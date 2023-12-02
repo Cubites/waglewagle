@@ -8,12 +8,12 @@
 	<link rel="stylesheet" href="/resources/css/test/testIndex.css">
 </head>
 <body>
-	<%@ include file="test/testheader.jsp" %>
+	<%@ include file="/WEB-INF/views/test/testheader.jsp" %>
 	<div id="center">
 		<div id="container">
 			
 		</div>
 	</div>
-	<%@ include file="test/testfooter.jsp" %>
+	<%@ include file="/WEB-INF/views/test/testfooter.jsp" %>
 </body>
 </html>
