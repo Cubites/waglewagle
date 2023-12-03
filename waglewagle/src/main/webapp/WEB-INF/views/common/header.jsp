@@ -21,10 +21,10 @@
 					</div>
 				</div>
 				<div id="headerTopRight">
-					<c:if test='${!empty session.getAttribute("user_id")}'>
-						<div>${session.getAttribute("user_nick")}</div>
+					<c:if test='${!empty sessionScope.users_info.users_nick}'>
+						<div>${sessionScope.users_info.users_nick} 님</div>
 					</c:if>
-					<c:if test='${empty session.getAttribute("user_id")}'>
+					<c:if test='${empty sessionScope.users_info.users_nick}'>
 						<div class="text_center">
 							<a href="#" class="text_center">로그인</a>
 						</div>
@@ -39,6 +39,18 @@
 				<div id="headerBottomLeft">
 					<img src="/resources/images/menu.png">
 					<ul>
+						<c:forEach var="cate1" items="${categoryFirst}" varStatus="status1">
+							<li>
+								<a href="#">${cate1.value}</a>
+								<ul>
+									<c:forEach var="cate2" items="${categorySecond[cate1.key]}">
+										<li><a href="#">${cate2}</a>
+									</c:forEach>
+								</ul>
+							</li>
+						</c:forEach>
+					</ul>
+					<!-- <ul>
 						<li>
 							<a href="#">패션 / 뷰티</a>
 							<ul>
@@ -83,7 +95,7 @@
 						<li>
 							<a href="#">기타</a>
 						</li>
-					</ul>
+					</ul> -->
 				</div>
 				<div id="headerBottomCenter">
 					<a href="#" class="text_center">공지사항</a>
