@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.waglewagle.users.mapper.UsersMapper">
+	<select id="userInfo" resultType="kr.co.waglewagle.domain.UsersVO" parameterType="Integer">
+		SELECT 
+			users_id
+			, users_nick 
+			, users_name
+			, users_gender
+			, users_phone
+			, users_rel
+			, users_image
+			, users_addr_list 
+		FROM users WHERE users_id=#{users_id}
+	</select>
+	
+	<select id="allCategory" resultType="kr.co.waglewagle.domain.CategoryVO">
+		SELECT 
+			category_id, category_upper_id, category_name 
+		FROM category 
+		ORDER BY category_id ASC
+	</select>
+</mapper>
