@@ -39,18 +39,6 @@
 				<div id="headerBottomLeft">
 					<img src="/resources/images/menu.png">
 					<ul>
-						<c:forEach var="cate1" items="${categoryFirst}" varStatus="status1">
-							<li>
-								<a href="#">${cate1.value}</a>
-								<ul>
-									<c:forEach var="cate2" items="${categorySecond[cate1.key]}">
-										<li><a href="#">${cate2}</a>
-									</c:forEach>
-								</ul>
-							</li>
-						</c:forEach>
-					</ul>
-					<!-- <ul>
 						<li>
 							<a href="#">패션 / 뷰티</a>
 							<ul>
@@ -59,7 +47,7 @@
 								<li><a href="#">신발</a></li>
 								<li><a href="#">어린이</a></li>
 								<li><a href="#">신발</a></li>
-								<li><a href="#">가빙 / 지갑</a></li>
+								<li><a href="#">가방 / 지갑</a></li>
 								<li><a href="#">시계</a></li>
 								<li><a href="#">주얼리</a></li>
 								<li><a href="#">미용</a></li>
@@ -95,7 +83,21 @@
 						<li>
 							<a href="#">기타</a>
 						</li>
-					</ul> -->
+					</ul>
+					<!-- 
+					<ul>
+						<c:forEach var="cate1" items="${categoryFirst}" varStatus="status1">
+							<li>
+								<a href="#">${cate1.value}</a>
+								<ul>
+									<c:forEach var="cate2" items="${categorySecond[cate1.key]}">
+										<li><a href="#">${cate2}</a>
+									</c:forEach>
+								</ul>
+							</li>
+						</c:forEach>
+					</ul>
+					-->
 				</div>
 				<div id="headerBottomCenter">
 					<a href="#" class="text_center">공지사항</a>

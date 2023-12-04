@@ -61,6 +61,7 @@ a:visited{color: black;}
 	height: 100%;
 	border: none;
 	margin-left: 10px;
+	outline: none;
 }
 /*** headerTopRight ***/
 #headerContainer>#headerTop>#headerTopRight{
@@ -119,7 +120,7 @@ a:visited{color: black;}
 	display: block;
 }
 #headerContainer>#headerBottom>#headerBottomLeft>ul>li{
-	height: 50px;
+	height: 70px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -127,7 +128,7 @@ a:visited{color: black;}
 	position: relative;
 }
 #headerContainer>#headerBottom>#headerBottomLeft>ul>li:hover{
-	background-color: #A24949;
+	background-color: #903030;
 }
 #headerContainer>#headerBottom>#headerBottomLeft>ul>li>a{
 	width: 100%;
@@ -137,6 +138,7 @@ a:visited{color: black;}
 	align-items: center;
 	color: #ffffff;
 	font-weight: bold;
+	font-size: 18px;
 }
 #headerContainer>#headerBottom>#headerBottomLeft>ul>li>ul{
 	position: absolute;
@@ -150,18 +152,18 @@ a:visited{color: black;}
 }
 #headerContainer>#headerBottom>#headerBottomLeft>ul>li>ul>li{
 	width: 100%;
-	height: 30px;
+	height: 50px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: #CF5C5C;
+	background-color: #BA4A4A;
 }
 #headerContainer>#headerBottom>#headerBottomLeft>ul>li>ul>li:hover{
-	background-color: #A24949;
+	background-color: #903030;
 }
 #headerContainer>#headerBottom>#headerBottomLeft>ul>li>ul>li>a{
 	color: #ffffff;
-	font-size: 12px;
+	font-size: 15px;
 	font-weight: bold;
 }
 /*** headerbottomCenter ***/
@@ -176,7 +178,8 @@ a:visited{color: black;}
 #headerContainer>#headerBottom>#headerBottomCenter>a{
 	width: 15%;
 	height: 100%;
-	font-size: 20px;	
+	font-size: 20px;
+	font-weight: bold;
 }
 /*** headerbottomRight ***/
 #headerContainer>#headerBottom>#headerBottomRight{
@@ -218,6 +221,7 @@ a:visited{color: black;}
 	height: 15vh;
 	min-width: 1280px;
 	min-height: 100px;
+	background-color: #CF5C5C;
 }
 #footerContainer{
 	width: 80%;
@@ -225,7 +229,6 @@ a:visited{color: black;}
 	min-width: 1000px;
 	min-height: 100px;
 	margin: 0 auto;
-	background-color: #CF5C5C;
 	color: #ffffff;
 	font-weight: bold;
 	display: flex;
