@@ -1,0 +1,186 @@
+#container{
+	height: 80vh;
+	min-height: 470px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#formHeader{
+	background-color: #CF5C5C;
+	border-radius: 5px 5px 0px 0px;
+	width:400px;
+	height:40px;
+	text-align: center;
+	color: #fff;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#formContent{
+	border-radius: 0px 0px 10px 10px;
+	background-color: #ffe8e8;
+	width:400px;
+	height:600px;
+	color: #635656
+}
+
+#formContent > form{
+	margin: 0 55px 0 55px;
+	height: 85%;
+}
+
+#inputArea{
+	padding-top: 15px;
+	display:flex;
+	height:100%;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+
+#submitArea{
+	height:100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.formText{
+	color: #635656;
+	font-size: 15px;
+}
+
+.space-between{
+	display: flex;
+	justify-content: space-between;
+}
+
+.basicBtn{
+	background-color: #CF5C5C;
+	border-width: 0;
+	width:80px;
+	height:25px;
+	font-size:10px;
+	color:#fff;
+	border-radius: 15px;
+	cursor: pointer;
+}
+
+#pwdCheckTxt{
+	color: #F44848;
+	margin-left: auto;
+}
+
+.flex-end{
+	display: flex;
+	justify-content: flex-end;
+}
+
+select{
+	background-color: #ffe8e8;
+	border-width: 0 0 1px;
+	border-color: #CF5C5C;
+}
+select:focus {
+  outline: none;
+}
+
+#joinBtn{
+	background-color: #CF5C5C;
+	border-width: 0;
+	width:150px;
+	height:35px;
+	color:#fff;
+	cursor: pointer;
+	border-radius: 15px;
+	font-size: 18px;
+}
+
+#enterEmail{
+	margin-bottom: 10px;
+}
+
+#sendNum{
+	background-color: #CF5C5C;
+	border-width: 0;
+	color:#fff;
+	cursor: pointer;
+	
+	font-size:9px;
+	width:70px;
+	height:25px;
+	border-radius: 15px 0px 0px 15px;
+}
+
+#validCheck{
+	background-color: #CF5C5C;
+	border-width: 0;
+	color:#fff;
+	cursor: pointer;
+	
+	border-radius: 0px 15px 15px 0px;
+	font-size:9px;
+	width:70px;
+	height:25px;
+	background: #7C7474;
+}
+
+#pwd1{
+	margin-bottom: 5px;
+}
+
+#pwdCheckTxt{
+	font-size:10px;
+	
+}
+#nickCheckTxt{
+	font-size:10px;
+	
+}
+
+#name_gender{
+	display: flex;
+	flex-direction: col;
+}
+
+#nameArea{
+	margin-right: 20px;
+}
+
+
+#interest_dong{
+	margin-bottom:10px;
+}
+
+#addDongBtnArea{
+	display: flex;
+	flex-direction: row; 
+	justify-content: space-around;
+	
+}
+
+.addDongBtn{
+	height : 30px;
+	width: 70px;
+	border-radius: 20px;
+	border : none;
+	color: #fff;
+	background-color: #7C7474;
+	font-size: 20px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.formInput{
+	background-color: #ffe8e8;
+	border-width: 0 0 1px;
+	border-color: #CF5C5C;
+}
+.formInput::placeholder {
+  color: #A6A0A0;
+  font-size:10px;
+}
+

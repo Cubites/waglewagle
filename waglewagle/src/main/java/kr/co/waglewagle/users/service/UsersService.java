@@ -8,4 +8,5 @@ import kr.co.waglewagle.domain.UsersVO;
 public interface UsersService {
 	UsersVO userInfo(Integer users_id);
 	List<CategoryVO> allCategory();
+	boolean join(UsersVO vo);
 }

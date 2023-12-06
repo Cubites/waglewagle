@@ -24,5 +24,10 @@ public class UsersServiceImpl implements UsersService {
 	public List<CategoryVO> allCategory() {
 		return mapper.allCategory();
 	}
+	
+	@Override
+	public boolean join(UsersVO vo) {
+		return mapper.join(vo) > 0 ? true : false;
+	}
 
 }
