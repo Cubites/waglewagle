@@ -193,9 +193,7 @@ function thImgSelect() {
   }
 }
 
-function submits() {
-  alert(1);
-}
+
 
 function numberValidation(val) {
   return !isNaN(val);
@@ -230,12 +228,18 @@ $(function () {
 function searchAddr() {
   new daum.Postcode({
     oncomplete: function (data) {
+   	  var roadAddr = data.roadAddress; 
       var jibunAddress = data.jibunAddress;
+      jibunAddress = jibunAddress === '' ? data.autoJibunAddress : jibunAddres; 
+     
       var jibunArr = jibunAddress.split(' ');
       var dong = jibunArr[jibunArr.length - 2];
-
+    
+	
       $('#fullJibun').val(jibunAddress);
       $('#addrDong').val(dong);
     },
   }).open();
+  
+  
 }
