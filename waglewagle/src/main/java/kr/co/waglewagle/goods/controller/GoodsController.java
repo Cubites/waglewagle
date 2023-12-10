@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.goods.service.GoodsService;
 import kr.co.waglewagle.goods.won.FileStore;
@@ -42,7 +43,7 @@ public class GoodsController {
 							 @SessionAttribute(name = "loginUser",required = false) UsersVO LoginUserId) {
 							 //Session에서 로그인한 유저 정보 가져옴 required false 
 			
-			log.info("vo = {}",vo);
+			
 			
 			//Spring: 태그를 이용해서 출력할 수도 있지만..그냥 br담아서 출력하는 것도 나쁘지않은 선택!
 			//글로벌 오류 출력하기 위해 담음
@@ -66,10 +67,13 @@ public class GoodsController {
 			//fullPath가 필요한것 이름은 이제 필요 없어서!! 다시 set해줌
 			vo.setGoods_th_img(th_path);
 			
-			
-			//로그인 유저id받아야함 
+			//로그인 유저id받아야함 추후에 반드시 고칠 것 !
 			//sess.getAttribute(th_path); 
 			vo.setUsers_id(1000); //테스트용 1000
+			
+			//추후 컨버터로 등록할 것 -> 현재 Form - service 올바르지 못하다! 단,date -> Timestamp로 고쳐야함
+			//GoodsVO registedGoodsVO = convertGoodsFormToGoods(vo,LoginUserId);
+			
 			int resultOfGoodsRegist = service.registGoods(vo); 
 			//이미지 파일들을 DB에 저장하기 위해선 상품id와 사진 경로가 필요함!
 			int resultOfImageRegist = service.registImages(vo.getGoods_id(),list);
@@ -77,6 +81,28 @@ public class GoodsController {
 			
 			
 			return "home";
+		}
+
+		private GoodsVO convertGoodsFormToGoods(GoodsFormVO vo, UsersVO loginUserId) {
+			GoodsVO goods = new GoodsVO();
+			
+			//goodsVO form vo의 값 담을 것
+			//추후의 로그인 유저 id로 고칠 것
+			if(loginUserId == null) {
+			goods.setUsers_id(1000);
+			}else {
+				goods.setUsers_id(loginUserId.getUsers_id());
+			}
+			goods.setGoods_address(vo.getGoods_addr());
+			goods.setGoods_comment(vo.getGoods_comment());
+			//goods.setGoods_exp(vo.getGoods_exp());
+			goods.setGoods_start_price(vo.getGoods_start_price());
+			goods.setGoods_title(vo.getGoods_title());
+			goods.setGoods_avg_price(vo.getGoods_start_price());
+			goods.setGoods_th_img(vo.getGoods_th_img());
+			
+			
+			return null;
 		}
 
 		

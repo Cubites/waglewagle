@@ -39,16 +39,9 @@ public class GoodsServiceImpl implements GoodsService {
 	public Integer registGoods(GoodsFormVO vo) {
 		GoodsVO goods = new GoodsVO();
 		//결과를 GoodsVO로 받으면 되자나 
-		setGoodsExpDate(vo);
-		
 		return mapper.insertGoods(vo);
 	}
 
-
-	private void setGoodsExpDate(GoodsFormVO vo) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public Integer registImages(Integer goods_id, List<UploadImage> list) {

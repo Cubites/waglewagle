@@ -230,9 +230,7 @@ function getLowerCategories(){
 		}
 		
 		for(const cate of result){
-			//console.log(cate.category_id);
-			//console.log(cate.category_upper_id);
-			//console.log(cate.category_name);
+			
 			 str ="";
 			 str += "<option value='"+cate.category_id+"'>";
 			 str  += cate.category_name+"</option>";
