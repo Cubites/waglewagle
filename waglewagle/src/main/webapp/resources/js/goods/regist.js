@@ -230,7 +230,7 @@ function searchAddr() {
     oncomplete: function (data) {
    	  var roadAddr = data.roadAddress; 
       var jibunAddress = data.jibunAddress;
-      jibunAddress = jibunAddress === '' ? data.autoJibunAddress : jibunAddres; 
+      jibunAddress = jibunAddress === '' ? data.autoJibunAddress : jibunAddress; 
      
       var jibunArr = jibunAddress.split(' ');
       var dong = jibunArr[jibunArr.length - 2];
