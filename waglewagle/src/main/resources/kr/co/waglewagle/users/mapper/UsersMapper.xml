@@ -29,4 +29,10 @@
 			#{users_nick}, MD5(#{users_pwd}), #{users_name}, #{users_gender}, #{users_phone}, #{users_email}, NOW(), 42, 0, #{users_addr_list}
 		)
 	</insert>
+	
+	<!-- email 중복 체크 -->
+	<select id="isEmailDup" parameterType ="String" resultType="Integer">
+		SELECT COUNT(*) FROM users WHERE users_email = #{users_email}
+	</select>
+	
 </mapper>

@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.users.service.UsersService;
+import kr.co.waglewagle.users.ty.mailauth.MailConfig;
+import kr.co.waglewagle.users.ty.mailauth.MailService;
 
 
 @Controller
@@ -16,6 +19,7 @@ public class UsersController {
 	
 	@Autowired
 	private UsersService service;
+	
 	
 	// 테스트용 세션 추가
 	@GetMapping("/add/session")
@@ -41,4 +45,37 @@ public class UsersController {
 	public String loginForm() {
 		return "users/login";
 	}
+	
+	@ResponseBody
+	@GetMapping("/emailCheck")
+	public String emailCheck(String users_email) {
+		return String.valueOf(service.isEmailDup(users_email));
+	}
+	
+	
+	MailConfig mailConfig = new MailConfig();
+	MailService ms = new MailService(mailConfig.javaMailSender());
+
+	@ResponseBody
+	@GetMapping("/sendAuthNum")
+	public String sendAuthNum(HttpSession session, String users_email) {
+		try {
+			String authNum = ms.sendSimpleMessage(users_email);
+			session.setAttribute("authNum", authNum);
+			return authNum;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "FAILED";
+		}
+	}
+	
+	@ResponseBody
+	@GetMapping("/checkAuthNum")
+	public String checkAuthNum(HttpSession session, String validNum){
+		String authNum = (String)session.getAttribute("authNum");
+		
+		return validNum.equals(authNum) ? "true" : "false";
+	}
+	
+	
 }

@@ -46,6 +46,7 @@
 	justify-content: center;
 	align-items: center;
 }
+
 .formText{
 	color: #635656;
 	font-size: 15px;
@@ -65,11 +66,6 @@
 	color:#fff;
 	border-radius: 15px;
 	cursor: pointer;
-}
-
-#pwdCheckTxt{
-	color: #F44848;
-	margin-left: auto;
 }
 
 .flex-end{
@@ -97,8 +93,17 @@ select:focus {
 	font-size: 18px;
 }
 
-#enterEmail{
-	margin-bottom: 10px;
+#emailCheckText{
+	visibility:hidden;
+	font-size:10px;
+	color: #F44848;
+	margin-top:0;
+}
+#timer{
+	background-color: #ffe8e8;
+	border-width: 0 0 0px;
+	border-color: #CF5C5C;
+	text-align: center;
 }
 
 #sendNum{
@@ -111,6 +116,10 @@ select:focus {
 	width:70px;
 	height:25px;
 	border-radius: 15px 0px 0px 15px;
+}
+
+#validNum{
+	text-align: center;
 }
 
 #validCheck{
@@ -132,7 +141,8 @@ select:focus {
 
 #pwdCheckTxt{
 	font-size:10px;
-	
+	color: #F44848;
+	margin-left: auto;
 }
 #nickCheckTxt{
 	font-size:10px;

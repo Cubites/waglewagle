@@ -29,5 +29,10 @@ public class UsersServiceImpl implements UsersService {
 	public boolean join(UsersVO vo) {
 		return mapper.join(vo) > 0 ? true : false;
 	}
+	
+	@Override
+	public boolean isEmailDup(String users_email) {
+		return mapper.isEmailDup(users_email) > 0 ? true : false;
+	}
 
 }

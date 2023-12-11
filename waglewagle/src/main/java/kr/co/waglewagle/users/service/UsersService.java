@@ -9,4 +9,5 @@ public interface UsersService {
 	UsersVO userInfo(Integer users_id);
 	List<CategoryVO> allCategory();
 	boolean join(UsersVO vo);
+	boolean isEmailDup(String users_email);
 }
