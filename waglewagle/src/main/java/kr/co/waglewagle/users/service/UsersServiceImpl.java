@@ -34,5 +34,10 @@ public class UsersServiceImpl implements UsersService {
 	public boolean isEmailDup(String users_email) {
 		return mapper.isEmailDup(users_email) > 0 ? true : false;
 	}
+	
+	@Override
+	public boolean isNickDup(String users_nick) {
+		return mapper.isNickDup(users_nick) > 0 ? true : false;
+	}
 
 }

@@ -27,10 +27,42 @@
 				}
 				
 				$("#users_addr_list").val(dongResult);
-				$("#joinForm").submit();
+				
+				if(!validEmail){//이메일 형식 체크
+	               alert("이메일 형식을 확인해주세요.");
+	               $("#users_email").focus();
+	               return;
+	            }else if(!isCheckEmailDup){//이메일 확인 버튼
+	               alert("이메일을 확인해주세요.");
+	               $("#isEmailDup").focus();
+	               return;
+	            }else if(!isValidEmail){//이메일 인증
+	               alert("이메일을 인증을 완료해주세요.");
+	               $("#validNum").focus();
+	               return;
+	            }else if(!validPwd || !pwdIsEqual){
+	               alert("비밀번호를 확인해주세요.");
+	               $("#users_pwd").focus();
+	               return;
+	            }else if(!isCheckNickDup){
+	               alert("닉네임을 확인해주세요.");
+	               $("#users_nick").focus();
+	               return;
+	            }else if($("#users_name").length < 1 && $("#users_name") === ""){
+	               alert("이름을 입력해주세요.");
+	               $("#users_name").focus();
+	               return;
+	            }else if($("#phoneBack").length < 1 && $("#users_name") === ""){
+	               alert("전화번호를 해주세요.");
+	               $("#phoneBack").focus();
+	               return;
+	            }else{
+	               $("#joinForm").submit();
+	            }
+				 $("#joinForm").submit();
 			})
 		})
-	
+
 		//이메일 형식 체크(정규식)
 		function isEmail(email){
 			let reg = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
@@ -57,7 +89,7 @@
 			})
 		})
 		
-	
+		var isCheckEmailDup = false;
 		$(function(){	
 			// 이메일 중복 체크
 			$("#isEmailDup").click(function(){
@@ -71,10 +103,12 @@
 								$("#emailCheckText").text("중복된 이메일입니다.");
 								$("#emailCheckText").css('visibility', 'visible');
 								$("#users_email").focus();
+								isCheckEmailDup = false;
 							}else{
 								$("#emailCheckText").text("사용가능한 이메일입니다.")
 								$("#users_email").attr('readonly', 'readonly');
 								$("#emailCheckText").css('visibility', 'visible');
+								isCheckEmailDup = true;
 							}
 						}
 					})
@@ -87,18 +121,22 @@
 		var intervalVar;
 		$(function(){
 			$("#sendNum").click(function(){
-				sendNumClicked = true;
-				$('#sendNum').prop('value', '인증번호 재전송');
-				$('#validNum').val('');
-				$.ajax({
-					url:"sendAuthNum",
-					data:{users_email : $("#users_email").val()},
-					success: function(data){
-						console.log(data);
-					}
-				});
-				
-				resetTimer();
+				if(!isCheckEmailDup){
+					alert("이메일 확인을 해주세요.")
+				}else{
+					sendNumClicked = true;
+					$('#sendNum').prop('value', '인증번호 재전송');
+					$('#validNum').val('');
+					$.ajax({
+						url:"sendAuthNum",
+						data:{users_email : $("#users_email").val()},
+						success: function(data){
+							console.log(data);
+						}
+					});
+					
+					resetTimer();
+				}
 				
 			});
 			
@@ -147,7 +185,7 @@
 								alert("인증이 완료되었습니다.");
 								isValidEmail = true;
 							}else{
-								alert("인증번호가 일치하지 않습니다. ");
+								alert("인증번호가 일치하지 않습니다.");
 								isValidEmail = false;
 							}
 						}
@@ -156,6 +194,77 @@
 			})
 		})
 		
+		//비밀번호 형식 체크(정규식)
+		function isPassword(password){
+			//let reg = /^(((?=.*[a-zA-Z])(?=.*[0-9]))|((?=.*[a-zA-Z])(?=.*[!@#$%^&*]))|((?=.*[!@#$%^&*])(?=.*[0-9]))).{8,20}$/;
+			let reg = new RegExp("(((?=.*[a-zA-Z])(?=.*[0-9]))|((?=.*[a-zA-Z])(?=.*[!@#$%^&*]))|((?=.*[!@#$%^&*])(?=.*[0-9]))).{8,20}$");
+
+			return reg.test(password);
+		}
+		
+		
+		//비밀번호 형식 올바른지 아닌지
+		var validPwd = false;
+		var pwdIsEqual = false;
+		$(function(){
+			//입력된 이메일 값 실시간 체크
+			$("#users_pwd").keyup(function(){
+				 
+				if(!isPassword($("#users_pwd").val())){
+					$("#pwdCheckTxt").text("비밀번호는 숫자, 알파벳, 특수문자 중 2가지 이상을 포함해 8~20글자 사이로 작성해 주세요!");
+					$("#pwdCheckTxt").css('visibility', 'visible');
+					console.log("false");
+					validPwd = false;
+				}else{
+					console.log("true");
+					$("#pwdCheckTxt").css('visibility', 'hidden');
+					validPwd = true;
+				}
+			})
+			
+			$("#users_pwd2").keyup(function(){
+				 
+				if($("#users_pwd").val() !== $("#users_pwd2").val()){
+					$("#pwdCheckTxt").text("비밀번호가 일치하지 않습니다.");
+					$("#pwdCheckTxt").css('visibility', 'visible');
+					pwdIsEqual = false;
+				}else{
+					$("#pwdCheckTxt").css('visibility', 'hidden');
+					pwdIsEqual = true;
+				}
+			})
+		})
+		
+		
+		//닉네임 중복 체크
+		var isCheckNickDup = false;
+		$(function(){	
+			$("#checkNickBtn").click(function(){
+				if($("#users_nick").val() === ''){
+					alert("닉네임을 입력해주세요.");
+				}else{
+					$.ajax({
+						url:"nickCheck",
+						data:{users_nick : $("#users_nick").val()},
+						success: function(data){
+							if(data === 'true'){
+								$("#nickCheckTxt").text("중복된 닉네임입니다.");
+								$("#nickCheckTxt").css('visibility', 'visible');
+								$("#users_nick").focus();
+								isCheckNickDup = false;
+							}else{
+								$("#nickCheckTxt").text("사용가능한 닉네임입니다.")
+								$("#users_nick").attr('readonly', 'readonly');
+								$("#nickCheckTxt").css('visibility', 'visible');
+								isCheckNickDup = true;
+							}
+						}
+					})
+				}
+			
+			})
+			
+		})
 		
 		var dongList = ['', '', '']
 	
@@ -285,11 +394,11 @@
 							<div id="passwordArea">
 								<div id="pwd1">
 									<div class="formText">비밀번호</div>
-									<input type="password" size="40" class="formInput" name="users_pwd" placeholder="영문,특수문자,숫자 포함 8자 이상"><br>
+									<input type="password" size="40" class="formInput" id="users_pwd" name="users_pwd" placeholder="영문,특수문자,숫자 포함 8자 이상"><br>
 								</div>
 								<div id="pwd2">
 									<div class="formText">비밀번호 확인</div>
-									<input type="password" size="40" class="formInput">
+									<input type="password" size="40" class="formInput" id="users_pwd2">
 								</div>
 								<div class="flex-end">
 									<div id="pwdCheckTxt">비밀번호가 일치하지 않습니다.</div>
@@ -298,14 +407,14 @@
 							<div id="nickArea">
 								<div class="formText">닉네임</div>
 								<div  class="space-between">
-									<input type="text" size="27" name="users_nick" class="formInput"><input type="button" class="basicBtn" value="중복확인"><br>
+									<input type="text" size="27" id="users_nick" name="users_nick" class="formInput"><input type="button" id="checkNickBtn" class="basicBtn" value="중복확인"><br>
 								</div>
 								<div id="nickCheckTxt">사용가능한 닉네임입니다.</div>
 							</div>
 							<div id="name_gender">
 								<div id="nameArea">
 									<div class="formText">이름</div>
-									<input type="text" size="27" name="users_name" class="formInput"><br>
+									<input type="text" size="27" id="users_name" name="users_name" class="formInput"><br>
 								</div>
 								<div id="genderArea">	
 									<div class="formText">성별</div>

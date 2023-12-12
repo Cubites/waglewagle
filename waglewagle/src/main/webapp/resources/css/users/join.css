@@ -1,6 +1,9 @@
-#container{
+#center{
+	min-height: 700px;
 	height: 80vh;
-	min-height: 470px;
+}
+
+#container{
 	display:flex;
 	justify-content: center;
 	align-items: center;
@@ -23,6 +26,7 @@
 	background-color: #ffe8e8;
 	width:400px;
 	height:600px;
+	min-height: 470px;
 	color: #635656
 }
 
@@ -91,6 +95,7 @@ select:focus {
 	cursor: pointer;
 	border-radius: 15px;
 	font-size: 18px;
+	cursor: pointer;
 }
 
 #emailCheckText{
@@ -140,12 +145,15 @@ select:focus {
 }
 
 #pwdCheckTxt{
+	visibility:hidden;
 	font-size:10px;
 	color: #F44848;
 	margin-left: auto;
 }
 #nickCheckTxt{
+	visibility:hidden;
 	font-size:10px;
+	color: #F44848;
 	
 }
 
@@ -178,6 +186,7 @@ select:focus {
 	color: #fff;
 	background-color: #7C7474;
 	font-size: 20px;
+	cursor: pointer;
 }
 
 input:focus {

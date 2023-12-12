@@ -35,4 +35,9 @@
 		SELECT COUNT(*) FROM users WHERE users_email = #{users_email}
 	</select>
 	
+	<!-- nickname 중복 체크 -->
+	<select id="isNickDup" parameterType ="String" resultType="Integer">
+		SELECT COUNT(*) FROM users WHERE users_nick = #{users_nick}
+	</select>
+	
 </mapper>

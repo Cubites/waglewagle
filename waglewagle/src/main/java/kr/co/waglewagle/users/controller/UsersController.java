@@ -73,8 +73,14 @@ public class UsersController {
 	@GetMapping("/checkAuthNum")
 	public String checkAuthNum(HttpSession session, String validNum){
 		String authNum = (String)session.getAttribute("authNum");
-		
+
 		return validNum.equals(authNum) ? "true" : "false";
+	}
+	
+	@ResponseBody
+	@GetMapping("/nickCheck")
+	public String nickCheck(String users_nick) {
+		return String.valueOf(service.isNickDup(users_nick));
 	}
 	
 	
