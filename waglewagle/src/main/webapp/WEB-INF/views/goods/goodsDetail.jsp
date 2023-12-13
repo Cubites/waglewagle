@@ -33,10 +33,10 @@
 	})
 	function displayDong(){
 		let jibun = "${goods.goods_address}".split(" ");
-	
+		console.log(jibun);
 		let dong = jibun[jibun.length-2];
-		dong = dong.indexOf('리') !== -1 ? dong: jibun[jibun.length-3];
 		
+		dong = dong.charAt(dong.length-1) !== '리' ? dong: jibun[jibun.length-3];	
 		$("#dong").text(dong);
 		
 	}
@@ -89,22 +89,20 @@
               <img id="right" class="direc" src="/resources/images/goods/right.png" alt="">
                <div id="imagewrap">
                 <div id="slideList">
-                <img class="imgs" src="/resources/images/goods/image 17.jpg"/>
-                <img class="imgs" src="/resources/images/goods/image 17.jpg"/>
-                <img class="imgs" src="/resources/images/goods/image 17.jpg"/>
-                <img class="imgs" src="/resources/images/goods/image 17.jpg"/>
-                <!--  
+                
+           			<!-- 업로드된 이미지 받아오기 --> 
                	  <img class="imgs" src="/upload${goods.goods_th_img}"/>
                	  <c:forEach items="${images}" var="img" begin="0">
                	  	<c:if test="${img.images_loc != goods.goods_th_img}">
                	  	<img class="imgs" src="/upload${img.images_loc}"/>
                	  	</c:if>
                	  </c:forEach>
-               	  -->	
+               	  	
                 </div>
               </div>
               
             </div>
+            <script src="/resources/js/goods/slide.js"></script>
             <div id="likebox">
 
               <img id="likeImage" src="/resources/images/goods/favorite_border.jpg">
@@ -167,7 +165,7 @@
 			
 		</div>
 	</div>
-	<script src="/resources/js/goods/slide.js"></script>
+	
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

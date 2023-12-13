@@ -68,7 +68,7 @@ function moveSlide(num) {
   var left = -(num * imgWidth);
   slidList.style.left = left + 'px';
   currImg = num;
-  console.log("num="+num);
+  
 
   if (currImg === imgLength || -currImg === imgLength) {
   		

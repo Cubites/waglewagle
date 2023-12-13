@@ -231,11 +231,12 @@ function searchAddr() {
    	  var roadAddr = data.roadAddress; 
       var jibunAddress = data.jibunAddress;
       jibunAddress = jibunAddress === '' ? data.autoJibunAddress : jibunAddress; 
-     
+      
+      //지번 수정 12-13
       var jibunArr = jibunAddress.split(' ');
       var dong = jibunArr[jibunArr.length - 2];
-    
-	
+      dong = dong.charAt(dong.length-1) !== '리' ? dong: jibunArr[jibunArr.length - 3];
+			
       $('#fullJibun').val(jibunAddress);
       $('#addrDong').val(dong);
     },
