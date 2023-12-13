@@ -7,4 +7,54 @@
 		FROM category 
 		ORDER BY category_id ASC
 	</select>
+	
+	<select id="getLowerCategory" resultType="kr.co.waglewagle.domain.CategoryVO" parameterType="Integer">
+		SELECT * FROM category  WHERE category_upper_id = #{id}
+	</select>
+	
+	<insert id="insertGoods" parameterType="kr.co.waglewagle.goods.won.GoodsFormVO" 
+	 useGeneratedKeys="true" keyProperty="goods_id"> 
+		INSERT INTO goods (
+		goods_title,
+		goods_comment,
+		goods_start_price,
+		users_id,
+		goods_exp,
+		goods_th_img,
+		goods_avg_price,
+		goods_address,
+		category_id)
+		VALUES (
+		#{goods_title}
+		,#{goods_comment}
+		,#{goods_start_price}
+		,#{users_id}
+		,#{goods_exp} 
+		,#{goods_th_img}
+		,#{goods_start_price}
+		,#{goods_addr}
+		<choose>
+		<when test="goods_category1 eq 24 or goods_category1 eq 25">
+		   ,#{goods_category1})
+		</when>
+		<otherwise>
+			,#{goods_category2})
+		</otherwise>
+		</choose>
+	</insert>
+	
+	<insert id="insertImages" parameterType="map">
+		
+		INSERT INTO 
+		images (
+		goods_id
+		,images_loc)
+		VALUES
+		<foreach collection="imagesList" item="path" separator=",">
+		(
+		#{goods_id}
+		,#{path.fullPath}
+		)
+		</foreach>
+	</insert>
 </mapper>
