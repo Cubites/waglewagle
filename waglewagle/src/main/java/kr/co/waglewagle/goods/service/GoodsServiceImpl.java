@@ -71,10 +71,25 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public Integer getFavorsCnt(int goodsId) {
+	public Integer getFavorsCnt(Integer goodsId) {
 		// TODO Auto-generated method stub
 		Integer favorCnt = mapper.countFavorsByGoodsId(goodsId); 
 		return favorCnt;
+	}
+
+	
+
+	@Override
+	public boolean isFavoritGoods(Integer usersId,Integer goodsId) {
+		//유저 아이디와 굿즈 아이디를 가져와서 map으로 만들고 DB조회 
+		Map<String,Integer> favorMap = new ConcurrentHashMap<String, Integer>();
+		 favorMap.put("usersId", usersId);
+		 favorMap.put("goodsId", goodsId);
+		 
+		 Integer result = mapper.countFavorsByUsersId(favorMap);
+		 
+		 return result >0 ? true:false;
+	   
 	}
 
 	

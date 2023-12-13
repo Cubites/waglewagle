@@ -122,12 +122,16 @@ public class GoodsController {
 		}
 		
 		@GetMapping("goods/showTest")
-		public String testDetail(Model model) {
+		public String testDetail(Model model, @SessionAttribute(name = "loginUser",required = false) UsersVO LoginUserId) {
 			model.addAttribute("goods",goodsService.getGoods(25));
 			model.addAttribute("images",goodsService.getImages(25));
 			model.addAttribute("favorsCnt",goodsService.getFavorsCnt(25));
 			model.addAttribute("bidsCnt",bidsService.getBidsCnt(25));
+			
+			model.addAttribute("userFavor",goodsService.isFavoritGoods(1000, 25));
+			
 			//찜인원 가져오기 (임의 GoodsId 집어넣음 실제로는 path에서 받아와야함
+			
 			
 			
 			//경매 참여 인원가져오기 bids에서 호가 한 인원 가져오기 

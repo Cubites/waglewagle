@@ -15,6 +15,7 @@ public interface GoodsService {
 	Integer registImages(Integer goods_id, List<UploadImage> list);
 	GoodsVO getGoods(Integer goodsId);
 	List<ImagesVO> getImages(Integer goodsId);
-	Integer getFavorsCnt(int goodsId);
+	Integer getFavorsCnt(Integer goodsId);
+	boolean isFavoritGoods(Integer usersId,Integer goodsId);
 	
 }

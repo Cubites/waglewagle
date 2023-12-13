@@ -12,7 +12,8 @@
 
 
 	<script>
-	var userlike = false;
+	//유저의 찜상태 체크
+	var userlike = "${userFavor}";
 	var expDate = "${goods.goods_exp}";
 	$(function(){
 		
@@ -25,9 +26,10 @@
 		 $("#likebox").click(function () {
 		        if (window.userlike === false) {
 		          $("#likeImage").attr("src", "/resources/images/goods/favorite.jpg");
-		          
+		          changeFavors(1);
 		        } else {
 		          $("#likeImage").attr("src", "/resources/images/goods/favorite_border.jpg");
+		          changeFavors(-1);	
 		        }
 		        userlike = !userlike;
 		      })
@@ -74,6 +76,11 @@
 		
 	}
 	
+	function changeFavors(num){
+		let favorsDom = $("#jjimcnt"); 
+		let val = Number(favorsDom.text())+num;
+		favorsDom.text(val);
+	}
 	</script>
 </head>
 
@@ -105,8 +112,16 @@
             </div>
             <script src="/resources/js/goods/slide.js"></script>
             <div id="likebox">
-
-              <img id="likeImage" src="/resources/images/goods/favorite_border.jpg">
+			  <!-- 유저의 찜상태 체크 -->
+			  <c:choose>
+			  	<c:when test="${userFavor}">
+			  	<img id="likeImage" src="/resources/images/goods/favorite.jpg">
+			  	</c:when>
+			  	<c:otherwise>
+			  	<img id="likeImage" src="/resources/images/goods/favorite_border.jpg">
+			  	</c:otherwise>
+			  </c:choose>
+           
               <div id="jjim">찜하기</div>
             </div>
           </div>

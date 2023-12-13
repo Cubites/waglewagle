@@ -66,4 +66,7 @@
 	<select id="countFavorsByGoodsId" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM favors WHERE goods_id = #{goods_id}
 	</select>
+	<select id="countFavorsByUsersId" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*) FROM favors WHERE users_id = #{usersId} AND goods_id = #{goodsId}
+	</select>
 </mapper>

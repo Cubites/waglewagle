@@ -19,5 +19,6 @@ public interface GoodsMapper {
 	GoodsVO selectGoodsById(Integer goodsId);
 	List<ImagesVO> selectImagesById(Integer goodsId);
 	Integer countFavorsByGoodsId(int goodsId);
+	Integer countFavorsByUsersId(Map<String,Integer> favorMap);
 	
 }
