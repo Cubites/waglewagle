@@ -24,5 +24,20 @@ public class UsersServiceImpl implements UsersService {
 	public List<CategoryVO> allCategory() {
 		return mapper.allCategory();
 	}
+	
+	@Override
+	public boolean join(UsersVO vo) {
+		return mapper.join(vo) > 0 ? true : false;
+	}
+	
+	@Override
+	public boolean isEmailDup(String users_email) {
+		return mapper.isEmailDup(users_email) > 0 ? true : false;
+	}
+	
+	@Override
+	public boolean isNickDup(String users_nick) {
+		return mapper.isNickDup(users_nick) > 0 ? true : false;
+	}
 
 }

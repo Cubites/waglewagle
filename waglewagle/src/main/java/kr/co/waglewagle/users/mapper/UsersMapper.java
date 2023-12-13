@@ -11,4 +11,7 @@ import kr.co.waglewagle.domain.UsersVO;
 public interface UsersMapper {
 	UsersVO userInfo(Integer users_id);
 	List<CategoryVO> allCategory();
+	int join(UsersVO vo);
+	int isEmailDup(String users_email);
+	int isNickDup(String users_nick);
 }
