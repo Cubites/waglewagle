@@ -38,7 +38,11 @@ public class WebConfig implements WebMvcConfigurer {
 	private String username;
 	@Value("${db.userpassword}")
 	private String userpassword;
-
+	@Value("${file.dir}")
+	private String filePath;
+	//외부 파일과 실제 디렉토리 경로 설정을 위해 추가
+	@Value("${os.root}")
+	private String osRoot;
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
@@ -54,6 +58,8 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		//외부 파일 읽어오기 위해서 추가
+		registry.addResourceHandler("/upload/**").addResourceLocations("file:///"+osRoot+"/");
 	}
 
 	// db관련 bean등록

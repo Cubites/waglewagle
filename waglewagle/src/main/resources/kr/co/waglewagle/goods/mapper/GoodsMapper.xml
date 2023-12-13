@@ -57,4 +57,10 @@
 		)
 		</foreach>
 	</insert>
+	<select id="selectGoodsById" parameterType="Integer" resultType="kr.co.waglewagle.domain.GoodsVO">
+		SELECT * FROM goods WHERE goods_id = #{goodsId}
+	</select>
+	<select id="selectImagesById" parameterType="Integer" resultType="kr.co.waglewagle.domain.ImagesVO">
+		SELECT * FROM images WHERE goods_id = #{goodsId}
+	</select>
 </mapper>

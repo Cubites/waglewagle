@@ -16,4 +16,6 @@ public interface GoodsMapper {
 	List<CategoryVO> getLowerCategory(Integer lowerId);
 	Integer insertGoods(GoodsFormVO vo);
 	Integer insertImages(Map map);
+	GoodsVO selectGoodsById(Integer goodsId);
+	List<ImagesVO> selectImagesById(Integer goodsId);
 }

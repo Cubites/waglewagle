@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.waglewagle.domain.CategoryVO;
 import kr.co.waglewagle.domain.GoodsVO;
+import kr.co.waglewagle.domain.ImagesVO;
 import kr.co.waglewagle.goods.mapper.GoodsMapper;
 import kr.co.waglewagle.goods.won.GoodsFormVO;
 import kr.co.waglewagle.goods.won.UploadImage;
@@ -54,6 +55,21 @@ public class GoodsServiceImpl implements GoodsService {
 		
 		return mapper.insertImages(map);
 	}
+
+	@Override
+	public GoodsVO getGoods(Integer goodsId) {
+		GoodsVO goods = mapper.selectGoodsById(goodsId);
+		log.info("goods = {}",goods);
+		return goods;
+	}
+
+	@Override
+	public List<ImagesVO> getImages(Integer goodsId) {
+		List<ImagesVO> imageList = mapper.selectImagesById(goodsId);
+		return imageList;
+	}
+
+	
 	
 	
 }

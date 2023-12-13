@@ -1,0 +1,330 @@
+#wrap {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#top {
+  margin: 3%;
+  min-height: 400px;
+
+  display: flex;
+  flex-direction: row;
+}
+
+#topbox1 {
+  width: 45%;
+  height: 400px;
+  margin-right: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#imagebox {
+  height: 350px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.direc {
+  width: 5%;
+  height: 10%;
+}
+
+#left {
+  position: absolute;
+  top: 45%;
+  left: 2%;
+}
+
+#right {
+  position: absolute;
+  top: 45%;
+  left: 93%;
+}
+
+.imgs {
+  width: 420px;
+  height: 350px;
+  border-radius: 5px;
+}
+
+#likebox {
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: flex;
+  position: relative;
+}
+
+#likeImage {
+  width: 30px;
+  height: 30px;
+  top: 10%;
+  left: 5%;
+  position: absolute;
+}
+
+#jjim {
+  text-align: center;
+  line-height: 40px;
+  position: absolute;
+  top: 0%;
+  left: 45%;
+}
+
+#topbox2 {
+  width: 55%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbox2c {
+  height: 25%;
+  border: 1px solid black;
+}
+
+#title {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  height: 15%;
+}
+
+#titleFont {
+  margin-top: 1%;
+  margin-left: 1%;
+  width: 80%;
+  font-size: 18px;
+  font-weight: bold;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow: auto;
+}
+
+#sirenimg {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 6%;
+  right: 5%;
+}
+
+#sirenfont {
+  font-size: 10px;
+  color: #838383;
+  position: absolute;
+  top: 14%;
+  right: 10%;
+}
+
+#seller {
+  height: 15%;
+  display: flex;
+  flex-direction: column;
+}
+
+#sellerBox {
+  border: 1px solid black;
+  height: 50%;
+  display: flex;
+  flex-direction: row;
+  font-size: 15px;
+}
+
+#sellerfont {
+  margin-top: 1%;
+  margin-left: 1%;
+}
+
+#sellerNic {
+  margin: 20px;
+}
+
+#disBox {
+  margin-top: 0.3%;
+
+  width: 35%;
+  background-color: #ed5565;
+  border-radius: 5px;
+  color: white;
+  font-weight: lighter;
+  font-size: small;
+  text-align: center;
+  line-height: 25px;
+}
+
+#dis {
+  display: inline-block;
+  padding-left: 3%;
+  padding-right: 3%;
+  font-size: medium;
+  font-weight: bold;
+}
+
+#addrBox {
+  font-size: 15px;
+  display: flex;
+}
+
+#addrfont {
+  width: 30%;
+  margin-top: 1%;
+  margin-left: 1%;
+}
+
+#addrBox > span {
+  font-size: 10px;
+  line-height: 30px;
+
+  color: #838383;
+}
+
+#dong {
+  margin-left: 4%;
+}
+
+#contentbox {
+  color: #838383;
+  height: 45%;
+  border-radius: 5px;
+  font-size: 10px;
+  padding: 1%;
+}
+
+#content {
+  color: black;
+  padding: 1%;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+#priceAndTimeFont {
+  margin-top: 1%;
+  height: auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#priceAndTimeFont > span {
+  color: #838383;
+  margin-right: 3%;
+  font-size: 10px;
+}
+
+#priceAndTime {
+  height: auto;
+  display: flex;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  justify-content: space-evenly;
+}
+
+#priceVal {
+  width: 50%;
+  text-align: center;
+  display: block;
+  font-weight: bold;
+  font-size: 25px;
+  padding-left: 4%;
+}
+
+#timeVal {
+  width: 50%;
+  text-align: center;
+  display: block;
+  color: #db0000;
+  font-weight: bold;
+  font-size: 25px;
+  padding-right: 10%;
+}
+
+#topbox2footer {
+  height: auto;
+
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#topbox2footer > div {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+}
+
+#topbox2footer > div > img {
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+#person {
+  padding-left: 12%;
+}
+
+#jjimp {
+  padding-left: 5%;
+}
+
+#jjimp > .footerFont {
+  padding-right: 5px;
+  text-align: left;
+}
+
+#mid {
+  margin-top: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
+  min-height: 150px;
+  border: 1px solid black;
+}
+
+#bottom {
+  margin-bottom: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 1%;
+  min-height: 80px;
+  border: 1px solid black;
+}
+
+/* 슬라이드*/
+ #imagewrap {
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #slideList {
+      position: absolute;
+      left: 0;
+      top: 0;
+
+    }
+
+    #slideList>.imgs {
+
+      float: left;
+
+    }
+
+    #slideList.active {
+      transition: 0.3s ease-out;
+    }
+
+    .direc {
+      position: absolute;
+      z-index: 1;
+    }

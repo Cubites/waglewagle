@@ -17,7 +17,7 @@ $(function () {
   //rejectValue 출력용
   (function () {
     var p = $('#price').val();
-   	console.log(p);
+  
      if (p !== '' && p !== null && p !== undefined) {
       changePrice();
     }

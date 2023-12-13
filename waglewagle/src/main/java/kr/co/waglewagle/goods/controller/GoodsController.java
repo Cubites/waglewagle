@@ -2,12 +2,14 @@ package kr.co.waglewagle.goods.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -36,6 +38,15 @@ public class GoodsController {
 		public String goForm(GoodsFormVO vo) {
 			return "goods/regist";
 		}
+		
+		//상품 등록 후 상품 상세화면으로 이동
+		@GetMapping("/goods/{goods_id}")
+		public String showGoods(@PathVariable(name = "goods_id") Integer goodsId,Model model) {
+			GoodsVO goods = service.getGoods(goodsId);
+			model.addAttribute("goods",goods);
+			return "goods/goodsDetail";
+		}
+		
 		
 		@PostMapping("/goods/regist")
 		public String regist(@Validated GoodsFormVO vo, BindingResult br, 
@@ -78,10 +89,13 @@ public class GoodsController {
 			//이미지 파일들을 DB에 저장하기 위해선 상품id와 사진 경로가 필요함!
 			int resultOfImageRegist = service.registImages(vo.getGoods_id(),list);
 		
-			
-			
-			return "home";
+			model.addAttribute("goodsId", vo.getGoods_id());
+			//post로 설정해둬서 뒤로가기하면 다시 같은 상품이 등록 될 수 있어서 막기 위해 경우 페이지 지정
+			return "goods/showGoods";
 		}
+		
+	
+		
 
 		private GoodsVO convertGoodsFormToGoods(GoodsFormVO vo, UsersVO loginUserId) {
 			GoodsVO goods = new GoodsVO();
@@ -104,7 +118,16 @@ public class GoodsController {
 			
 			return null;
 		}
-
+		
+		@GetMapping("goods/showTest")
+		public String testDetail(Model model) {
+			model.addAttribute("goods",service.getGoods(25));
+			model.addAttribute("images",service.getImages(25));
+			
+			log.info("goods = {}",model.getAttribute("goods"));
+			log.info("images = {}",model.getAttribute("images"));
+			return "goods/goodsDetail";
+		}
 		
 		
 		
