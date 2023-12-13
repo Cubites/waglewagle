@@ -63,4 +63,7 @@
 	<select id="selectImagesById" parameterType="Integer" resultType="kr.co.waglewagle.domain.ImagesVO">
 		SELECT * FROM images WHERE goods_id = #{goodsId}
 	</select>
+	<select id="countFavorsByGoodsId" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM favors WHERE goods_id = #{goods_id}
+	</select>
 </mapper>

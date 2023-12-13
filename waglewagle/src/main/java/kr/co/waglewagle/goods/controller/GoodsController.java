@@ -2,7 +2,6 @@ package kr.co.waglewagle.goods.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.co.waglewagle.bids.service.BidsService;
 import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.goods.service.GoodsService;
@@ -31,7 +31,9 @@ public class GoodsController {
 	
      	//생성자주입 - file 저장을 돕는 객체
 		private final FileStore fileStore;
-		private final GoodsService service;
+		private final GoodsService goodsService;
+		private final BidsService bidsService;
+		
 		
 		//상품 등록 form으로 이동
 		@GetMapping("/goods/regist")
@@ -42,7 +44,7 @@ public class GoodsController {
 		//상품 등록 후 상품 상세화면으로 이동
 		@GetMapping("/goods/{goods_id}")
 		public String showGoods(@PathVariable(name = "goods_id") Integer goodsId,Model model) {
-			GoodsVO goods = service.getGoods(goodsId);
+			GoodsVO goods = goodsService.getGoods(goodsId);
 			model.addAttribute("goods",goods);
 			return "goods/goodsDetail";
 		}
@@ -85,9 +87,9 @@ public class GoodsController {
 			//추후 컨버터로 등록할 것 -> 현재 Form - service 올바르지 못하다! 단,date -> Timestamp로 고쳐야함
 			//GoodsVO registedGoodsVO = convertGoodsFormToGoods(vo,LoginUserId);
 			
-			int resultOfGoodsRegist = service.registGoods(vo); 
+			int resultOfGoodsRegist = goodsService.registGoods(vo); 
 			//이미지 파일들을 DB에 저장하기 위해선 상품id와 사진 경로가 필요함!
-			int resultOfImageRegist = service.registImages(vo.getGoods_id(),list);
+			int resultOfImageRegist = goodsService.registImages(vo.getGoods_id(),list);
 		
 			model.addAttribute("goodsId", vo.getGoods_id());
 			//post로 설정해둬서 뒤로가기하면 다시 같은 상품이 등록 될 수 있어서 막기 위해 경우 페이지 지정
@@ -121,11 +123,17 @@ public class GoodsController {
 		
 		@GetMapping("goods/showTest")
 		public String testDetail(Model model) {
-			model.addAttribute("goods",service.getGoods(25));
-			model.addAttribute("images",service.getImages(25));
+			model.addAttribute("goods",goodsService.getGoods(25));
+			model.addAttribute("images",goodsService.getImages(25));
+			model.addAttribute("favorsCnt",goodsService.getFavorsCnt(25));
+			model.addAttribute("bidsCnt",bidsService.getBidsCnt(25));
+			//찜인원 가져오기 (임의 GoodsId 집어넣음 실제로는 path에서 받아와야함
 			
+			
+			//경매 참여 인원가져오기 bids에서 호가 한 인원 가져오기 
 			log.info("goods = {}",model.getAttribute("goods"));
 			log.info("images = {}",model.getAttribute("images"));
+			
 			return "goods/goodsDetail";
 		}
 		

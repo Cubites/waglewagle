@@ -24,10 +24,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Configuration
 @ComponentScan(basePackages = "kr.co.waglewagle")
 @EnableWebMvc
 @MapperScan(basePackages = "kr.co.waglewagle", annotationClass = Mapper.class)
+@Slf4j
 public class WebConfig implements WebMvcConfigurer {
 
 	@Value("${db.driver}")
@@ -49,6 +52,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
+		
 		InternalResourceViewResolver rs = new InternalResourceViewResolver();
 		rs.setPrefix("/WEB-INF/views/");
 		rs.setSuffix(".jsp");
@@ -113,6 +117,7 @@ public class WebConfig implements WebMvcConfigurer {
 		public MessageSource messageSource() {
 			final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 			
+			log.info("hi ");
 			
 			messageSource.setBasename("/errorMessage/error");
 			

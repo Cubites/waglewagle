@@ -25,6 +25,7 @@
 		 $("#likebox").click(function () {
 		        if (window.userlike === false) {
 		          $("#likeImage").attr("src", "/resources/images/goods/favorite.jpg");
+		          
 		        } else {
 		          $("#likeImage").attr("src", "/resources/images/goods/favorite_border.jpg");
 		        }
@@ -33,7 +34,7 @@
 	})
 	function displayDong(){
 		let jibun = "${goods.goods_address}".split(" ");
-		console.log(jibun);
+		
 		let dong = jibun[jibun.length-2];
 		
 		dong = dong.charAt(dong.length-1) !== '리' ? dong: jibun[jibun.length-3];	
@@ -143,14 +144,14 @@
             </div>
             <div class="topbox2c" id="topbox2footer">
               <div id="person">
-                <span class="footerFont">현재 경재 참여 인원</span>
+                <span class="footerFont">현재 경매 참여 인원</span>
                 <img id="personimg" src="/resources/images/goods/person.png" alt="">
-                <span id="personcnt">20</span>
+                <span id="personcnt">${bidsCnt}</span>
               </div>
               <div id="jjimp">
                 <span class="footerFont">이 상품을 찜한 사람</span>
                 <img src="/resources/images/goods/favorite.jpg">
-                <span id="jjimcnt">10</span>
+                <span id="jjimcnt">${favorsCnt}</span>
               </div>
             </div>
           </div>

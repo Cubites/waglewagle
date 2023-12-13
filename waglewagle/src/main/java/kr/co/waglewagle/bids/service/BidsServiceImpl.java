@@ -11,4 +11,10 @@ public class BidsServiceImpl implements BidsService {
 	@Autowired
 	private BidsMapper mapper;
 
+	@Override
+	public Integer getBidsCnt(int goodsId) {
+		 Integer bidsCnt = mapper.countBidsByGoodsId(goodsId);
+		return bidsCnt;
+	}
+
 }

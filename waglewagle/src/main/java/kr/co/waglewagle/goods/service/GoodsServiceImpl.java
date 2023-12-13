@@ -24,6 +24,7 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	@Autowired
 	private GoodsMapper mapper;
+	
 
 	@Override
 	public List<CategoryVO> allCategory() {
@@ -68,6 +69,15 @@ public class GoodsServiceImpl implements GoodsService {
 		List<ImagesVO> imageList = mapper.selectImagesById(goodsId);
 		return imageList;
 	}
+
+	@Override
+	public Integer getFavorsCnt(int goodsId) {
+		// TODO Auto-generated method stub
+		Integer favorCnt = mapper.countFavorsByGoodsId(goodsId); 
+		return favorCnt;
+	}
+
+	
 
 	
 	

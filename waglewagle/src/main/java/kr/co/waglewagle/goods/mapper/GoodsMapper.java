@@ -18,4 +18,6 @@ public interface GoodsMapper {
 	Integer insertImages(Map map);
 	GoodsVO selectGoodsById(Integer goodsId);
 	List<ImagesVO> selectImagesById(Integer goodsId);
+	Integer countFavorsByGoodsId(int goodsId);
+	
 }
