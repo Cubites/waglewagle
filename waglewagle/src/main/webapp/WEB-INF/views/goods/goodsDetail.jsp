@@ -13,10 +13,10 @@
 
 	<script>
 	//유저의 찜상태 체크
-	var userlike = "${userFavor}";
+	var userlike = "${userFavor}" === 'true';
 	var expDate = "${goods.goods_exp}";
 	$(function(){
-		
+		console.log(window.userlike);
 		setInterval(()=>{
 			displayRemainingTime()*1000;
 		},1000);
