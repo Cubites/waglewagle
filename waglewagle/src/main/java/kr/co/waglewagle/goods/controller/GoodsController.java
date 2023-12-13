@@ -19,6 +19,7 @@ import kr.co.waglewagle.goods.service.GoodsService;
 import kr.co.waglewagle.goods.won.FileStore;
 import kr.co.waglewagle.goods.won.GoodsFormVO;
 import kr.co.waglewagle.goods.won.UploadImage;
+import kr.co.waglewagle.users.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +34,7 @@ public class GoodsController {
 		private final FileStore fileStore;
 		private final GoodsService goodsService;
 		private final BidsService bidsService;
+		private final UsersService usersService;
 		
 		
 		//상품 등록 form으로 이동
@@ -128,7 +130,8 @@ public class GoodsController {
 			model.addAttribute("favorsCnt",goodsService.getFavorsCnt(25));
 			model.addAttribute("bidsCnt",bidsService.getBidsCnt(25));
 			
-			model.addAttribute("userFavor",goodsService.isFavoritGoods(120, 25));
+			model.addAttribute("userFavor",goodsService.isFavoritGoods(1000, 25));
+			//usersService.getUsersRelationShip()
 			log.info("model {}",model);
 			//찜인원 가져오기 (임의 GoodsId 집어넣음 실제로는 path에서 받아와야함
 			

@@ -228,16 +228,20 @@ $(function () {
 function searchAddr() {
   new daum.Postcode({
     oncomplete: function (data) {
-   	  var roadAddr = data.roadAddress; 
-      var jibunAddress = data.jibunAddress;
-      jibunAddress = jibunAddress === '' ? data.autoJibunAddress : jibunAddress; 
       
-      //지번 수정 12-13
-      var jibunArr = jibunAddress.split(' ');
-      var dong = jibunArr[jibunArr.length - 2];
-      dong = dong.charAt(dong.length-1) !== '리' ? dong: jibunArr[jibunArr.length - 3];
+   	  var guso =data.sido+" "+data.sigungu+" ";
+      
+      if(data.bname1 == ""){
+      	guso +=data.bname;
+      }else{
+      	guso +=data.bname1;
+      }
+      
+      
+      dong = guso.substring(guso.lastIndexOf(" "));
+     
 			
-      $('#fullJibun').val(jibunAddress);
+      $('#fullJibun').val(guso);
       $('#addrDong').val(dong);
     },
   }).open();

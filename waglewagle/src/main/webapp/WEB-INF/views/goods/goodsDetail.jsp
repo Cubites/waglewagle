@@ -37,9 +37,8 @@
 	function displayDong(){
 		let jibun = "${goods.goods_address}".split(" ");
 		
-		let dong = jibun[jibun.length-2];
-		
-		dong = dong.charAt(dong.length-1) !== '리' ? dong: jibun[jibun.length-3];	
+		let dong = jibun[jibun.length-1];
+			
 		$("#dong").text(dong);
 		
 	}
