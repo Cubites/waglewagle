@@ -15,7 +15,11 @@
 	var userlike = false;
 	var expDate = "${goods.goods_exp}";
 	$(function(){
-		displayRemainingTime();
+		
+		setInterval(()=>{
+			displayRemainingTime()*1000;
+		},1000);
+		
 		displayPrice();
 		displayDong();
 		 $("#likebox").click(function () {
@@ -43,6 +47,7 @@
 		$("#priceVal").text(price);
 		
 	}
+	
 	function displayRemainingTime(){
 		
 		//1일 05시간 30분
@@ -61,11 +66,11 @@
 		const minutes = ("0"+Math.floor(timeRemain %(1000*60*60)/(1000*60))).slice(-2);
 		const seconds = Math.floor(timeRemain %(1000*60)/1000);
 		
-		console.log(seconds);
+		
 		
 		$("#timeVal").text(days+"일 "+hours+"시간 "+minutes+"분" );
 		
-		//setInterval(()=>{displayRemainingTime()},6000);
+		
 	}
 	
 	</script>
