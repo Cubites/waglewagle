@@ -86,7 +86,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public static PropertyPlaceholderConfigurer property() {
 		PropertyPlaceholderConfigurer pro = new PropertyPlaceholderConfigurer();
-		pro.setLocation(new ClassPathResource("db.properties"));
+		pro.setLocations(new ClassPathResource("db.properties"), new ClassPathResource("mail.properties"));
 		return pro;
 	}
 

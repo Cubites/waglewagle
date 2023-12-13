@@ -8,17 +8,22 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MailService{
-
+	
 	private final JavaMailSender mailSender;
+	
 	//인증번호
 	private String authNum;
 	
@@ -78,6 +83,8 @@ public class MailService{
 		
 		MimeMessage message = createMessage(to);
 		try {
+			log.info("mailesender {}",mailSender);
+			log.info("mailesender {}",mailSender.toString());
 			mailSender.send(message);
 		} catch(MailException e) {
 			e.printStackTrace();

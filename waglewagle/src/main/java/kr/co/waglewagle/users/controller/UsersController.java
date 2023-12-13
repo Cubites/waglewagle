@@ -19,7 +19,11 @@ public class UsersController {
 	
 	@Autowired
 	private UsersService service;
+	@Autowired
+	private MailService ms;
 	
+	//MailConfig mailConfig = new MailConfig();
+	//MailService ms = new MailService(mailConfig.javaMailSender());
 	
 	// 테스트용 세션 추가
 	@GetMapping("/add/session")
@@ -52,9 +56,6 @@ public class UsersController {
 		return String.valueOf(service.isEmailDup(users_email));
 	}
 	
-	
-	MailConfig mailConfig = new MailConfig();
-	MailService ms = new MailService(mailConfig.javaMailSender());
 
 	@ResponseBody
 	@GetMapping("/sendAuthNum")
