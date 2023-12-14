@@ -14,10 +14,81 @@
 		FROM users WHERE users_id=#{users_id}
 	</select>
 	
-	<select id="allCategory" resultType="kr.co.waglewagle.domain.CategoryVO">
+	<select id="checkPoint" resultType="kr.co.waglewagle.domain.PointVO" parameterType="Integer">
+		SELECT
+			point_usable
+			, point_total
+		FROM point
+		WHERE users_id=#{users_id}
+	</select>
+	
+	<select id="countAuctions" resultType="java.util.Map" parameterType="Integer">
 		SELECT 
-			category_id, category_upper_id, category_name 
-		FROM category 
-		ORDER BY category_id ASC
+			auctions_count
+			, auctions_ing_count
+			, auctions_end_count
+			, auctions_break_count
+			, auctions_fail_count
+			, auctions_count + auctions_ing_count + auctions_end_count + auctions_break_count + auctions_fail_count AS auctions_total_count
+		FROM (
+			SELECT 
+				(SELECT COUNT(*) FROM goods WHERE goods_exp > NOW() AND users_id = #{users_id}) AS auctions_count
+				, (SELECT COUNT(*) FROM auctions_ing WHERE users_id = #{users_id}) AS auctions_ing_count
+				, (SELECT COUNT(*) FROM auctions_end WHERE users_id = #{users_id}) AS auctions_end_count
+				, (SELECT COUNT(*) FROM auctions_break WHERE users_id = #{users_id}) AS auctions_break_count
+				, (SELECT COUNT(*) FROM auctions_fail WHERE users_id = #{users_id}) AS auctions_fail_count
+			FROM users
+			WHERE users_id = #{users_id}
+		) cn;
+	</select>
+	
+	<select id="checkAuctions" resultType="kr.co.waglewagle.util.hcju.SomeoneAuctionsVO" parameterType="java.util.Map">
+		SELECT 
+			goods_id, goods_title, goods_comment, goods_start_price, users_id, goods_exp, post_date, goods_th_img, bids_price 
+		FROM (
+			SELECT 
+				goods_id 
+				, goods_title 
+				, goods_comment 
+				, goods_start_price 
+				, users_id 
+				, goods_exp
+				, goods_date AS post_date
+				, goods_th_img 
+				, null AS bids_price
+			FROM goods gs
+			WHERE gs.goods_exp > NOW() AND users_id = #{users_id}
+			UNION 
+			SELECT
+				gs2.goods_id 
+				, gs2.goods_title 
+				, gs2.goods_comment 
+				, gs2.goods_start_price 
+				, gs2.users_id 
+				, gs2.goods_exp 
+				, bs.bids_date AS post_date
+				, gs2.goods_th_img 
+				, bs.bids_price
+			FROM goods gs2
+			JOIN (
+				SELECT 
+					bd.users_id AS users_id
+					, bd.goods_id AS goods_id
+					, bd.bids_price AS bids_price
+					, bd.bids_date AS bids_date
+				FROM bids bd
+				JOIN (
+					SELECT
+						users_id
+						, goods_id
+						, MAX(bids_price) AS bids_price
+					FROM bids 
+					WHERE users_id = #{users_id}
+					GROUP BY users_id, goods_id
+				) mbd ON bd.users_id = mbd.users_id AND bd.goods_id = mbd.goods_id AND bd.bids_price = mbd.bids_price
+			) bs ON bs.goods_id = gs2.goods_id
+			ORDER BY post_date desc
+		) al
+		LIMIT #{start_page}, 5
 	</select>
 </mapper>

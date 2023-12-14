@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -35,6 +37,9 @@ public class WebConfig implements WebMvcConfigurer {
 	private String username;
 	@Value("${db.userpassword}")
 	private String userpassword;
+	
+	@Autowired
+	MypageInterceptor mypageInterceptor;
 
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
@@ -88,6 +93,12 @@ public class WebConfig implements WebMvcConfigurer {
 		PropertyPlaceholderConfigurer pro = new PropertyPlaceholderConfigurer();
 		pro.setLocation(new ClassPathResource("db.properties"));
 		return pro;
+	}
+
+	// Mypage 공통 작업 인터셉터
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns();
 	}
 
 }
