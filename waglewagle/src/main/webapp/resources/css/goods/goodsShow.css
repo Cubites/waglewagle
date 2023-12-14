@@ -6,6 +6,8 @@
 
   flex-direction: column;
   justify-content: space-evenly;
+  padding-left:10%;
+  padding-right:10%;
 }
 
 #top {
@@ -49,8 +51,10 @@
 }
 
 .imgs {
+	/*
   width: 420px;
   height: 350px;
+  */
   border-radius: 5px;
 }
 

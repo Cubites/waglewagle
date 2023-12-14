@@ -17,6 +17,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -32,7 +33,9 @@ import lombok.extern.slf4j.Slf4j;
 @MapperScan(basePackages = "kr.co.waglewagle", annotationClass = Mapper.class)
 @Slf4j
 public class WebConfig implements WebMvcConfigurer {
-
+	
+	
+	
 	@Value("${db.driver}")
 	private String driver;
 	@Value("${db.url}")

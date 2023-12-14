@@ -16,7 +16,7 @@
 	var userlike = "${userFavor}" === 'true';
 	var expDate = "${goods.goods_exp}";
 	$(function(){
-		console.log(window.userlike);
+		
 		setInterval(()=>{
 			displayRemainingTime()*1000;
 		},1000);
