@@ -14,4 +14,5 @@ public interface UsersMapper {
 	int join(UsersVO vo);
 	int isEmailDup(String users_email);
 	int isNickDup(String users_nick);
+	UsersVO login(UsersVO vo);
 }
