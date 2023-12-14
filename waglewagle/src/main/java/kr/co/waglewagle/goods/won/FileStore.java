@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FileStore {
 	
-	@Value("${file_dir}")
+	@Value("${file.dir}")
 	private String fileDir;
 	
 	

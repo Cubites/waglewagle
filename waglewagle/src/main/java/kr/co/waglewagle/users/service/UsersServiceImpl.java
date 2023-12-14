@@ -3,6 +3,7 @@ package kr.co.waglewagle.users.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.waglewagle.domain.CategoryVO;
@@ -27,6 +28,14 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Override
 	public boolean join(UsersVO vo) {
+		String pwd = vo.getUsers_pwd();
+		
+		//암호화
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encodedPwd = encoder.encode(pwd);
+		
+		vo.setUsers_pwd(encodedPwd);
+		
 		return mapper.join(vo) > 0 ? true : false;
 	}
 	
@@ -40,4 +49,9 @@ public class UsersServiceImpl implements UsersService {
 		return mapper.isNickDup(users_nick) > 0 ? true : false;
 	}
 
+	
+	@Override
+	public UsersVO login(UsersVO vo) {
+		return mapper.login(vo);
+	}
 }

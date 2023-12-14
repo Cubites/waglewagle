@@ -11,4 +11,5 @@ public interface UsersService {
 	boolean join(UsersVO vo);
 	boolean isEmailDup(String users_email);
 	boolean isNickDup(String users_nick);
+	UsersVO login(UsersVO vo);
 }

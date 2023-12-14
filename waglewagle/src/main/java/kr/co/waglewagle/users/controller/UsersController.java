@@ -3,6 +3,7 @@ package kr.co.waglewagle.users.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,7 +43,7 @@ public class UsersController {
 	@PostMapping("/join")
 	public String joinProcess(UsersVO vo) {
 		boolean r = service.join(vo);
-		return "redirect:/login";
+		return "redirect:users/login";
 	}
 	
 	@GetMapping("/login")
@@ -50,15 +51,39 @@ public class UsersController {
 		return "users/login";
 	}
 	
+	@PostMapping("/login")
+	public String login(HttpSession session, UsersVO vo) {
+		//db에 있는 정보
+		UsersVO login = service.login(vo);
+		boolean isValid = false;
+		
+		if(login == null) {
+			System.out.println("회원정보없음");
+		}else {
+			System.out.println("회원정보있음");
+			isValid = BCrypt.checkpw(vo.getUsers_pwd(), login.getUsers_pwd()); 
+		}
+		
+		
+		if(isValid) {
+			System.out.println("비번맞음");
+			session.setAttribute("users_info", login);
+			return "redirect:/index";
+		}else {
+			System.out.println("비번틀림");
+			return "redirect:/login";
+		}
+	}
+	
 	@ResponseBody
-	@GetMapping("/emailCheck")
-	public String emailCheck(String users_email) {
+	@GetMapping("/emaildup")
+	public String emailDupCheck(String users_email) {
 		return String.valueOf(service.isEmailDup(users_email));
 	}
 	
 
 	@ResponseBody
-	@GetMapping("/sendAuthNum")
+	@PostMapping("/send_authnum")
 	public String sendAuthNum(HttpSession session, String users_email) {
 		try {
 			String authNum = ms.sendSimpleMessage(users_email);
@@ -71,7 +96,7 @@ public class UsersController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/checkAuthNum")
+	@PostMapping("/check_authnum")
 	public String checkAuthNum(HttpSession session, String validNum){
 		String authNum = (String)session.getAttribute("authNum");
 
@@ -79,10 +104,11 @@ public class UsersController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/nickCheck")
+	@GetMapping("/nickcheck")
 	public String nickCheck(String users_nick) {
 		return String.valueOf(service.isNickDup(users_nick));
 	}
+	
 	
 	
 }
