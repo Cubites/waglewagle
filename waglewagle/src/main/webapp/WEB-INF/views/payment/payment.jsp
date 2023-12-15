@@ -51,10 +51,31 @@
 			    amount : $('#amount_input').val(),
 			    buyer_name : '구매자'
 			  }, function (rsp) { // callback
-				  	console.log(rsp);
+				  	console.log('->>', rsp);
 				    if (rsp.success) {
-				      var msg = '결제가 완료되었습니다.';
-				      alert(msg);
+				    	$.ajax({
+				    		type: "post",
+				    		async: true,
+				    		url: "/payment",
+				    		dataType: "text",
+				    		data: {
+				    			// 추후에 session에서 user_id 갖고 오는 걸로 수정하기
+				    			user_id: 3,
+				    			paylog_cash: rsp.paid_amount,
+				    			paylog_type: rsp.pay_method
+				    		},
+				    		success: function(data, textStatus) {
+						      	if (data!=="") {
+						      		alert('결제가 완료되었습니다.');
+							      	location.href = data;
+						      	} else {
+						      	    alert("결제 완료에 실패하였습니다.");
+						      	}
+				    		},
+				    		error: function(data, textStatus) {
+				    			alert("결제 완료에 실패하였습니다.")
+				    		}
+				    	})
 				    } else {
 				      var msg = '결제에 실패하였습니다.';
 				      msg += '에러내용 : ' + rsp.error_msg;
