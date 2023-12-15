@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.waglewagle.domain.CategoryVO;
+import kr.co.waglewagle.domain.PointVO;
 import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.users.mapper.UsersMapper;
 
@@ -23,6 +24,12 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public List<CategoryVO> allCategory() {
 		return mapper.allCategory();
+	}
+
+	@Override
+	public PointVO getPoint(Integer users_id) {
+		PointVO userPoint = mapper.selectPointByUsersId(users_id);
+		return userPoint;
 	}
 
 }

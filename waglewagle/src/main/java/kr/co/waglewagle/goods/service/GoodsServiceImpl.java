@@ -92,6 +92,20 @@ public class GoodsServiceImpl implements GoodsService {
 	   
 	}
 
+	@Override
+	public Integer addGoodsFavor(Integer users_id, Integer goods_id,boolean status) {
+		Map<String, Integer> favorMap = new ConcurrentHashMap<>();
+		favorMap.put("usersId",users_id);
+		favorMap.put("goodsId", goods_id);
+		
+		if(status) { //true면 favor 넣기
+			return mapper.insertFavor(favorMap);
+		}
+		//false면 favor빼기
+		return mapper.deleteFavor(favorMap);
+		
+	}
+
 	
 
 	

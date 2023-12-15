@@ -124,13 +124,19 @@ public class GoodsController {
 		}
 		
 		@GetMapping("goods/showTest")
-		public String testDetail(Model model, @SessionAttribute(name = "loginUser",required = false) UsersVO LoginUserId) {
+		public String testDetail(Model model, @SessionAttribute(name = "users_info",required = false) UsersVO loginUser) {
+			//굿즈아이디
 			model.addAttribute("goods",goodsService.getGoods(25));
+			//이미지 가져오기 
 			model.addAttribute("images",goodsService.getImages(25));
+			//찜수 가져오기 
 			model.addAttribute("favorsCnt",goodsService.getFavorsCnt(25));
+			//경매 참여인원 가져오기
 			model.addAttribute("bidsCnt",bidsService.getBidsCnt(25));
-			
-			model.addAttribute("userFavor",goodsService.isFavoritGoods(1000, 25));
+			//유저 point가져오기
+			model.addAttribute("usersPoint",usersService.getPoint(loginUser.getUsers_id()));
+			//유저 favor 가져오기 -> 추후에 합칠 수 있으면 합치자..! 
+			model.addAttribute("userFavor",goodsService.isFavoritGoods(loginUser.getUsers_id(), 25));
 			//usersService.getUsersRelationShip()
 			log.info("model {}",model);
 			//찜인원 가져오기 (임의 GoodsId 집어넣음 실제로는 path에서 받아와야함

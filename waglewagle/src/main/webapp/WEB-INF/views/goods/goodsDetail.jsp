@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,8 +22,9 @@
 			displayRemainingTime()*1000;
 		},1000);
 		
-		displayPrice();
+		//displayPrice();
 		displayDong();
+		
 		 $("#likebox").click(function () {
 		        if (window.userlike === false) {
 		          $("#likeImage").attr("src", "/resources/images/goods/favorite.jpg");
@@ -32,6 +34,7 @@
 		          changeFavors(-1);	
 		        }
 		        userlike = !userlike;
+		        storeUserFavor(userlike);
 		      })
 	})
 	function displayDong(){
@@ -42,6 +45,7 @@
 		$("#dong").text(dong);
 		
 	}
+	/*
 	function displayPrice(){
 		let price = $("#priceVal").text()
 		price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -49,6 +53,7 @@
 		$("#priceVal").text(price);
 		
 	}
+	*/
 	
 	function displayRemainingTime(){
 		
@@ -79,6 +84,22 @@
 		let favorsDom = $("#jjimcnt"); 
 		let val = Number(favorsDom.text())+num;
 		favorsDom.text(val);
+	}
+	
+	function storeUserFavor(status){
+		//users_info.users_id;
+		$.ajax({
+			url:"/goods/favor",
+			type: "post",
+			data: {	
+					"goodsId" : "${goods.goods_id}",
+					"status" : userlike
+				},
+			success : function(){
+				
+			}
+			
+		});
 	}
 	</script>
 </head>
@@ -136,11 +157,11 @@
             </div>
             <div class="topbox2c" id="seller">
               <div id="sellerBox">
-                <div id="sellerfont">판매자 : <span id="sellerNic">망고미</span></div>
-                <div id="disBox">와글이와의 거리 "<span id="dis">42</span>"</div>
+                <div id="sellerfont">판매자 : <span id="sellerNic">${users_info.users_nick}</span></div>
+                <div id="disBox">와글이와의 거리 "<span id="dis">${users_info.users_rel}</span>"</div>
               </div>
               <div id="addrBox">
-                <div id="addrfont">거래장소 : <span id="dong">마포구</span></div>
+                <div id="addrfont">거래장소 : <span id="dong"></span></div>
                 <span>(정확한 장소는 입찰 후 공개됩니다.)</span>
               </div>
 
@@ -153,8 +174,8 @@
               <span id="timeoutFont">경매 종료까지 시간</span>
             </div>
             <div class="topbox2c" id="priceAndTime">
-              <span id="priceVal">${goods.goods_start_price}원</span>
-              <span id="timeVal" >1일 05시간 30분</span>
+              <span id="priceVal"><fmt:formatNumber value="${goods.goods_start_price}" pattern="#,###"/>원</span>
+              <span id="timeVal" ></span>
             </div>
             <div class="topbox2c" id="topbox2footer">
               <div id="person">
@@ -180,7 +201,7 @@
               <div id="imgWrap">
                 <img id="coinImg" src="/resources/images/goods/coin.png" alt="">
               </div>
-              <div id="myPoint">44000</div>
+              <div id="myPoint"><fmt:formatNumber value="${usersPoint.point_total}" pattern="#,###"/>원</div>
               <div id="fillText">
                 <span>충전하기</span>
               </div>
@@ -199,7 +220,7 @@
               나의 희망 가격
             </div>
             <div id="bidsPriceCheck">
-              <span>44000</span> 원
+              <span>0</span> 원
             </div>
           </div>
         </div>

@@ -21,4 +21,6 @@ public class UsersController {
 		sess.setAttribute("users_info", service.userInfo(1));
 		return "home";
 	}
+	
+	
 }

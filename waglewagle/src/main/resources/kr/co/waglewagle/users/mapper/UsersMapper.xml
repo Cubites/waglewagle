@@ -20,4 +20,8 @@
 		FROM category 
 		ORDER BY category_id ASC
 	</select>
+	
+	<select id="selectPointByUsersId" parameterType="Integer" resultType="kr.co.waglewagle.domain.PointVO">
+		SELECT * FROM point WHERE users_id = #{usersId}
+	</select>
 </mapper>
