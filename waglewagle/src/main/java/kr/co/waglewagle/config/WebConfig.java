@@ -14,6 +14,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -28,6 +31,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @ComponentScan(basePackages = "kr.co.waglewagle")
 @EnableWebMvc
 @MapperScan(basePackages = "kr.co.waglewagle", annotationClass = Mapper.class)
+@EnableTransactionManagement
 public class WebConfig implements WebMvcConfigurer {
 
 	@Value("${db.driver}")
@@ -89,29 +93,36 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public static PropertyPlaceholderConfigurer property() {
 		PropertyPlaceholderConfigurer pro = new PropertyPlaceholderConfigurer();
-		pro.setLocations(new ClassPathResource("db.properties"),new ClassPathResource("file.properties"), new ClassPathResource("mail.properties"));
+		pro.setLocations(new ClassPathResource("db.properties"), new ClassPathResource("file.properties"),
+				new ClassPathResource("mail.properties"));
 		return pro;
 	}
-	
-	// 파일 업로드를 위한 bean
-		@Bean(name = "multipartResolver")
-		public CommonsMultipartResolver multipartResolver() {
-			CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-			resolver.setMaxUploadSize(2000000);
-			resolver.setDefaultEncoding("UTF-8");
-			return resolver;
-		}
-		
-	//messages를 읽기 위한 Bean
-		@Bean 
-		public MessageSource messageSource() {
-			final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-			
-			
-			messageSource.setBasename("/errorMessage/error");
-			
-			messageSource.setDefaultEncoding("utf-8");
-			return messageSource;
-		}
 
+	// 파일 업로드를 위한 bean
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver multipartResolver() {
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setMaxUploadSize(2000000);
+		resolver.setDefaultEncoding("UTF-8");
+		return resolver;
+	}
+
+	// messages를 읽기 위한 Bean
+	@Bean
+	public MessageSource messageSource() {
+		final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+
+		messageSource.setBasename("/errorMessage/error");
+
+		messageSource.setDefaultEncoding("utf-8");
+		return messageSource;
+	}
+
+	// 트랜잭션 설정
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		DataSourceTransactionManager dtm = new DataSourceTransactionManager();
+		dtm.setDataSource(dataSource());
+		return dtm;
+	}
 }

@@ -11,6 +11,6 @@ public class PaylogVO {
 	private Integer paylog_id;
 	private Integer users_id;
 	private Integer paylog_cash;
-	private Integer paylog_type;
+	private String paylog_type;
 	private Date paylog_date;
 }
