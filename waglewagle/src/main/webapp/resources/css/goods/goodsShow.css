@@ -6,8 +6,8 @@
 
   flex-direction: column;
   justify-content: space-evenly;
-  padding-left:10%;
-  padding-right:10%;
+  padding-left:9%;
+  padding-right:9%;
 }
 
 #top {
@@ -178,15 +178,16 @@
 }
 
 #addrfont {
-  width: 30%;
+  width: 31%;
   margin-top: 1%;
   margin-left: 1%;
+  padding-bottom: 1%;
 }
 
 #addrBox > span {
   font-size: 10px;
   line-height: 30px;
-
+  margin-left:2px
   color: #838383;
 }
 
@@ -332,3 +333,133 @@
       position: absolute;
       z-index: 1;
     }
+    
+    /*mid 추가!*/
+    #mid {
+  border-radius: 5px;
+  border: 2px solid #ffd36e;
+}
+
+#midTextBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 1%;
+  padding-right: 1%;
+  margin-top: 10px;
+}
+.midText {
+  width: auto;
+  font-size: 10px;
+  color: #adadad;
+}
+#myPoints {
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  margin-left: 5%;
+}
+#myPointBox {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+#coinImg {
+  width: 70px;
+  height: 70px;
+}
+#myPoint {
+  padding-top: 1%;
+  text-align: center;
+  line-height: 50px;
+  font-weight: bolder;
+
+  font-size: 40px;
+  margin-left: 5%;
+  margin-right: 6%;
+}
+.myPointBoxChild {
+  margin-top: 1%;
+  padding-top: 0.5%;
+}
+#fillText {
+  margin-top: 2.5%;
+  line-height: 40px;
+  width: 133px;
+  height: 40px;
+  border: 1px solid #db0000;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: #ffd36e;
+  border-style: none;
+  margin-left: 2%;
+}
+#fillText > span {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+#imgWrap {
+  margin-left: 4%;
+  margin-bottom: 10px;
+}
+
+#submitPoint {
+  width: 380px;
+  height: 50px;
+  border: 1px solid black;
+  margin-right: 6%;
+  margin-top: 2%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+#submitPoint > input {
+  padding-top: 0.8%;
+  border: none;
+  font-size: 18px;
+  height: 100%;
+  padding-bottom: 1.5%;
+  margin-left: 5%;
+  font-weight: bold;
+}
+#submitButton {
+  line-height: 30px;
+  margin-right: 5%;
+  height: 30px;
+  width: 90px;
+  margin-top: 1%;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #ff4356;
+  color: #fffefe;
+  font-weight: normal;
+  font-size: 14px;
+}
+    
+    /*12.15추가*/
+#bottom {
+  border-radius: 5px;
+  border: 2px solid #ffd36e;
+}
+#bottom > div {
+  height: 80%;
+  display: flex;
+  justify-content: space-between;
+  line-height: 70px;
+}
+
+#bottom > div > div {
+  width: 50%;
+}
+#bottomFont {
+  padding-left: 10%;
+  font-size: 15px;
+  font-weight: bold;
+}
+#bidsPriceCheck {
+  padding-left: 10%;
+  font-size: 30px;
+  font-weight: bolder;
+}
