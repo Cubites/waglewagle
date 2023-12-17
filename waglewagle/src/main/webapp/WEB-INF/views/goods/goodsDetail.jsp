@@ -18,13 +18,15 @@
 	var expDate = "${goods.goods_exp}";
 	$(function(){
 		
-		setInterval(()=>{
-			displayRemainingTime()*1000;
-		},1000);
-		
-		//displayPrice();
-		displayDong();
-		
+		//숫자만 입력가능 및 콤마로 자동 변환 이벤트
+	      let inputDom = document.querySelector("#submitPoint > input");
+	      inputDom.addEventListener("input", function (e) {
+	        let val = e.target.value.replace(/[^0-9]/g, '');
+	        e.target.value = val.replace(/\d(?=(?:\d{3})+$)/g, '$&,');
+	      });
+	      ////////////////////////////////////////
+	      
+	      //찜버튼 클릭 이벤트
 		 $("#likebox").click(function () {
 		        if (window.userlike === false) {
 		          $("#likeImage").attr("src", "/resources/images/goods/favorite.jpg");
@@ -36,6 +38,25 @@
 		        userlike = !userlike;
 		        storeUserFavor(userlike);
 		      })
+		////////////////////////////////
+	      
+		//잘못 입력에 대한 모달꺼지는 것 정의
+	      $("#basicModal").click(() => {
+	        $("#basicModal").fadeOut();
+	      })
+		////////////////////////////////
+		
+		//시간 계산하는 기능 1초마다 실행되도록 함 
+		setInterval(()=>{
+			displayRemainingTime();
+		},1000);
+		////////////////////////////////
+		
+		//DB에서 읽어온 주소 중 동만 읽어옴 
+		displayDong();
+		///////////////////////////
+		
+		
 	})
 	function displayDong(){
 		let jibun = "${goods.goods_address}".split(" ");
@@ -45,15 +66,7 @@
 		$("#dong").text(dong);
 		
 	}
-	/*
-	function displayPrice(){
-		let price = $("#priceVal").text()
-		price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		
-		$("#priceVal").text(price);
-		
-	}
-	*/
+	
 	
 	function displayRemainingTime(){
 		
@@ -80,12 +93,15 @@
 		
 	}
 	
+	//찜 버튼 관련 
+	//찜버튼 눌렀을 때 좋아유 수 변화를 위해 
 	function changeFavors(num){
 		let favorsDom = $("#jjimcnt"); 
 		let val = Number(favorsDom.text())+num;
 		favorsDom.text(val);
 	}
 	
+	//찜버튼 눌렀을 때 DB에 반영 
 	function storeUserFavor(status){
 		//users_info.users_id;
 		$.ajax({
@@ -101,6 +117,63 @@
 			
 		});
 	}
+	/////////////////////////////////////
+	
+	 //가격 검증 관련 (프론트 검증 물론 입력못하게 막아두긴함)
+    function askingPrice() {
+      let askPriceDom = $("#submitPoint > input");
+      let askPrice = askPriceDom.val();
+      //숫자 검증
+      if (askPriceValidation(askPrice)) {
+        //검증 완료 후 숫자 변환 
+        askPriceComma = askPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        showModal("제출하신 가격은 <span id='priceComma'>" + askPriceComma + "</span>원 입니다.<br>" +
+          "한번 제출한 가격은 취소할 수 없습니다. <br>" +
+          "계속 진행하시겠습니까?", "submit");
+		
+      }
+    }
+    //제출된 가격을 검사하는 함수
+    function askPriceValidation(price) {
+      var num = Number(price);
+      //숫자가 아니거나, 정수가 아닐시
+      if (Number.isNaN(num) || !Number.isInteger(num)) {
+        showModal("제출된 가격을 확인해주세요", "reject");
+        return false;
+      } else if (num < 0) {
+        showModal("0보다 작은 숫자는 입력하실 수 없습니다.", "reject");
+        return false;
+      }
+
+      return true;
+
+    }
+    //텍스트에 대해 모달창 보여주는 함수
+    function showModal(text, command) {
+
+      if (command !== "submit") {
+        let modalContent = $("#basicModal-Content");
+        modalContent.text("잘못된 입력입니다. " + text);
+        $("#basicModal").fadeIn();
+        return false;
+      }
+      let submitModal = $("#submitModalText");
+      submitModal.html(text);
+      $("#submitModal").fadeIn();
+      return true;
+
+    }
+	
+    //모달창에서ok를 누르면!  
+    function isOk(status) {
+      if (status === true) {
+        //ajax보내는 함수 정의
+      }
+
+      $("#submitModal").fadeOut();
+
+    }
+    //모달 관련 함수 끝
 	</script>
 </head>
 
@@ -208,8 +281,8 @@
 
             </div>
             <div id="submitPoint" class="myPointBoxChild">
-              <input type="text" placeholder="희망 가격을 제출해 주세요">
-              <div id="submitButton">제출하기</div>
+              <input type="text" placeholder="희망 가격을 제출해 주세요" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+              <div id="submitButton" onclick="askingPrice()">제출하기</div>
             </div>
 
           </div>
@@ -229,6 +302,25 @@
 		</div>
 	</div>
 	
+	<!-- 모달창 -->
+	 <div id="basicModal" class="modal">
+    <div id="basicModal-Content" class="modal-Content">
+
+    </div>
+  </div>
+
+  <div id="submitModal" class="modal">
+    <div id="submitModal-Content" class="modal-Content">
+      <div id="submitModalText"></div>
+      <div>
+        <div id="modalOk" onclick="isOk(true)"><span class="submitFont">확인</span></div>
+        <div id="modalCancle" onclick="isOk(false)"><span class="submitFont">취소</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- 모달창 끝 -->
+	
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+	
 </body>
 </html>

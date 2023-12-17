@@ -463,3 +463,76 @@
   font-size: 30px;
   font-weight: bolder;
 }
+input:focus {outline:none;}
+
+
+/* 12- 15  오후 추가 모달 관련 css*/
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  min-height:720px;
+  background-color: rgba(0, 0, 0, 0.5);
+  left: 0;
+  top: 30%;
+  display: none;
+}
+
+.modal-Content {
+  border: 1px solid black;
+  width: 400px;
+  height: 200px;
+  background: #fff;
+  border-radius: 10px;
+  position: relative;
+  top: 45%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -200px;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 80px 0;
+  line-height: 23px;
+
+  color: #ed5565;
+  z-index: 20;
+}
+#submitModal {
+  display: flex;
+  flex-direction: column;
+  display: none;
+}
+
+#submitModalText + div {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  height: 100%;
+  line-height: 30px;
+  justify-content: space-evenly;
+}
+
+.submitFont {
+  margin-top: 20px;
+  color: black;
+  font-weight: bold;
+  border-color: 1px;
+  display: inline-block;
+  height: 30px;
+  width: 70px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+#submitModalText {
+  color: #ed5565;
+  font-weight: bold;
+}
+#submitModal-Content {
+  padding: 60px 0;
+}
+#priceComma {
+  color: black;
+  font-weight: bolder;
+  font-size: 20px;
+}
+/* 12- 15  오후 추가 모달 관련 css*/
