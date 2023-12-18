@@ -19,6 +19,4 @@ public class AdminsController {
 //		model.addAttribute("map",service.list(vo));
 		return "admin/adminmanage";
 	}
-	
-	
 }
