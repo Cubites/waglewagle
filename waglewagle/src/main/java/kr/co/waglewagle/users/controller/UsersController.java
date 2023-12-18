@@ -74,7 +74,7 @@ public class UsersController {
 		if(isValid) {
 			System.out.println("비번맞음");
 			session.setAttribute("users_info", login);
-			return "redirect:/index";
+			return "redirect:/main";
 		}else {
 			System.out.println("비번틀림");
 			return "redirect:/login";

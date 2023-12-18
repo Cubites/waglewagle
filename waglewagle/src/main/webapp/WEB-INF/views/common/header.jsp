@@ -11,7 +11,7 @@
 	<div id="header">
 		<div id="headerContainer">
 			<div id="headerTop">
-				<a href="#" id="headerTopLeft">
+				<a href="main" id="headerTopLeft">
 					<img alt="logo" src="/resources/images/logo.png">
 				</a>
 				<div id="headerTopCenter" class="text_center">

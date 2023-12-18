@@ -1,0 +1,206 @@
+*{
+	box-sizing: border-box;
+}
+
+#center{
+	min-height: 1800px;
+	height: 80vh;
+}
+
+#container{
+	display:flex;
+	flex-direction:column;
+	justify-content: center;
+	align-items: center;
+}
+
+.hide{
+	display:none;
+}
+.space-between{
+	display: flex;
+	justify-content: space-between;
+}
+
+#bannerArea{
+	width:100%;
+	height:510px;
+	min-height: 400px;
+	background-image: url("/waglewagle/src/main/webapp/resources/images/bannertest.png");
+}
+
+.swiper-button-prev, .swiper-button-next{
+	color: #CF5C5C;
+}
+.productImg > img{
+	width: 60%;
+}
+
+
+
+.hoverEl > .swiper-slide:hover{
+	
+	box-shadow:2px 4px 4px 2px darkgray;
+	background-color: rgba(0,0,0,0.7);
+}
+
+.leftTime{
+	width:80%;
+	font-size:30px;
+	color: red;
+	border-radius: 25px;
+	font-weight: bold;
+	position:absolute;
+	top:50%;
+	left: 50%;
+    transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+#popularProductsArea{
+	height:500px;
+	width:100%;
+}
+
+
+#popularTitle{
+	height: 10%;
+	font-size: 25px;
+}
+
+#popularProductsArea > .swiper{
+	width:100%;
+	height:75%;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#popularProductsArea > .swiper-wrapper{
+	width:100%;
+	height:100%;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.productImg{
+	height: 30%;
+}
+
+.productTitle{
+	margin-bottom: 20px;
+}
+
+.avgPriceTitle, .expTitle{
+	font-size: 15px;
+	color: #a69c9c;
+}
+.productAvgPrice, .productExp{
+	font-size: 15px;
+	color: #a69c9c;
+}
+
+.productAddr{
+	margin-top:20px;
+	font-size: 15px;
+}
+
+#popularProducts{
+	width:90%;
+	height:100%;
+	display:flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+
+#newRegProductsArea{
+	height:380px;
+	width:100%;
+}
+
+#newRegProductsArea > .swiper{
+	width:100%;
+	height:75%;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.avgPrice_expDateArea{
+	display: flex;
+	justify-content: space-around;
+}
+
+#nearProductsArea{
+	height:380px;
+	width:100%;
+}
+
+#nearProdHeader{
+	display:flex;
+	width: 16%;
+	justify-content:space-between;
+}
+
+#location{
+	display:flex;
+	align-items: center;
+}
+
+#locNameArea{
+	width : 100%;
+	display: flex;
+}
+.locName{
+	font-size:15px;
+	color: #C3C3C3;
+	margin-right: 5px;
+}
+
+#nearProductsArea > .swiper{
+	width:100%;
+	height:75%;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+<!-- swiper -->
+
+.swiper {
+	width: 100%;
+	height: 100%;
+}
+
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	height:98%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 25px;
+}
+
+.relative{
+	position:relative;
+}
+
+.swiper-slide.smallEl{
+	width:13%;
+}
+@media (max-width: 760px) {
+.swiper-button-next {
+	right: 20px;
+	transform: rotate(90deg);
+}
+
+.swiper-button-prev {
+	left: 20px;
+	transform: rotate(90deg);
+}
+
+<!-- swiper -->

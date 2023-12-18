@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.waglewagle.mainpage.mapper.MainpageMapper">
+	<select id="popularList" resultType="kr.co.waglewagle.domain.GoodsVO">
+		SELECT goods.*, COUNT(*) as bids_count 
+		FROM 
+			goods JOIN bids ON goods.goods_id = bids.goods_id
+		WHERE goods.goods_exp > NOW()
+		GROUP BY bids.goods_id
+		ORDER BY bids_count DESC
+		LIMIT 20
+	</select>
+	
+	<select id="newRegList" resultType="kr.co.waglewagle.domain.GoodsVO">
+		SELECT * FROM goods WHERE goods_exp > NOW() ORDER BY goods_date DESC  limit 20
+	</select>
+	
+	<select id="nearList" resultType="kr.co.waglewagle.domain.GoodsVO" parameterType="List">
+		SELECT * FROM goods 
+		<if test="list != null">
+			WHERE goods_address IN
+			<foreach collection="list" item="addr" open="(" separator="," close=")">
+				#{addr}
+			</foreach>
+		</if>
+		<if test="list == null">
+			WHERE goods_address = "서울 마포구 서교동"
+		</if>
+		AND goods_exp > NOW()
+		ORDER BY goods_date DESC limit 20
+	</select>
+</mapper>
