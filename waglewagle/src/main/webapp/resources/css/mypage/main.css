@@ -1,0 +1,38 @@
+/* mypageTop */
+#mypageTop{
+	width: 100%;
+	height: 400px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#mypageTop>#userInfoBox{
+	width: 95%;
+	height: 350px;
+	background-color: #FBEFEF;
+	border-radius: 10px;
+}
+#mypageTop>#userInfoBox>#userInfoLeft{
+	width: 30%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#mypageTop>#userInfoBox>#userInfoLeft>#userBox{
+	width: 90%;
+	height: 90%;
+	background-color: #ffffff;
+	padding: 5% 10%;
+}
+#mypageTop>#userInfoBox>#userInfoLeft>#userBox>#user_name{
+	width: 100%;
+	height: 10%;
+	
+}
+
+/* mypageBottom */
+#mypageBottom{
+	width: 100%;
+	height: 550px;
+}
