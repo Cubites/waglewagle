@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import kr.co.waglewagle.domain.NoticesVO;
 
 @Controller
-public class GoodsController {
+public class GoodsManageController {
 //	@Autowired
 //	private NoticeService service;
 	
