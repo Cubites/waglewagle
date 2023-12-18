@@ -26,7 +26,7 @@
 		INSERT INTO users(
 			users_nick, users_pwd, users_name, users_gender, users_phone, users_email, users_join, users_rel, users_status, users_addr_list
 		) VALUES(
-			#{users_nick}, MD5(#{users_pwd}), #{users_name}, #{users_gender}, #{users_phone}, #{users_email}, NOW(), 42, 0, #{users_addr_list}
+			#{users_nick}, #{users_pwd}, #{users_name}, #{users_gender}, #{users_phone}, #{users_email}, NOW(), 42, 0, #{users_addr_list}
 		)
 	</insert>
 	
@@ -40,4 +40,25 @@
 		SELECT COUNT(*) FROM users WHERE users_nick = #{users_nick}
 	</select>
 	
+	<!-- 로그인 -->
+	<select id="login" parameterType ="kr.co.waglewagle.domain.UsersVO" resultType="kr.co.waglewagle.domain.UsersVO">
+		SELECT * FROM users WHERE users_email = #{users_email}
+	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findId" parameterType="Map" resultType="kr.co.waglewagle.domain.UsersVO">
+		SELECT * FROM users WHERE users_name=#{users_name} AND users_phone=#{users_phone}
+ 	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findPwd" parameterType="Map" resultType="kr.co.waglewagle.domain.UsersVO">
+		SELECT * FROM users WHERE users_name=#{users_name} AND users_email=#{users_email}
+ 	</select>
+ 	
+ 	<!-- 비밀번호 변경 -->
+	<update id="changePwd" parameterType="Map">
+		UPDATE users 
+		SET users_pwd=#{users_pwd}
+		WHERE users_id=#{users_id}
+	</update>
 </mapper>

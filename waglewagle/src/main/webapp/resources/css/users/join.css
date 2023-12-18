@@ -72,6 +72,10 @@
 	cursor: pointer;
 }
 
+.pinkBtn:hover{
+	background-color: #903030;
+}
+
 .flex-end{
 	display: flex;
 	justify-content: flex-end;
@@ -98,6 +102,10 @@ select:focus {
 	cursor: pointer;
 }
 
+#joinBtn:hover{
+	background-color: #903030;
+}
+
 #emailCheckText{
 	visibility:hidden;
 	font-size:10px;
@@ -117,15 +125,20 @@ select:focus {
 	color:#fff;
 	cursor: pointer;
 	
-	font-size:9px;
+	font-size:9.5px;
 	width:70px;
 	height:25px;
 	border-radius: 15px 0px 0px 15px;
 }
 
+#sendNum:hover{
+	background-color: #903030;
+}
+
 #validNum{
 	text-align: center;
 }
+
 
 #validCheck{
 	background-color: #CF5C5C;
@@ -134,10 +147,14 @@ select:focus {
 	cursor: pointer;
 	
 	border-radius: 0px 15px 15px 0px;
-	font-size:9px;
+	font-size:9.5px;
 	width:70px;
 	height:25px;
 	background: #7C7474;
+}
+
+#validCheck:hover{
+	background-color: #504b4a;
 }
 
 #pwd1{
@@ -189,9 +206,14 @@ select:focus {
 	cursor: pointer;
 }
 
+.addDongBtn:hover{
+	background-color: #504b4a;
+}
+
 input:focus {
   outline: none;
 }
+
 
 .formInput{
 	background-color: #ffe8e8;
