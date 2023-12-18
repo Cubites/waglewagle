@@ -100,7 +100,7 @@
 					-->
 				</div>
 				<div id="headerBottomCenter">
-					<a href="#" class="text_center">공지사항</a>
+					<a href="/board/noticelist" class="text_center">공지사항</a>
 					<a href="#" class="text_center">문의하기</a>				
 				</div>
 				<a href="#" id="headerBottomRight">

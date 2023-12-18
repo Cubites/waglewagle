@@ -9,14 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import kr.co.waglewagle.domain.NoticesVO;
 
 @Controller
-public class AdminsController {
+public class statsController {
 //	@Autowired
 //	private NoticeService service;
 	
-	@GetMapping("/admin/adminmanage")
+
+	
+	@GetMapping("/admin/stats")
 	public String index(Model model,NoticesVO vo) {
 		//서비스 호출하고 map return 받을거니까...
 //		model.addAttribute("map",service.list(vo));
-		return "admin/adminmanage";
+		return "admin/stats";
 	}
+	
+	
 }
