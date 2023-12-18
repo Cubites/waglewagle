@@ -4,7 +4,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,7 @@ public class BidsServiceImpl implements BidsService {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor = Exception.class)
 	public boolean askPrice(BidsFormVO vo) throws BidsException {
+		
 		
 		boolean result=true;
 		int insert=0;

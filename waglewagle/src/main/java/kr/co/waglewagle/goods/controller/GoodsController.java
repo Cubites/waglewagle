@@ -45,13 +45,7 @@ public class GoodsController {
 			return "goods/regist";
 		}
 		
-		//상품 등록 후 상품 상세화면으로 이동
-//		@GetMapping("/goods/{goods_id}")
-//		public String showGoods(@PathVariable(name = "goods_id") Integer goodsId,Model model) {
-//			GoodsVO goods = goodsService.getGoods(goodsId);
-//			model.addAttribute("goods",goods);
-//			return "goods/goodsDetail";
-//		}
+		
 		
 		
 		

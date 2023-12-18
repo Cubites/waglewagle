@@ -308,25 +308,25 @@
             <div class="midText">나의 사용 가능 포인트</div>
             <div class="midText">희망 가격을 제출하면 경매에 자동으로 참여됩니다.</div>
           </div>
-          <div id="myPointBox">
-            <div id="myPoints" class="myPointBoxChild">
-              <div id="imgWrap">
-                <img id="coinImg" src="/resources/images/goods/coin.png" alt="">
-              </div>
-              <div id="myPoint"><fmt:formatNumber value="${usersPoint.point_usable}" pattern="#,###"/>원</div>
-              <div id="fillText">
-                <span>충전하기</span>
-              </div>
-
-            </div>
-            <div id="submitPoint" class="myPointBoxChild">
-              <input type="text" placeholder="희망 가격을 제출해 주세요" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-              <div id="submitButton" onclick="askingPriceCheck()">제출하기</div>
-            </div>
-
+         <div id="midPointWrap">
+        
+          <div id="myPoints">
+          	<img id="coin" src="/resources/images/goods/coin.png">
+          	<div id="myPoint"><fmt:formatNumber value="${usersPoint.point_usable}" pattern="#,###"/>원</div>
+          	<div id="fillText"><div>충전하기</div></div>
           </div>
-        </div>
-         <div id="bottom">
+        
+          <div id="submitPoint">
+          		<input type="text" placeholder="희망 가격을 제출해 주세요" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+          		<div id="submitButton" onclick="askingPriceCheck()">제출하기</div>
+          </div>
+          
+          
+          </div>
+          </div>
+           
+			
+			 <div id="bottom">
           <div>
             <div id="bottomFont">
               나의 희망 가격
@@ -334,6 +334,9 @@
             <div id="bidsPriceCheck">
               <span>${maxBids}</span> 원
             </div>
+          </div>
+        </div>
+        
           </div>
         </div>
       </div>
