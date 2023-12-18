@@ -14,10 +14,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -32,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableWebMvc
 @MapperScan(basePackages = "kr.co.waglewagle", annotationClass = Mapper.class)
 @Slf4j
+@EnableTransactionManagement
 public class WebConfig implements WebMvcConfigurer {
 	
 	
@@ -127,5 +130,13 @@ public class WebConfig implements WebMvcConfigurer {
 			messageSource.setDefaultEncoding("utf-8");
 			return messageSource;
 		}
+		//트랜잭션 빈 등록 
+		  @Bean
+		   public PlatformTransactionManager transactionManager() {
+		      DataSourceTransactionManager dtm = new DataSourceTransactionManager();
+		      dtm.setDataSource(dataSource());
+		
+		      return dtm;
+		   }
 
 }

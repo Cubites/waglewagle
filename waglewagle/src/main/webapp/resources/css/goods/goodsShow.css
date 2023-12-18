@@ -474,7 +474,7 @@ input:focus {outline:none;}
   min-height:720px;
   background-color: rgba(0, 0, 0, 0.5);
   left: 0;
-  top: 30%;
+  top: 0;
   display: none;
 }
 

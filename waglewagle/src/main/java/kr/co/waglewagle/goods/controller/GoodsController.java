@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.co.waglewagle.bids.service.BidsService;
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Controller
 @Slf4j
+@RequestMapping("/goods")
 public class GoodsController {
 
 	
@@ -38,21 +40,22 @@ public class GoodsController {
 		
 		
 		//상품 등록 form으로 이동
-		@GetMapping("/goods/regist")
+		@GetMapping("/regist")
 		public String goForm(GoodsFormVO vo) {
 			return "goods/regist";
 		}
 		
 		//상품 등록 후 상품 상세화면으로 이동
-		@GetMapping("/goods/{goods_id}")
-		public String showGoods(@PathVariable(name = "goods_id") Integer goodsId,Model model) {
-			GoodsVO goods = goodsService.getGoods(goodsId);
-			model.addAttribute("goods",goods);
-			return "goods/goodsDetail";
-		}
+//		@GetMapping("/goods/{goods_id}")
+//		public String showGoods(@PathVariable(name = "goods_id") Integer goodsId,Model model) {
+//			GoodsVO goods = goodsService.getGoods(goodsId);
+//			model.addAttribute("goods",goods);
+//			return "goods/goodsDetail";
+//		}
 		
 		
-		@PostMapping("/goods/regist")
+		
+		@PostMapping("/regist")
 		public String regist(@Validated GoodsFormVO vo, BindingResult br, 
 							 Model model,
 							 @SessionAttribute(name = "loginUser",required = false) UsersVO LoginUserId) {
@@ -98,9 +101,41 @@ public class GoodsController {
 			return "goods/showGoods";
 		}
 		
-	
+		//상품 등록 후 상품 상세화면으로 이동
+				@GetMapping("/{goods_id}")
+				public String testDetail(Model model, 
+						@SessionAttribute(name = "users_info",required = false) UsersVO loginUser,
+						@PathVariable("goods_id") Integer goodsId) {
+					
+					// 추후 성능문제 발생시 쿼리 합칠 것 
+				
+					
+					//굿즈아이디
+					model.addAttribute("goods",goodsService.getGoods(goodsId));
+					//이미지 가져오기 
+					model.addAttribute("images",goodsService.getImages(goodsId));
+					//찜수 가져오기 
+					model.addAttribute("favorsCnt",goodsService.getFavorsCnt(goodsId));
+					//경매 참여인원 가져오기
+					model.addAttribute("bidsCnt",bidsService.getBidsCnt(goodsId));
+					//유저 point가져오기
+					model.addAttribute("usersPoint",usersService.getPoint(loginUser.getUsers_id()));
+					//유저 favor 가져오기 -> 추후에 합칠 수 있으면 합치자..! 
+					model.addAttribute("userFavor",goodsService.isFavoritGoods(loginUser.getUsers_id(), goodsId));
+					//usersService.getUsersRelationShip()
+//					log.info("model {}",model);
+//					//찜인원 가져오기 (임의 GoodsId 집어넣음 실제로는 path에서 받아와야함
+//					
+//					
+//					
+//					//경매 참여 인원가져오기 bids에서 호가 한 인원 가져오기 
+//					log.info("goods = {}",model.getAttribute("goods"));
+//					log.info("images = {}",model.getAttribute("images"));
+					
+					return "goods/goodsDetail";
+				}
 		
-
+		//나중에 혹시몰라서 만들어 둔 것
 		private GoodsVO convertGoodsFormToGoods(GoodsFormVO vo, UsersVO loginUserId) {
 			GoodsVO goods = new GoodsVO();
 			
@@ -123,32 +158,6 @@ public class GoodsController {
 			return null;
 		}
 		
-		@GetMapping("goods/showTest")
-		public String testDetail(Model model, @SessionAttribute(name = "users_info",required = false) UsersVO loginUser) {
-			//굿즈아이디
-			model.addAttribute("goods",goodsService.getGoods(25));
-			//이미지 가져오기 
-			model.addAttribute("images",goodsService.getImages(25));
-			//찜수 가져오기 
-			model.addAttribute("favorsCnt",goodsService.getFavorsCnt(25));
-			//경매 참여인원 가져오기
-			model.addAttribute("bidsCnt",bidsService.getBidsCnt(25));
-			//유저 point가져오기
-			model.addAttribute("usersPoint",usersService.getPoint(loginUser.getUsers_id()));
-			//유저 favor 가져오기 -> 추후에 합칠 수 있으면 합치자..! 
-			model.addAttribute("userFavor",goodsService.isFavoritGoods(loginUser.getUsers_id(), 25));
-			//usersService.getUsersRelationShip()
-			log.info("model {}",model);
-			//찜인원 가져오기 (임의 GoodsId 집어넣음 실제로는 path에서 받아와야함
-			
-			
-			
-			//경매 참여 인원가져오기 bids에서 호가 한 인원 가져오기 
-			log.info("goods = {}",model.getAttribute("goods"));
-			log.info("images = {}",model.getAttribute("images"));
-			
-			return "goods/goodsDetail";
-		}
 		
 		
 		

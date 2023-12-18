@@ -120,18 +120,20 @@
 	/////////////////////////////////////
 	
 	 //가격 검증 관련 (프론트 검증 물론 입력못하게 막아두긴함)
-    function askingPrice() {
-      let askPriceDom = $("#submitPoint > input");
-      let askPrice = askPriceDom.val();
-      //숫자 검증
-      if (askPriceValidation(askPrice)) {
-        //검증 완료 후 숫자 변환 
-        askPriceComma = askPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-        showModal("제출하신 가격은 <span id='priceComma'>" + askPriceComma + "</span>원 입니다.<br>" +
-          "한번 제출한 가격은 취소할 수 없습니다. <br>" +
-          "계속 진행하시겠습니까?", "submit");
-		
-      }
+    function askingPriceCheck() {
+    	 let askPriceDom = $("#submitPoint > input");
+         let askPrice = askPriceDom.val();
+         let askPriceNoComma = askPrice.replace(/,/g, "");
+
+         //숫자 검증
+         if (askPriceValidation(askPriceNoComma)) {
+           //검증 완료 후 숫자 변환 
+
+           showModal("제출하신 가격은 <span id='priceComma'>" + askPrice + "</span>원 입니다.<br>" +
+             "한번 제출한 가격은 취소할 수 없습니다. <br>" +
+             "계속 진행하시겠습니까?", "submit");
+
+         }
     }
     //제출된 가격을 검사하는 함수
     function askPriceValidation(price) {
@@ -153,7 +155,7 @@
 
       if (command !== "submit") {
         let modalContent = $("#basicModal-Content");
-        modalContent.text("잘못된 입력입니다. " + text);
+        modalContent.text(text);
         $("#basicModal").fadeIn();
         return false;
       }
@@ -166,14 +168,50 @@
 	
     //모달창에서ok를 누르면!  
     function isOk(status) {
+  
+    
       if (status === true) {
         //ajax보내는 함수 정의
+         askPrice();
       }
 
       $("#submitModal").fadeOut();
 
     }
     //모달 관련 함수 끝
+    
+    
+    function askPrice(){
+    	 let askPriceDom = $("#submitPoint > input");
+    	 let askPrice = askPriceDom.val();
+    	 let askPriceNoComma = askPrice.replace(/,/g, "");
+    	
+    	$.ajax({
+    		url:"/bids/askPrice",
+    		type:"post",
+    		data: {"users_id":"${users_info.users_id}","goods_id":"${goods.goods_id}"
+    			,"bids_price":askPriceNoComma,"point_usable":"${usersPoint.point_usable}"},
+    		contentType:"application/x-www-form-urlencoded;charset=utf-8",
+    		success:function(data){
+    			console.log(data);
+    			showModal(data,"");
+    			setTimeout(() => {
+    				location.reload(true);
+				}, 3000);
+    			
+    			
+    		},
+    		error:function(xhr,error,msg){
+    			showModal(xhr.responseText,"reject");
+    			setTimeout(() => {
+    				location.reload(true);
+				}, 3000);
+    			
+    			
+    		}
+    		
+    	})
+    }
 	</script>
 </head>
 
@@ -274,7 +312,7 @@
               <div id="imgWrap">
                 <img id="coinImg" src="/resources/images/goods/coin.png" alt="">
               </div>
-              <div id="myPoint"><fmt:formatNumber value="${usersPoint.point_total}" pattern="#,###"/>원</div>
+              <div id="myPoint"><fmt:formatNumber value="${usersPoint.point_usable}" pattern="#,###"/>원</div>
               <div id="fillText">
                 <span>충전하기</span>
               </div>
@@ -282,7 +320,7 @@
             </div>
             <div id="submitPoint" class="myPointBoxChild">
               <input type="text" placeholder="희망 가격을 제출해 주세요" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-              <div id="submitButton" onclick="askingPrice()">제출하기</div>
+              <div id="submitButton" onclick="askingPriceCheck()">제출하기</div>
             </div>
 
           </div>
