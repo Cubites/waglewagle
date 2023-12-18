@@ -16,21 +16,20 @@
 
 	<script>
 	
-		//게시물 삭제
-		function noticeDelete(){
-			console.log('?????') //
-			console.log(document.getElementById("notices_id").innerText); //notices_id값 가지고 오고 아래 넣어주기!! (ex.나는 2가 notices_id인줄 알고있지만 모르니까..)
-		    if(confirm("선택한 공지를 정말로 삭제 하시겠습니까?")==true)  {
-		    	const notices_id = document.getElementById("notices_id").innerText;
-		    	location.href="/admin/noticedelete/${notices_id}";  	
+		 //게시물 삭제
+		function qnaDelete(){
+			console.log(document.getElementById("qnas_id").innerText); //notices_id값 가지고 오고 아래 넣어주기!! (ex.나는 2가 notices_id인줄 알고있지만 모르니까..)
+		    if(confirm("선택한 문의사항을 삭제 하시겠습니까?")==true)  {
+		    	const qnas_id = document.getElementById("qnas_id").innerText;
+		    	location.href="/admin/qnadelete/${qnas_id}";  	
 		    }
 		}
-		//게시물 수정
+/* 		//게시물 수정
 		function noticesModify(){
 			console.log(document.getElementById("notices_id").innerText);
 			const notice_id = document.getElementById("notices_id").innerText;
 			location.href="/admin/noticemodify/${notices_id}";
-		}
+		}  */
 		
 		//사이드바 선택에 맞는 함수들..
 	    function notice(){
@@ -78,36 +77,32 @@
 
         
             <div id="main-box">
-            	<div class="noticeView">
-<%--             		<!-- 내용들 -->
-            		<p id="notices_id">글번호 : ${a.notices_id }</p>
-            		제목 : <div id="noticetitle" type="text"> ${a.notices_title}</div>         
-            		<div id="noticedate">
-                    	<p id="noticedate" type="text">작성일 : <fmt:formatDate value="${a.notices_date}" pattern="YYYY-MM-dd"/></p>
-                    </div>
-            		<div id="noticecontent" type="text">내용 : ${a.notices_content}</div> --%>
-            		
-            		
-            	   <div class="rightloc"><p style="font-size:15px" class="noticeinfo" id="notices_id">글번호: ${a.notices_id } &nbsp&nbsp 작성일: ${a.notices_date }</p></div>
-            	 
+            	<div class="noticeView">       		
+            	   <div class="rightloc"><p style="font-size:15px" class="noticeinfo" id="qnas_id">글번호: ${a.qnas_id } &nbsp&nbsp 작성일: ${a.qnas_date }</p></div>
+            	   <!-- 작성자 -->
+                   <div id="noticetitle">
+                       <!-- <p id="titletxt">제목</p> -->
+                       ${a.users_id}
+                   </div>
             	   <!-- 제목 -->
                    <div id="noticetitle">
                        <!-- <p id="titletxt">제목</p> -->
-                       ${a.notices_title}
+                       ${a.qnas_title}
                    </div>
                    <!-- 내용 -->
                    <div id="noticecontent">
                        <!-- <p id="contenttxt">내용</p> -->
-                       ${a.notices_content}
+                       ${a.qnas_content}
                    </div>
             		
             		<!-- 버튼들 -->
             		<div class="writebtn">
             			<!-- 공지 상세페이지 버튼들  -->
 						<div id="notice_button">
-							<input type="button" id="writebtn" value="목록" onclick="notice()">
-							<input type="button" id="writebtn" value="수정" onclick="noticesModify()">
-							<input type="button" id="writebtn" value="삭제" onclick="noticeDelete()">
+							<input type="button" id="writebtn" value="목록" onclick="qna()">
+							<input type="button" id="writebtn" value="답글" onclick="">
+							<!-- <input type="button" id="writebtn" value="수정" onclick="noticesModify()"> -->
+							<input type="button" id="writebtn" value="삭제" onclick="qnaDelete()">
 		                 </div>
             		</div>
             	</div>

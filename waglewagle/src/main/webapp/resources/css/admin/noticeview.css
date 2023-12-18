@@ -72,8 +72,16 @@
     font-size: 20px;
     /* border: 1px solid #999; */
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-#title{
+
+.noticeView{
+	text-align: center;
+}
+#noticetitle{
     width: 500px;
     height: 50px;
     box-sizing: border-box;
@@ -91,16 +99,23 @@
     margin: auto;
     margin-right: 5px;
 }
-#noticedate{
+/* #noticedate{
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
-}
+    width: 500px;
+    height: 50px;
+    box-sizing: border-box;
+    padding-left: 10px;
+    background: #F1F1F1;
+    border: 1px solid #000000;
+    border-radius: 10px;
+} */
 #datetxt{
     margin: auto;
     margin-right: 5px;
 }
-#content{
+#noticecontent{
     box-sizing: border-box;
 
     width: 500px;
@@ -117,7 +132,6 @@
     margin-bottom: 10px;
 } 
 #contenttxt{
-    
     margin-right: 5px;
 }
 #modifybtn{
@@ -133,4 +147,17 @@
 #writebtn > a:hover, #writebtn> a:active {
     background-color: #1E90FF;
     text-decoration: none;
-} 
+}
+#writebtn{
+    width: 150px;
+    height: 35px;
+    background: #686868;
+    border-radius: 10px;
+    color: azure;
+    font-size: 14px;
+    font-stretch: 100;
+}
+.rightloc{
+	display:flex;
+	justify-content: flex-end;
+}

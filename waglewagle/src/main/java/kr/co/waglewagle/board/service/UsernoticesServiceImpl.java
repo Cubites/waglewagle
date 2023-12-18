@@ -1,4 +1,4 @@
-package kr.co.waglewagle.admins.service;
+package kr.co.waglewagle.board.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +14,7 @@ import kr.co.waglewagle.admins.mapper.NoticeMapper;
 import kr.co.waglewagle.domain.NoticesVO;
 
 @Service
-public class NoticeServiceImpl implements NoticeService {
+public class UsernoticesServiceImpl implements UsernoticesSerivce {
 
 	@Autowired
 	private NoticeMapper mapper;
@@ -24,24 +24,6 @@ public class NoticeServiceImpl implements NoticeService {
 		return mapper.noticeList();
 	}
 	
-	//공지 글 등록하기
-	@Override
-	public  List<NoticesVO> Noticewrite(NoticesVO vo,HttpServletRequest request) {
-		mapper.Noticewrite(vo);
-		return mapper.noticeList();
-	}
-
-	//공지 수정하기
-//	@Override
-//	public void Noticemodify(NoticesVO vo) {
-//	}
-	
-	//공지 삭제하기
-	@Override
-	public void Noticedelete(int notices_id) {
-		System.out.println("====>"+notices_id);
-		mapper.Noticedelete(notices_id);
-	}
 
 	@Override
 	public Object list(NoticesVO vo) {
@@ -57,17 +39,6 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public Object Noticeview(NoticesVO vo, boolean b) {
 		return null;
-	}
-
-	@Override
-	public NoticesVO Noticemodify(int notices_id) {
-		return mapper.detail(notices_id);
-	}
-
-	@Override
-	public int NoticeModifyUpdate(NoticesVO vo, HttpServletRequest request) {
-		int r = mapper.NoticeModifyUpdate(vo);
-		return r;
 	}
 
 

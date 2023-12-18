@@ -25,5 +25,15 @@
         <select id="detail" parameterType="int" resultType="kr.co.waglewagle.domain.NoticesVO">
         	SELECT * FROM notices WHERE notices_id = #{notices_id}
         </select>
+        
+        <!-- 삭제하기 -->
+        <delete id="Noticedelete" parameterType="int">
+        <!-- return 할 필요가 없을경우는 resultType 작성할필요없음.. -->
+        	delete  from notices where notices_id=#{notices_id}
+        </delete>
+        
+        <update id="NoticeModifyUpdate" parameterType="kr.co.waglewagle.domain.NoticesVO">    
+        	UPDATE notices SET notices_title = #{notices_title},notices_content=#{notices_content} WHERE notices_id=#{notices_id} and admins_id=#{admins_id}
+        </update>
  
 </mapper>

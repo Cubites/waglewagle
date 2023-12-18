@@ -12,15 +12,10 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="/resources/css/admin/noticewrite.css"/>
+    <link rel="stylesheet" href="/resources/css/admin/noticemodify.css"/>
 
 	<script>
-		//게시물 삭제
-		const noticeDelete = () => {
-		    if(confirm("선택한 공지를 정말 삭제 하시겠습니까?")==true) document.location.href='/admin/delete?seqno=${noticeview.seqno}';
-		}
-		
-		
+
 		function notice(){
 			 location.href = "/admin/noticelist";
 		}
@@ -42,13 +37,48 @@
 		function password(){
 			 location.href = "/admin/changepwd";
 		}
-	</script>
+		
+		
+/* 		document.noticemodify.action="/admin/noticeModify/{notices_id}";
+		document.noticemodify.submit(); */
+		
+  		function noticeModify(){
+			console.log(document.getElementById("notices_id").innerText); //찍히나??
+			if(confirm("수정완료?")) {
+				$("#noticemodify").submit();
+			}
+		}
+ 	
+/* 	 	$.ajax({
+	 		type : 'post',
+	 		url : '/admin/noticemodify/${notices_id}',           
+	 		async : true,            
+	 		headers : {              
+	 			"Content-Type" : "application/json",      
+	 			"X-HTTP-Method-Override" : "POST"    
+	 		},    
+	 		dataType : 'text',       
+	 		data : JSON.stringify({  
+	 			"notices_title":notices_title,
+	 			"notices_content" : notices_content,
+	 			"notices_date":notices_date
+	 		}),    
+	 		success : function(result) { // 결과 성공 콜백함수        
+	 			console.log(result);    
+	 		},    
+	 		error : function(request, status, error) { // 결과 에러 콜백함수        
+	 			console.log(error)    
+	 			}
+	 		}) */
+	 		
+	 		
+ </script>
 </head> 
 <body>
 	<div id="header">
         <div id="headerContainer">
             <br/>
-            <img src="/resources/images/log.jpg" title="와글와글 로고"/>
+            <img src="/resources/images/log.jpg" title="와글와글 로고 onclick="notice()"/>
         </div>
     </div>
 
@@ -65,42 +95,32 @@
             </div>
             
             
-            <div id="main-box">
-            	            
-            		
+            
+            <div id="main-box">  
+            	<!-- 내가 선택한 글번호에 맞는 내용이 출력되는 페이지가 있고 그 안에 수정을 하고, 수정완료 버튼 누르고 method=post 다시 저장되는 과정 반복 -->
+            	
+            	<div class="rightloc"><p style="font-size:15px" class="noticeinfo" id="notices_id">글번호: ${a.notices_id } &nbsp&nbsp 작성일: ${a.notices_date }</p></div>
+            	<%-- <form name="noticemodify" method="post" action="<c:url value='/admin/noticemodify/${notices_id}'>"> --%>
+            	<form id="noticemodify" method="post" action="/admin/noticeModify">
+            	<input type="hidden" name="notices_id" value="${notices_id}"/> <!-- form 태그로 데이터를 보낼때는 input태그로 데이터 모두 가지고 있어야함..!! -->
                     <!-- 제목 -->
                     <div id="noticetitle">
                         <p id="titletxt">제목</p>
-                        <input id="title" name="title" value="${view.notices_title}">
+                        <input id="title" name="notices_title" value="${a.notices_title}">
                     </div>
-
                     <!-- 내용 -->
                     <div id="noticecontent">
                         <p id="contenttxt">내용</p>
-                        <textarea id="content" name="content" value="${view.notices_content}"></textarea>
+                        <textarea id="content" name="notices_content">${a.notices_content}</textarea>
                     </div>
 
 
-                    <!-- 공지업로드 버튼 -->
+                    <!-- 수정페이지버튼 -->
                     <div id="noticebutton">
-                    	<input type="button" id="writebtn" value="공지수정" onclick="modifyForm()">
-                        <input type="button" id="writebtn" value="취소" onclick="history.back()">
+                    	<input type="button" id="writebtn" value="수정완료" onclick="noticeModify()">
+                        <input type="button" id="writebtn" value="취소" onclick="notice()">
                     </div>
-
-<%-- 					
-                    <!-- 공지업로드 버튼 -->
-                    <div id="notice button">
-                        <c:if test="{pre_seqno !=0}">
-                        <a href="/admin/noticeview?seqno=${pre_seqno}&page=${page}keyword=${keyword }">이전</a>&nbsp;&nbsp;
-                        </c:if>
-                        <a href="/board/list?page=${page}&keyword=${keyword}">목록가기</a>&nbsp;&nbsp;
-				 		<c:if test="${next_seqno != 0}">	
-				          <a href="/admin/noticeview??seqno=${next_seqno}&page=${page}&keyword=${keyword}">다음</a>&nbsp;&nbsp;
-				 		</c:if>
-				         <a href="/admin/noticewrite">공지작성</a>&nbsp;&nbsp;
-				          <a href="/admin/noticemodify?seqno=${noticeview.seqno}&page=${page}&keyword=${keyword}">공지수정</a>&nbsp;&nbsp;
-				          <a href="javascript:noticeDelete()">공지삭제</a>
-                    </div> --%>
+				</form>
             </div>
         </div>
     </div>

@@ -11,15 +11,14 @@ import kr.co.waglewagle.domain.NoticesVO;
 
 public interface NoticeService {
 	public List<NoticesVO> noticeList();
-	
-	
-	public void Noticemodify(NoticesVO vo);
-	public void Noticedelete(int notices_id);
+//	public void Noticemodify(NoticesVO vo);
 	List<NoticesVO> Noticewrite(NoticesVO vo, HttpServletRequest request);
 	public Object list(NoticesVO vo);
-
-
 	public NoticesVO Noticeview(int notices_id);
+	public void Noticedelete(int notices_id); //삭제하기
+	public Object Noticeview(NoticesVO vo, boolean b);
+	public NoticesVO Noticemodify(int notices_id);
 	
+	public int NoticeModifyUpdate(NoticesVO vo, HttpServletRequest request);
 
 }
