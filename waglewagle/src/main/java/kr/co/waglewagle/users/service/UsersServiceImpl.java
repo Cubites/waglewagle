@@ -1,6 +1,7 @@
 package kr.co.waglewagle.users.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -53,5 +54,28 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public UsersVO login(UsersVO vo) {
 		return mapper.login(vo);
+	}
+	
+	@Override
+	public UsersVO findId(Map<String, String> user_info) {
+		return mapper.findId(user_info);
+	}
+	
+	@Override
+	public UsersVO findPwd(Map<String, String> user_info) {
+		return mapper.findPwd(user_info);
+	}
+	
+	@Override
+	public boolean changePwd(Map<String, String> user_info) {
+		String pwd = user_info.get("users_pwd");
+		
+		//암호화
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encodedPwd = encoder.encode(pwd);
+		
+		user_info.put("users_pwd", encodedPwd);
+		
+		return mapper.changePwd(user_info) > 0 ? true : false;
 	}
 }

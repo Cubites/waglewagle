@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="/resources/css/common/common.css">
 	<link rel="stylesheet" href="/resources/css/users/login.css">
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="/resources/js/users/login.js"></script>
 </head>
 
@@ -33,7 +32,7 @@
 								</div>
 								<div id="findInfoArea">
 									<div id="findInfo">
-										<a href="#">아이디/비밀번호 찾기</a>
+										<a href="find_info">아이디/비밀번호 찾기</a>
 									</div>
 								</div>
 							</div>

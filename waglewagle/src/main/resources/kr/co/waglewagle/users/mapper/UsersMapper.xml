@@ -45,4 +45,20 @@
 		SELECT * FROM users WHERE users_email = #{users_email}
 	</select>
 	
+	<!-- 아이디 찾기 -->
+	<select id="findId" parameterType="Map" resultType="kr.co.waglewagle.domain.UsersVO">
+		SELECT * FROM users WHERE users_name=#{users_name} AND users_phone=#{users_phone}
+ 	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findPwd" parameterType="Map" resultType="kr.co.waglewagle.domain.UsersVO">
+		SELECT * FROM users WHERE users_name=#{users_name} AND users_email=#{users_email}
+ 	</select>
+ 	
+ 	<!-- 비밀번호 변경 -->
+	<update id="changePwd" parameterType="Map">
+		UPDATE users 
+		SET users_pwd=#{users_pwd}
+		WHERE users_id=#{users_id}
+	</update>
 </mapper>

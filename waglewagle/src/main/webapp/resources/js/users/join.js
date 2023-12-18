@@ -35,12 +35,12 @@ $(function(){
            alert("닉네임을 확인해주세요.");
            $("#users_nick").focus();
            return;
-        }else if($("#users_name").length < 1 || $("#users_name") === ""){
+        }else if($("#users_name").val().length < 1 || $("#users_name").val() === ""){
            alert("이름을 입력해주세요.");
            $("#users_name").focus();
            return;
-        }else if($("#phoneBack").length < 1 || $("#users_name") === ""){
-           alert("전화번호를 해주세요.");
+        }else if($("#phoneBack").val().length < 1 || $("#phoneBack").val() === ""){
+           alert("전화번호를 입력해주세요.");
            $("#phoneBack").focus();
            return;
         }else{
@@ -201,12 +201,10 @@ $(function(){
 	$("#users_pwd").keyup(function(){
 		 
 		if(!isPassword($("#users_pwd").val())){
-			$("#pwdCheckTxt").text("비밀번호는 숫자, 알파벳, 특수문자 중 2가지 이상을 포함해 8~20글자 사이로 작성해 주세요!");
+			$("#pwdCheckTxt").text("숫자, 알파벳, 특수문자 중 2가지 이상을 포함해 8~20글자로 작성해 주세요!");
 			$("#pwdCheckTxt").css('visibility', 'visible');
-			console.log("false");
 			validPwd = false;
 		}else{
-			console.log("true");
 			$("#pwdCheckTxt").css('visibility', 'hidden');
 			validPwd = true;
 		}

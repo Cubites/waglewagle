@@ -18,7 +18,24 @@
 			
 			<!-- 실시간 인기 상품 -->
 			<div id="popularProductsArea">
+				<div id="popularTitle">
 				
+				</div>
+				<div id="popularSlide">
+					<div id="leftArrow"></div>
+					<div id="popularProducts">
+						<!-- 상품 반복  -->
+						<div id="popProduct">
+							<div id="productImg">
+								
+							</div>
+							<div id="productTitle"></div>
+							<div id="productAvgPrice"></div>
+							<div id="productAddr"></div>
+						</div>					
+					</div>
+					<div id="rigthArrow"></div>
+				</div>
 			</div>
 			
 			<!-- 신규 등록 물품 -->
