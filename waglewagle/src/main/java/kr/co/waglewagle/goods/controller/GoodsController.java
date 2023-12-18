@@ -101,36 +101,34 @@ public class GoodsController {
 			return "goods/showGoods";
 		}
 		
-		//상품 등록 후 상품 상세화면으로 이동
+				//상품 등록 후 상품 상세화면으로 이동
 				@GetMapping("/{goods_id}")
 				public String testDetail(Model model, 
 						@SessionAttribute(name = "users_info",required = false) UsersVO loginUser,
 						@PathVariable("goods_id") Integer goodsId) {
 					
 					// 추후 성능문제 발생시 쿼리 합칠 것 
-				
+					//같이 가지고 올 수 있는게 없네 
+					
 					
 					//굿즈아이디
 					model.addAttribute("goods",goodsService.getGoods(goodsId));
 					//이미지 가져오기 
 					model.addAttribute("images",goodsService.getImages(goodsId));
+					
 					//찜수 가져오기 
 					model.addAttribute("favorsCnt",goodsService.getFavorsCnt(goodsId));
 					//경매 참여인원 가져오기
 					model.addAttribute("bidsCnt",bidsService.getBidsCnt(goodsId));
 					//유저 point가져오기
 					model.addAttribute("usersPoint",usersService.getPoint(loginUser.getUsers_id()));
-					//유저 favor 가져오기 -> 추후에 합칠 수 있으면 합치자..! 
+					 
 					model.addAttribute("userFavor",goodsService.isFavoritGoods(loginUser.getUsers_id(), goodsId));
-					//usersService.getUsersRelationShip()
-//					log.info("model {}",model);
-//					//찜인원 가져오기 (임의 GoodsId 집어넣음 실제로는 path에서 받아와야함
+					//최대 호가 금액 가져오기
+					model.addAttribute("maxBids", bidsService.selectMaxBidsByUsersId(loginUser.getUsers_id(),goodsId));
+				
 //					
 //					
-//					
-//					//경매 참여 인원가져오기 bids에서 호가 한 인원 가져오기 
-//					log.info("goods = {}",model.getAttribute("goods"));
-//					log.info("images = {}",model.getAttribute("images"));
 					
 					return "goods/goodsDetail";
 				}

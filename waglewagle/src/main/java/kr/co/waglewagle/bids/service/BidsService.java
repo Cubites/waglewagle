@@ -8,5 +8,7 @@ public interface BidsService {
 	Integer getBidsCnt(int goodsId);
 
 	boolean askPrice(BidsFormVO vo) throws BidsException;
+
+	Integer selectMaxBidsByUsersId(Integer users_id, Integer goodsId);
 	
 }

@@ -193,11 +193,12 @@
     			,"bids_price":askPriceNoComma,"point_usable":"${usersPoint.point_usable}"},
     		contentType:"application/x-www-form-urlencoded;charset=utf-8",
     		success:function(data){
+    			
     			console.log(data);
     			showModal(data,"");
     			setTimeout(() => {
     				location.reload(true);
-				}, 3000);
+				}, 2000);
     			
     			
     		},
@@ -205,7 +206,7 @@
     			showModal(xhr.responseText,"reject");
     			setTimeout(() => {
     				location.reload(true);
-				}, 3000);
+				}, 2000);
     			
     			
     		}
@@ -331,7 +332,7 @@
               나의 희망 가격
             </div>
             <div id="bidsPriceCheck">
-              <span>0</span> 원
+              <span>${maxBids}</span> 원
             </div>
           </div>
         </div>

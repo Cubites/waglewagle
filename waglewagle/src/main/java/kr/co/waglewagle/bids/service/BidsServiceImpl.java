@@ -1,5 +1,8 @@
 package kr.co.waglewagle.bids.service;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -54,6 +57,16 @@ public class BidsServiceImpl implements BidsService {
 			
 		
 		return result;
+	}
+
+	@Override
+	public Integer selectMaxBidsByUsersId(Integer users_id,Integer goods_id) {
+		Map<String, Integer> map = new ConcurrentHashMap<>();
+		map.put("users_id", users_id);
+		map.put("goods_id", goods_id);
+		Integer result = mapper.selectMaxBidsPriceByUsersId(map);
+		
+		return result == null ? 0:result;
 	}
 
 }

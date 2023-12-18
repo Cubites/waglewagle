@@ -26,7 +26,14 @@
 		INSERT INTO bids (users_id,goods_id,bids_price) 
 		VALUES(#{users_id},#{goods_id},#{bids_price})
 	</insert>
+	
 	<update id="UpdateUsablePoint" parameterType="kr.co.waglewagle.bids.won.BidsFormVO">
 		UPDATE point set point_usable=point_usable-#{bids_price} WHERE users_id = #{users_id}
 	</update>
+	
+	<select id="selectMaxBidsPriceByUsersId" parameterType="map" resultType="Integer">
+		SELECT MAX(bids.bids_price) FROM bids where goods_id = #{goods_id} AND users_id =#{users_id};
+
+	</select>
+	
 </mapper>
