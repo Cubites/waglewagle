@@ -18,6 +18,16 @@
 	var expDate = "${goods.goods_exp}";
 	$(function(){
 		
+		
+		if ("${rejectmsg}" !== "") {
+			
+			showModal("${rejectmsg}","result");
+		}
+		
+		//신고하기 화면으로 넘어감
+		$("#sirenimg").click(()=>{
+			location.href = "/report/${goods.goods_id}/${users_info.users_id}";
+		});
 		//숫자만 입력가능 및 콤마로 자동 변환 이벤트
 	      let inputDom = document.querySelector("#submitPoint > input");
 	      inputDom.addEventListener("input", function (e) {
@@ -363,6 +373,6 @@
   <!-- 모달창 끝 -->
 	
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-	
+
 </body>
 </html>

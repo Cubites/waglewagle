@@ -34,10 +34,12 @@ public class BidsController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("content-type", "text/plain;charset=UTF-8");
 		boolean result;
-		
+		String msg="제출된 가격을 확인해 주세요";
 		//자신의 글에 호가 검ㅏ
 		if(vo.getUsers_id() == loginuser.getUsers_id()) {
 			rs.rejectValue("users_id", null,null,"자신이 올린 글에는 호가 불가함");
+			msg ="본인의 글에는 호가할 수 없습니다";
+			
 		}
 		//가용 포인트 검사
 		if(vo.getPoint_usable()-vo.getBids_price() <0) {
@@ -46,7 +48,8 @@ public class BidsController {
 		
 		//response = new ResponseEntity<String>("제출된 가격을 확인해주세요 ",headers,HttpStatus.BAD_REQUEST);
 		if(rs.hasErrors()) {
-			response = new ResponseEntity<String>("제출된 가격을 확인해주세요",headers,HttpStatus.BAD_REQUEST);
+			
+			response = new ResponseEntity<String>(msg,headers,HttpStatus.BAD_REQUEST);
 		}
 		
 		
@@ -54,7 +57,7 @@ public class BidsController {
 		try {
 			result = service.askPrice(vo);
 		} catch (BidsException e) {
-			response = new ResponseEntity<String>("제출된 가격을 확인해주세요",headers,HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<String>(msg,headers,HttpStatus.BAD_REQUEST);
 			return response;
 		}
 
