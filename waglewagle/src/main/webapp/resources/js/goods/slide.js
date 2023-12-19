@@ -3,8 +3,6 @@ let imgs = document.querySelectorAll('.imgs');
 let imgLength = imgs.length;
 let imgWidth = imgs[0].width;
 let imgHight = imgs[0].height;
-let left = document.querySelector('#left');
-let right = document.querySelector('#right');
 let currImg = 0;
 //이미지와 이미지 슬라이드 감싸고 있는 박스
 let imagewrap = document.querySelector('#imagewrap');
@@ -19,22 +17,6 @@ function init() {
   addClickEvent();
 }
 
-function addClickEvent() {
-  left.addEventListener('click', () => {
-    moveSlide(currImg - 1);
-  });
-  right.addEventListener('click', () => {
-    moveSlide(currImg + 1);
-  });
-
-  $('#slideList').click(function (event) {
-    if (event.offsetX >= 210) {
-      moveSlide(currImg + 1);
-    } else {
-      moveSlide(currImg - 1);
-    }
-  });
-}
 function addImages() {
   //맨 뒤 그림부터 앞에 추가
   for (let i = imgLength - 1; i >= 0; i--) {
@@ -61,7 +43,7 @@ function updateSlideWidth() {
 //초기 위치 지정
 function setInitPos() {
   let initpos = -(imgLength * imgWidth);
-  
+ 
   slidList.style.transform = 'translateX(' + initpos + 'px)';
   setTimeout(() => {
     slidList.classList.add('active');

@@ -18,7 +18,7 @@ public class UsersController {
 	// 테스트용 세션 추가
 	@GetMapping("/add/session")
 	public String usersInfo(HttpSession sess) {
-		sess.setAttribute("users_info", service.userInfo(3));
+		sess.setAttribute("users_info", service.userInfo(1));
 		return "home";
 	}
 	

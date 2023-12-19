@@ -62,9 +62,16 @@
 
 			$("#reportForm").submit();
 
+		}else{
+			
+		
 		}
 
 		$("#submitModal").fadeOut();
+	}
+	
+	function goback(url){
+		location.href="/goods/"+url;
 	}
 </script>
 
@@ -169,7 +176,7 @@
 				</form>
 				<div id="reportFooter">
 					<div id="submit">신고하기</div>
-					<div id="cancle">취소하기</div>
+					<div id="cancle" onclick="goback('${goods.goods_id}')">돌아가기</div>
 				</div>
 			</div>
 		</div>
