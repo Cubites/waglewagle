@@ -147,27 +147,8 @@ public class WebConfig implements WebMvcConfigurer {
 			messageSource.setDefaultEncoding("utf-8");
 			return messageSource;
 		}
-		//트랜잭션 빈 등록 
-		  @Bean
-		   public PlatformTransactionManager transactionManager() {
-		      DataSourceTransactionManager dtm = new DataSourceTransactionManager();
-		      dtm.setDataSource(dataSource());
 		
-		      return dtm;
-		   }
 
-
-
-	// messages를 읽기 위한 Bean
-	@Bean
-	public MessageSource messageSource() {
-		final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-
-		messageSource.setBasename("/errorMessage/error");
-
-		messageSource.setDefaultEncoding("utf-8");
-		return messageSource;
-	}
 
 	// 트랜잭션 설정
 	@Bean

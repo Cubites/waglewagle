@@ -112,4 +112,10 @@ public class UsersServiceImpl implements UsersService {
 		return mapper.changePwd(user_info) > 0 ? true : false;
 	}
 
+	@Override
+	public List<CategoryVO> allCategory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

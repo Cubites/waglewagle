@@ -10,8 +10,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.waglewagle.bids.service.BidsService;
 import kr.co.waglewagle.domain.GoodsVO;
@@ -44,13 +44,15 @@ public class GoodsController {
 
 	@PostMapping("/goods/regist")
 	public String regist(@Validated GoodsFormVO vo, BindingResult br, Model model,
-			@SessionAttribute(name = "loginUser", required = false) UsersVO LoginUserId) {
-		// Session에서 로그인한 유저 정보 가져옴 required false
+			@SessionAttribute(name = "users_info", required = false) UsersVO LoginUserId
+			,RedirectAttributes rs) {
+		
+		
 
 		// Spring: 태그를 이용해서 출력할 수도 있지만..그냥 br담아서 출력하는 것도 나쁘지않은 선택!
 		// 글로벌 오류 출력하기 위해 담음
 		model.addAttribute("error", br);
-
+		
 		// 파일 아무것도 첨부 안했을 때 실행되는 로직
 		if (vo.getImages() == null || "".equals(vo.getImages().get(0).getOriginalFilename())) {
 
@@ -61,7 +63,7 @@ public class GoodsController {
 			return "goods/regist";
 		}
 
-		// 정상처리 로직
+		// 정상처리 로직//////////////////////////////////////////////////////////////////////////////
 		// DB에 넣기전 가공 로직
 		List<UploadImage> list = new ArrayList<>();
 		list = fileStore.storeFiles(vo.getImages());
@@ -69,20 +71,20 @@ public class GoodsController {
 		// fullPath가 필요한것 이름은 이제 필요 없어서!! 다시 set해줌
 		vo.setGoods_th_img(th_path);
 
-		// 로그인 유저id받아야함 추후에 반드시 고칠 것 !
-		// sess.getAttribute(th_path);
-		vo.setUsers_id(1000); // 테스트용 1000
+		
+		vo.setUsers_id(LoginUserId.getUsers_id()); 
 
-		// 추후 컨버터로 등록할 것 -> 현재 Form - service 올바르지 못하다! 단,date -> Timestamp로 고쳐야함
+		
 		// GoodsVO registedGoodsVO = convertGoodsFormToGoods(vo,LoginUserId);
-
 		int resultOfGoodsRegist = goodsService.registGoods(vo);
 		// 이미지 파일들을 DB에 저장하기 위해선 상품id와 사진 경로가 필요함!
 		int resultOfImageRegist = goodsService.registImages(vo.getGoods_id(), list);
 
-		model.addAttribute("goodsId", vo.getGoods_id());
+		//model.addAttribute("goodsId", vo.getGoods_id());
 		// post로 설정해둬서 뒤로가기하면 다시 같은 상품이 등록 될 수 있어서 막기 위해 경우 페이지 지정
-		return "goods/showGoods";
+		
+		rs.addAttribute("goods_id", vo.getGoods_id());
+		return "redirect:/goods/{goods_id}";
 	}
 
 	// 상품 등록 후 상품 상세화면으로 이동
