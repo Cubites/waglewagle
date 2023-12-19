@@ -55,9 +55,27 @@ public class UsersController {
 	
 	// 회원가입 정보 제출 후 login page 이동
 	@PostMapping("/join")
-	public String joinProcess(UsersVO vo) {
-		boolean r = service.join(vo);
-		return "redirect:login";
+	public void joinProcess(HttpServletResponse response, UsersVO vo) throws IOException{
+		response.setContentType("text/html; charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		
+		PrintWriter out = response.getWriter();
+		boolean joinResult = service.join(vo);
+		if(joinResult) {
+			int users_id = service.selectUsersId(vo.getUsers_email());
+			boolean creatPointResult = service.createPoint(users_id);
+			if(creatPointResult) {
+				out.println("<script>alert('회원가입 되었습니다.');"+ "location.href='login';</script>");
+				out.flush();
+			}else {
+				out.println("<script>alert('포인트 계좌 생성에 실패했습니다. 관리자에게 문의하세요.');"+ "location.href='main';</script>");
+				out.flush();
+			}
+		}else {
+			out.println("<script>alert('회원가입에 실패했습니다.');"+ "location.href='#';</script>");
+			out.flush();
+		}
+		
 	}
 	
 	@GetMapping("/login")
@@ -82,7 +100,7 @@ public class UsersController {
 		if(isValid) {
 			System.out.println("비번맞음");
 			session.setAttribute("users_info", login);
-			return "redirect:/index";
+			return "redirect:/main";
 		}else {
 			System.out.println("비번틀림");
 			return "redirect:/login";
@@ -181,7 +199,6 @@ public class UsersController {
 		user_info.put("users_pwd", users_pwd);
 		user_info.put("users_id", users_id);
 		boolean pwdIsChanged = service.changePwd(user_info);
-		System.out.println("비밀번호 변경됨? : " + pwdIsChanged);
 		if(pwdIsChanged) {
 			out.println("<script>alert('비밀번호가 변경되었습니다.');"+ "location.href='login';</script>");
 			out.flush();

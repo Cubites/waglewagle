@@ -66,6 +66,16 @@ public class UsersServiceImpl implements UsersService {
 	}
 	
 	@Override
+	public int selectUsersId(String users_email) {
+		return mapper.selectUsersId(users_email);
+	}
+	
+	@Override
+	public boolean createPoint(int users_id) {
+		return mapper.createPoint(users_id) > 0 ? true : false;
+	}
+	
+	@Override
 	public boolean isEmailDup(String users_email) {
 		return mapper.isEmailDup(users_email) > 0 ? true : false;
 	}

@@ -17,6 +17,8 @@ public interface UsersMapper {
 	List<CategoryVO> allCategory();
 	PointVO selectPointByUsersId(Integer users_id);
 	int join(UsersVO vo);
+	int selectUsersId(String users_email);
+	int createPoint(int users_id);
 	int isEmailDup(String users_email);
 	int isNickDup(String users_nick);
 	UsersVO login(UsersVO vo);
