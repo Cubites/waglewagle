@@ -57,4 +57,24 @@
 		)
 		</foreach>
 	</insert>
+	<select id="selectGoodsById" parameterType="Integer" resultType="kr.co.waglewagle.domain.GoodsVO">
+		SELECT * FROM goods WHERE goods_id = #{goodsId}
+	</select>
+	<select id="selectImagesById" parameterType="Integer" resultType="kr.co.waglewagle.domain.ImagesVO">
+		SELECT * FROM images WHERE goods_id = #{goodsId}
+	</select>
+	<select id="countFavorsByGoodsId" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM favors WHERE goods_id = #{goods_id}
+	</select>
+	<select id="countFavorsByUsersId" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*) FROM favors WHERE users_id = #{usersId} AND goods_id = #{goodsId}
+	</select>
+	
+	<insert id="insertFavor" parameterType="Map" >
+		INSERT INTO favors (users_id, goods_id) 
+		VALUES (#{usersId},#{goodsId})
+	</insert>
+	<delete id="deleteFavor" parameterType="Map">
+		DELETE FROM favors WHERE users_id = #{usersId} AND goods_id = #{goodsId}
+	</delete>
 </mapper>

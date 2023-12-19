@@ -17,7 +17,7 @@ $(function () {
   //rejectValue 출력용
   (function () {
     var p = $('#price').val();
-   	console.log(p);
+  
      if (p !== '' && p !== null && p !== undefined) {
       changePrice();
     }
@@ -228,15 +228,20 @@ $(function () {
 function searchAddr() {
   new daum.Postcode({
     oncomplete: function (data) {
-   	  var roadAddr = data.roadAddress; 
-      var jibunAddress = data.jibunAddress;
-      jibunAddress = jibunAddress === '' ? data.autoJibunAddress : jibunAddress; 
+      
+   	  var guso =data.sido+" "+data.sigungu+" ";
+      
+      if(data.bname1 == ""){
+      	guso +=data.bname;
+      }else{
+      	guso +=data.bname1;
+      }
+      
+      
+      dong = guso.substring(guso.lastIndexOf(" "));
      
-      var jibunArr = jibunAddress.split(' ');
-      var dong = jibunArr[jibunArr.length - 2];
-    
-	
-      $('#fullJibun').val(jibunAddress);
+			
+      $('#fullJibun').val(guso);
       $('#addrDong').val(dong);
     },
   }).open();
