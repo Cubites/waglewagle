@@ -33,6 +33,22 @@
 		) cn;
 	</select>
 	
+	<select id="checkAuctionIng" parameterType="kr.co.waglewagle.domain.ReportsVO" resultType="int">
+		SELECT count(*) FROM wagle.auctions_ing WHERE goods_id = #{goods_id};
+	</select>
+	
+	<select id="checkReport" parameterType="kr.co.waglewagle.domain.ReportsVO" resultType="int">
+		SELECT count(*) FROM wagle.reports WHERE goods_id = #{goods_id};
+	</select>
+	
+	<insert id="saveReport" parameterType="kr.co.waglewagle.domain.ReportsVO">
+		INSERT INTO wagle.reports (
+			reports_type, users_id, goods_id, reports_content
+		) VALUES (
+			1, #{users_id}, #{goods_id}, #{reports_content}
+		) 
+	</insert>
+
 	<select id="countAuctions" resultType="Integer" parameterType="Integer">
 		SELECT
 			(

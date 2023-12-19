@@ -9,6 +9,7 @@ import kr.co.waglewagle.util.hcju.SomeoneAuctionsEndVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsIngVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsVO;
 import kr.co.waglewagle.util.hcju.SomeoneFavorsVO;
+import kr.co.waglewagle.domain.ReportsVO;
 
 public interface AuctionsService {
 	Map<String, Integer> countAllAuctions(Integer users_id);
@@ -33,4 +34,6 @@ public interface AuctionsService {
 	
 	Integer countFavors(Integer users_id);
 	List<SomeoneFavorsVO> checkFavors(Map<String, Integer> auctionsIngVal);
+  
+  boolean saveReport(ReportsVO vo);
 }
