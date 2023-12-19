@@ -1,0 +1,76 @@
+#main-box {
+    width: 85%;
+    height: 100%;
+    font-size: 20px;
+    /* border: 1px solid #999; */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.noticeView{
+	text-align: center;
+}
+#noticetitle{
+    width: 500px;
+    height: 50px;
+    box-sizing: border-box;
+    padding-left: 10px;
+    background: #F1F1F1;
+    border: 1px solid #000000;
+    border-radius: 10px;
+}
+#noticetitle{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+#titletxt{
+    margin: auto;
+    margin-right: 5px;
+}
+#datetxt{
+    margin: auto;
+    margin-right: 5px;
+}
+#noticecontent{
+    box-sizing: border-box;
+    width: 500px;
+    height: 300px;
+    padding-left: 10px;
+    padding-top: 10px;
+    background: #F1F1F1;
+    border: 1px solid #000000;
+    border-radius: 20px;
+}
+#noticecontent{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+} 
+#contenttxt{
+    margin-right: 5px;
+}
+#modifybtn{
+    width: 150px;
+    height: 35px;
+    background: #686868;
+    border-radius: 10px;
+    color: azure;
+    font-size: 14px;
+    font-stretch: 100;
+}
+#writebtn > a:hover, #writebtn> a:active {
+    background-color: #1E90FF;
+    text-decoration: none;
+}
+#writebtn{
+    width: 150px;
+    height: 35px;
+    background: #CF5C5C;
+    border-radius: 10px;
+    color: azure;
+    font-size: 14px;
+    font-stretch: 100;
+}

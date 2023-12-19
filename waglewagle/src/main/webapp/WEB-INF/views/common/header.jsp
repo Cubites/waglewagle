@@ -27,7 +27,7 @@
 					</c:if>
 					<c:if test='${empty sessionScope.users_info.users_nick}'>
 						<div class="text_center">
-							<a href="#" class="text_center">로그인</a>
+							<a href="login" class="text_center">로그인</a>
 						</div>
 					</c:if>
 					<div class="text_center">
@@ -107,7 +107,7 @@
 					-->
 				</div>
 				<div id="headerBottomCenter">
-					<a href="#" class="text_center">공지사항</a>
+					<a href="/board/noticelist" class="text_center">공지사항</a>
 					<a href="/boards/qnas/write" class="text_center">문의하기</a>				
 				</div>
 				<a href="#" id="headerBottomRight">
