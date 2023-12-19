@@ -10,61 +10,11 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 	<link rel="stylesheet" href="/resources/css/mainpage/mainpage.css">
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="/resources/js/mainpage/mainpage.js"></script>
 	<!-- Swiper JS -->
   	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-	<!-- Initialize Swiper -->
-	<script>
-	
-	$(function(){
-    var swiper = new Swiper('.swiper', {
-        slidesPerView: 5,
-        spaceBetween: 30,
-        loop: true,
-        loopAdditionalSlides: 1,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-      });
-		
-	})
-	$(function(){
-    var swiper = new Swiper('.swiper.banner', {
-        slidesPerView: 1,
-        loop: true,
-        loopedSlides: 1,
-        autoplay:{
-        	delay:3000,
-        	disableOnInteraction: false,
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-      });
-		
-	})
-		
-	$(function(){
-		$(".swiper-slide").mouseover(function(){
-			let now = new Date();
-			let expDate = new Date($(this).find(".popProduct").find(".avgPrice_expDateArea").find(".expArea").find(".productExp").text());
-			let leftTime = expDate - now;
-			
-			const days = Math.floor(leftTime/(1000*60*60*24));
-	     	const hours = ("0"+Math.floor(leftTime %(1000*60*60*24)/(1000*60*60))).slice(-2);
 
-			
-			$(".leftTime").text(days+"일 "+hours+"시간");
-			$(this).find('.popProduct').find(".leftTime").removeClass("hide");
-		})
-		$(".swiper-slide").mouseout(function(){
-			$(this).find('.popProduct').find(".leftTime").addClass("hide");
-		})
-	})
-
-	</script>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -109,27 +59,35 @@
 				<!-- swiper -->
 				<div class="swiper mySwiper">
 					<div class="swiper-wrapper hoverEl relative">
+						<c:if test="${empty popular_list }">
+							<div class="noItems">
+								<div class="noItemValue">조건에 맞는 상품이 없습니다.</div>
+							</div>
+						</c:if>
 						<c:forEach var="item" items="${popular_list }">
 							<div class="swiper-slide">
 			                    <div class="popProduct">
 				                    <div class="productImg">
-				                   		<img src="/resources/images/default_profile.png">
+				                   		<img src="${item.goods_th_img }">
 				                    </div>
 				                    <div class="productTitle">${item.goods_title }</div>
-				                    <div class="avgPrice_expDateArea">
-			                        	<div class="avgPriceArea">
+			                    	<div class="avgPrice_expDateArea">
+			                        	<div class="avg_expTitle">
 			                        		<div class="avgPriceTitle">평균 입찰가</div>
-				                        	<div class="productAvgPrice">${item.goods_avg_price }원</div>
-				                        </div>
-				                        <div class="expArea">
 				                        	<div class="expTitle">입찰 마감일</div>
+				                        </div>
+				                        <div class="avg_expValue">
+				                        	<div class="productAvgPrice">${item.goods_avg_price }원</div>
 					                        <div class="productExp">
 					                        	${item.goods_exp }
 					                        </div>
 				                        </div>
 			                        </div>
-				                    <div class="productAddr">
-				                    	${item.goods_address }
+				                    <div class="productAddrArea">
+				                    	<div id="locImg"><img src="/resources/images/loc.png"></div>
+					                    <div class="productAddr">
+					                    	${item.goods_address }
+					                    </div>
 				                    </div>
 				                    <div class="leftTime hide">
 				                    </div>
@@ -150,20 +108,25 @@
 				<!-- swiper -->
 				<div class="swiper mySwiper">
 					<div class="swiper-wrapper hoverEl">
+						<c:if test="${empty new_list }">
+							<div class="noItems">
+								<div class="noItemValue">조건에 맞는 상품이 없습니다.</div>
+							</div>
+						</c:if>
 						<c:forEach var="item" items="${new_list }">
 							<div class="swiper-slide smallEl">
 			                     <div class="popProduct">
 			                        <div class="productImg">
-			                           <img src="/resources/images/default_profile.png">
+			                           <img src="${item.goods_th_img }">
 			                        </div>
 			                        <div class="productTitle">${item.goods_title }</div>
-			                        <div class="avgPrice_expDateArea">
-			                        	<div class="avgPriceArea">
+		                        	<div class="avgPrice_expDateArea">
+			                        	<div class="avg_expTitle">
 			                        		<div class="avgPriceTitle">평균 입찰가</div>
-				                        	<div class="productAvgPrice">${item.goods_avg_price }원</div>
-				                        </div>
-				                        <div class="expArea">
 				                        	<div class="expTitle">입찰 마감일</div>
+				                        </div>
+				                        <div class="avg_expValue">
+				                        	<div class="productAvgPrice">${item.goods_avg_price }원</div>
 					                        <div class="productExp">
 					                        	${item.goods_exp }
 					                        </div>
@@ -201,20 +164,25 @@
 				<!-- swiper -->
 				<div class="swiper mySwiper">
 					<div class="swiper-wrapper hoverEl">
+						<c:if test="${empty near_list }">
+							<div class="noItems">
+								<div class="noItemValue">조건에 맞는 상품이 없습니다.</div>
+							</div>
+						</c:if>
 						<c:forEach var="item" items="${near_list }">
 							<div class="swiper-slide">
 			                     <div class="popProduct">
 			                        <div class="productImg">
-			                           <img src="/resources/images/default_profile.png">
+			                           <img src="${item.goods_th_img }">
 			                        </div>
 			                        <div class="productTitle">${item.goods_title }</div>
 			                        	<div class="avgPrice_expDateArea">
-				                        	<div class="avgPriceArea">
+				                        	<div class="avg_expTitle">
 				                        		<div class="avgPriceTitle">평균 입찰가</div>
-					                        	<div class="productAvgPrice">${item.goods_avg_price }원</div>
-					                        </div>
-					                        <div class="expArea">
 					                        	<div class="expTitle">입찰 마감일</div>
+					                        </div>
+					                        <div class="avg_expValue">
+					                        	<div class="productAvgPrice">${item.goods_avg_price }원</div>
 						                        <div class="productExp">
 						                        	${item.goods_exp }
 						                        </div>

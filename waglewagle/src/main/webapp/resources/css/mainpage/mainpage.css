@@ -32,11 +32,44 @@
 .swiper-button-prev, .swiper-button-next{
 	color: #CF5C5C;
 }
+
+.noItems{
+	width:100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #fcf2f2;
+	border-radius: 25px;
+}
+
+.noItemsValue{
+	font-size: 20px;
+}
+
+.popProduct{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 .productImg > img{
 	width: 60%;
 }
 
+.productAddrArea{
+	margin-top:10px;
+	width:80%;
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+}
 
+.productAddrArea > #locImg{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .hoverEl > .swiper-slide:hover{
 	
@@ -66,6 +99,7 @@
 #popularTitle{
 	height: 10%;
 	font-size: 25px;
+	text-align: center;
 }
 
 #popularProductsArea > .swiper{
@@ -90,6 +124,10 @@
 
 .productTitle{
 	margin-bottom: 20px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 200px;
 }
 
 .avgPriceTitle, .expTitle{
@@ -102,8 +140,10 @@
 }
 
 .productAddr{
-	margin-top:20px;
-	font-size: 15px;
+	font-size: 13px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
 }
 
 #popularProducts{
@@ -130,9 +170,21 @@
 
 .avgPrice_expDateArea{
 	display: flex;
-	justify-content: space-around;
+	flex-direction: row;
+	justify-content:space-evenly;
+	width:100%;
 }
 
+.avg_expTitle{
+	display: flex;
+	flex-direction: column;
+}
+
+.avg_expValue{
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+}
 #nearProductsArea{
 	height:380px;
 	width:100%;
@@ -144,8 +196,13 @@
 	justify-content:space-between;
 }
 
+#nearProductsTitle{
+	width:40%;
+}
+
 #location{
 	display:flex;
+	width:60%;
 	align-items: center;
 }
 
@@ -154,9 +211,10 @@
 	display: flex;
 }
 .locName{
-	font-size:15px;
+	font-size:13px;
 	color: #C3C3C3;
 	margin-right: 5px;
+	
 }
 
 #nearProductsArea > .swiper{

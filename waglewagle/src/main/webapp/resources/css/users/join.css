@@ -139,6 +139,9 @@ select:focus {
 	text-align: center;
 }
 
+#validButtonds{
+	width: 170px;
+}
 
 #validCheck{
 	background-color: #CF5C5C;

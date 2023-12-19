@@ -1,8 +1,6 @@
 package kr.co.waglewagle.mainpage.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.mainpage.service.MainpageService;
 
@@ -30,6 +29,7 @@ public class MainpageController {
 			List<String> users_addrList = Arrays.asList(login.getUsers_addr_list().split(","));
 			model.addAttribute("near_list", service.nearList(users_addrList));
 			
+			//시구동 -> 동
 			for(int i=0; i<users_addrList.size(); i++) {
 				users_addrList.set(i, users_addrList.get(i).substring(users_addrList.get(i).lastIndexOf(" ")));
 			}
