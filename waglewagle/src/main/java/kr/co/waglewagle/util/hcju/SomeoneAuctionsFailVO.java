@@ -7,14 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SomeoneAuctionsVO {
+public class SomeoneAuctionsFailVO {
 	private Integer goods_id;
 	private String goods_title;
-	private Integer goods_start_price;
-	private Integer goods_avg_price;
-	private Integer users_id;
-	private Date goods_exp;
-	private Date post_date;
 	private String goods_th_img;
-	private Integer bids_price;
+	private Integer goods_start_price;
+	private Date post_date;
+	private Date goods_exp;
 }

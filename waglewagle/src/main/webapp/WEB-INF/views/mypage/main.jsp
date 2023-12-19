@@ -6,6 +6,7 @@
 <head>
 	<link rel="stylesheet" href="/resources/css/common/common.css">
 	<link rel="stylesheet" href="/resources/css/mypage/main.css">
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -122,8 +123,8 @@
 						<ul>
 							<li><a href="/mypage/auctions">경매 중</a></li>
 							<li><a href="/mypage/auctions_ing">거래 중</a></li>
-							<li><a href="/mypage/auctions_end/sold">판매 완료</a></li>
-							<li><a href="/mypage/auctions_end/bought">구매 완료</a></li>
+							<li><a href="/mypage/auctions_end_sold">판매 완료</a></li>
+							<li><a href="/mypage/auctions_end_bought">구매 완료</a></li>
 							<li><a href="/mypage/auctions_break">파기 상품</a></li>
 							<li><a href="/mypage/auctions_fail">유찰 상품</a></li>
 							<li><a href="/mypage/favors_list">찜 상품</a></li>
@@ -134,12 +135,10 @@
 						<ul>
 							<li><a href="/mypage/favors_list/fix">관심 지역 수정</a></li>
 							<li><a href="/mypage/pwd/change">비밀번호 수정</a></li>
-							<li><a href="#">문의 내역</a></li>
+							<li><a href="/mypage/qnas">문의 내역</a></li>
 						</ul>
 					</div>
-					<div id="cancelMenu">
-						<a href="#">회원 탈퇴</a>
-					</div>
+					<div id="cancelMenu">회원 탈퇴</div>
 				</div>
 				<div id="mypageList">
 					<c:if test='${menuTab == 0 && menuNum == 0}'>
@@ -155,10 +154,10 @@
 						<%@ include file="/WEB-INF/views/mypage/auctions_end_bought.jsp" %>
 					</c:if>
 					<c:if test='${menuTab == 0 && menuNum == 4}'>
-						<%@ include file="/WEB-INF/views/mypage/auctions_fail.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/auctions_break.jsp" %>
 					</c:if>
 					<c:if test='${menuTab == 0 && menuNum == 5}'>
-						<%@ include file="/WEB-INF/views/mypage/auctions_break.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/auctions_fail.jsp" %>
 					</c:if>
 					<c:if test='${menuTab == 0 && menuNum == 6}'>
 						<%@ include file="/WEB-INF/views/mypage/favors_list.jsp" %>
@@ -169,15 +168,36 @@
 					<c:if test='${menuTab == 1 && menuNum == 1}'>
 						<%@ include file="/WEB-INF/views/mypage/pwd_change.jsp" %>
 					</c:if>
+					<c:if test='${menuTab == 1 && menuNum == 2}'>
+						<%@ include file="/WEB-INF/views/mypage/qnas_list.jsp" %>
+					</c:if>
+					<c:if test='${menuTab == 1 && menuNum == 3}'>
+						<%@ include file="/WEB-INF/views/mypage/qnas_detail.jsp" %>
+					</c:if>
 				</div>
 			</div>
 		</div>
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+	<div id="deleteAccountWindow">
+		<div id="infoInputBox">
+			<div>회원을 탈퇴하시려면 비밀번호를 입력해주세요.</div>
+			<div id="pwdBox">
+				<div>비밀번호 입력</div>
+				<input type="password">
+			</div>
+			<div id="deleteButton">회원탈퇴</div>
+			<div id="alertAboutDelete">
+				[주의] 경매에 참가하고 있거나, 거래 중인 게시글이 있으면 회원을 탈퇴할 수 없습니다.<br>
+				참여중인 경매가 모두 완료된 후 다시 시도해 주세요.
+			</div>
+			<img id="closeDeleteWindow" src="/resources/images/close_icon.png">
+		</div>
+	</div>
 	<script>
 		// 좌측 메뉴 목록에서 현재 메뉴에 하이라이트
 		const menu = document.getElementsByClassName("mypageDetailMenu");
-		let targetTag = menu[${menuTab}].querySelectorAll("ul>li")[${menuNum}]
+		let targetTag = menu[${menuTab}].querySelectorAll("ul>li")[${menuTab == 1 && menuNum == 3 ? 2 : menuNum}]
 		targetTag.querySelector("a").style.color = "#CF5C5C";
 		targetTag.querySelector("a").style.fontWeight = "bold";
 
@@ -195,6 +215,40 @@
 		favorVal = Math.floor(favorVal / 79 * 100);
 		document.getElementById("favorRate").style.width = `${"${favorVal}"}%`;
 		document.getElementById("favorPin").style.left = `calc(${"${favorVal}"}% - 100px)`;
+		
+		// 회원탈퇴
+		$("#cancelMenu").click(function() {
+		    $("#deleteAccountWindow").css("display", "block");
+		    $(window).scrollTop(0);
+		});
+		$("#closeDeleteWindow").click(function() {
+		    $("#deleteAccountWindow").css("display", "none");
+		});
+		$("#deleteButton").click(function(){
+		    if(confirm("정말로 회원탈퇴하시겠습니까?")){
+				$.ajax({
+				    url: "/users/delete",
+				    type: "post",
+				    contentType: "application/json",
+				    data: JSON.stringify({
+						data: $("#pwdBox > input").val()
+				    }),
+				    success: function(data){
+						console.log(data);
+						if(data.resultCode == 0){
+						    alert("회원이 탈퇴되었습니다.");
+						    location.href = "/users/logout";
+						} else if(data.resultCode == 1){
+						    alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+						} else if(data.resultCode == 2){
+						    alert("경매에 참여중이거나, 거래중입니다. 모든 거래가 끝나야 회원탈퇴를 할 수 있습니다.");
+						} else if(data.resultCode == 3){
+						    alert("회원탈퇴에 실패하였습니다. 잠시후에 다시 시도해주세요.");
+						}
+				    }
+				});
+		    }
+		});
 	</script>
 </body>
 </html>

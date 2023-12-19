@@ -1,88 +1,70 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<link rel="stylesheet" href="/resources/css/mypage/auctions.css">
+	<link rel="stylesheet" href="/resources/css/mypage/auctions_end.css">
 </head>
 <body>
 	<div id="auctionsContainer">
-		<div id="acTitle">'<span>레오나르도 망곰</span>'님의 경매중인 목록</div>
+		<div id="acTitle">'<span>레오나르도 망곰</span>'님의 거래 파기 목록</div>
 		<div id="itemsList">
 			<!-- 반복 -->
-			<div class="itemBox">
-				<img class="wayMark" src="/resources/images/sell_icon.png">
-				<img class="goodsThumb" src="/resources/images/goods_sample.png">
-				<div class="itemTitle">망곰이 내복 팝니다~</div>
-				<div class="varPriceBox"></div>
-				<div class="staticValuesBox">
-					<p>시작가 : 10,000원</p>
-					<p>평균가 : 20,000원</p>
-					<p>마감일 : 2023.11.23</p>
-				</div>
-			</div>
-			<div class="itemBox">
-				<img class="wayMark" src="/resources/images/buy_icon.png">
-				<img class="goodsThumb" src="/resources/images/goods_sample.png">
-				<div class="itemTitle">망곰이 내복 팝니다~</div>
-				<div class="varPriceBox">호가 : 30,000원</div>
-				<div class="staticValuesBox">
-					<p>시작가 : 10,000원</p>
-					<p>평균가 : 20,000원</p>
-					<p>마감일 : 2023.11.23</p>
-				</div>
-			</div>
-			<div class="itemBox">
-				<img class="wayMark" src="/resources/images/sell_icon.png">
-				<img class="goodsThumb" src="/resources/images/goods_sample.png">
-				<div class="itemTitle">망곰이 내복 팝니다~</div>
-				<div class="varPriceBox"></div>
-				<div class="staticValuesBox">
-					<p>시작가 : 10,000원</p>
-					<p>평균가 : 20,000원</p>
-					<p>마감일 : 2023.11.23</p>
-				</div>
-			</div>
-			<div class="itemBox">
-				<img class="wayMark" src="/resources/images/sell_icon.png">
-				<img class="goodsThumb" src="/resources/images/goods_sample.png">
-				<div class="itemTitle">망곰이 내복 팝니다~</div>
-				<div class="varPriceBox"></div>
-				<div class="staticValuesBox">
-					<p>시작가 : 10,000원</p>
-					<p>평균가 : 20,000원</p>
-					<p>마감일 : 2023.11.23</p>
-				</div>
-			</div>
-			<div class="itemBox">
-				<img class="wayMark" src="/resources/images/sell_icon.png">
-				<img class="goodsThumb" src="/resources/images/goods_sample.png">
-				<div class="itemTitle">망곰이 내복 팝니다~</div>
-				<div class="varPriceBox"></div>
-				<div class="staticValuesBox">
-					<p>시작가 : 10,000원</p>
-					<p>평균가 : 20,000원</p>
-					<p>마감일 : 2023.11.23</p>
-				</div>
-			</div>
+			<c:forEach var="item" items="${ListData}">
+				<a class="itemBox" href="#">
+					<img class="wayMark" src='/resources/images/sell_icon.png'>
+					<div 
+						class="thumbnailBox"
+						style="background-image: url('/resources/images/${item.goods_th_img}')"
+					>
+						<img class="stampImg" src="/resources/images/auctions_break_icon.png">
+					</div>
+					<div class="itemTitle">${item.goods_title}</div>
+					<div class="varPriceBox"></div>
+					<div class="staticValuesBox">
+						<p>거래파기일 : <fmt:formatDate value="${item.auctions_break_date}" pattern="yyyy.MM.dd"/></p>
+					</div>
+				</a>
+			</c:forEach>
 			<!-- /반복 -->
 		</div>
+		<!-- pagination -->
 		<div id="pagingBox">
 			<ul>
-				<li><a href="#">&#60;</a></li>
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">6</a></li>
-				<li><a href="#">7</a></li>
-				<li><a href="#">8</a></li>
-				<li><a href="#">9</a></li>
-				<li><a href="#">10</a></li>
-				<li><a href="#">&#62;</a></li>
+				<c:if test="${pageNum10 != 0}">
+					<li><a href="/mypage/auctions_break?page=${pageNum10}&scroll=0">&#60;</a></li>
+				</c:if>
+				<c:forEach var="num" begin="${pageNum10 + 1}" end="${(pageNumMax - pageNum10) < 10 ? pageNumMax : pageNum10 + 10}" step="1">
+					<c:if test="${pageNum1 == num}">
+						<li class="nowPage">
+							<a href="/mypage/auctions_break?page=${num}&scroll=0">${num}</a>
+						</li>
+					</c:if>
+					<c:if test="${pageNum1 != num}">
+						<li>
+							<a href="/mypage/auctions_break?page=${num}&scroll=0">${num}</a>
+						</li>
+					</c:if>
+				</c:forEach>
+				<c:if test="${(pageNumMax - pageNum10) > 10}">
+					<li><a href="/mypage/auctions_break?page=${pageNum10 + 11}&scroll=0">&#62;</a></li>
+				</c:if>
 			</ul>
 		</div>
+		<!-- /pagination -->
 	</div>
+	<script>
+		window.scrollTo({top: "${scrollY}"});
+		window.addEventListener("scroll", () => {
+			let scrollVal = window.scrollY;
+			let aTags = document.getElementById("pagingBox").querySelectorAll("a");
+			for(let aa of aTags){
+			    aa.href = aa.href.substr(0, aa.href.indexOf("&scroll=")) + "&scroll=" + scrollVal;
+			}
+		});
+	</script>
 </body>
 </html>

@@ -37,7 +37,6 @@
 	background-color: #F4F4F4;
 	border-radius: 10px;
 	margin: 1% 0;
-	cursor: pointer;
 }
 #auctionsContainer>#itemsList>.itemBox:hover{
 	background-color: #E4E4E4
@@ -76,7 +75,7 @@
 	height: 100%;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: center;
 }
 #auctionsContainer>#pagingBox>ul>li{
@@ -84,8 +83,13 @@
 	height: 40px;
 	border-radius: 20px;
 	overflow: hidden;
+	margin: 0 1%;
 }
 #auctionsContainer>#pagingBox>ul>li:hover>a{
+	background-color: #CF5C5C;
+	color: #fff;
+}
+#auctionsContainer>#pagingBox>ul>li.nowPage>a{
 	background-color: #CF5C5C;
 	color: #fff;
 }

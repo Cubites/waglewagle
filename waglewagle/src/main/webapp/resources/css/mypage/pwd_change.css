@@ -37,6 +37,22 @@
 .pwdBox>input:focus{
 	outline: none;
 }
+/* alertMessageBox */
+#alertMessageBox{
+	width: 450px;
+	padding-left: 150px;
+	font-size: 12px;
+	color: red;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+	height: 20px;
+}
+/* newPwdConfirm */
+#newPwdConfirm{
+	margin-top: 0;
+}
 /* pwdChangeButton */
 #pwdChangeButton{
 	width: 120px;

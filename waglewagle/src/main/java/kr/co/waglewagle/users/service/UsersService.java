@@ -3,16 +3,22 @@ package kr.co.waglewagle.users.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.PointVO;
+import kr.co.waglewagle.domain.QnasVO;
 import kr.co.waglewagle.domain.UsersVO;
-import kr.co.waglewagle.util.hcju.SomeoneAuctionsVO;
 
 public interface UsersService {
 	UsersVO userInfo(Integer users_id);
 	PointVO checkPoint(Integer users_id);
 	
-	Map<String, Integer> countAuctions(Integer users_id);
+	String checkFavorAreas(Integer users_id);
+	int updateAreas(Map<String, Object> dataForAreaUpdate);
+
+	int validPwd(Map<String, Object> dataForValidPwd);
+	int pwdChange(Map<String, Object> dataForValidPwd);
+
+	int countQnas(Integer users_id);
+	List<QnasVO> checkQnas(Map<String, Integer> dataForCheckQnas);
 	
-	List<SomeoneAuctionsVO> checkAuctions(Map<String, Integer> auctionsVal);
+	int deleteAccount(Integer users_id);
 }

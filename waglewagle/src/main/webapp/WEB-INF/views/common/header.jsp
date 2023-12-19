@@ -30,9 +30,15 @@
 							<a href="#" class="text_center">로그인</a>
 						</div>
 					</c:if>
-					<a href="#" class="text_center">
+					<div class="text_center">
 						<img src="/resources/images/mypageIcon.png">
-					</a>
+						<c:if test='${!empty sessionScope.users_info.users_nick}'>
+							<div id="myMenu">
+								<a href="/mypage/auctions">마이페이지</a>
+								<a href="#" id="logoutButton">로그아웃</a>
+							</div>
+						</c:if>
+					</div>
 				</div>
 			</div>
 			
@@ -102,7 +108,7 @@
 				</div>
 				<div id="headerBottomCenter">
 					<a href="#" class="text_center">공지사항</a>
-					<a href="#" class="text_center">문의하기</a>				
+					<a href="/boards/qnas/write" class="text_center">문의하기</a>				
 				</div>
 				<a href="#" id="headerBottomRight">
 					<img src="/resources/images/shopping.png">
@@ -111,5 +117,12 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		$("#logoutButton").click(function() {
+		   if(confirm("로그아웃 하시겠습니까?")) {
+		       location.href="/users/logout";
+		   }
+		});
+	</script>
 </body>
 </html>

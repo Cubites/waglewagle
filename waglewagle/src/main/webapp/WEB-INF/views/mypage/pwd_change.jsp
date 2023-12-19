@@ -4,7 +4,6 @@
 <html>
 <head>
 	<link rel="stylesheet" href="/resources/css/mypage/pwd_change.css">
-	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
 	<div id="auctionsContainer">
@@ -15,6 +14,9 @@
         <div id="newPwd" class="pwdBox">
             <div>새 비밀번호</div>
             <input type="password">
+        </div>
+        <div id="alertMessageBox">
+            
         </div>
         <div id="newPwdConfirm" class="pwdBox">
             <div>비밀번호 확인</div>
