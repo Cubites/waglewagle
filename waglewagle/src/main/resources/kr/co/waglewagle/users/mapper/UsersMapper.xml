@@ -67,6 +67,11 @@
 		LIMIT #{start_page}, 10;
 	</select>
 	
+
+	<select id="selectPointByUsersId" parameterType="Integer" resultType="kr.co.waglewagle.domain.PointVO">
+		SELECT * FROM point WHERE users_id = #{usersId}
+	</select>
+
   <!-- 회원 탈퇴 -->
 	<update id="deleteAccount" parameterType="Integer">
 		UPDATE users SET users_status = 1 WHERE users_id = #{users_id}
@@ -112,4 +117,5 @@
 		SET users_pwd=#{users_pwd}
 		WHERE users_id=#{users_id}
 	</update>
+
 </mapper>

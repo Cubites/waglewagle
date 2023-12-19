@@ -10,6 +10,9 @@ import kr.co.waglewagle.domain.UsersVO;
 
 public interface UsersService {
 	UsersVO userInfo(Integer users_id);
+	List<CategoryVO> allCategory();
+	PointVO getPoint(Integer users_id);
+
 
 	boolean join(UsersVO vo);
 	boolean isEmailDup(String users_email);
@@ -28,4 +31,5 @@ public interface UsersService {
 	List<QnasVO> checkQnas(Map<String, Integer> dataForCheckQnas);
 	
 	int deleteAccount(Integer users_id);
+
 }

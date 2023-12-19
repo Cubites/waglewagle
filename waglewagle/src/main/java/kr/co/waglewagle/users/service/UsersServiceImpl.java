@@ -7,8 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+import kr.co.waglewagle.domain.CategoryVO;
+import kr.co.waglewagle.domain.PointVO;
+
 import kr.co.waglewagle.domain.PointVO;
 import kr.co.waglewagle.domain.QnasVO;
+
 import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.users.mapper.UsersMapper;
 
@@ -70,6 +75,14 @@ public class UsersServiceImpl implements UsersService {
 		return mapper.isNickDup(users_nick) > 0 ? true : false;
 	}
 
+
+	@Override
+	public PointVO getPoint(Integer users_id) {
+		PointVO userPoint = mapper.selectPointByUsersId(users_id);
+		return userPoint;
+	}
+
+
 	
 	@Override
 	public UsersVO login(UsersVO vo) {
@@ -98,4 +111,5 @@ public class UsersServiceImpl implements UsersService {
 		
 		return mapper.changePwd(user_info) > 0 ? true : false;
 	}
+
 }

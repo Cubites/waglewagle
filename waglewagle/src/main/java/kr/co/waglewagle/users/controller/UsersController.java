@@ -46,6 +46,7 @@ public class UsersController {
 		return "home";
 	}
 	
+
 	// 회원가입 페이지 이동
 	@GetMapping("/join")
 	public String joinForm() {
@@ -373,4 +374,5 @@ public class UsersController {
 		model.addAttribute("menuNum", 1);
 		return "mypage/main";
 	}
+
 }

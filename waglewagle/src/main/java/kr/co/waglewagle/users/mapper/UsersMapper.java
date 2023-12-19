@@ -14,6 +14,8 @@ import kr.co.waglewagle.domain.UsersVO;
 public interface UsersMapper {
 	UsersVO userInfo(Integer users_id);
 
+	List<CategoryVO> allCategory();
+	PointVO selectPointByUsersId(Integer users_id);
 	int join(UsersVO vo);
 	int isEmailDup(String users_email);
 	int isNickDup(String users_nick);
@@ -30,5 +32,6 @@ public interface UsersMapper {
 	int countQnas(Integer users_id);
 	List<QnasVO> checkQnas(Map<String, Integer> dataForCheckQnas);
 	int deleteAccount(Integer users_id);
+
 
 }
