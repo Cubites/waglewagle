@@ -43,12 +43,21 @@
                 </div>
             </div>
             <div id="report">
-                <div id="report_space">
+                <div id="report_space" onClick="goReport()">
                     <img src="/resources/images/mobile/report_img.png" id="report_img">
                     <div id="auc_report_btn">거래 파기 신고하기</div>
                 </div>
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+    	
+    	// 신고하기 페이지로 이동
+    	function goReport() {
+    		const goods_id = 2;
+    		location.href = "/auctions/${goods_id}/report";
+    	}
+    
+    </script>
 </body>
 </html>
