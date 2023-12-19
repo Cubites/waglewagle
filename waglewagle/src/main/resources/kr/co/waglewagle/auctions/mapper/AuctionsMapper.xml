@@ -11,11 +11,23 @@
 			, auctions_count + auctions_ing_count + auctions_end_count + auctions_break_count + auctions_fail_count AS auctions_total_count
 		FROM (
 			SELECT 
-				(SELECT COUNT(*) FROM goods WHERE goods_exp > NOW() AND users_id = #{users_id}) AS auctions_count
-				, (SELECT COUNT(*) FROM auctions_ing WHERE users_id = #{users_id}) AS auctions_ing_count
-				, (SELECT COUNT(*) FROM auctions_end WHERE users_id = #{users_id}) AS auctions_end_count
-				, (SELECT COUNT(*) FROM auctions_break WHERE users_id = #{users_id}) AS auctions_break_count
-				, (SELECT COUNT(*) FROM auctions_fail WHERE users_id = #{users_id}) AS auctions_fail_count
+				(SELECT COUNT(*) FROM goods WHERE goods_exp > NOW() AND users_id = #{users_id}) + (
+					SELECT
+						COUNT(*)
+					FROM goods gs2
+					JOIN (
+						SELECT
+							goods_id
+						FROM bids 
+						WHERE users_id = #{users_id}
+						GROUP BY goods_id
+					) bs ON bs.goods_id = gs2.goods_id
+					WHERE gs2.goods_exp > NOW()
+				) AS auctions_count 
+				, (SELECT COUNT(*) FROM auctions_ing WHERE auctions_ing_seller = #{users_id} OR auctions_ing_buyer = #{users_id}) AS auctions_ing_count 
+				, (SELECT COUNT(*) FROM auctions_end WHERE auctions_end_seller = #{users_id} OR auctions_end_buyer = #{users_id}) AS auctions_end_count 
+				, (SELECT COUNT(*) FROM auctions_break WHERE auctions_break_user = #{users_id}) AS auctions_break_count 
+				, (SELECT COUNT(*) FROM auctions_fail WHERE auctions_fail_seller = #{users_id}) AS auctions_fail_count 
 			FROM users
 			WHERE users_id = #{users_id}
 		) cn;
