@@ -16,4 +16,11 @@ public interface GoodsMapper {
 	List<CategoryVO> getLowerCategory(Integer lowerId);
 	Integer insertGoods(GoodsFormVO vo);
 	Integer insertImages(Map map);
+	GoodsVO selectGoodsById(Integer goodsId);
+	List<ImagesVO> selectImagesById(Integer goodsId);
+	Integer countFavorsByGoodsId(int goodsId);
+	Integer countFavorsByUsersId(Map<String,Integer> favorMap);
+	Integer insertFavor(Map<String,Integer> favorMap);
+	Integer deleteFavor(Map<String, Integer> favorMap);
+	
 }

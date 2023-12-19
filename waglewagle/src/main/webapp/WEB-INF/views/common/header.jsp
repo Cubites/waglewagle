@@ -3,10 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>Header</title>
-</head>
+<header>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</header>
 <body>
 	<div id="header">
 		<div id="headerContainer">
@@ -29,9 +30,15 @@
 							<a href="login" class="text_center">로그인</a>
 						</div>
 					</c:if>
-					<a href="#" class="text_center">
+					<div class="text_center">
 						<img src="/resources/images/mypageIcon.png">
-					</a>
+						<c:if test='${!empty sessionScope.users_info.users_nick}'>
+							<div id="myMenu">
+								<a href="/mypage/auctions">마이페이지</a>
+								<a href="#" id="logoutButton">로그아웃</a>
+							</div>
+						</c:if>
+					</div>
 				</div>
 			</div>
 			
@@ -100,8 +107,8 @@
 					-->
 				</div>
 				<div id="headerBottomCenter">
-					<a href="#" class="text_center">공지사항</a>
-					<a href="#" class="text_center">문의하기</a>				
+					<a href="/board/noticelist" class="text_center">공지사항</a>
+					<a href="/boards/qnas/write" class="text_center">문의하기</a>				
 				</div>
 				<a href="#" id="headerBottomRight">
 					<img src="/resources/images/shopping.png">
@@ -110,5 +117,12 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		$("#logoutButton").click(function() {
+		   if(confirm("로그아웃 하시겠습니까?")) {
+		       location.href="/users/logout";
+		   }
+		});
+	</script>
 </body>
 </html>
