@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.waglewagle.domain.CategoryVO;
 import kr.co.waglewagle.domain.PointVO;
 import kr.co.waglewagle.domain.QnasVO;
 import kr.co.waglewagle.domain.UsersVO;
@@ -13,7 +14,6 @@ import kr.co.waglewagle.domain.UsersVO;
 public interface UsersMapper {
 	UsersVO userInfo(Integer users_id);
 
-	List<CategoryVO> allCategory();
 	int join(UsersVO vo);
 	int isEmailDup(String users_email);
 	int isNickDup(String users_nick);
@@ -22,7 +22,7 @@ public interface UsersMapper {
 	UsersVO findPwd(Map<String, String> user_info);
 	int changePwd(Map<String, String> user_info);
 
-  PointVO checkPoint(Integer users_id);
+	PointVO checkPoint(Integer users_id);
 	String checkFavorAreas(Integer users_id);
 	int updateAreas(Map<String, Object> dataForAreaUpdate);
 	int validPwd(Map<String, Object> dataForValidPwd);

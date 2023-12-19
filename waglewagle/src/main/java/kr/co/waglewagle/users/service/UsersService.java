@@ -3,6 +3,7 @@ package kr.co.waglewagle.users.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.waglewagle.domain.CategoryVO;
 import kr.co.waglewagle.domain.PointVO;
 import kr.co.waglewagle.domain.QnasVO;
 import kr.co.waglewagle.domain.UsersVO;
@@ -10,7 +11,6 @@ import kr.co.waglewagle.domain.UsersVO;
 public interface UsersService {
 	UsersVO userInfo(Integer users_id);
 
-  List<CategoryVO> allCategory();
 	boolean join(UsersVO vo);
 	boolean isEmailDup(String users_email);
 	boolean isNickDup(String users_nick);
@@ -19,7 +19,7 @@ public interface UsersService {
 	UsersVO findPwd(Map<String, String> user_info);
 	boolean changePwd(Map<String, String> user_info);
 
-  PointVO checkPoint(Integer users_id);
+	PointVO checkPoint(Integer users_id);
 	String checkFavorAreas(Integer users_id);
 	int updateAreas(Map<String, Object> dataForAreaUpdate);
 	int validPwd(Map<String, Object> dataForValidPwd);
