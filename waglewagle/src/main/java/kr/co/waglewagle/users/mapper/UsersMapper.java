@@ -13,6 +13,8 @@ public interface UsersMapper {
 	UsersVO userInfo(Integer users_id);
 	List<CategoryVO> allCategory();
 	int join(UsersVO vo);
+	int selectUsersId(String users_email);
+	int createPoint(int users_id);
 	int isEmailDup(String users_email);
 	int isNickDup(String users_nick);
 	UsersVO login(UsersVO vo);

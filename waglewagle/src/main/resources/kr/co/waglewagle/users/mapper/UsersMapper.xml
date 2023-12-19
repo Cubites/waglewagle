@@ -40,6 +40,20 @@
 		SELECT COUNT(*) FROM users WHERE users_nick = #{users_nick}
 	</select>
 	
+	<!-- 회원 아이디 조회 -->
+	<select id="selectUsersId" parameterType="String" resultType="Integer">
+		SELECT users_id FROM users WHERE users_email = #{users_email}
+	</select>
+	
+	<!-- point 테이블 insert -->
+	<insert id="createPoint" parameterType="Integer">
+		INSERT INTO point(
+			users_id
+		) VALUES (
+			#{users_id}
+		)
+	</insert>
+	
 	<!-- 로그인 -->
 	<select id="login" parameterType ="kr.co.waglewagle.domain.UsersVO" resultType="kr.co.waglewagle.domain.UsersVO">
 		SELECT * FROM users WHERE users_email = #{users_email}
