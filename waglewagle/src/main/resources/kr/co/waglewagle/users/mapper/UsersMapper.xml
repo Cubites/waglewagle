@@ -14,14 +14,108 @@
 		FROM users WHERE users_id=#{users_id}
 	</select>
 	
-	<select id="allCategory" resultType="kr.co.waglewagle.domain.CategoryVO">
-		SELECT 
-			category_id, category_upper_id, category_name 
-		FROM category 
-		ORDER BY category_id ASC
+  <!-- 포인트 조회 -->
+	<select id="checkPoint" resultType="kr.co.waglewagle.domain.PointVO" parameterType="Integer">
+		SELECT
+			point_usable
+			, point_total
+		FROM point
+		WHERE users_id=#{users_id}
 	</select>
 	
+  <!-- 관심지역 조회 -->
+	<select id="checkFavorAreas" resultType="String" parameterType="Integer">
+		SELECT
+			users_addr_list
+		FROM users
+		WHERE users_id = #{users_id}
+	</select>
+	
+  <!-- 관심지역 수정 -->
+	<update id="updateAreas" parameterType="java.util.Map">
+		UPDATE users 
+		SET users_addr_list = #{areas}
+		WHERE users_id = #{users_id};
+	</update>
+	
+  <!-- 비밀번호 일치여부 확인 -->
+	<select id="validPwd" resultType="int" parameterType="java.util.Map">
+		SELECT
+			COUNT(*)
+		FROM users
+		WHERE users_id = #{users_id} AND users_pwd = #{users_pwd}
+	</select>
+	<update id="pwdChange" parameterType="java.util.Map">
+		UPDATE users
+		SET users_pwd = #{users_pwd}
+		WHERE users_id = #{users_id}
+	</update>
+	
+  <!-- 문의글 수 확인 -->
+	<select id="countQnas" resultType="Integer" parameterType="Integer">
+		SELECT COUNT(*) FROM qnas WHERE users_id = #{users_id}
+	</select>
+	<select id="checkQnas" resultType="kr.co.waglewagle.domain.QnasVO" parameterType="java.util.Map">
+		SELECT 
+			row_number() over(order by qnas_date asc) as rownum
+			, qnas_id 
+			, qnas_title 
+			, qnas_date
+		FROM qnas
+		WHERE users_id = #{users_id}
+		ORDER BY qnas_date DESC
+		LIMIT #{start_page}, 10;
+	</select>
+	
+
 	<select id="selectPointByUsersId" parameterType="Integer" resultType="kr.co.waglewagle.domain.PointVO">
 		SELECT * FROM point WHERE users_id = #{usersId}
 	</select>
+
+  <!-- 회원 탈퇴 -->
+	<update id="deleteAccount" parameterType="Integer">
+		UPDATE users SET users_status = 1 WHERE users_id = #{users_id}
+  </update>
+
+	<!-- 회원 가입 -->	
+	<insert id="join" parameterType="kr.co.waglewagle.domain.UsersVO">
+		INSERT INTO users(
+			users_nick, users_pwd, users_name, users_gender, users_phone, users_email, users_join, users_rel, users_status, users_addr_list
+		) VALUES(
+			#{users_nick}, #{users_pwd}, #{users_name}, #{users_gender}, #{users_phone}, #{users_email}, NOW(), 42, 0, #{users_addr_list}
+		)
+	</insert>
+	
+	<!-- email 중복 체크 -->
+	<select id="isEmailDup" parameterType ="String" resultType="Integer">
+		SELECT COUNT(*) FROM users WHERE users_email = #{users_email}
+	</select>
+	
+	<!-- nickname 중복 체크 -->
+	<select id="isNickDup" parameterType ="String" resultType="Integer">
+		SELECT COUNT(*) FROM users WHERE users_nick = #{users_nick}
+	</select>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType ="kr.co.waglewagle.domain.UsersVO" resultType="kr.co.waglewagle.domain.UsersVO">
+		SELECT * FROM users WHERE users_email = #{users_email}
+	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findId" parameterType="Map" resultType="kr.co.waglewagle.domain.UsersVO">
+		SELECT * FROM users WHERE users_name=#{users_name} AND users_phone=#{users_phone}
+ 	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findPwd" parameterType="Map" resultType="kr.co.waglewagle.domain.UsersVO">
+		SELECT * FROM users WHERE users_name=#{users_name} AND users_email=#{users_email}
+ 	</select>
+ 	
+ 	<!-- 비밀번호 변경 -->
+	<update id="changePwd" parameterType="Map">
+		UPDATE users 
+		SET users_pwd=#{users_pwd}
+		WHERE users_id=#{users_id}
+	</update>
+
 </mapper>

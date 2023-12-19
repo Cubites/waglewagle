@@ -1,5 +1,269 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.waglewagle.auctions.mapper.AuctionsMapper">
+	<select id="countAllAuctions" resultType="java.util.Map" parameterType="Integer">
+		SELECT 
+			auctions_count
+			, auctions_ing_count
+			, auctions_end_count
+			, auctions_break_count
+			, auctions_fail_count
+			, auctions_count + auctions_ing_count + auctions_end_count + auctions_break_count + auctions_fail_count AS auctions_total_count
+		FROM (
+			SELECT 
+				(SELECT COUNT(*) FROM goods WHERE goods_exp > NOW() AND users_id = #{users_id}) + (
+					SELECT
+						COUNT(*)
+					FROM goods gs2
+					JOIN (
+						SELECT
+							goods_id
+						FROM bids 
+						WHERE users_id = #{users_id}
+						GROUP BY goods_id
+					) bs ON bs.goods_id = gs2.goods_id
+					WHERE gs2.goods_exp > NOW()
+				) AS auctions_count 
+				, (SELECT COUNT(*) FROM auctions_ing WHERE auctions_ing_seller = #{users_id} OR auctions_ing_buyer = #{users_id}) AS auctions_ing_count 
+				, (SELECT COUNT(*) FROM auctions_end WHERE auctions_end_seller = #{users_id} OR auctions_end_buyer = #{users_id}) AS auctions_end_count 
+				, (SELECT COUNT(*) FROM auctions_break WHERE auctions_break_user = #{users_id}) AS auctions_break_count 
+				, (SELECT COUNT(*) FROM auctions_fail WHERE auctions_fail_seller = #{users_id}) AS auctions_fail_count 
+			FROM users
+			WHERE users_id = #{users_id}
+		) cn;
+	</select>
 	
+	<select id="countAuctions" resultType="Integer" parameterType="Integer">
+		SELECT
+			(
+				SELECT 
+					COUNT(*)
+				FROM goods gs
+				WHERE gs.goods_exp > NOW() AND users_id = #{users_id}
+			) + (
+				SELECT
+					COUNT(*)
+				FROM goods gs2
+				JOIN (
+					SELECT
+						goods_id
+					FROM bids 
+					WHERE users_id = #{users_id}
+					GROUP BY goods_id
+				) bs ON bs.goods_id = gs2.goods_id
+				WHERE gs2.goods_exp > NOW()
+			) auctionsTotalNum;
+	</select>
+	
+	<select id="checkAuctions" resultType="kr.co.waglewagle.util.hcju.SomeoneAuctionsVO" parameterType="java.util.Map">
+		SELECT 
+			goods_id
+			, goods_title
+			, goods_start_price
+			, goods_avg_price
+			, users_id
+			, goods_exp
+			, post_date
+			, goods_th_img
+			, bids_price 
+		FROM (
+			SELECT 
+				goods_id 
+				, goods_title 
+				, goods_start_price 
+				, goods_avg_price
+				, users_id 
+				, goods_exp
+				, goods_date AS post_date
+				, goods_th_img 
+				, null AS bids_price
+			FROM goods gs
+			WHERE gs.goods_exp > NOW() AND users_id = #{users_id}
+			UNION 
+			SELECT
+				gs2.goods_id 
+				, gs2.goods_title 
+				, gs2.goods_start_price 
+				, gs2.goods_avg_price
+				, gs2.users_id 
+				, gs2.goods_exp 
+				, bs.bids_date AS post_date
+				, gs2.goods_th_img 
+				, bs.bids_price
+			FROM goods gs2
+			JOIN (
+				SELECT 
+					bd.users_id AS users_id
+					, bd.goods_id AS goods_id
+					, bd.bids_price AS bids_price
+					, bd.bids_date AS bids_date
+				FROM bids bd
+				JOIN (
+					SELECT
+						users_id
+						, goods_id
+						, MAX(bids_price) AS bids_price
+					FROM bids 
+					WHERE users_id = #{users_id}
+					GROUP BY users_id, goods_id
+				) mbd ON bd.users_id = mbd.users_id AND bd.goods_id = mbd.goods_id AND bd.bids_price = mbd.bids_price
+			) bs ON bs.goods_id = gs2.goods_id
+			WHERE gs2.goods_exp > NOW()
+			ORDER BY post_date desc
+		) al
+		LIMIT #{start_page}, 5
+	</select>
+	
+	<select id="countAuctionsIng" resultType="Integer" parameterType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM auctions_ing 
+		WHERE auctions_ing_seller = #{users_id} OR auctions_ing_buyer = #{users_id}
+	</select>
+	<select id="checkAuctionsIng" resultType="kr.co.waglewagle.util.hcju.SomeoneAuctionsIngVO" parameterType="java.util.Map">
+		SELECT 
+			g.goods_id 
+			, g.goods_th_img 
+			, g.goods_title 
+			, ai.purchase_price
+			, g.goods_exp
+			, ai.seller_id 
+			, ai.buyer_id
+			, ai.auctions_ing_read
+		FROM goods g 
+		JOIN (
+			SELECT 
+				goods_id
+				, auctions_ing_seller AS seller_id 
+				, auctions_ing_buyer AS buyer_id
+				, auctions_ing_price AS purchase_price 
+				, IF (auctions_ing_seller = #{users_id}, auctions_seller_read, auctions_buyer_read) AS auctions_ing_read
+			FROM auctions_ing 
+			WHERE auctions_ing_seller = #{users_id} OR auctions_ing_buyer = #{users_id}
+		) ai ON ai.goods_id = g.goods_id
+		ORDER BY g.goods_exp DESC
+		LIMIT #{start_page}, 5
+	</select>
+	
+	<select id="countAuctionsEndSold" resultType="Integer" parameterType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM auctions_end 
+		WHERE auctions_end_seller = #{users_id}
+	</select>
+	<select id="checkAuctionsEndSold" resultType="kr.co.waglewagle.util.hcju.SomeoneAuctionsEndVO" parameterType="java.util.Map">
+		SELECT 
+			g.goods_id 
+			, g.goods_th_img 
+			, g.goods_title 
+			, ae.purchase_price
+			, ae.auctions_end_date
+			, ae.seller_id 
+			, ae.buyer_id
+		FROM goods g 
+		JOIN (
+			SELECT 
+				goods_id
+				, auctions_end_seller AS seller_id 
+				, auctions_end_buyer AS buyer_id
+				, auctions_end_price AS purchase_price 
+				, auctions_end_date
+			FROM auctions_end 
+			WHERE auctions_end_seller = #{users_id}
+		) ae ON ae.goods_id = g.goods_id
+		ORDER BY ae.auctions_end_date DESC
+		LIMIT #{start_page}, 5;
+	</select>
+	
+	<select id="countAuctionsEndBought" resultType="Integer" parameterType="Integer">
+		SELECT COUNT(*) FROM auctions_end WHERE auctions_end_buyer = #{users_id}
+	</select>
+	<select id="checkAuctionsEndBought" resultType="kr.co.waglewagle.util.hcju.SomeoneAuctionsEndVO" parameterType="java.util.Map">
+		SELECT 
+			g.goods_id 
+			, g.goods_th_img 
+			, g.goods_title 
+			, ae.purchase_price
+			, ae.auctions_end_date
+			, ae.seller_id 
+			, ae.buyer_id
+		FROM goods g 
+		JOIN (
+			SELECT 
+				goods_id
+				, auctions_end_seller AS seller_id 
+				, auctions_end_buyer AS buyer_id
+				, auctions_end_price AS purchase_price 
+				, auctions_end_date
+			FROM auctions_end 
+			WHERE auctions_end_buyer = #{users_id}
+		) ae ON ae.goods_id = g.goods_id
+		ORDER BY ae.auctions_end_date DESC
+		LIMIT #{start_page}, 5;
+	</select>
+	
+	<select id="countAuctionsBreak" resultType="Integer" parameterType="Integer">
+		SELECT COUNT(*) FROM auctions_break WHERE auctions_Break_user = #{users_id}
+	</select>
+	<select id="checkAuctionsBreak" resultType="kr.co.waglewagle.util.hcju.SomeoneAuctionsBreakVO" parameterType="java.util.Map">
+		SELECT 
+			g.goods_id 
+			, g.goods_th_img 
+			, g.goods_title 
+			, abu.auctions_break_date
+		FROM goods g
+		JOIN (
+			SELECT
+				goods_id
+				, auctions_break_date
+			FROM auctions_break
+			WHERE auctions_break_user = #{users_id}
+		) abu ON abu.goods_id = g.goods_id
+		ORDER BY abu.auctions_break_date DESC
+		LIMIT #{start_page}, 5
+	</select>
+	
+	<select id="countAuctionsFail" resultType="Integer" parameterType="Integer">
+		SELECT COUNT(*) FROM auctions_fail WHERE auctions_fail_seller = #{users_id};
+	</select>
+	<select id="checkAuctionsFail" resultType="kr.co.waglewagle.util.hcju.SomeoneAuctionsFailVO" parameterType="java.util.Map">
+		SELECT 
+			g.goods_id 
+			, g.goods_th_img
+			, g.goods_title 
+			, g.goods_start_price
+			, g.goods_date AS post_date
+			, g.goods_exp 
+		FROM goods g 
+		JOIN (
+			SELECT
+				goods_id
+			FROM auctions_fail
+			WHERE auctions_fail_seller = #{users_id}
+		) af ON af.goods_id = g.goods_id
+		ORDER BY g.goods_exp DESC
+		LIMIT #{start_page}, 5
+	</select>
+	
+	<select id="countFavors" resultType="Integer" parameterType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM goods g 
+		JOIN favors f ON f.goods_id = g.goods_id
+		WHERE f.users_id = #{user_id} AND g.goods_exp > NOW()
+	</select>
+	<select id="checkFavors" resultType="kr.co.waglewagle.util.hcju.SomeoneFavorsVO" parameterType="java.util.Map">
+		SELECT 
+			g.goods_id 
+			, g.goods_title 
+			, g.goods_th_img 
+			, g.goods_start_price 
+			, g.goods_avg_price 
+			, g.goods_exp 
+		FROM goods g 
+		JOIN favors f ON f.goods_id = g.goods_id
+		WHERE f.users_id = #{users_id} AND g.goods_exp > NOW()
+		ORDER BY g.goods_exp ASC
+		LIMIT #{start_page}, 5
+	</select>
 </mapper>

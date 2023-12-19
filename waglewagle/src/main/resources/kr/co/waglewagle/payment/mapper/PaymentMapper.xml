@@ -2,4 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.waglewagle.payment.mapper.PaymentMapper">
 	
+	<insert id="savePayment" parameterType="kr.co.waglewagle.domain.PaylogVO">
+		INSERT INTO wagle.paylog (
+			users_id, paylog_cash, paylog_type
+		) VALUES (
+			#{users_id}, #{paylog_cash}, #{paylog_type}
+		)
+	</insert>
+
+	<update id="updateTotalPoint" parameterType="kr.co.waglewagle.domain.PaylogVO">
+		UPDATE wagle.point SET
+			point_total = point_total + #{paylog_cash},
+			point_usable = point_usable + #{paylog_cash}
+		WHERE users_id=#{users_id}
+	</update>
 </mapper>

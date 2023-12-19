@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.MessageSource;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -33,7 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 @ComponentScan(basePackages = "kr.co.waglewagle")
 @EnableWebMvc
 @MapperScan(basePackages = "kr.co.waglewagle", annotationClass = Mapper.class)
+
 @Slf4j
+
 @EnableTransactionManagement
 public class WebConfig implements WebMvcConfigurer {
 	
@@ -52,6 +56,12 @@ public class WebConfig implements WebMvcConfigurer {
 	//외부 파일과 실제 디렉토리 경로 설정을 위해 추가
 	@Value("${os.root}")
 	private String osRoot;
+
+	
+	@Autowired
+	MypageInterceptor mypageInterceptor;
+
+
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
@@ -105,10 +115,17 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public static PropertyPlaceholderConfigurer property() {
 		PropertyPlaceholderConfigurer pro = new PropertyPlaceholderConfigurer();
-		pro.setLocations(new ClassPathResource("db.properties"),new ClassPathResource("file.properties"));
+		pro.setLocations(new ClassPathResource("db.properties"), new ClassPathResource("file.properties"),
+				new ClassPathResource("mail.properties"));
 		return pro;
 	}
-	
+
+	// Mypage 공통 작업(유저 정보 조회, 게시글 상태별 수 조회) 인터셉터
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns();
+	}
+
 	// 파일 업로드를 위한 bean
 		@Bean(name = "multipartResolver")
 		public CommonsMultipartResolver multipartResolver() {
@@ -123,7 +140,7 @@ public class WebConfig implements WebMvcConfigurer {
 		public MessageSource messageSource() {
 			final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 			
-			log.info("hi ");
+			
 			
 			messageSource.setBasename("/errorMessage/error");
 			
@@ -139,4 +156,24 @@ public class WebConfig implements WebMvcConfigurer {
 		      return dtm;
 		   }
 
+
+
+	// messages를 읽기 위한 Bean
+	@Bean
+	public MessageSource messageSource() {
+		final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+
+		messageSource.setBasename("/errorMessage/error");
+
+		messageSource.setDefaultEncoding("utf-8");
+		return messageSource;
+	}
+
+	// 트랜잭션 설정
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		DataSourceTransactionManager dtm = new DataSourceTransactionManager();
+		dtm.setDataSource(dataSource());
+		return dtm;
+	}
 }
