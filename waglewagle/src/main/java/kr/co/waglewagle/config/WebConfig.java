@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.MessageSource;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -42,6 +44,9 @@ public class WebConfig implements WebMvcConfigurer {
 	private String username;
 	@Value("${db.userpassword}")
 	private String userpassword;
+	
+	@Autowired
+	MypageInterceptor mypageInterceptor;
 
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
@@ -96,6 +101,12 @@ public class WebConfig implements WebMvcConfigurer {
 		pro.setLocations(new ClassPathResource("db.properties"), new ClassPathResource("file.properties"),
 				new ClassPathResource("mail.properties"));
 		return pro;
+	}
+
+	// Mypage 공통 작업(유저 정보 조회, 게시글 상태별 수 조회) 인터셉터
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns();
 	}
 
 	// 파일 업로드를 위한 bean
