@@ -157,7 +157,7 @@
   height: 9%;
 }
 
-#actionEnd {
+#auctionEnd {
   width: 80%;
   background-color: #fe4c4c;
   display: flex;
@@ -172,7 +172,7 @@
 #endImg {
   width: 25px;
   height: 25px;
-  margin-right: 10px;
+  margin-right: 40px;
 }
 
 #reportUser {

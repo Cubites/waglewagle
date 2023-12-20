@@ -43,4 +43,13 @@ public interface AuctionsMapper {
 	int checkReport(ReportsVO vo);
 	// 신고 접수하기
 	int saveReport(ReportsVO vo);
+
+	Integer checkgoodsInAuctionIng(Integer goods_id);
+	
+	//신고 받은 물품 break테이블에 넣기
+	Integer insertAuctionsBreak(Map<String, Object> map);
+
+	Integer updateBreakRefund(Map<String,Object> paramMap);
+
+	Integer deleteAuctionIng(Integer object);
 }

@@ -5,8 +5,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.co.waglewagle.auctions.won.AuctionIng;
 import kr.co.waglewagle.chat.service.ChatService;
 import kr.co.waglewagle.chat.won.MemberType;
 import kr.co.waglewagle.domain.ChatVO;
@@ -32,7 +35,12 @@ public class ChatController {
 	private final ChatService service;
 	private final UsersService userService;
 	private final GoodsService goodsService;
-
+	
+	@ExceptionHandler(IndexOutOfBoundsException.class)
+	public String gohome() {
+		return"redirect:/main";
+	}
+	
 	@GetMapping("/s1")
 	public void session1(HttpSession session) {
 		session.setAttribute("users_info", userService.userInfo(111));
@@ -40,15 +48,17 @@ public class ChatController {
 
 	@GetMapping("/s2")
 	public void session2(HttpSession session) {
-		session.setAttribute("users_info", userService.userInfo(110));
+		session.setAttribute("users_info", userService.userInfo(105));
 	}
 
 	@GetMapping("/{goodsId}")
 
-	public String showChatPage(Model model, @PathVariable("goodsId") Integer goodsId,
+	public String showChatPage(Model model, @AuctionIng Integer goodsId,
 			@SessionAttribute("users_info") UsersVO loginUser) {
 
-		
+		if(goodsId == null) {
+			return "redirect:/main";
+		}
 
 		// 굿즈 아이디로 옥션 정보 가져오기 맵에는 seller와 buyer id값으로 유저 정보 저장되어 있다.
 		List <Map<String, Object>> auction = service.getAuctionInfoByGoodsId(goodsId);
@@ -100,7 +110,7 @@ public class ChatController {
 			model.addAttribute("me", buyerMap);
 			model.addAttribute("oppsite", sellerMap);
 		}else {
-			//유저는 아무곳에도 없음! 나가!
+			System.out.println("여기오면 망한거임");
 			return false;
 		}
 		

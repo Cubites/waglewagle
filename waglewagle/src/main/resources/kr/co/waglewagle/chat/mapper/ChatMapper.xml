@@ -9,7 +9,7 @@
 		FROM (	SELECT auctions_ing_id, auctions_ing_seller, auctions_ing_buyer, auctions_ing_price, auctions_date,
 				goods.goods_id, goods_title,goods_comment,goods_th_img, goods_address, goods_access,category_id
  				FROM  auctions_ing inner join goods on (auctions_ing.goods_id = goods.goods_id) 
- 				WHERE goods.goods_id = 607) a, users u
+ 				WHERE goods.goods_id = #{goodsId}) a, users u
 		WHERE (a.auctions_ing_seller = u.users_id OR a.auctions_ing_buyer = u.users_id);
 	</select>
 	

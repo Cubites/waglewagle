@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.waglewagle.auctions.service.AuctionsService;
+import kr.co.waglewagle.auctions.won.AuctionIng;
 import kr.co.waglewagle.domain.ReportsVO;
 
 @Controller
@@ -54,4 +55,8 @@ public class AuctionsController {
 	public String goAuctionsReportComplete() {
 		return "auctions/mobileAuctionsReportComplete";
 	}
+	
+	
+	//@PostMapping("/auctions/")
+	
 }
