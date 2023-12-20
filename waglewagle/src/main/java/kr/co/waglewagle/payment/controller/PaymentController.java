@@ -17,6 +17,9 @@ public class PaymentController {
 	@Autowired
 	private PaymentService service;
 	
+
+	
+
 	// 포인트 충전 페이지로 이동
 	@GetMapping("/payment")
 	public String goPayment() {
@@ -39,4 +42,5 @@ public class PaymentController {
 			return "";
 		}
 	}
+
 }

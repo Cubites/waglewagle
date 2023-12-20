@@ -7,7 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import kr.co.waglewagle.domain.CategoryVO;
+import kr.co.waglewagle.domain.PointVO;
+
+import kr.co.waglewagle.domain.PointVO;
+import kr.co.waglewagle.domain.QnasVO;
+
 import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.users.mapper.UsersMapper;
 
@@ -18,13 +24,35 @@ public class UsersServiceImpl implements UsersService {
 	private UsersMapper mapper;
 
 	@Override
-	public UsersVO userInfo(Integer users_id) {
-		return mapper.userInfo(users_id);
+	public UsersVO userInfo(Integer users_id) { return mapper.userInfo(users_id); }
+
+	@Override
+	public PointVO checkPoint(Integer users_id) { return mapper.checkPoint(users_id); }
+
+
+	@Override
+	public String checkFavorAreas(Integer users_id) { return mapper.checkFavorAreas(users_id); }
+	@Override
+	public int updateAreas(Map<String, Object> dataForAreaUpdate) { return mapper.updateAreas(dataForAreaUpdate); }
+
+	@Override
+	public String selectPwd(Integer users_id) { 
+		return mapper.selectPwd(users_id); 
+	}
+	
+	@Override
+	public int pwdChange(Map<String, Object> dataForValidPwd) { return mapper.pwdChange(dataForValidPwd); }
+
+	@Override
+	public int countQnas(Integer users_id) { return mapper.countQnas(users_id); }
+	@Override
+	public List<QnasVO> checkQnas(Map<String, Integer> dataForCheckQnas) {
+		return mapper.checkQnas(dataForCheckQnas);
 	}
 
 	@Override
-	public List<CategoryVO> allCategory() {
-		return mapper.allCategory();
+	public int deleteAccount(Integer users_id) {
+		return mapper.deleteAccount(users_id);
 	}
 	
 	@Override
@@ -41,6 +69,16 @@ public class UsersServiceImpl implements UsersService {
 	}
 	
 	@Override
+	public int selectUsersId(String users_email) {
+		return mapper.selectUsersId(users_email);
+	}
+	
+	@Override
+	public boolean createPoint(int users_id) {
+		return mapper.createPoint(users_id) > 0 ? true : false;
+	}
+	
+	@Override
 	public boolean isEmailDup(String users_email) {
 		return mapper.isEmailDup(users_email) > 0 ? true : false;
 	}
@@ -49,6 +87,14 @@ public class UsersServiceImpl implements UsersService {
 	public boolean isNickDup(String users_nick) {
 		return mapper.isNickDup(users_nick) > 0 ? true : false;
 	}
+
+
+	@Override
+	public PointVO getPoint(Integer users_id) {
+		PointVO userPoint = mapper.selectPointByUsersId(users_id);
+		return userPoint;
+	}
+
 
 	
 	@Override
@@ -78,4 +124,11 @@ public class UsersServiceImpl implements UsersService {
 		
 		return mapper.changePwd(user_info) > 0 ? true : false;
 	}
+
+	@Override
+	public List<CategoryVO> allCategory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -13,4 +13,10 @@ public interface GoodsService {
 	List<CategoryVO> getLowerCategory(Integer lower);
 	Integer registGoods(GoodsFormVO vo);
 	Integer registImages(Integer goods_id, List<UploadImage> list);
+	GoodsVO getGoods(Integer goodsId);
+	List<ImagesVO> getImages(Integer goodsId);
+	Integer getFavorsCnt(Integer goodsId);
+	boolean isFavoritGoods(Integer usersId,Integer goodsId);
+	Integer addGoodsFavor(Integer users_id, Integer goods_id,boolean status);
+	
 }
