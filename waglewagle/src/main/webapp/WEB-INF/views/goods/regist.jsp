@@ -115,9 +115,8 @@
 
 					<div class="inputBox">
 						<span class="inputlabel"><span class="pointer">*</span>거래마감일</span>
-						<input id="goodsDate" type="date" name="goods_expDate"
-							Class="goodsInput"> <input type="hidden" name="goods_exp"
-							id="goods_exph">
+						<input id="goodsDate" type="date" name="goods_exp" class="goodsInput"> 
+							<input type="hidden" name="goods_exp" id="goods_exph">
 						<forms:errors path="goods_exp" cssClass="errorMessage" />
 					</div>
 

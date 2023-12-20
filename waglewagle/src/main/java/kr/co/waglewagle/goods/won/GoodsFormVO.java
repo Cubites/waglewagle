@@ -41,9 +41,10 @@ public class GoodsFormVO {
 	@Min(value = 0, message = " 가격은 음수일 수 없습니다.")
 	private Integer goods_start_price;
 	@NotNull(message = " 경매 날짜를 지정해주세요")
-	private Timestamp goods_exp;
+	private Date goods_exp;
 	@NotBlank(message = " 주소를 입력해주세요")
 	private String goods_addr;
+	
 	
 	private String goods_dong;
 }

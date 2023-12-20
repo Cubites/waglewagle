@@ -123,7 +123,7 @@ public class WebConfig implements WebMvcConfigurer {
 	// Mypage 공통 작업(유저 정보 조회, 게시글 상태별 수 조회) 인터셉터
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns();
+		//registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns();
 	}
 
 	// 파일 업로드를 위한 bean
