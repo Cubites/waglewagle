@@ -16,7 +16,7 @@
         <div id="content">
             <div id="report_reasons">
                 <input type="checkbox" id="toggle" hidden>
-                <label for="toggle" id="toggle-label" onClick="clickToggle()">
+                <label for="toggle" id="toggle-label" onclick="clickToggle()">
                     <img src="/resources/images/mobile/toggle_img.png" id="toggle_img">
                     <p id="before_select">신고 사유 선택하기</p>
                     <p id="after_select_1">"이미지와 실제 상품이 너무 다름"</p>
@@ -24,9 +24,9 @@
                     <p id="after_select_3">"기타 사유"</p>
                 </label>
                 <ul id="menu">
-                    <li class="menu-item" value="1" onClick="clickReason(event)">이미지와 실제 상품이 너무 다름</li>
-                    <li class="menu-item" value="2" onClick="clickReason(event)">판매자가 거래 장소에 나오지 않음</li>
-                    <li class="menu-item" value="3" onClick="clickReason(event)">기타 사유</li>
+                    <li class="menu-item" value="1" onclick="clickReason(event)">이미지와 실제 상품이 너무 다름</li>
+                    <li class="menu-item" value="2" onclick="clickReason(event)">판매자가 거래 장소에 나오지 않음</li>
+                    <li class="menu-item" value="3" onclick="clickReason(event)">기타 사유</li>
                 </ul>
             </div>
             <textarea id="report_detail" placeholder="신고 사유를 &#13;&#10; 상세히 작성해주세요."></textarea>
@@ -54,20 +54,15 @@
 		
 		// 신고 사유 토글 보였다 안보였다 하는 함수
 		function clickToggle() {
-			const menu = window.getComputedStyle(document.getElementById('menu')).getPropertyValue('height');
-			menu.style.height = 0;
-			menu.style.minHeight = 0;
-			menu.style.opacity = 0;
-			console.log(menu);
-			// $('#menu').css(window.getComputedStyle(menu).getPropertyValue('height'), 0);
-			//$('#menu').css("min-height", 0);
-			//$('#menu').css("opacity", 0);
+			const menu = document.getElementById('menu');
+			menu.style.height = "20vh";
+			menu.style.minHeight = "10vh";
+			menu.style.opacity = 1;
 		}
 			
 		
 		// 선택한 신고 사유 보이도록 하는 함수
 		function clickReason(e) {
-			console.log(e.target.value);
 			const reason = e.target.value;
 			if (reason == 1) {
 				$("#after_select_1").show();
@@ -75,31 +70,36 @@
 				$("#after_select_2").hide();
 				$("#after_select_3").hide();
 				$("#toggle_img").hide();
-				report_title = document.getElementById('after_select_1').innerText;
+				report_title = "0"
 			} else if (reason == 2) {
 				$("#after_select_2").show();
 				$("#before_select").hide();
 				$("#after_select_1").hide();
 				$("#after_select_3").hide();
 				$("#toggle_img").hide();
-				report_title = document.getElementById('after_select_2').innerText;
+				report_title = "1"
 			} else {
 				$("#after_select_3").show();
 				$("#before_select").hide();
 				$("#after_select_1").hide();
 				$("#after_select_2").hide();
 				$("#toggle_img").hide();
-				report_title = document.getElementById('after_select_3').innerText;
+				report_title = "2"
 			}
-			// 토글 자동으로 닫기... 안되네
-			const menu = window.getComputedStyle(document.getElementById('menu')).getPropertyValue('height');
+			// 토글 자동으로 닫기
+			const menu = document.getElementById('menu');
 			menu.style.height = 0;
 			menu.style.minHeight = 0;
 			menu.style.opacity = 0;
 		}
 		
+		
 		// 신고 접수 되는 함수
 		function submitReport() {
+	        // URL에서 "goods_id" 파라미터 값을 추출
+			var currentUrl = window.location.pathname;
+	        var goods_id = currentUrl.split('/')[3];
+	
 			report_content = document.getElementById('report_detail').value;
 			if (report_title === "") {
 				alert("신고 사유를 선택해주세요!")
@@ -110,12 +110,9 @@
 				$.ajax({
 					type: "post",
 					async: true,
-					// 12 -> goods_id인 것 (이전 페이지에서 받아와야함)
-					url: "/auctions/12/report",
+					url: "/auctions/report/" + goods_id,
 					dataType: "text",
 					data : {
-						// 유저 정보 받아서 넣는 걸로 수정해야 함. -> 거래 중인 물품 가져올 때 판매자 id 꺼내서 여기로 보내야 함.
-						users_id: 2,
 						report_data: report_data
 					},
 					success: function(data, textStatus) {

@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+
+import kr.co.waglewagle.domain.AuctionsBreakVO;
+import kr.co.waglewagle.domain.AuctionsEndVO;
 import kr.co.waglewagle.domain.AuctionsIngVO;
+import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsBreakVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsEndVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsIngVO;
@@ -37,10 +41,20 @@ public interface AuctionsMapper {
 	Integer countFavors(Integer users_id);
 	List<SomeoneFavorsVO> checkFavors(Map<String, Integer> auctionsIngVal);
   
-  // 경매중인 물품인지 확인하기
-	int checkAuctionIng(ReportsVO vo);
+	// 거래 중인 물품인지 확인하기
+	int checkAuctionIng(int goods_id);
+	// 거래 중 정보 가져오기
+	Map<String, String> getAuctionIngInfo(int goods_id);
+	// 거래 중 테이블에서 데이터 꺼내기
+	AuctionsIngVO getAunctionIngData(int goods_id);
+	// 경매 완료 테이블에 저장하기
+	int saveAuctionEnd(AuctionsEndVO vo);
+	// 거래 중 테이블에서 삭제하기
+	int deleteAuctionIngData(int auctions_ing_id);
 	// 신고된 물품인지 확인하기
-	int checkReport(ReportsVO vo);
+	int checkReport(int goods_id);
 	// 신고 접수하기
 	int saveReport(ReportsVO vo);
+	// 거래 파기 테이블에 저장하기
+	int saveAuctionBreak(AuctionsBreakVO vo);
 }
