@@ -141,24 +141,38 @@
 		                 </div>
             		</div>
             		
-						<form method="post" action="/admin/writeReply/${qnas_id}">
-	            			<div id="replyText">
-	            				<textarea id="noticetitle" name="qnas_reply" placeholder="문의답글을 작성하세요">${a.qnas_reply}</textarea>
-	            			</div>
-	            			<!-- 답변 유무로 버튼 변경되어서 표시된다. -->
-	            			<c:if test="${empty a.qnas_reply }">
-		            			<input type="submit" value="답글작성" id="writebtn">
-		            	 	</c:if>
-		            	 	
-		            	 	<c:if test="${!empty a.qnas_reply}">
-		            	 		<div id="replybtn">
-		            	 			<input type="submit" value="답글수정" id="writebtn">
-		            				<%-- <input type="button" id="writebtn" value="답글수정" onclick="writeReply(${a.qnas_id})"> --%>
-		            				<input type="button" id="writebtn" value="답글삭제" onclick="delReply(${a.qnas_id})">
-		            			</div>
-		            	 	</c:if>	
-	            		</form>
 
+            		<c:if test="${empty a.qnas_reply }">
+	            		<!-- 답변 -->
+	            		<form method="post" action="/admin/writeReply/${qnas_id }">
+	            			<div id="replyText">
+	            				<textarea id="title" name="qnas_reply" placeholder="문의답글을 작성하세요"></textarea>
+	            			</div>
+	            			<input type="submit" value="답글작성" id="writebtn">
+	            		</form>
+	            		
+	            		<%-- <div id="replybtn">
+            				<input type="button" id="writebtn" value="답글작성" onclick="writeReply(${a.qnas_id})">
+            			</div> --%>
+            	 	</c:if>
+            	 	
+            	 	<c:if test="${!empty a.qnas_reply}">
+            	 	
+            	 		<form method="post" action="/admin/writeReply/${qnas_id }">
+	            			<div id="replyText">
+	            				<textarea id="title" name="qnas_reply" placeholder="문의답글을 작성하세요"></textarea>
+	            			</div>
+	            			<input type="submit" value="답글작성" id="writebtn">
+	            		</form>
+	            		
+            	 		<div id="noticetitle">
+            	 			${a.qnas_reply}
+            	 		</div>
+            	 		<div id="replybtn">
+            				<input type="button" id="writebtn" value="답글수정" onclick="modifyReply(${a.qnas_id})">
+            				<input type="button" id="writebtn" value="답글삭제" onclick="delReply(${a.qnas_id})">
+            			</div>
+            	 	</c:if>	
             	</div>
             </div>
         </div>

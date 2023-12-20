@@ -1,26 +1,56 @@
 package kr.co.waglewagle.admins.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.javassist.CtNewConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-//import kr.co.waglewagle.admins.service.ReplyService;
-import kr.co.waglewagle.domain.NoticesVO;
+import kr.co.waglewagle.admins.service.GoodsManageService;
+import kr.co.waglewagle.domain.GoodsVO;
+
 
 @Controller
-public class GoodsManageController {
-//	@Autowired
-//	private NoticeService service;
-	
+public class GoodsManageController{
+	@Autowired
+	private GoodsManageService service;
 
-	
-	@GetMapping("/admin/goodsmanage")
-	public String index(Model model,NoticesVO vo) {
-		//서비스 호출하고 map return 받을거니까...
-//		model.addAttribute("map",service.list(vo));
-		return "admin/goodsmanage";
+	@GetMapping("/admin/goodsManageList")
+	public String adminGoodsList(Model model,GoodsVO vo) {
+//		List<GoodsVO> list = service.goodsList();
+		List<Map<String, Object>> list = service.adminGoodsList();
+		model.addAttribute("list",list);
+		return "/admin/goodsManageList";
 	}
 	
-	
+	//상품 삭제하기
+//	@GetMapping("/admin/goodsDelete/{goods_id}")
+//	public String goodsDelete(@PathVariable("goods_id") int goods_id, Model model,HttpServletRequest request) {
+//		service.goodsDelete(goods_id);
+//		return "redirect:/admin/goodsManageList";
+//	}
+
+//	@GetMapping("/admin/goodsStatus")
+//	public String goodsStatus(Model model,GoodsVO vo) {
+//		return "/admin/goods";
+//	}
+
+	//ajax이용 상태 변경
+	@ResponseBody
+	@PostMapping("/admin/goodsStatus")
+	public Integer goodsStatus(@RequestBody Map<String, Integer> status ,Model model) {
+		//status.get("goods_id"); //goods_id꺼낸거야 status는 map으로 goods_id랑 goods_status 가지고 있는데..
+		int a = service.goodsAccess(status); // 서비스에서 a에 담아준거고...아래 return할때 사용할라구!
+//		System.out.println("=======>"+status.get("goods_id")); //잘찍히는지 확인해보기
+		return a==1 ? status.get("goods_access") :(status.get("goods_access")==0 ? 1:0 );
+	}
 }

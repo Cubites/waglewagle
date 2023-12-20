@@ -47,10 +47,10 @@
 			 location.href = "/admin/stats";
 		}
 		function user(){
-			 location.href = "/admin/usermanage";
+			 location.href = "/admin/userManageList";
 		}
 		function goods(){
-			 location.href = "/admin/goodsmanage";
+			 location.href = "/admin/goodsManageList";
 		}
 		function admin(){
 			 location.href = "/admin/adminmanage";
@@ -95,7 +95,7 @@
                        <p id="contenttxt">내용</p>
                        <textarea id="content" name="notices_content" placeholder="공지내용 작성 규칙에 맞춰 작성할것"></textarea>
                    </div>
-				</form>
+				
                    <!-- 공지업로드 버튼 -->
                    <div id="noticebutton">
                    	<input type="button" id="writebtn" value="공지작성" onclick="registerForm()">

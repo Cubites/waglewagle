@@ -75,10 +75,10 @@
 				 location.href = "/admin/stats";
 			}
 			function user(){
-				 location.href = "/admin/usermanage";
+				 location.href = "/admin/userManageList";
 			}
 			function goods(){
-				 location.href = "/admin/goodsmanage";
+				 location.href = "/admin/goodsManageList";
 			}
 			function admin(){
 				 location.href = "/admin/adminmanage";
@@ -137,7 +137,7 @@
                       
                             <tr>
                               <td>*이름</td>
-                              <td><input class="onborder" for="admin-name" type="text" max="10" placeholder="이름을 입력하세요."/></td>
+                              <td><input class="onborder" id="admin-name" type="text" max="10" placeholder="이름을 입력하세요."/></td>
                             </tr>
                       
                             <tr>

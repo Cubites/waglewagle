@@ -233,8 +233,7 @@ public class UsersController {
 		}
 		
 	}
-	
-	
+
 	@GetMapping("find_result")
 	public String findResult() {
 		return "users/findResult";
