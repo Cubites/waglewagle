@@ -76,8 +76,8 @@
 
   <!-- 회원 탈퇴 -->
 	<update id="deleteAccount" parameterType="Integer">
-		UPDATE users SET users_status = 1 WHERE users_id = #{users_id}
-  </update>
+		UPDATE users SET users_status = 2 WHERE users_id = #{users_id}
+  	</update>
 
 	<!-- 회원 가입 -->	
 	<insert id="join" parameterType="kr.co.waglewagle.domain.UsersVO">
