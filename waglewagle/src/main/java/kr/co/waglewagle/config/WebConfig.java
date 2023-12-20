@@ -1,5 +1,7 @@
 package kr.co.waglewagle.config;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -18,6 +20,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -29,8 +32,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import kr.co.waglewagle.auctions.won.AutionGoodsArgumentResolver;
 import kr.co.waglewagle.users.ty.util.LoginInterceptor;
 import kr.co.waglewagle.users.ty.util.LogoutInterceptor;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
@@ -66,6 +71,12 @@ public class WebConfig implements WebMvcConfigurer {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
+	
+	//argumentResolver등록
+	   @Override
+	   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+	      resolvers.add(auctionArgumentResolver());
+	   }
 
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -162,6 +173,13 @@ public class WebConfig implements WebMvcConfigurer {
 		return dtm;
 	}
 	
+
+	 //ArgumentResolver 등록
+   @Bean
+   public HandlerMethodArgumentResolver auctionArgumentResolver() {
+      return new AutionGoodsArgumentResolver();
+   }
+
 	//login interceptor
 	@Bean
 	public LoginInterceptor loginInterceptor() {
