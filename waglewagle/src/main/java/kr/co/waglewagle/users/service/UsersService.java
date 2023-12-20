@@ -27,7 +27,7 @@ public interface UsersService {
 	PointVO checkPoint(Integer users_id);
 	String checkFavorAreas(Integer users_id);
 	int updateAreas(Map<String, Object> dataForAreaUpdate);
-	int validPwd(Map<String, Object> dataForValidPwd);
+	String selectPwd(Integer users_id);
 	int pwdChange(Map<String, Object> dataForValidPwd);
 	int countQnas(Integer users_id);
 	List<QnasVO> checkQnas(Map<String, Integer> dataForCheckQnas);

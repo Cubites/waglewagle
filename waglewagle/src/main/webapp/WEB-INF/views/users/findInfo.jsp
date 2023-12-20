@@ -35,7 +35,7 @@
 										<option value="011">011</option>
 										<option value="016">016</option>
 									</select>
-									<input type="text" size="30" id="phoneBack" class="formInput" placeholder="숫자만 입력해주세요"><br>
+									<input type="text" size="29" id="phoneBack" class="formInput" placeholder="숫자만 입력해주세요"><br>
 									<input type="hidden" id="phoneResult" name="users_phone" value="">
 								</div>
 							</div>
