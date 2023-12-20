@@ -38,13 +38,15 @@
 		WHERE users_id = #{users_id};
 	</update>
 	
-  <!-- 비밀번호 일치여부 확인 -->
-	<select id="validPwd" resultType="int" parameterType="java.util.Map">
+  <!-- 비밀번호 일치여부 확인위해 암호화된 비밀번호 select -->
+	<select id="selectPwd" resultType="String" parameterType="Integer">
 		SELECT
-			COUNT(*)
+			users_pwd
 		FROM users
-		WHERE users_id = #{users_id} AND users_pwd = #{users_pwd}
+		WHERE users_id = #{users_id}
 	</select>
+	
+	<!-- 마이페이지 비밀번호 변경 -->
 	<update id="pwdChange" parameterType="java.util.Map">
 		UPDATE users
 		SET users_pwd = #{users_pwd}
@@ -74,8 +76,8 @@
 
   <!-- 회원 탈퇴 -->
 	<update id="deleteAccount" parameterType="Integer">
-		UPDATE users SET users_status = 1 WHERE users_id = #{users_id}
-  </update>
+		UPDATE users SET users_status = 2 WHERE users_id = #{users_id}
+  	</update>
 
 	<!-- 회원 가입 -->	
 	<insert id="join" parameterType="kr.co.waglewagle.domain.UsersVO">
@@ -125,7 +127,7 @@
 		SELECT * FROM users WHERE users_name=#{users_name} AND users_email=#{users_email}
  	</select>
  	
- 	<!-- 비밀번호 변경 -->
+ 	<!-- 비밀번호 찾기 비밀번호 변경 -->
 	<update id="changePwd" parameterType="Map">
 		UPDATE users 
 		SET users_pwd=#{users_pwd}

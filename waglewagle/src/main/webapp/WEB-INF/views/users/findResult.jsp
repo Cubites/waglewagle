@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 	$(function(){
+		
 		if("${result_type}" === 'find_id'){
 			$("#formHeader").val("아이디 찾기");
 			if("${users_email}" === 'NOT_EXIST'){
@@ -21,9 +22,10 @@
 				$("#resultArea_null").addClass("hide");
 			}
 		}else{
-			$("#formHeader").val("비밀번호 찾기");
+			$("#formHeader").text("비밀번호 찾기");
 			$("#resultArea").addClass("hide");
 			$("#resultArea_null").removeClass("hide");
+			
 		}
 	})
 </script>

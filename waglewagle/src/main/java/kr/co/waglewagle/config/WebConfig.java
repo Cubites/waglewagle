@@ -33,6 +33,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import com.zaxxer.hikari.HikariDataSource;
 
 import kr.co.waglewagle.auctions.won.AutionGoodsArgumentResolver;
+import kr.co.waglewagle.users.ty.util.LoginInterceptor;
+import kr.co.waglewagle.users.ty.util.LogoutInterceptor;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
@@ -64,8 +67,7 @@ public class WebConfig implements WebMvcConfigurer {
 	
 	@Autowired
 	MypageInterceptor mypageInterceptor;
-
-
+	
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
@@ -133,7 +135,10 @@ public class WebConfig implements WebMvcConfigurer {
 	// Mypage 공통 작업(유저 정보 조회, 게시글 상태별 수 조회) 인터셉터
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns();
+		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(2);
+		registry.addInterceptor(loginInterceptor()).addPathPatterns("/**")
+													.excludePathPatterns("/resources/**", "/upload/**", "/main","/login","/join", "/find_info","/emaildup","/send_authnum","/check_authnum", "/nickcheck", "/find_id", "/find_pwd", "/find_result", "/change_pwd","/board/noticelist/**").order(1);
+		registry.addInterceptor(logoutInterceptor()).addPathPatterns("/login","/join", "/find_info").order(3);
 	}
 
 	// 파일 업로드를 위한 bean
@@ -168,9 +173,21 @@ public class WebConfig implements WebMvcConfigurer {
 		return dtm;
 	}
 	
-	//ArgumentResolver 등록
-	   @Bean
-	   public HandlerMethodArgumentResolver auctionArgumentResolver() {
-	      return new AutionGoodsArgumentResolver();
-	   }
+
+	 //ArgumentResolver 등록
+   @Bean
+   public HandlerMethodArgumentResolver auctionArgumentResolver() {
+      return new AutionGoodsArgumentResolver();
+   }
+
+	//login interceptor
+	@Bean
+	public LoginInterceptor loginInterceptor() {
+		return new LoginInterceptor();
+	}
+	//logout interceptor
+	@Bean
+	public LogoutInterceptor logoutInterceptor() {
+		return new LogoutInterceptor();
+	}
 }

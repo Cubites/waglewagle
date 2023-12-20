@@ -30,7 +30,7 @@
 								<div id="emailCheckText">이메일 체크 메세지</div>
 								
 								<div class="space-between">
-									<div>
+									<div class="flex">
 										<input type="text" size="10" id="validNum" class="formInput">
 										<input type="text" size="2" id="timer" value="" readonly>
 									</div>
@@ -42,11 +42,11 @@
 							<div id="passwordArea">
 								<div id="pwd1">
 									<div class="formText">비밀번호</div>
-									<input type="password" size="40" class="formInput" id="users_pwd" name="users_pwd" placeholder="영문,특수문자,숫자 포함 8자 이상"><br>
+									<input type="password" size="35" class="formInput" id="users_pwd" name="users_pwd" placeholder="영문,특수문자,숫자 포함 8자 이상"><br>
 								</div>
 								<div id="pwd2">
 									<div class="formText">비밀번호 확인</div>
-									<input type="password" size="40" class="formInput" id="users_pwd2">
+									<input type="password" size="35" class="formInput" id="users_pwd2">
 								</div>
 								<div class="flex-end">
 									<div id="pwdCheckTxt">비밀번호가 일치하지 않습니다.</div>

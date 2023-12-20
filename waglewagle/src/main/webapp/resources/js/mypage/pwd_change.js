@@ -49,9 +49,7 @@ document.getElementById("pwdChangeButton").addEventListener("click", (e) => {
                             success: function(data) {
                                 if(data){
                                     alert("비밀번호가 변경되었습니다.");
-                                    $("#pwdBox > input").each(function(index, item) {
-                                        item.val("");
-                                    });
+                                    location.href = '/mypage/auctions';
                                 }
                             }
                         });

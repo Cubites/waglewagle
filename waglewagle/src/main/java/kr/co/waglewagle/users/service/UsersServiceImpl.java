@@ -36,7 +36,10 @@ public class UsersServiceImpl implements UsersService {
 	public int updateAreas(Map<String, Object> dataForAreaUpdate) { return mapper.updateAreas(dataForAreaUpdate); }
 
 	@Override
-	public int validPwd(Map<String, Object> dataForValidPwd) { return mapper.validPwd(dataForValidPwd); }
+	public String selectPwd(Integer users_id) { 
+		return mapper.selectPwd(users_id); 
+	}
+	
 	@Override
 	public int pwdChange(Map<String, Object> dataForValidPwd) { return mapper.pwdChange(dataForValidPwd); }
 
