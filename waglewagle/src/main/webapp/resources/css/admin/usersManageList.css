@@ -39,7 +39,7 @@
 	width: 15%;
 	height: 100%;
 	text-align: center;
-	justify-content: space-between; /* 수직 간격을 동일하게 분배 */
+	justify-content: space-between;
 }
 #side-box div {
     height: 40px;
@@ -68,7 +68,6 @@
 #main-box {
     width: 85%;
     height: 100%;
-    font-size: 20px;
     /* border: 1px solid #999; */
     text-align: center;
 	display: flex;
@@ -89,7 +88,6 @@
 #plus input {
     margin: 0 20px; 
 }
-
 .noticelist .nlist{
     border-collapse:collapse; 
     border-spacing:0; 
@@ -129,7 +127,6 @@
     font-size:15px; 
     font-weight:bold;
 }
-/** tr에 shadow_down 클래스 사용하는 경우 -  테두리 박스에 그림자처리 **/
 .noticelist .nlist tr.shadow_down th{
     height:35px;  
     background:#fff; 
@@ -150,7 +147,7 @@
     border-right:1px solid #d4d4d4; 
     box-shadow:0;
 }
-/** tr에 bgColor 클래스 사용하는 경우 -  배경칼라처리 **/
+
 .noticelist .nlist thead.bgColor{
     border-top:none; 
     border-bottom:none;
@@ -166,12 +163,13 @@
 .noticelist .nlist td {
     text-align: center;
     padding: 8px 10px;
-    font-size: 14px; /* 이 부분을 추가해줍니다. */
+    font-size: 14px; /* 이 부분을 추가했음.. */
     border-bottom: 1px solid #d9d9d9;
 }
 #writebtn{
     width: 150px;
     height: 35px;
+    
     background: #686868;
     border-radius: 10px;
     color: azure;
@@ -179,4 +177,7 @@
     font-stretch: 100;
     align-items: center;
     margin-bottom: 10px;
+}
+.hiddenClass{
+	display:none;
 }

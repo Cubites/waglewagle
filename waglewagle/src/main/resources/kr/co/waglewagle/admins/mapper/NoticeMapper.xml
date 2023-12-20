@@ -3,7 +3,7 @@
 <mapper namespace="kr.co.waglewagle.admins.mapper.NoticeMapper">
     
         <select id="noticeList" resultType="kr.co.waglewagle.domain.NoticesVO">
-            SELECT * FROM wagle.notices
+            SELECT * FROM wagle.notices ORDER BY notices_id DESC
         </select>
         
         

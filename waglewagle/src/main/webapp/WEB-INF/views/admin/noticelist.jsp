@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/resources/css/admin/noticelist.css"/>
+    
     <script>
 	    function noticewrite(){
 			 location.href = "/admin/noticewrite";
@@ -27,10 +28,10 @@
 			 location.href = "/admin/stats";
 		}
 		function user(){
-			 location.href = "/admin/usermanage";
+			 location.href = "/admin/userManageList";
 		}
 		function goods(){
-			 location.href = "/admin/goodsmanage";
+			 location.href = "/admin/goodsManageList";
 		}
 		function admin(){
 			 location.href = "/admin/adminmanage";
@@ -39,14 +40,12 @@
 			 location.href = "/admin/changepwd";
 		}
 		
-/* 		function noticeDelete(){
-			//console.log('?????')
-			console.log(document.getElementById("notices_id").innerText); //notices_id값 가지고 오고 아래 넣어주기!! (ex.나는 2가 notices_id인줄 알고있지만 모르니까..)
+ 		/* 리스트에서 공지 삭제하기 */
+		function noticeDelete(notices_id){
 		    if(confirm("선택한 공지를 정말로 삭제 하시겠습니까?")==true)  {
-		    	const notices_id = document.getElementById("notices_id").innerText;
-		    	location.href="/admin/noticedelete/${notices_id}";  	
-		    	
-		    } */
+		    	location.href="/admin/noticedelete/"+notices_id;  	
+		    }
+		}
     </script>
 </head> 
 <body>
@@ -123,7 +122,7 @@
                         		<!-- 작성자 -->
                         		<td>${NoticesVO.admins_id}</td>
                         		<!-- 삭제버튼 -->
-                        		<td><a href="noticedelete/${notices_id}" role="button" onclick="noticeDelete()">삭제하기</a></td>
+                        		<td><a href="#;" role="button" onclick="noticeDelete(${NoticesVO.notices_id })">삭제하기</a></td>
                         	</tr>
                         </c:forEach>
                         </tbody>

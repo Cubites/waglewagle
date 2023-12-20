@@ -31,7 +31,6 @@ public class NoticesController {
 		return "/admin/noticelist";
 	}
 	
-	
 	//공지 등록 화면 띄우기
 	@GetMapping("/admin/noticewrite")
 	public void getNoticewrite() {}
@@ -64,7 +63,6 @@ public class NoticesController {
 //		model.addAttribute("a",a); //jsp로 보내주느거야아아아
 //		return "admin/noticeview";
 //	}
-	
 	
 	//공지 삭제하기
 	@GetMapping("/admin/noticedelete/{notices_id}")

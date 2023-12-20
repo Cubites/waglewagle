@@ -37,7 +37,6 @@
 	background-color: lightgray;
 	width: 15%;
 	height: 100%;
-	font-size: 20px;
 	text-align: center;
 	justify-content: space-between; /* 수직 간격을 동일하게 분배 */
 }

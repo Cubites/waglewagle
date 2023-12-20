@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.waglewagle.admins.mapper.UserManageMapper">
+
+		<select id="userList" resultType="kr.co.waglewagle.domain.UsersVO">
+            SELECT * FROM wagle.users
+        </select>
+        
+		<update id="usersAccess" parameterType="java.util.Map">
+			UPDATE users SET users_status=#{users_status} WHERE users_id=#{users_id};
+		</update>
+
+		<select id="usersReport" parameterType="kr.co.waglewagle.domain.UsersVO" resultType="Map">
+            select * 
+			from users u
+				join 
+				(SELECT 
+				reports.users_id
+				,count(reports.users_id) usersReport_cnt
+				FROM reports
+				INNER JOIN users
+				ON reports.users_id=users.users_id
+				WHERE reports_type=0
+				GROUP BY reports.users_id) a
+			on a.users_id = u.users_id 
+			order by u.users_id asc ;
+        </select>
+		
+		
+		
+</mapper>
