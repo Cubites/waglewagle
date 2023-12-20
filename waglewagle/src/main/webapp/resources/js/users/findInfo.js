@@ -8,6 +8,10 @@ function isEmail(email){
 var sendNumClicked = false;
 var intervalVar;
 $(function(){
+	$('form').each(function(){
+			this.reset();
+	})
+
 	$("#sendNum").click(function(){
 		if(!isEmail($("#users_email").val())){
 			alert("이메일 확인을 해주세요.")

@@ -1,7 +1,5 @@
 package kr.co.waglewagle.users.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,14 +8,16 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.waglewagle.auctions.service.AuctionsService;
 import kr.co.waglewagle.domain.UsersVO;
@@ -49,33 +49,47 @@ public class UsersController {
 
 	// 회원가입 페이지 이동
 	@GetMapping("/join")
-	public String joinForm() {
+	public String joinForm(HttpServletResponse res) {
+		res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+		res.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT");
+		res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate"); // HTTP 1.1.
 		return "users/join";
 	}
 	
 	// 회원가입 정보 제출 후 login page 이동
 	@PostMapping("/join")
-	public void joinProcess(HttpServletResponse response, UsersVO vo) throws IOException{
-		response.setContentType("text/html; charset=utf-8");
-		response.setCharacterEncoding("utf-8");
+	public String joinProcess(HttpServletResponse res, Model model, UsersVO vo){
 		
-		PrintWriter out = response.getWriter();
+		res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+		res.setHeader("Expires", "Tue, 6 July 1999 12:00:00 GMT");
+		res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate"); // HTTP 1.1.
+		
+		String cmd = ""; //move or back
+		String msg = "";
+		String url = "";
 		boolean joinResult = service.join(vo);
 		if(joinResult) {
 			int users_id = service.selectUsersId(vo.getUsers_email());
 			boolean creatPointResult = service.createPoint(users_id);
 			if(creatPointResult) {
-				out.println("<script>alert('회원가입 되었습니다.');"+ "location.href='login';</script>");
-				out.flush();
+				cmd = "move";
+				msg = "회원가입 되었습니다.";
+				url = "login";
 			}else {
-				out.println("<script>alert('포인트 계좌 생성에 실패했습니다. 관리자에게 문의하세요.');"+ "location.href='main';</script>");
-				out.flush();
+				cmd = "move";
+				msg = "포인트 계좌 생성에 실패했습니다. 관리자에게 문의하세요.";
+				url = "main";
 			}
 		}else {
-			out.println("<script>alert('회원가입에 실패했습니다.');"+ "location.href='#';</script>");
-			out.flush();
+			cmd = "back";
+			msg = "회원가입에 실패했습니다.";
 		}
 		
+		model.addAttribute("msg", msg);
+		model.addAttribute("cmd", cmd);
+		model.addAttribute("url", url);
+		
+		return "common/inform";
 	}
 	
 	@GetMapping("/login")
@@ -84,27 +98,39 @@ public class UsersController {
 	}
 	
 	@PostMapping("/login")
-	public String login(HttpSession session, UsersVO vo) {
+	public String login(HttpSession session, Model model, UsersVO vo){
+		
 		//db에 있는 정보
 		UsersVO login = service.login(vo);
 		boolean isValid = false;
+		String cmd = ""; //move or back
+		String msg = "";
+		String url = "";
 		
-		if(login == null) {
-			System.out.println("회원정보없음");
-		}else {
-			System.out.println("회원정보있음");
+		if(login == null) { //회원 정보가 존재하지 않음
+			msg = "아이디와 비밀번호를 확인해주세요.";
+			cmd = "back";
+		}else if(login.getUsers_status() == 0) {//정상 회원일 때 -> 로그인
 			isValid = BCrypt.checkpw(vo.getUsers_pwd(), login.getUsers_pwd()); 
+			if(isValid) {//로그인 성공!
+				session.setAttribute("users_info", login);
+				cmd = "move";
+				url = "main";
+			}else {//비밀번호 틀림!
+				msg = "아이디와 비밀번호를 확인해주세요.";
+				cmd = "back";
+			}
+		}else {//정지된 회원일 때
+			msg = "정지계정입니다. 관리자에게 문의해주세요.";
+			cmd = "move";
+			url = "main";
 		}
 		
+		model.addAttribute("msg", msg);
+		model.addAttribute("cmd", cmd);
+		model.addAttribute("url", url);
 		
-		if(isValid) {
-			System.out.println("비번맞음");
-			session.setAttribute("users_info", login);
-			return "redirect:/main";
-		}else {
-			System.out.println("비번틀림");
-			return "redirect:/login";
-		}
+		return "common/inform";
 	}
 	
 	@ResponseBody
@@ -131,7 +157,7 @@ public class UsersController {
 	@PostMapping("/check_authnum")
 	public String checkAuthNum(HttpSession session, String validNum){
 		String authNum = (String)session.getAttribute("authNum");
-
+		session.setAttribute("authNum", ""); //authNum 초기화
 		return validNum.equals(authNum) ? "true" : "false";
 	}
 	
@@ -157,18 +183,27 @@ public class UsersController {
 		if(vo == null) {
 			model.addAttribute("users_email", "NOT_EXIST");
 		}else {
-			String users_email = vo.getUsers_email();
-			int atIdx = users_email.indexOf("@");
-			String maskedEmail = users_email.substring(0,3) + "*****" + users_email.substring(atIdx); 
-			System.out.println(maskedEmail);
-			model.addAttribute("users_email", maskedEmail);
+			if(vo.getUsers_status() == 1) {
+				model.addAttribute("msg", "정지 계정입니다.");
+				model.addAttribute("cmd", "move");
+				model.addAttribute("url", "main");
+				
+				return "common/inform";
+			}else {
+				String users_email = vo.getUsers_email();
+				int atIdx = users_email.indexOf("@");
+				String maskedEmail = users_email.substring(0,3) + "*****" + users_email.substring(atIdx); 
+				System.out.println(maskedEmail);
+				model.addAttribute("users_email", maskedEmail);
+			}
 		}
 		model.addAttribute("result_type", "find_id");
 		
 		return "users/findResult";
 	}
+	
 	@PostMapping("find_pwd")
-	public String findPwd(Model model, String users_name, String users_email ) {
+	public String findPwd(Model model, String users_name, String users_email, RedirectAttributes rs) {
 		Map<String, String> user_info = new HashMap<>();
 		user_info.put("users_name", users_name);
 		user_info.put("users_email", users_email);
@@ -178,34 +213,54 @@ public class UsersController {
 			model.addAttribute("result_type", "find_pwd");
 			return "users/findResult";
 		}else {
-			model.addAttribute("vo", vo);
-			return "users/changePwd";
+			if(vo.getUsers_status() == 1) {
+				model.addAttribute("msg", "정지 계정입니다.");
+				model.addAttribute("cmd", "move");
+				model.addAttribute("url", "main");
+				
+				return "common/inform";
+			}
+			rs.addFlashAttribute("vo", vo);
+			return "redirect:change_pwd";
 		}
 		
 	}
+	
 	
 	@GetMapping("find_result")
 	public String findResult() {
 		return "users/findResult";
 	}
 	
+	@GetMapping("change_pwd")
+	public String changePwd() {
+		return "users/changePwd";
+	}
+	
+	
 	@PostMapping("change_pwd")
-	public void changePwd(HttpServletResponse response, Model model, String users_pwd, String users_id ) throws IOException{
-		response.setContentType("text/html; charset=utf-8");
-		response.setCharacterEncoding("utf-8");
-		
-		PrintWriter out = response.getWriter();
+	public String changePwdProcess(Model model, String users_pwd, String users_id){
+		String cmd = ""; //move or back
+		String msg = "";
+		String url = "";
 		Map<String, String> user_info = new HashMap<>();
 		user_info.put("users_pwd", users_pwd);
 		user_info.put("users_id", users_id);
 		boolean pwdIsChanged = service.changePwd(user_info);
 		if(pwdIsChanged) {
-			out.println("<script>alert('비밀번호가 변경되었습니다.');"+ "location.href='login';</script>");
-			out.flush();
+			cmd = "move";
+			msg = "비밀번호가 변경되었습니다.";
+			url = "login";
 		}else {
-			out.println("<script>alert('비밀변호 변경에 실패했습니다.');"+ "location.href='#';</script>");
-			out.flush();
+			cmd = "back";
+			msg = "비밀변호 변경에 실패했습니다.";
 		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("cmd", cmd);
+		model.addAttribute("url", url);
+		
+		return "common/inform";
 	}
 
   // 관심지역 수정
@@ -226,20 +281,23 @@ public class UsersController {
 	@ResponseBody
 	@PostMapping("/pwd/check")
 	public boolean pwdCheck(HttpSession sess, @RequestBody Map<String, Object> pwd) {
-		Map<String, Object> dataForValidPwd = new HashMap<>();
 		UsersVO vo = (UsersVO) sess.getAttribute("users_info");
-		dataForValidPwd.put("users_id", vo.getUsers_id());
-		dataForValidPwd.put("users_pwd", pwd.get("data"));
-		return service.validPwd(dataForValidPwd) == 1 ? true : false;
+		
+		String encryptPwd = service.selectPwd(vo.getUsers_id());
+		boolean isValid = BCrypt.checkpw((String)pwd.get("data"), encryptPwd);
+		
+		return isValid;
 	}
 	// 비밀번호 변경
 	@ResponseBody
 	@PostMapping("/pwd/change")
 	public boolean pwdChange(HttpSession sess, @RequestBody Map<String, Object> pwd) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
 		Map<String, Object> dataForValidPwd = new HashMap<>();
 		UsersVO vo = (UsersVO) sess.getAttribute("users_info");
 		dataForValidPwd.put("users_id", vo.getUsers_id());
-		dataForValidPwd.put("users_pwd", pwd.get("data"));	
+		dataForValidPwd.put("users_pwd", encoder.encode((String)pwd.get("data")));	
 		return service.pwdChange(dataForValidPwd) == 1 ? true : false;
 	}
 	
@@ -256,13 +314,14 @@ public class UsersController {
 	public Map<String, Integer> deleteAccount(HttpSession sess, @RequestBody Map<String, Object> pwd) {
 		System.out.println();
 		
+		
 		Map<String, Object> dataForValidPwd = new HashMap<>();
 		UsersVO vo = (UsersVO) sess.getAttribute("users_info");
-		dataForValidPwd.put("users_id", vo.getUsers_id());
-		dataForValidPwd.put("users_pwd", pwd.get("data"));
+		String encryptPwd = service.selectPwd(vo.getUsers_id());
+		boolean isValid = BCrypt.checkpw((String)pwd.get("data"), encryptPwd);
 
 		Map<String, Integer> result = new HashMap<>();
-		if(service.validPwd(dataForValidPwd) == 1) {
+		if(isValid) {
 			int auctionsCount = 0;
 			auctionsCount += auctionsService.countAuctions(vo.getUsers_id());
 			auctionsCount += auctionsService.countAuctionsIng(vo.getUsers_id());

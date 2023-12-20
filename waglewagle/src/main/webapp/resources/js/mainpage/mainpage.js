@@ -6,6 +6,13 @@
 			$(this).text(dong);
 		});
 		
+		
+		$(".productExp").each(function(){
+			var fullExp = $(this).text().trim();
+			var result = fullExp.substring(0,11);
+			$(this).text(result);
+		});
+		
 	})
 	
 	$(function(){
@@ -48,10 +55,20 @@
 	     	const hours = ("0"+Math.floor(leftTime %(1000*60*60*24)/(1000*60*60))).slice(-2);
 
 			
-			$(".leftTime").text(days+"일 "+hours+"시간");
-			$(this).find('.popProduct').find(".leftTime").removeClass("hide");
+			$(".leftTimeVal").text(days+"일 "+hours+"시간");
+			$(this).find('.popProduct').find(".leftTime").css("display", "flex");
+			
 		})
 		$(".swiper-slide").mouseout(function(){
-			$(this).find('.popProduct').find(".leftTime").addClass("hide");
+			$(this).find('.popProduct').find(".leftTime").css("display", "none");
 		})
+		
 	})
+		
+		$(function(){
+			$(".toDetailPage").click(function(){
+				var goods_id = $(this).find('input').val();
+				location.href='/goods/'+goods_id;
+				
+			})
+		})
