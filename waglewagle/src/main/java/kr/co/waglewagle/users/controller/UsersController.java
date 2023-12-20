@@ -120,10 +120,13 @@ public class UsersController {
 				msg = "아이디와 비밀번호를 확인해주세요.";
 				cmd = "back";
 			}
-		}else {//정지된 회원일 때
+		}else if(login.getUsers_status() == 1){//정지된 회원일 때
 			msg = "정지계정입니다. 관리자에게 문의해주세요.";
 			cmd = "move";
 			url = "main";
+		}else { // 탈퇴한 회원
+			msg = "아이디와 비밀번호를 확인해주세요.";
+			cmd = "back";
 		}
 		
 		model.addAttribute("msg", msg);
@@ -189,6 +192,8 @@ public class UsersController {
 				model.addAttribute("url", "main");
 				
 				return "common/inform";
+			}else if(vo.getUsers_status() == 2){
+				model.addAttribute("users_email", "NOT_EXIST");
 			}else {
 				String users_email = vo.getUsers_email();
 				int atIdx = users_email.indexOf("@");
@@ -219,6 +224,9 @@ public class UsersController {
 				model.addAttribute("url", "main");
 				
 				return "common/inform";
+			}else if(vo.getUsers_status() == 2){
+				model.addAttribute("result_type", "find_pwd");
+				return "users/findResult";
 			}
 			rs.addFlashAttribute("vo", vo);
 			return "redirect:change_pwd";
@@ -314,8 +322,6 @@ public class UsersController {
 	public Map<String, Integer> deleteAccount(HttpSession sess, @RequestBody Map<String, Object> pwd) {
 		System.out.println();
 		
-		
-		Map<String, Object> dataForValidPwd = new HashMap<>();
 		UsersVO vo = (UsersVO) sess.getAttribute("users_info");
 		String encryptPwd = service.selectPwd(vo.getUsers_id());
 		boolean isValid = BCrypt.checkpw((String)pwd.get("data"), encryptPwd);
