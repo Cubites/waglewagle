@@ -17,6 +17,6 @@ public class QnasVO {
 	private Date qnas_reply_date;
 	private Integer qnas_read;
 	private Integer admins_id;
-	
 	private Integer rownum;
+
 }

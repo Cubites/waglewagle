@@ -25,10 +25,10 @@
 			 location.href = "/admin/stats";
 		}
 		function user(){
-			 location.href = "/admin/usermanage";
+			 location.href = "/admin/userManageList";
 		}
 		function goods(){
-			 location.href = "/admin/goodsmanage";
+			 location.href = "/admin/goodsManageList";
 		}
 		function admin(){
 			 location.href = "/admin/adminmanage";

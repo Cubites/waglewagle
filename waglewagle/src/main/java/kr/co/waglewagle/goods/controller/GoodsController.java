@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -127,6 +128,46 @@ public class GoodsController {
 		return "goods/goodsDetail";
 	}
 
+	// 상품 검색 (검색어 이용)
+	@GetMapping("/goods/search/word")
+	public String searchGoodsByWord(@RequestParam(value = "goods_title", required = false, defaultValue = "#") String searchWord,
+			Model model) {
+		// 상품 제목에 포함되어 있으면 다 불러오기
+		List<GoodsVO> goodsList = goodsService.getGoodsByWord(searchWord);
+		model.addAttribute("goodsList", goodsList);
+		model.addAttribute("searchWord", searchWord);
+		return "goods/search";
+	}
+	
+	// 상품 검색 (카테고리 선택)
+	@GetMapping("/goods/search/category")
+	public String searchGoodsByCategory(@RequestParam(value = "category_id", required = false, defaultValue = "#") Integer categoryId,
+			Model model) {
+		// 선택한 카테고리에 해당하는 상품 다 불러오기
+		List<GoodsVO> goodsList = goodsService.getGoodsByCategory(categoryId);
+		model.addAttribute("goodsList", goodsList);
+		model.addAttribute("searchCategory", categoryId);
+		return "goods/search";
+	}
+	
+	// 상품 검색 (카테고리 & 검색어)
+	@GetMapping("/goods/search")
+	public String searchGoodsByBoth(@RequestParam(value = "category_id", required = false, defaultValue = "#") Integer categoryId,
+			@RequestParam(value = "goods_title", required = false, defaultValue = "#") String searchWord,
+			Model model) {
+		
+		System.out.println();
+		System.out.println(">>> 검색할거야 ---->   " +categoryId+ searchWord);
+		System.out.println();
+		
+		// 선택한 카테고리에 해당하는 상품 다 불러오기
+		List<GoodsVO> goodsList = goodsService.getGoodsByBoth(categoryId, searchWord);
+		model.addAttribute("goodsList", goodsList);
+		model.addAttribute("searchCategory", categoryId);
+		model.addAttribute("searchWord", searchWord);
+		return "goods/search";
+	}
+
 	// 나중에 혹시몰라서 만들어 둔 것
 	private GoodsVO convertGoodsFormToGoods(GoodsFormVO vo, UsersVO loginUserId) {
 		GoodsVO goods = new GoodsVO();
@@ -148,5 +189,6 @@ public class GoodsController {
 
 		return null;
 	}
+	
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.waglewagle.domain.AuctionsIngVO;
+import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsBreakVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsEndVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsIngVO;
@@ -42,9 +43,16 @@ public interface AuctionsService {
 
 	List<SomeoneFavorsVO> checkFavors(Map<String, Integer> auctionsIngVal);
 
+
 	boolean saveReport(ReportsVO vo);
 
 	boolean auctionEnd(Map<String, Object> paramMap) throws Exception;
 
 	
+
+  
+	Map<String, String> getAuctionIngGoods(int users_id, int goods_id);
+	void completeAuction(int goods_id);
+	boolean saveReport(ReportsVO vo);
+
 }

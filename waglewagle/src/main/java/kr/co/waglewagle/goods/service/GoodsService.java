@@ -19,4 +19,10 @@ public interface GoodsService {
 	boolean isFavoritGoods(Integer usersId,Integer goodsId);
 	Integer addGoodsFavor(Integer users_id, Integer goods_id,boolean status);
 	
+	// 검색창 검색
+	List<GoodsVO> getGoodsByWord(String searchWord);
+	// 카테고리 선택
+	List<GoodsVO> getGoodsByCategory(Integer categoryId);
+	// 둘 다 사용
+	List<GoodsVO> getGoodsByBoth(Integer categoryId, String searchWord);
 }

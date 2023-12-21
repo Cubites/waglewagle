@@ -11,7 +11,6 @@ import kr.co.waglewagle.domain.NoticesVO;
 
 public interface NoticeService {
 	public List<NoticesVO> noticeList();
-//	public void Noticemodify(NoticesVO vo);
 	List<NoticesVO> Noticewrite(NoticesVO vo, HttpServletRequest request);
 	public Object list(NoticesVO vo);
 	public NoticesVO Noticeview(int notices_id);

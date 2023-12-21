@@ -68,7 +68,7 @@
 							<div class="swiper-slide">
 			                    <div class="popProduct">
 				                    <div class="productImg">
-				                   		<img src="${item.goods_th_img }">
+				                   		<img src="/upload/${item.goods_th_img }">
 				                    </div>
 				                    <div class="productTitle">${item.goods_title }</div>
 			                    	<div class="avgPrice_expDateArea">
@@ -89,8 +89,10 @@
 					                    	${item.goods_address }
 					                    </div>
 				                    </div>
-				                    <div class="leftTime hide">
-				                    </div>
+				                    <div class="leftTime toDetailPage">
+			                        	<div class="leftTimeVal"></div>
+			                        	<input type="hidden" value="${item.goods_id }" class="goodsIdVal">
+			                   	 	</div>
 			                    </div>      
 							</div>
 		                 </c:forEach> 
@@ -117,7 +119,7 @@
 							<div class="swiper-slide smallEl">
 			                     <div class="popProduct">
 			                        <div class="productImg">
-			                           <img src="${item.goods_th_img }">
+			                           <img src="/upload/${item.goods_th_img }">
 			                        </div>
 			                        <div class="productTitle">${item.goods_title }</div>
 		                        	<div class="avgPrice_expDateArea">
@@ -132,8 +134,10 @@
 					                        </div>
 				                        </div>
 			                        </div>
-			                        <div class="leftTime hide">
-				                    </div>
+				                    <div class="leftTime toDetailPage">
+			                        	<div class="leftTimeVal"></div>
+			                        	<input type="hidden" value="${item.goods_id }" class="goodsIdVal">
+				                   	</div>
 			                     </div>      
 							</div>
 		                 </c:forEach> 
@@ -173,7 +177,7 @@
 							<div class="swiper-slide">
 			                     <div class="popProduct">
 			                        <div class="productImg">
-			                           <img src="${item.goods_th_img }">
+			                           <img src="/upload/${item.goods_th_img }">
 			                        </div>
 			                        <div class="productTitle">${item.goods_title }</div>
 			                        	<div class="avgPrice_expDateArea">
@@ -188,7 +192,9 @@
 						                        </div>
 					                        </div>
 				                        </div>
-				                        <div class="leftTime hide">
+				                        <div class="leftTime toDetailPage">
+				                        	<div class="leftTimeVal"></div>
+				                        	<input type="hidden" value="${item.goods_id }" class="goodsIdVal">
 				                   	 	</div>
 			                     </div>      
 							</div>

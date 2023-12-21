@@ -12,25 +12,55 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="/resources/css/admin/noticeview.css"/>
+    <link rel="stylesheet" href="/resources/css/admin/qnaview.css"/>
 
 	<script>
 	
-		 //게시물 삭제
-		function qnaDelete(){
-			console.log(document.getElementById("qnas_id").innerText); //notices_id값 가지고 오고 아래 넣어주기!! (ex.나는 2가 notices_id인줄 알고있지만 모르니까..)
+		 //문의글 삭제
+		function qnaDelete(qnas_id){
 		    if(confirm("선택한 문의사항을 삭제 하시겠습니까?")==true)  {
-		    	const qnas_id = document.getElementById("qnas_id").innerText;
-		    	location.href="/admin/qnadelete/${qnas_id}";  	
+		    	location.href="/admin/qnaDelete/"+qnas_id;  	
 		    }
+		} 
+
+		//답글 작성 
+		//페이지 이동만 하는것..
+	    function writeReply(qnas_id){
+	    	location.href="/admin/writeReply/"+qnas_id;
 		}
-/* 		//게시물 수정
-		function noticesModify(){
-			console.log(document.getElementById("notices_id").innerText);
-			const notice_id = document.getElementById("notices_id").innerText;
-			location.href="/admin/noticemodify/${notices_id}";
-		}  */
 		
+	
+		 //답글 삭제
+		function delReply(qnas_id){
+		    if(confirm("선택한 답글을 삭제 하시겠습니까?")==true)  {
+		    	location.href="/admin/delReply?qnas_id="+qnas_id;  	
+		    }
+		} 
+
+		
+		//답글 수정하기
+	  	function modifyReply(){
+			console.log(document.getElementById("qnas_id").innerText);
+			const qnas_id = document.getElementById("qnas_id").innerText;
+			location.href="/admin/modifyReply/${qnas_id}";
+		}  
+		
+		//답글 수정 (ajax)
+		/*function modifyReply(qnas_id){
+				$.ajax({
+					url:"/admin/modifyReply",
+					type:"post",
+					contnetType:"application/json",
+					data:JSON.stringify({
+						data:qnas_id
+					}),
+					success:function(data){
+					}
+				}) 
+			} */
+		
+		
+		 
 		//사이드바 선택에 맞는 함수들..
 	    function notice(){
 			 location.href = "/admin/noticelist";
@@ -42,10 +72,10 @@
 			 location.href = "/admin/stats";
 		}
 		function user(){
-			 location.href = "/admin/usermanage";
+			 location.href = "/admin/userManageList";
 		}
 		function goods(){
-			 location.href = "/admin/goodsmanage";
+			 location.href = "/admin/goodsManageList";
 		}
 		function admin(){
 			 location.href = "/admin/adminmanage";
@@ -74,37 +104,61 @@
                 <div id="adminmaster" onclick="admin()">관리자 계정</div>
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
-
         
             <div id="main-box">
-            	<div class="noticeView">       		
-            	   <div class="rightloc"><p style="font-size:15px" class="noticeinfo" id="qnas_id">글번호: ${a.qnas_id } &nbsp&nbsp 작성일: ${a.qnas_date }</p></div>
+            	<div class="noticeView">        		
+            	   <p style="font-size:15px" class="noticeinfo" id="qnas_id">글번호: ${a.qnas_id } &nbsp&nbsp 작성일: ${a.qnas_date }</p>
             	   <!-- 작성자 -->
+            	   <div>
+            	   <p id="titletxt">작성회원</p>
                    <div id="noticetitle">
-                       <!-- <p id="titletxt">제목</p> -->
                        ${a.users_id}
                    </div>
+                   </div>
             	   <!-- 제목 -->
+            	   <div>
+            	   <p id="titletxt">문의제목</p>
                    <div id="noticetitle">
-                       <!-- <p id="titletxt">제목</p> -->
                        ${a.qnas_title}
                    </div>
+                   </div>
                    <!-- 내용 -->
+                   <div>
+                   <p id="titletxt">문의내용</p>
                    <div id="noticecontent">
                        <!-- <p id="contenttxt">내용</p> -->
                        ${a.qnas_content}
                    </div>
-            		
+                   </div>
+
             		<!-- 버튼들 -->
             		<div class="writebtn">
             			<!-- 공지 상세페이지 버튼들  -->
 						<div id="notice_button">
+				            <!-- <input type="button" id="writebtn" value="답변작성" onclick="qnaReply()"> -->
 							<input type="button" id="writebtn" value="목록" onclick="qna()">
-							<input type="button" id="writebtn" value="답글" onclick="">
-							<!-- <input type="button" id="writebtn" value="수정" onclick="noticesModify()"> -->
-							<input type="button" id="writebtn" value="삭제" onclick="qnaDelete()">
+							<input type="button" id="writebtn" value="문의글 삭제" onclick="qnaDelete(${a.qnas_id})">
 		                 </div>
             		</div>
+            		
+						<form method="post" action="/admin/writeReply/${qnas_id}">
+	            			<div id="replyText">
+	            				<textarea id="noticetitle" name="qnas_reply" placeholder="문의답글을 작성하세요">${a.qnas_reply}</textarea>
+	            			</div>
+	            			<!-- 답변 유무로 버튼 변경되어서 표시된다. -->
+	            			<c:if test="${empty a.qnas_reply }">
+		            			<input type="submit" value="답글작성" id="writebtn">
+		            	 	</c:if>
+		            	 	
+		            	 	<c:if test="${!empty a.qnas_reply}">
+		            	 		<div id="replybtn">
+		            	 			<input type="submit" value="답글수정" id="writebtn">
+		            				<%-- <input type="button" id="writebtn" value="답글수정" onclick="writeReply(${a.qnas_id})"> --%>
+		            				<input type="button" id="writebtn" value="답글삭제" onclick="delReply(${a.qnas_id})">
+		            			</div>
+		            	 	</c:if>	
+	            		</form>
+
             	</div>
             </div>
         </div>

@@ -7,10 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import kr.co.waglewagle.auctions.mapper.AuctionsMapper;
+import kr.co.waglewagle.domain.AuctionsBreakVO;
+import kr.co.waglewagle.domain.AuctionsEndVO;
+import kr.co.waglewagle.domain.AuctionsFailVO;
 import kr.co.waglewagle.domain.AuctionsIngVO;
+import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsBreakVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsEndVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsIngVO;
@@ -18,6 +24,8 @@ import kr.co.waglewagle.util.hcju.SomeoneAuctionsVO;
 import kr.co.waglewagle.util.hcju.SomeoneFavorsVO;
 import kr.co.waglewagle.domain.ReportsVO;
 import kr.co.waglewagle.payment.mapper.PaymentMapper;
+import kr.co.waglewagle.goods.mapper.GoodsMapper;
+
 
 @Service
 public class AuctionsServiceImpl implements AuctionsService {
@@ -28,20 +36,35 @@ public class AuctionsServiceImpl implements AuctionsService {
 	private PaymentMapper payMapper;
 
 	@Override
+	public Map<String, String> getAuctionIngGoods(int users_id, int goods_id) {
+		// 물품 정보 가져오기
+		return mapper.getAuctionIngInfo(goods_id);
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void completeAuction(int goods_id) {
+		// 1. 거래 중 테이블에서 데이터 찾기
+		AuctionsIngVO ingVO = mapper.getAunctionIngData(goods_id);
+		// 2. 거래 완료 테이블에 추가
+		AuctionsEndVO endVO = new AuctionsEndVO();
+		endVO.setAuctions_end_seller(ingVO.getAuctions_ing_seller());
+		endVO.setAuctions_end_buyer(ingVO.getAuctions_ing_buyer());
+		endVO.setAuctions_end_price(ingVO.getAuctions_ing_price());
+		endVO.setAuctions_end_date(ingVO.getAuctions_date());
+		endVO.setGoods_id(ingVO.getGoods_id());
+		mapper.saveAuctionEnd(endVO);
+		// 3. 거래 중 테이블에서 해당 데이터 삭제
+		mapper.deleteAuctionIngData(ingVO.getAuctions_ing_id());
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public boolean saveReport(ReportsVO vo) {
 
-		// 1. 신고 가능한 지 확인하기
-		// 1-1. 경매 중인 물품인지 확인하기 -> 경매 중이어야 함.
-		int checkAuctionIng = mapper.checkAuctionIng(vo);
-		// 1-2. 이미 신고된 물품인지 확인하기 -> 신고되지 않은 물품이어야 함.
-		int checkReport = mapper.checkReport(vo);
-
-		// 경매 중이지 않은 물품인 것
-		if (checkAuctionIng == 0) {
-			return false;
-		}
-
-		// 이미 신고된 물품인 것
+		// 이미 신고된 물품인지 확인하기 -> 신고되지 않은 물품이어야 함.
+		int goods_id = vo.getGoods_id();
+		int checkReport = mapper.checkReport(goods_id);
 		if (checkReport >= 1) {
 			return false;
 		}
@@ -51,6 +74,19 @@ public class AuctionsServiceImpl implements AuctionsService {
 		if (saveReport != 1) {
 			return false;
 		}
+
+		// 거래 중 테이블에서 데이터 찾기
+		AuctionsIngVO ingVO = mapper.getAunctionIngData(goods_id);
+		// 경매 파기 테이블에 데이터 추가
+		AuctionsBreakVO breakVO = new AuctionsBreakVO();
+		breakVO.setAuctions_break_user(ingVO.getAuctions_ing_seller());
+		//vo.getReports_content().split(" - ")[1]
+		breakVO.setAuctions_break_reason(Integer.parseInt(vo.getReports_content().split(" - ")[0]));
+		breakVO.setAuctions_break_detail(vo.getReports_content().split(" - ")[1]);
+		breakVO.setGoods_id(ingVO.getGoods_id());
+		mapper.saveAuctionBreak(breakVO);
+		// 거래 중 테이블에서 데이터 삭제
+		mapper.deleteAuctionIngData(ingVO.getAuctions_ing_id());
 
 		return true;
 	}

@@ -18,7 +18,6 @@
 	
 		//게시물 삭제
 		function noticeDelete(){
-			console.log('?????') //
 			console.log(document.getElementById("notices_id").innerText); //notices_id값 가지고 오고 아래 넣어주기!! (ex.나는 2가 notices_id인줄 알고있지만 모르니까..)
 		    if(confirm("선택한 공지를 정말로 삭제 하시겠습니까?")==true)  {
 		    	const notices_id = document.getElementById("notices_id").innerText;
@@ -43,10 +42,10 @@
 			 location.href = "/admin/stats";
 		}
 		function user(){
-			 location.href = "/admin/usermanage";
+			 location.href = "/admin/userManageList";
 		}
 		function goods(){
-			 location.href = "/admin/goodsmanage";
+			 location.href = "/admin/goodsManageList";
 		}
 		function admin(){
 			 location.href = "/admin/adminmanage";

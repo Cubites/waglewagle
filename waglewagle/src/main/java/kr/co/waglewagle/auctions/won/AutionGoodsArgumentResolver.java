@@ -17,36 +17,35 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AutionGoodsArgumentResolver implements HandlerMethodArgumentResolver{
-	
-	@Autowired
-	private AuctionsMapper mapper;
-	
-	
-	@Override
-	public boolean supportsParameter(MethodParameter parameter) {
-		boolean hasAnnotaion = parameter.hasParameterAnnotation(AuctionIng.class);
-		boolean hasAssginedFrom = Integer.class.isAssignableFrom(parameter.getParameterType());
-		
-		return hasAnnotaion && hasAssginedFrom;
-	}
+   
+   @Autowired
+   private AuctionsMapper mapper;
+   
+   
+   @Override
+   public boolean supportsParameter(MethodParameter parameter) {
+      boolean hasAnnotaion = parameter.hasParameterAnnotation(AuctionIng.class);
+      boolean hasAssginedFrom = Integer.class.isAssignableFrom(parameter.getParameterType());
+      
+      return hasAnnotaion && hasAssginedFrom;
+   }
 
-	@Override
-	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-				
-		HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
-		String uri = request.getRequestURI();
-		Integer goods_id = Integer.parseInt( uri.substring(uri.lastIndexOf("/")+1));
-		Integer result = mapper.checkgoodsInAuctionIng(goods_id);
-		
-		if(result == 0) {
-			return null;
-		}
-		
-	
-		
-			
-		return goods_id;
-	}
+   @Override
+   public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+            
+      HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
+      String uri = request.getRequestURI();
+      Integer goods_id = Integer.parseInt( uri.substring(uri.lastIndexOf("/")+1));
+      Integer result = mapper.checkAuctionIng(goods_id);
+      
+      if(result == 0) {
+         return null;
+      }
+      
+         
+      return goods_id;
+   }
 
 }
+
