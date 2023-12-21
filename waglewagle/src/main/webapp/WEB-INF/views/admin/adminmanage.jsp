@@ -122,22 +122,22 @@
 				<div id="pagingBox">
 					<ul>
 						<c:if test="${pageNum10 != 0}">
-							<li><a href="/admin/adminmanage?page=${pageNum10}&scroll=0">&#60;</a></li>
+							<li><a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${pageNum10}&scroll=0">&#60;</a></li>
 						</c:if>
 						<c:forEach var="num" begin="${pageNum10 + 1}" end="${(pageNumMax - pageNum10) < 10 ? pageNumMax : pageNum10 + 10}" step="1">
 							<c:if test="${pageNum1 == num}">
 								<li class="nowPage">
-									<a href="/admin/adminmanage?page=${num}&scroll=0">${num}</a>
+									<a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${num}&scroll=0">${num}</a>
 								</li>
 							</c:if>
 							<c:if test="${pageNum1 != num}">
 								<li>
-									<a href="/admin/adminmanage?page=${num}&scroll=0">${num}</a>
+									<a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${num}&scroll=0">${num}</a>
 								</li>
 							</c:if>
 						</c:forEach>
 						<c:if test="${(pageNumMax - pageNum10) > 10}">
-							<li><a href="/admin/adminmanage?page=${pageNum10 + 11}&scroll=0">&#62;</a></li>
+							<li><a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${pageNum10 + 11}&scroll=0">&#62;</a></li>
 						</c:if>
 					</ul>
 				</div>

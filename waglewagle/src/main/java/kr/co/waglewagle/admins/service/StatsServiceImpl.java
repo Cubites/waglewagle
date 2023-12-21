@@ -15,22 +15,22 @@ public class StatsServiceImpl implements StatsService {
 	private StatsMapper mapper;
 
 	@Override
-	public List<Map<String, Object>> countGoodsByCategory() {
-		return mapper.countGoodsByCategory();
-	}
+	public List<Map<String, Object>> countGoodsByCategory() { return mapper.countGoodsByCategory(); }
 	@Override
-	public List<Map<String, Object>> countBidsByCategory() {
-		return mapper.countBidsByCategory();
-	}
+	public List<Map<String, Object>> countGoodsFailByCategory() { return mapper.countGoodsFailByCategory(); }
+	@Override
+	public List<Map<String, Object>> countBidsByCategory() { return mapper.countBidsByCategory(); }
 	
 
 	@Override
-	public List<Map<String, Object>> countGoodsByCategoryAll() {
-		return mapper.countGoodsByCategoryAll();
-	}
+	public List<Map<String, Object>> countGoodsByCategoryAll() {return mapper.countGoodsByCategoryAll(); }
 	@Override
-	public List<Map<String, Object>> countBidsByCategoryAll() {
-		return mapper.countBidsByCategoryAll();
-	}
+	public List<Map<String, Object>> countBidsByCategoryAll() { return mapper.countBidsByCategoryAll(); }
+	
+	@Override
+	public List<Map<String, Object>> countUsersByMonthLatestYear() { return mapper.countUsersByMonthLatestYear(); }
+	
+	@Override
+	public List<Map<String, Object>> countUsersGender() { return mapper.countUsersGender(); }
 
 }

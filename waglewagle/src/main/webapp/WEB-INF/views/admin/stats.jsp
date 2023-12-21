@@ -69,32 +69,27 @@
             </div>
             <div id="main-box">
 				<div id="statsTop">
-					<div id="statsTotalButton">전체</div>
-					<div id="statsCategoryButton">카테고리</div>
-					<div id="statsTimeButton">시간대</div>
-					<div id="statsGenderButton">성별</div>
+					<div class="chartMenuButton" id="statsTotalButton" style="background-color: #fff">전체</div>
+					<div class="chartMenuButton" id="statsCategoryButton">카테고리</div>
+					<div class="chartMenuButton" id="statsTimeButton">시간대</div>
+					<div class="chartMenuButton" id="statsGenderButton">성별</div>
 				</div>
 				<div id="statsBottom">
-					<div id="categoryBox">
+					<div class="chartBox" id="categoryBox">
 						<div class="title">카테고리</div>
 						<div class="chartArea chart1"></div>
 						<div class="chartArea chart2"></div>
 						<div class="chartArea chart3"></div>
 						<div class="chartArea chart4"></div>
+						<div class="chartArea chart5"></div>
 					</div>
-                    <div id="categoryBox">
+                    <div class="chartBox" id="dateBox">
 						<div class="title">시간대</div>
-						<div class="chartArea chart5"></div>
-						<div class="chartArea chart6"></div>
-						<div class="chartArea chart7"></div>
-						<div class="chartArea chart8"></div>
+						<div class="chartArea chart11"></div>
 					</div>
-					<div id="categoryBox">
+					<div class="chartBox" id="genderBox">
 						<div class="title">성별</div>
-						<div class="chartArea chart5"></div>
-						<div class="chartArea chart6"></div>
-						<div class="chartArea chart7"></div>
-						<div class="chartArea chart8"></div>
+						<div class="chartArea chart21"></div>
 					</div>
 				</div>
             </div>
@@ -108,26 +103,69 @@
 		
 		let ChartData = {
 			"chart1": ${goods_category},
-			"chart2": ${bids_category},
+			"chart2": ${goods_fail_category},
 			"chart3": ${goods_category_all},
-			"chart4": ${bids_category_all}
+
+			"chart4": ${bids_category},
+			"chart5": ${bids_category_all},
+
+			"chart11": ${users_month_latestyear},
+
+			"chart21": ${users_gender}
         }
 
             
 		circleChart("chart1", ChartData.chart1, {
         	Title: "상위 카테고리별 게시글 수"
         });
-        circleChart("chart2", ChartData.chart2, {
-        	Title: "상위 카테고리별 경매 참여 수"
+		circleChart("chart2", ChartData.chart2, {
+        	Title: "상위 카테고리별 유찰 수"
         });
         horizonalStackedBarChart("chart3", ChartData.chart3, {
         	Title: "하위 카테고리별 게시글 수",
 			Legend: ["경매글 수"]
         });
-        horizonalStackedBarChart("chart4", ChartData.chart4, {
+        circleChart("chart4", ChartData.chart4, {
+        	Title: "상위 카테고리별 경매 참여 수"
+        });
+        horizonalStackedBarChart("chart5", ChartData.chart5, {
         	Title: "하위 카테고리별 경매 참여 수",
 		    Legend: ["호가 횟수"]
         });
+
+		horizonalStackedBarChart("chart11", ChartData.chart11, {
+			Title: "최근 1년간 월별 가입자 수",
+			Legend: ["가입자 수"],
+			RateDataLabelOnOff: false
+		});
+
+		circleChart("chart21", ChartData.chart21, {
+			Title: "성별 가입자 수"
+		});
+		
+		console.log(document.getElementsByClassName("chartMenuButton"));
+		Array.from(document.getElementsByClassName("chartMenuButton")).forEach((item, index) => {
+			item.addEventListener("click", (e) => {
+				Array.from(document.getElementsByClassName("chartMenuButton")).forEach((item, index) => {
+					item.style.backgroundColor = "#ddd";
+				});
+				e.target.style.backgroundColor = "#fff";
+				if(index == 0){
+					Array.from(document.getElementsByClassName("chartBox")).forEach((item, index) => { 
+						item.style.display = "flex"
+					});
+				} else {	
+					let menuIndex = index;
+					Array.from(document.getElementsByClassName("chartBox")).forEach((item, index) => {
+						if(menuIndex-1 != index) { 
+							item.style.display = "none";
+						} else {
+							item.style.display = "flex";
+						}
+					});
+				}
+			});
+		});
 	</script>
 </body>
 </html>

@@ -74,7 +74,7 @@
     /* border: 1px solid #999; */
 }
 #main-box>#statsTop{
-	width: 80%;
+	width: 90%;
 	height: 10%;
 	margin: 0 auto;
 	display: flex;
@@ -113,7 +113,7 @@
     height: 500px;
     min-height: 300px;
 }
-#main-box>#statsBottom>#categoryBox{
+#main-box>#statsBottom>.chartBox{
 	width: 100%;
 	height: auto;
 	display: flex;
@@ -125,7 +125,7 @@
     padding: 20px;
     margin-bottom: 50px;
 }
-#main-box>#statsBottom>#categoryBox>.title{
+#main-box>#statsBottom>.chartBox>.title{
 	width: 120px;
 	height: 40px;
 	background-color: #fff;
@@ -136,11 +136,18 @@
 	align-items: center;
 	position: absolute;
 	left: 20px;
-	top: -20px;	
+	top: -20px;
 	z-index: 100;
 }
-#main-box>#statsBottom>#categoryBox>.chart3,
-#main-box>#statsBottom>#categoryBox>.chart4{
+#main-box>#statsBottom>.chartBox>.chartArea{
+	width: 500px;
+	height: 500px;
+}
+#main-box>#statsBottom>.chartBox>.chart3,
+#main-box>#statsBottom>.chartBox>.chart5{
 	width: 1000px;
 	height: 1000px;
+}
+#main-box>#statsBottom>.chartBox>.chart5{
+	width: 1000px;
 }

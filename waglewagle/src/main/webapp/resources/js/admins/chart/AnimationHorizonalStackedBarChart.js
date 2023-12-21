@@ -49,7 +49,8 @@ function HorizontalStackedBarChart(ChartTag, ChartData, {
   FontColors = Array(ShapeColors.length).fill('#000'),
   xFormat,
   AnimeDuration = 1000,
-  FontFamily
+  FontFamily,
+  RateDataLabelOnOff = true
 } = {}) {
   /* 에러 */
   if(typeof ChartTag !== 'string'){console.error(`"ChartTag" is not string type.`);return;}

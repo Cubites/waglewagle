@@ -21,7 +21,7 @@ public class AdminsServiceImpl implements AdminsService {
 	}
 	
 	@Override
-	public Integer countAdmins() { return mapper.countAdmins(); }
+	public Integer countAdmins(String searchWord) { return mapper.countAdmins(searchWord); }
 	@Override
 	public List<AdminsVO> showAdmins(Map<String, Object> dataForSearch) { 
 		return mapper.showAdmins(dataForSearch);	

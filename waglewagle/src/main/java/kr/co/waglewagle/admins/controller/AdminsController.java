@@ -36,7 +36,7 @@ public class AdminsController {
 
 		int itemsNumPerPage = 10;
 		int totalAuctionsNum = 0;
-		totalAuctionsNum = service.countAdmins();
+		totalAuctionsNum = service.countAdmins(searchWord);
 		totalAuctionsNum = (int) Math.ceil(((double)totalAuctionsNum) / itemsNumPerPage);
 		int nowPage1 = 0;
 		int nowPage10 = 0;
@@ -61,6 +61,7 @@ public class AdminsController {
 		model.addAttribute("pageNum10", nowPage10);
 		model.addAttribute("pageNumMax", totalAuctionsNum);
 		
+		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("scrollY", scroll);
 		return "admin/adminmanage";
 	}

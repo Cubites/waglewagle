@@ -6,8 +6,11 @@
 		SELECT * FROM admins WHERE admins_id = #{admins_id}
 	</select>
 	<!-- 관리자 수 조회 -->
-	<select id="countAdmins" resultType="Integer">
+	<select id="countAdmins" resultType="Integer" parameterType="String">
 		SELECT COUNT(*) FROM admins
+		<if test='searchWord != null'>
+		WHERE admins_email LIKE "%${searchWord}%" OR admins_name LIKE "%${searchWord}%" 
+		</if>
 	</select>
 	<!--  관리자 계정 표시(기본) -->
 	<select id="showAdmins" resultType="kr.co.waglewagle.domain.AdminsVO" parameterType="java.util.Map">

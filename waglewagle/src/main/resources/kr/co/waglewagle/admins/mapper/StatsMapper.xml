@@ -18,6 +18,29 @@
 			ORDER BY c.category_upper_id
 		) cc ON cc.category_upper_id = c2.category_id
 	</select>
+	<select id="countGoodsFailByCategory" resultType="java.util.Map">
+		SELECT 
+			c2.category_name AS domain
+			, gaf2.count AS count
+			, ROUND(gaf2.count / (SELECT COUNT(*) FROM auctions_fail) * 100) AS rate
+		FROM category c2 
+		JOIN (
+			SELECT
+				c.category_upper_id AS domain
+				, SUM(gaf.count) AS count
+			FROM category c 
+			JOIN (
+				SELECT
+					g.category_id 
+					, COUNT(*) AS count
+				FROM goods g
+				JOIN auctions_fail af
+				ON g.goods_id = af.goods_id
+				GROUP BY g.category_id
+			) gaf ON gaf.category_id = c.category_id 
+			GROUP BY c.category_upper_id
+		) gaf2 ON gaf2.domain = c2.category_id
+	</select>
 	<select id="countGoodsByCategoryAll" resultType="java.util.Map">
 		SELECT 
 			c.category_name AS domain
@@ -68,5 +91,35 @@
 			GROUP BY g.category_id
 		) bg ON bg.category_id = c.category_id  
 		ORDER BY c.category_id ASC
+	</select>
+	
+	<select id="countUsersByMonthLatestYear" resultType="java.util.Map">
+		SELECT 
+			c.yearmonth AS domain
+			, COALESCE(us.count, 0) AS count
+			, '' AS rate
+		FROM (
+			SELECT 
+				DATE_FORMAT(calender_full_date, "%Y-%m") AS yearmonth 
+			FROM calender 
+			WHERE calender_full_date > (SELECT NOW() - INTERVAL 1 YEAR)
+			GROUP BY DATE_FORMAT(calender_full_date, "%Y-%m")
+		) c 
+		LEFT JOIN (
+			SELECT 
+				DATE_FORMAT(users_join, "%Y-%m") AS sign_in_date
+				, COUNT(*) AS count
+			FROM users
+			GROUP BY DATE_FORMAT(users_join, "%Y-%m")
+		) us ON us.sign_in_date = c.yearmonth
+	</select>
+	
+	<select id="countUsersGender" resultType="java.util.Map">
+		SELECT 
+			IF(users_gender = 0, '남', '여') AS domain 
+			, COUNT(*) AS count
+			, ROUND(COUNT(*) / (SELECT COUNT(*) FROM users) * 100) AS rate
+		FROM users
+		GROUP BY users_gender;
 	</select>
 </mapper>
