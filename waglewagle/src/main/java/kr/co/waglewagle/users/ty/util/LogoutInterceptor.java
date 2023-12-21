@@ -23,7 +23,7 @@ public class LogoutInterceptor implements HandlerInterceptor {
 			PrintWriter writer = response.getWriter();
 			writer.print("<script>");
 			writer.print("alert('로그인되어 있습니다.');");
-			writer.print("location.href='/main';");
+			writer.print("location.href='/';");
 			writer.print("</script>");
 			return false;
 		}

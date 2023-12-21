@@ -44,7 +44,7 @@ public interface AuctionsService {
 	List<SomeoneFavorsVO> checkFavors(Map<String, Integer> auctionsIngVal);
 
 
-	boolean saveReport(ReportsVO vo);
+	
 
 	boolean auctionEnd(Map<String, Object> paramMap) throws Exception;
 

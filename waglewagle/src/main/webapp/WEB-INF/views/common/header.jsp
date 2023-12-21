@@ -28,7 +28,7 @@
 					</c:if>
 					<c:if test='${empty sessionScope.users_info.users_nick}'>
 						<div class="text_center">
-							<a href="users/login" class="text_center">로그인</a>
+							<a href="/users/login" class="text_center">로그인</a>
 						</div>
 					</c:if>
 					<div class="text_center">

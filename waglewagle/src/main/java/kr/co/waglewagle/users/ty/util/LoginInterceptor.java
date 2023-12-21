@@ -25,7 +25,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			PrintWriter writer = response.getWriter();
 			writer.print("<script>");
 			writer.print("alert('로그인이 필요한 페이지입니다.');");
-			writer.print("location.href='/login';");
+			writer.print("location.href='/users/login';");
 			writer.print("</script>");
 			
 			return false;

@@ -79,11 +79,6 @@ public class WebConfig implements WebMvcConfigurer {
 		configurer.enable();
 	}
 	
-	//argumentResolver등록
-	   @Override
-	   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-	      resolvers.add(auctionArgumentResolver());
-	   }
 
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
