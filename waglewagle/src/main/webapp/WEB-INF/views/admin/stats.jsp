@@ -9,9 +9,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/resources/css/admin/qnalist.css"/>
-
+	<link rel="stylesheet" href="/resources/css/admin/stats.css"/>
 	<script>
 	
 		const search = () => {
@@ -67,9 +68,66 @@
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
             <div id="main-box">
-               통계페이지
+				<div id="statsTop">
+					<div id="statsTotalButton">전체</div>
+					<div id="statsCategoryButton">카테고리</div>
+					<div id="statsTimeButton">시간대</div>
+					<div id="statsGenderButton">성별</div>
+				</div>
+				<div id="statsBottom">
+					<div id="categoryBox">
+						<div class="title">카테고리</div>
+						<div class="chartArea chart1"></div>
+						<div class="chartArea chart2"></div>
+						<div class="chartArea chart3"></div>
+						<div class="chartArea chart4"></div>
+					</div>
+                    <div id="categoryBox">
+						<div class="title">시간대</div>
+						<div class="chartArea chart5"></div>
+						<div class="chartArea chart6"></div>
+						<div class="chartArea chart7"></div>
+						<div class="chartArea chart8"></div>
+					</div>
+					<div id="categoryBox">
+						<div class="title">성별</div>
+						<div class="chartArea chart5"></div>
+						<div class="chartArea chart6"></div>
+						<div class="chartArea chart7"></div>
+						<div class="chartArea chart8"></div>
+					</div>
+				</div>
             </div>
         </div>
     </div>
+    <script type="module">
+		import barChart from "/resources/js/admins/chart/AnimationBarChart.js";
+		import circleChart from "/resources/js/admins/chart/AnimationCircleChart.js";
+		import stackedBarChart from "/resources/js/admins/chart/AnimationStackedBarChart.js";
+		import horizonalStackedBarChart from "/resources/js/admins/chart/AnimationHorizonalStackedBarChart.js";
+		
+		let ChartData = {
+			"chart1": ${goods_category},
+			"chart2": ${bids_category},
+			"chart3": ${goods_category_all},
+			"chart4": ${bids_category_all}
+        }
+
+            
+		circleChart("chart1", ChartData.chart1, {
+        	Title: "상위 카테고리별 게시글 수"
+        });
+        circleChart("chart2", ChartData.chart2, {
+        	Title: "상위 카테고리별 경매 참여 수"
+        });
+        horizonalStackedBarChart("chart3", ChartData.chart3, {
+        	Title: "하위 카테고리별 게시글 수",
+			Legend: ["경매글 수"]
+        });
+        horizonalStackedBarChart("chart4", ChartData.chart4, {
+        	Title: "하위 카테고리별 경매 참여 수",
+		    Legend: ["호가 횟수"]
+        });
+	</script>
 </body>
 </html>
