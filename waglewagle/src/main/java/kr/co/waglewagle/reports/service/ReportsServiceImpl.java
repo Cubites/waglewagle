@@ -31,19 +31,20 @@ public class ReportsServiceImpl implements ReportsService {
 		
 		System.out.println(report);
 			
-//
+		System.out.println("여기 ");
 		 Integer reportResult = mapper.insertReport(report);
-		 
+		 System.out.println("여기 ");
 		 Map<String,Object> paramMap = getParamMap(report,userId);
 		//auctions_break 테이블에 넣기 값 넣기
+		 System.out.println(paramMap);
 		 Integer breakResult= auctionsMapper.insertAuctionsBreak(paramMap);
-		 
+		 System.out.println("여기 ");
 		 //돈 환불해주기 정확하지 않아서 일단 막아둠
 		Integer breakRefundResult = auctionsMapper.updateBreakRefund(paramMap);
-		
+		System.out.println("여기 ");
 		 //auctions_ing테이블에서 삭제하기 일단 막아둠
-		 Integer deleteResult = auctionsMapper.deleteAuctionIng((Integer)paramMap.get("goodsId"));
-		
+		 Integer deleteResult = auctionsMapper.deleteAuctionIng(paramMap);
+		System.out.println("여기");
 		 	if(reportResult == 0 || breakResult == 0 
 		 			|| breakRefundResult == 0 || deleteResult == 0) {
 		 		
@@ -60,7 +61,7 @@ public class ReportsServiceImpl implements ReportsService {
 		 Map<String, Object> map = new ConcurrentHashMap<>();
 		 map.put("breakReason", reportReason);
 		 map.put("breakDetail", reportContent);
-		 map.put("goodsId", report.getGoods_id());
+		 map.put("goods_id", report.getGoods_id());
 		 map.put("userId", userId);
 		 return map;
 	}

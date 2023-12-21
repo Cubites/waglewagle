@@ -44,5 +44,7 @@ public interface AuctionsService {
 
 	boolean saveReport(ReportsVO vo);
 
-	boolean auctionEnd(Map<String, Integer> paramMap) throws Exception;
+	boolean auctionEnd(Map<String, Object> paramMap) throws Exception;
+
+	
 }

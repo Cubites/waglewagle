@@ -306,12 +306,15 @@
 	
 	<update id="updateBreakRefund" parameterType="map">
 		UPDATE point 
-		SET point_usable = point_usable + (SELECT auctions_ing_price FROM auctions_ing WHERE goods_id =#{goodsId}) 
+		SET point_usable = point_usable + (SELECT auctions_ing_price FROM auctions_ing WHERE goods_id =#{goods_id}) 
 		WHERE users_id = #{userId}
 	</update>
-	<delete id="deleteAuctionIng" parameterType="Integer">
+	
+	<delete id="deleteAuctionIng" parameterType="map">
+		
 		DELETE FROM auctions_ing WHERE goods_id = #{goods_id}
 	</delete>
+	
 	<insert id="insertAuctionEnd" parameterType="map">
 	INSERT INTO auctions_end 
 	(auctions_end_seller,

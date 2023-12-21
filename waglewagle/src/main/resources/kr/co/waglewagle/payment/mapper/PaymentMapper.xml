@@ -28,4 +28,26 @@
 	SET point_total = point_total- #{auctions_end_price} 
 	WHERE users_id = #{auctions_end_buyer};
 	</update>
+	
+	<delete id="deleteAuctionIng" parameterType="Integer">
+	DELETE FROM auctions_ing WHERE goods_id = #{goods_id}
+	</delete> 
+	
+	<insert id="insertAuctionEnd" parameterType="map">
+	INSERT INTO auctions_end 
+	(auctions_end_seller,
+	auctions_end_buyer,
+	auctions_end_price,
+	goods_id,
+	auctions_end_date)
+	VALUES(
+	 #{auctions_end_seller},
+	 #{auctions_end_buyer},
+	 #{auctions_end_price},
+	 #{goods_id},
+	 NOW()
+	)
+	</insert>
+	
+	
 </mapper>

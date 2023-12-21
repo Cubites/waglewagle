@@ -64,8 +64,8 @@ public class AuctionsController {
 	
 	@PostMapping("/auctions/end/{goods_id}")
 	@ResponseBody
-	public ResponseEntity<String> auctionEnd(@RequestParam Map<String,Integer> paramMap,@AuctionIng Integer goodsId) {
-		System.out.println(paramMap + "파라미터맵");
+	public ResponseEntity<String> auctionEnd(@RequestParam Map<String,Object> paramMap,@AuctionIng Integer goodsId) {
+		
 		ResponseEntity<String> response=null;
 		HttpHeaders header = new HttpHeaders();
 		header.add("content-type", "text/plain;charset=UTF-8");
@@ -78,7 +78,10 @@ public class AuctionsController {
 		
 		
 		try {
-			boolean result = service.auctionEnd(paramMap);
+			
+			
+			boolean deleteresult = service.auctionEnd(paramMap);
+			
 		} catch (Exception e) {
 			return new ResponseEntity<String>(msg,header,HttpStatus.BAD_REQUEST);
 		}
