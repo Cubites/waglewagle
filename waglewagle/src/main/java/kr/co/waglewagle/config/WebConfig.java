@@ -90,7 +90,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-		//외부 파일 읽어오기 위해서 추가
+		//외부 파일 읽어오기 위해서 추가  -> 이미지 파일 경로때문에 삭제될 코드!!!!!!!!!!!!!!!!!!!!!!!!!!
 		registry.addResourceHandler("/upload/**").addResourceLocations("file:///"+osRoot+"/");
 	}
 
