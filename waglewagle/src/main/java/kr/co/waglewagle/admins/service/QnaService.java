@@ -16,5 +16,14 @@ public interface QnaService {
 	Object list(QnasVO vo);
 	public Object Qnaview(QnasVO vo, boolean b);
 	void qnaDelete(int qnas_id);
+	
+	
+//	int qnaWrite(QnasVO vo, HttpServletRequest request);
+	QnasVO qnaReply(int qnas_id);
+//	public String delReply(Map<String, Integer> reply);
+	void modifyReply(QnasVO vo, HttpServletRequest request);
+	int delReply(QnasVO vo, HttpServletRequest request);
+	public void writeReply(QnasVO vo, HttpServletRequest request);
+
 
 }

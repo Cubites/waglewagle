@@ -112,6 +112,10 @@ select:focus {
 	color: #F44848;
 	margin-top:0;
 }
+
+.flex{
+	display: flex;
+}
 #timer{
 	background-color: #ffe8e8;
 	border-width: 0 0 0px;
@@ -139,6 +143,11 @@ select:focus {
 	text-align: center;
 }
 
+#validButtons{
+	width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 
 #validCheck{
 	background-color: #CF5C5C;
@@ -176,7 +185,8 @@ select:focus {
 
 #name_gender{
 	display: flex;
-	flex-direction: col;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 #nameArea{

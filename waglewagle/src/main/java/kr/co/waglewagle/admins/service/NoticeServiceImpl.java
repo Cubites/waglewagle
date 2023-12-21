@@ -39,7 +39,7 @@ public class NoticeServiceImpl implements NoticeService {
 	//공지 삭제하기
 	@Override
 	public void Noticedelete(int notices_id) {
-		System.out.println("====>"+notices_id);
+		//System.out.println("====>"+notices_id);
 		mapper.Noticedelete(notices_id);
 	}
 

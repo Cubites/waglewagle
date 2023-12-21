@@ -27,10 +27,10 @@
 			 location.href = "/admin/stats";
 		}
 		function user(){
-			 location.href = "/admin/usermanage";
+			 location.href = "/admin/userManageList";
 		}
 		function goods(){
-			 location.href = "/admin/goodsmanage";
+			 location.href = "/admin/goodsManageList";
 		}
 		function admin(){
 			 location.href = "/admin/adminmanage";
@@ -126,6 +126,9 @@
                         		<td>
 	                        		<c:if test="${empty QnasVO.qnas_reply}">
 	                        				미답변
+	                        		</c:if>
+	                        		<c:if test="${!empty QnasVO.qnas_reply}">
+	                        				답변완료
 	                        		</c:if>
                         		</td>
                         	</tr>

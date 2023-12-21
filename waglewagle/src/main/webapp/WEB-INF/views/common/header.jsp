@@ -12,7 +12,7 @@
 	<div id="header">
 		<div id="headerContainer">
 			<div id="headerTop">
-				<a href="#" id="headerTopLeft">
+				<a href="/main" id="headerTopLeft">
 					<img alt="logo" src="/resources/images/logo.png">
 				</a>
 				<div id="headerTopCenter" class="text_center">
@@ -110,7 +110,7 @@
 					<a href="/board/noticelist" class="text_center">공지사항</a>
 					<a href="/boards/qnas/write" class="text_center">문의하기</a>				
 				</div>
-				<a href="#" id="headerBottomRight">
+				<a href="/goods/regist" id="headerBottomRight">
 					<img src="/resources/images/shopping.png">
 					<span>상품등록</span>
 				</a>

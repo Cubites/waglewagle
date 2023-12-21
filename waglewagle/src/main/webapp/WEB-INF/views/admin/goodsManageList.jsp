@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -12,7 +11,7 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="/resources/css/admin/noticelist.css"/>
+    <link rel="stylesheet" href="/resources/css/admin/goodsManageList.css"/>
     <script>
 	    function noticewrite(){
 			 location.href = "/admin/noticewrite";
@@ -27,10 +26,10 @@
 			 location.href = "/admin/stats";
 		}
 		function user(){
-			 location.href = "/admin/usermanage";
+			 location.href = "/admin/userManageList";
 		}
 		function goods(){
-			 location.href = "/admin/goodsmanage";
+			 location.href = "/admin/goodsManageList";
 		}
 		function admin(){
 			 location.href = "/admin/adminmanage";
@@ -38,6 +37,23 @@
 		function password(){
 			 location.href = "/admin/changepwd";
 		}
+
+ 		function goods_status(goods_access,goods_id){
+ 			/* console.log(goods_id);  */
+			$.ajax({
+				url:"/admin/goodsStatus",
+				type:"post",
+				contentType:"application/json",
+				data:JSON.stringify({
+					goods_access: goods_access,
+					goods_id: goods_id
+				}),
+				success:function(data){
+					$('#button0'+goods_id).toggleClass('hiddenClass');
+					$('#button1'+goods_id).toggleClass('hiddenClass');
+				}
+			})
+		} 
     </script>
 </head> 
 <body>
@@ -84,44 +100,39 @@
                             <tr>
                                 <th>번호</th>
                                 <th>상품명</th>
+                                <th>회원명</th>
                                 <th>신고수</th>
-                                <th>삭제하기</th>
+                                <th>접근여부</th>
                             </tr>
                         </thead>
+             
                         
                         <tbody>
-                            <tr>
-                                <td class="nonotice" colspan="8">등록된 상품이  없습니다.</td>
-                            </tr> 
-    
-                                    
-                           <!--  <tr>
-                                <td>10</td>
-                                <td class="nlist_l">
-                                    <a href="notice_view.html">망곰이01</a>
-                                </td>
-                                <td class="date">0</td>
-                                <td><button>삭제하기</button></td>
-                            </tr>
-                            
-                            <tr>
-                                <td>9</td>
-                                <td class="nlist_l">
-                                    <a href="notice_view.html">망곰이01</a>
-                                </td>
-                                <td class="date">0</td>
-                                <td><button>삭제하기</button></td>
-                            </tr>
-    
-                            <tr>
-                                <td>8</td>
-                                <td class="nlist_l">
-                                    <a href="notice_view.html">망곰이01</a>
-                                </td>
-                                <td class="date">0</td>
-                                <td><button >삭제하기</button></td>
-                            </tr> -->
-    
+                        
+                        
+                        <c:if test="${empty list }">
+                        	<tr>
+                        		<td>가입한 회원이 없습니다..</td>
+                        	</tr>
+                        </c:if>
+                        
+                        <c:forEach items="${list}" var="item">
+                        	<tr>
+                        		<!-- 번호 -->
+                        		<td>${item.goods_id}</td>
+                        		<!-- 상품명 -->
+                        		<td>${item.goods_title}</td>
+                        		<!-- 회원명 -->
+                        		<td>${item.users_id}</td>
+                        		<!-- 신고수 -->
+                        		<td>${item.goodsReport_cnt}</td>
+                        		<!-- 접근여부 -->
+								<td>
+									<button onclick="goods_status(1,${item.goods_id})" id="button0${item.goods_id}" class="${item.goods_access == true ? 'hiddenClass' : '' }">접근해제</button>
+									<button onclick="goods_status(0,${item.goods_id})" id="button1${item.goods_id}" class="${item.goods_access == false ? 'hiddenClass' : '' }">접근금지</button>
+								</td>     		
+                        	</tr>
+                        </c:forEach>
                         </tbody>
                     </table>
             </div>

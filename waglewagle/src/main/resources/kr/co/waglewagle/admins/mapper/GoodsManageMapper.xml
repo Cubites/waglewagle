@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.waglewagle.admins.mapper.GoodsManageMapper">
+
+		<select id="goodsList" resultType="kr.co.waglewagle.domain.GoodsVO">
+            SELECT * FROM wagle.goods
+        </select>
+        
+        <update id="goodsAccess" parameterType="java.util.Map">
+        	update goods set goods_access=#{goods_access} where goods_id=#{goods_id};
+        </update>
+
+        <select id="adminGoodsList" parameterType="kr.co.waglewagle.domain.GoodsVO" resultType="Map">
+			select * 
+			from goods g
+				join
+				(select 
+				reports.goods_id
+				,count(reports.goods_id) goodsReport_cnt
+				from reports
+				inner join goods
+				on reports.goods_id=goods.goods_id
+				where reports_type=1
+				group by reports.goods_id) a 
+			on a.goods_id = g.goods_id
+			order by g.goods_id asc;
+		</select>
+        
+</mapper>

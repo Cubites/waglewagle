@@ -7,8 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+import kr.co.waglewagle.domain.CategoryVO;
+import kr.co.waglewagle.domain.PointVO;
+
 import kr.co.waglewagle.domain.PointVO;
 import kr.co.waglewagle.domain.QnasVO;
+
 import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.users.mapper.UsersMapper;
 
@@ -31,7 +36,10 @@ public class UsersServiceImpl implements UsersService {
 	public int updateAreas(Map<String, Object> dataForAreaUpdate) { return mapper.updateAreas(dataForAreaUpdate); }
 
 	@Override
-	public int validPwd(Map<String, Object> dataForValidPwd) { return mapper.validPwd(dataForValidPwd); }
+	public String selectPwd(Integer users_id) { 
+		return mapper.selectPwd(users_id); 
+	}
+	
 	@Override
 	public int pwdChange(Map<String, Object> dataForValidPwd) { return mapper.pwdChange(dataForValidPwd); }
 
@@ -61,6 +69,16 @@ public class UsersServiceImpl implements UsersService {
 	}
 	
 	@Override
+	public int selectUsersId(String users_email) {
+		return mapper.selectUsersId(users_email);
+	}
+	
+	@Override
+	public boolean createPoint(int users_id) {
+		return mapper.createPoint(users_id) > 0 ? true : false;
+	}
+	
+	@Override
 	public boolean isEmailDup(String users_email) {
 		return mapper.isEmailDup(users_email) > 0 ? true : false;
 	}
@@ -69,6 +87,14 @@ public class UsersServiceImpl implements UsersService {
 	public boolean isNickDup(String users_nick) {
 		return mapper.isNickDup(users_nick) > 0 ? true : false;
 	}
+
+
+	@Override
+	public PointVO getPoint(Integer users_id) {
+		PointVO userPoint = mapper.selectPointByUsersId(users_id);
+		return userPoint;
+	}
+
 
 	
 	@Override
@@ -98,4 +124,11 @@ public class UsersServiceImpl implements UsersService {
 		
 		return mapper.changePwd(user_info) > 0 ? true : false;
 	}
+
+	@Override
+	public List<CategoryVO> allCategory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

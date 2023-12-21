@@ -14,7 +14,11 @@ import kr.co.waglewagle.domain.UsersVO;
 public interface UsersMapper {
 	UsersVO userInfo(Integer users_id);
 
+	List<CategoryVO> allCategory();
+	PointVO selectPointByUsersId(Integer users_id);
 	int join(UsersVO vo);
+	int selectUsersId(String users_email);
+	int createPoint(int users_id);
 	int isEmailDup(String users_email);
 	int isNickDup(String users_nick);
 	UsersVO login(UsersVO vo);
@@ -25,10 +29,11 @@ public interface UsersMapper {
 	PointVO checkPoint(Integer users_id);
 	String checkFavorAreas(Integer users_id);
 	int updateAreas(Map<String, Object> dataForAreaUpdate);
-	int validPwd(Map<String, Object> dataForValidPwd);
+	String selectPwd(Integer users_id);
 	int pwdChange(Map<String, Object> dataForValidPwd);
 	int countQnas(Integer users_id);
 	List<QnasVO> checkQnas(Map<String, Integer> dataForCheckQnas);
 	int deleteAccount(Integer users_id);
+
 
 }

@@ -104,6 +104,9 @@
 	margin-bottom: 30px;
 }
 
+#phoneNumber{
+	display:flex;
+}
 
 #inputAreaPwd{
 	padding-top: 28px;
@@ -120,6 +123,10 @@
 
 #emailArea{
 	margin-bottom: 5px;	
+}
+
+.wrap{
+	display:flex;
 }
 
 

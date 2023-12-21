@@ -14,26 +14,26 @@
     <link rel="stylesheet" href="/resources/css/admin/join.css"/>
     <script>
 	    function notice(){
-			 location.href = "/admin/noticelist";
-		}
-		function qna(){
-			 location.href = "/admin/qnalist";
-		}
-		function stats(){
-			 location.href = "/admin/stats";
-		}
-		function user(){
-			 location.href = "/admin/usermanage";
-		}
-		function goods(){
-			 location.href = "/admin/goodsmanage";
-		}
-		function admin(){
-			 location.href = "/admin/adminmanage";
-		}
-		function password(){
-			 location.href = "/admin/changepwd";
-		}
+			   location.href = "/admin/noticelist";
+      }
+      function qna(){
+         location.href = "/admin/qnalist";
+      }
+      function stats(){
+         location.href = "/admin/stats";
+      }
+      function user(){
+         location.href = "/admin/usermanage";
+      }
+      function goods(){
+         location.href = "/admin/goodsmanage";
+      }
+      function admin(){
+         location.href = "/admin/adminmanage";
+      }
+      function password(){
+         location.href = "/admin/changepwd";
+      }
     </script>
 </head> 
 
