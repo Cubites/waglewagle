@@ -26,13 +26,13 @@
 		}
 		
 		
-		$("basicModal").click
+		
 
 	})
 
 	function showmodal(text, status) {
 		
-		console.log(status);
+		
 		if (status === "result") {
 
 			let modalContent = $("#basicModal-Content");
@@ -43,10 +43,20 @@
 				$("#basicModal").fadeOut();
 			},2000)
 			
-			
+			//신고 완료 후 다시 돌아가는 페이지 (유저신고인 경우 main으로 일단 보냄)
+			if("${path}" === "" ){
+				
 			setTimeout(() => {
 				location.href="/goods/${goods_id}";				
 			}, 1000);
+			
+			}else{
+			
+			setTimeout(() => {
+				location.href="${path}";				
+			}, 1000);
+				
+			}
 		}else{
 
 		let submitModal = $("#submitModalText");
@@ -59,7 +69,10 @@
 	function isOk(status) {
 
 		if (status === true) {
-
+			let reportType = $("#reson option:selected").val();
+			let reportContent = $("#textBox").val().trim();
+			let result = reportType+"-"+reportContent;
+			$("#report_content").val(result);
 			$("#reportForm").submit();
 
 		}else{
@@ -71,7 +84,18 @@
 	}
 	
 	function goback(url){
+		if(isGoodsReport()){
 		location.href="/goods/"+url;
+		}else{
+			location.href="/chat/"+url;
+		}
+	}
+	
+	function isGoodsReport(){
+		if("${report}" == ""){
+			return true
+		}
+		return false;
 	}
 </script>
 
@@ -140,6 +164,15 @@
 #submitModal-Content {
 	padding: 60px 0;
 }
+
+#reson{
+	width: 100%;
+	height: 100%;
+	border: none;
+	border-radius: 10px;
+}
+
+
 </style>
 </head>
 <body>
@@ -147,41 +180,72 @@
 	<div id="center">
 		<div id="container">
 			<div id="wrap">
-				<form id="reportForm" action="/report/goods" method="post"
-					enctype="application/x-www-form-urlencoded">
+				<c:choose>
+					<c:when test="${empty report}">
+					<form id="reportForm" action="/report/goods" method="post"
+					enctype="application/x-www-form-urlencoded" style="display: none;">
 					<input type="hidden" value="${goods.users_id}" name="users_id">
 					<input type="hidden" value="${goods.goods_id}" name="goods_id">
-					<input type="hidden" value="2" name="reports_type">
+					<input type="hidden" value="1" name="reports_type">
+					<input type="hidden" name="reports_content" id="report_content">
+				</form>	
+					
+					</c:when>
+					<c:otherwise>
+					
+					<form id="reportForm" action="/report/goods" method="post"
+					enctype="application/x-www-form-urlencoded" style="display: none;">
+					<input type="hidden" value="${report.users_id}" name="users_id">
+					<input type="hidden" value="${report.goods_id}" name="goods_id">
+					<input type="hidden" value="0" name="reports_type">
+					<input type="hidden" name="reports_content" id="report_content">
+					</form>	
+					
+					</c:otherwise>
+				
+				</c:choose>
+				
 					<div id="reportBox">
-
-						<div id="reportTop">${goods.goods_title}</div>
+						<c:choose>
+							<c:when test="${empty report}">
+							<div id="reportTop">${goods.goods_title}</div>
+							</c:when>
+							<c:otherwise>
+							<div id="reportTop">
+							<select id="reson" name="reson">
+								<option id="reson1" value=0>이미지와 실제 상품이 너무 다름</option>
+								<option id="reson2" value=1>판매자가 거래 장소에 나오지 않음</option>
+								<option id="reson3" value=2>기타 사유</option>
+							</select>
+							</div>
+							</c:otherwise>
+						</c:choose>
 						<div id="reportMid">
-							<textarea name="reports_content" id="textBox"
-								placeholder="
-            
-            
-        신고 사유를 자세하게 적어주세요
-
-        - 부적절한 상품 
-
-        - 과도한 가격
-
-        - 사기 전과가 있는 판매자
-            ">
-
-
-            </textarea>
+							<textarea id="textBox"placeholder="&#13;&#10;신고 사유를 자세하게 적어주세요 &#13;&#10;&#13;&#10;- 부적절한 상품 &#13;&#10;&#13;&#10;- 과도한 가격 &#13;&#10;&#13;&#10;- 사기 전과가 있는 판매자" ></textarea>
 
 						</div>
-				</form>
+				
+
 				<div id="reportFooter">
 					<div id="submit">신고하기</div>
+					<c:choose>
+					<c:when test="${empty report}">
 					<div id="cancle" onclick="goback('${goods.goods_id}')">돌아가기</div>
+					</c:when>
+					<c:otherwise>
+					<div id="cancle" onclick="goback('${report.goods_id}')">돌아가기</div>
+					</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
 	</div>
-	</div>
+</div>
+
+
+
+
+
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	<!-- 모달창 -->
 	<div id="basicModal" class="modal">

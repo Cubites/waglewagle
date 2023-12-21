@@ -66,8 +66,8 @@
             
             	<!-- 회원 검색 -->
                 <div id="plus"> 검색 
-                	<input type="text" size="20"> 
-                	<button>조회하기</button>
+                	<input type="text" size="20" id="findAdminWord"> 
+                	<button id="findAdminButton">조회하기</button>
                 </div>
                 
                 <!-- 관리자 추가 버튼  -->
@@ -80,60 +80,96 @@
                     <table class="nlist">
 
                         <colgroup>
-                            <col width="80px" />
-                            <col width="*" />
-                            <col width="100px" />
-                            <col width="100px" />
-                            <col width="100px" />
+                            <col width="120px" />
+                            <col width="120px" />
+                            <col width="120px" />
+                            <col width="120px" />
                         </colgroup>
 
                         <thead>
                             <tr>
                                 <th>번호</th>
                                 <th>이름</th>
-                                <th>관리단계<th>
+                                <th>관리등급</th>
                                 <th>삭제하기</th>
                             </tr>
                         </thead>
                         
                         <tbody>
-                            <tr>
-                                <td class="nonotice" colspan="8">등록된 관리자가 없습니다.</td>
-                            </tr> 
-    
-                                    
-                           <!--  <tr>
-                                <td>10</td>
-                                <td class="nlist_l">
-                                    <a href="notice_view.html">망곰이01</a>
-                                </td>
-                                <td class="date">0</td>
-                                <td><button>삭제하기</button></td>
-                            </tr>
+                        
+                        	<c:if test="${ListData == null }">
+	                            <tr>
+	                                <td class="nonotice" colspan="4">등록된 관리자가 없습니다.</td>
+	                            </tr>
+                            </c:if> 
                             
-                            <tr>
-                                <td>9</td>
-                                <td class="nlist_l">
-                                    <a href="notice_view.html">망곰이01</a>
-                                </td>
-                                <td class="date">0</td>
-                                <td><button>삭제하기</button></td>
-                            </tr>
-    
-                            <tr>
-                                <td>8</td>
-                                <td class="nlist_l">
-                                    <a href="notice_view.html">망곰이01</a>
-                                </td>
-                                <td class="date">0</td>
-                                <td><button >삭제하기</button></td>
-                            </tr> -->
-    
+    						<c:forEach var="item" items="${ListData}">
+	    						<tr>
+	                                <td>${item.admins_id }</td>
+	                                <td>${item.admins_name }</td>
+	                                <td id="adminRole">${item.admins_role}</td>
+	                                <td>
+	                                	<button onclick="deleteAdmin(${item.admins_id})">삭제하기</button>
+                                	</td>
+								</tr>
+    						</c:forEach>
+                                    
                         </tbody>
                     </table>
-            </div>
+            	</div>
+            	 <!-- /회원 리스트 -->
+            	 <!-- pagination -->
+				<div id="pagingBox">
+					<ul>
+						<c:if test="${pageNum10 != 0}">
+							<li><a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${pageNum10}&scroll=0">&#60;</a></li>
+						</c:if>
+						<c:forEach var="num" begin="${pageNum10 + 1}" end="${(pageNumMax - pageNum10) < 10 ? pageNumMax : pageNum10 + 10}" step="1">
+							<c:if test="${pageNum1 == num}">
+								<li class="nowPage">
+									<a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${num}&scroll=0">${num}</a>
+								</li>
+							</c:if>
+							<c:if test="${pageNum1 != num}">
+								<li>
+									<a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${num}&scroll=0">${num}</a>
+								</li>
+							</c:if>
+						</c:forEach>
+						<c:if test="${(pageNumMax - pageNum10) > 10}">
+							<li><a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${pageNum10 + 11}&scroll=0">&#62;</a></li>
+						</c:if>
+					</ul>
+				</div>
+				<!-- /pagination -->
             </div>
         </div>
     </div>
+    <script>
+    	function deleteAdmin(admins_id){
+    	    if(confirm("정말로 해당 관리자 계정을 삭제하시겠습니까?")){
+    			$.ajax({
+    			    url: "/admin/delete/admin_account",
+    			    type: "post",
+    			    contentType: "application/json",
+    			    data: JSON.stringify({
+    					admins_id: admins_id    				
+    			    }),
+    			    success: function(data){
+						if(data){
+						    alert("정상적으로 삭제되었습니다.");
+						    location.href = "/admin/adminmanage";
+						} else {
+						    alert("삭제 권한이 없거나, 오류가 발생했습니다. \n 최고관리자로 로그인하셨다면 잠시후 다시 시도해주세요.")
+						}
+    			    }
+    			});
+    	    }
+    	}
+    	
+    	$("#findAdminButton").click(function(){
+			location.href = "/admin/adminmanage?searchWord=" + $("#findAdminWord").val();
+    	});
+    </script>
 </body> 
 </html>

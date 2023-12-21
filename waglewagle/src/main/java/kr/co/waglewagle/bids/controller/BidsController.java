@@ -55,6 +55,7 @@ public class BidsController {
 		
 		//response = new ResponseEntity<String>("제출된 가격을 확인해주세요 ",headers,HttpStatus.BAD_REQUEST);
 		if(rs.hasErrors()) {
+			
 			log.info("rs {}",rs);
 			response = new ResponseEntity<String>(msg,headers,HttpStatus.BAD_REQUEST);
 			return response;
@@ -65,6 +66,7 @@ public class BidsController {
 		
 		
 		try {
+			System.out.println("여기까진왔다");
 			result = service.askPrice(vo);
 		} catch (BidsException e) {
 			response = new ResponseEntity<String>(msg,headers,HttpStatus.BAD_REQUEST);
