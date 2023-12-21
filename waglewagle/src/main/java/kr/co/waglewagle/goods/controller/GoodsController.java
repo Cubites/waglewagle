@@ -95,9 +95,13 @@ public class GoodsController {
 
 		// 추후 성능문제 발생시 쿼리 합칠 것
 		// 같이 가지고 올 수 있는게 없네
-
+		
+		GoodsVO goods = goodsService.getGoods(goodsId);
+		UsersVO seller = usersService.userInfo(goods.getUsers_id());
+				
+		model.addAttribute("seller",seller);
 		// 굿즈아이디
-		model.addAttribute("goods", goodsService.getGoods(goodsId));
+		model.addAttribute("goods", goods);
 		// 이미지 가져오기
 		model.addAttribute("images", goodsService.getImages(goodsId));
 		
@@ -105,12 +109,16 @@ public class GoodsController {
 		model.addAttribute("favorsCnt", goodsService.getFavorsCnt(goodsId));
 		// 경매 참여인원 가져오기
 		model.addAttribute("bidsCnt", bidsService.getBidsCnt(goodsId));
+		
+		
+		// 로그인한 유저의 정보 가져오기
 		// 유저 point가져오기
 		model.addAttribute("usersPoint", usersService.getPoint(loginUser.getUsers_id()));
 
 		model.addAttribute("userFavor", goodsService.isFavoritGoods(loginUser.getUsers_id(), goodsId));
 		// 최대 호가 금액 가져오기
 		model.addAttribute("maxBids", bidsService.selectMaxBidsByUsersId(loginUser.getUsers_id(), goodsId));
+		
 		
 		
 		
