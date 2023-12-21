@@ -77,4 +77,19 @@
 	<delete id="deleteFavor" parameterType="Map">
 		DELETE FROM favors WHERE users_id = #{usersId} AND goods_id = #{goodsId}
 	</delete>
+	
+	<select id="selectGoodsByWord" parameterType="String" resultType="kr.co.waglewagle.domain.GoodsVO">
+		SELECT * FROM goods WHERE goods_title LIKE CONCAT('%', #{searchWord}, '%') AND goods_exp >= now();
+	</select>
+	
+	<select id="selectGoodsByCategory" parameterType="Integer" resultType="kr.co.waglewagle.domain.GoodsVO">
+		SELECT * FROM goods WHERE category_id = #{categoryId} AND goods_exp >= now();
+	</select>
+	
+	<select id="selectGoodsByBoth" parameterType="Map" resultType="kr.co.waglewagle.domain.GoodsVO">
+		SELECT * FROM goods 
+		WHERE category_id = #{categoryId} 
+			AND goods_title LIKE CONCAT('%', #{searchWord}, '%') 
+			AND goods_exp >= now();
+	</select>
 </mapper>

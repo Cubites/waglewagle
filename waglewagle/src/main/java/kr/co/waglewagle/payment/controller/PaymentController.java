@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.co.waglewagle.domain.PaylogVO;
+import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.payment.service.PaymentService;
 
 @Controller
@@ -16,9 +18,6 @@ public class PaymentController {
 
 	@Autowired
 	private PaymentService service;
-	
-
-	
 
 	// 포인트 충전 페이지로 이동
 	@GetMapping("/payment")
@@ -29,9 +28,9 @@ public class PaymentController {
 	// 포인트 충전
 	@PostMapping("/payment")
 	@ResponseBody
-	public String savePayment(HttpServletRequest request) {
+	public String savePayment(@SessionAttribute("users_info") UsersVO loginUser, HttpServletRequest request) {
 		PaylogVO vo = new PaylogVO();
-		vo.setUsers_id(Integer.parseInt(request.getParameter("user_id")));
+		vo.setUsers_id(loginUser.getUsers_id());
 		vo.setPaylog_cash(Integer.parseInt(request.getParameter("paylog_cash")));
 		vo.setPaylog_type(request.getParameter("paylog_type"));
 		// 결제와 포인트 변경까지 온전히 실행됐는지 확인

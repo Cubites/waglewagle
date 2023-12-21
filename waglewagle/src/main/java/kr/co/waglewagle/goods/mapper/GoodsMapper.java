@@ -23,4 +23,8 @@ public interface GoodsMapper {
 	Integer insertFavor(Map<String,Integer> favorMap);
 	Integer deleteFavor(Map<String, Integer> favorMap);
 	
+	// 검색
+	List<GoodsVO> selectGoodsByWord(String searchWord);
+	List<GoodsVO> selectGoodsByCategory(Integer categoryId);
+	List<GoodsVO> selectGoodsByBoth(Map<String, Object> search);
 }
