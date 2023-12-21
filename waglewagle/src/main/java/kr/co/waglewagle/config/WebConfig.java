@@ -97,7 +97,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-		//외부 파일 읽어오기 위해서 추가
+		//외부 파일 읽어오기 위해서 추가  -> 이미지 파일 경로때문에 삭제될 코드!!!!!!!!!!!!!!!!!!!!!!!!!!
 		registry.addResourceHandler("/upload/**").addResourceLocations("file:///"+osRoot+"/");
 	}
 
@@ -145,8 +145,8 @@ public class WebConfig implements WebMvcConfigurer {
 
 		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(2);
 		registry.addInterceptor(loginInterceptor()).addPathPatterns("/**")
-													.excludePathPatterns("/resources/**", "/upload/**", "/main","/login","/join", "/find_info","/emaildup","/send_authnum","/check_authnum", "/nickcheck", "/find_id", "/find_pwd", "/find_result", "/change_pwd","/board/noticelist/**").order(1);
-		registry.addInterceptor(logoutInterceptor()).addPathPatterns("/login","/join", "/find_info").order(3);
+													.excludePathPatterns("/resources/**", "/upload/**", "/", "/users/**", "/board/noticelist/**").order(1);
+		registry.addInterceptor(logoutInterceptor()).addPathPatterns("/users/login","/users/join", "/users/find_info").order(3);
 
 	}
 

@@ -201,7 +201,7 @@ $(function(){
 	$("#users_pwd").keyup(function(){
 		 
 		if(!isPassword($("#users_pwd").val())){
-			$("#pwdCheckTxt").text("숫자, 알파벳, 특수문자 중 2가지 이상을 포함해 8~20글자로 작성해 주세요!");
+			$("#pwdCheckTxt").text("영문,특수문자,숫자 중 2가지 이상 포함해 8~20자로 작성해 주세요!");
 			$("#pwdCheckTxt").css('visibility', 'visible');
 			validPwd = false;
 		}else{

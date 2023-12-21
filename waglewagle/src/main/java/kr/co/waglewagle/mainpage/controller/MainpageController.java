@@ -20,7 +20,7 @@ public class MainpageController {
 	@Autowired
 	private MainpageService service;
 	
-	@GetMapping("/main")
+	@GetMapping("/")
 	public String index(Model model, HttpSession session) {
 		model.addAttribute("popular_list", service.popularList());
 		model.addAttribute("new_list", service.newRegList());

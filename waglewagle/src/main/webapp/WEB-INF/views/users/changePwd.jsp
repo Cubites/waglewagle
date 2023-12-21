@@ -19,7 +19,7 @@
 					<div id="formHeader">비밀번호 변경하기</div>				
 				</div>
 				<div id="formContent">
-					<form id="changePwdForm" method="post" action="change_pwd">
+					<form id="changePwdForm" method="post" action="/users/change_pwd">
 						<!-- input data : change pwd -->
 						<div id="inputAreaChangePwd">
 							<div id="passwordArea">

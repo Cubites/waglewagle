@@ -48,7 +48,7 @@ public class UsersController {
 	
 
 	// 회원가입 페이지 이동
-	@GetMapping("/join")
+	@GetMapping("/users/join")
 	public String joinForm(HttpServletResponse res) {
 		res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		res.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT");
@@ -57,7 +57,7 @@ public class UsersController {
 	}
 	
 	// 회원가입 정보 제출 후 login page 이동
-	@PostMapping("/join")
+	@PostMapping("/users/join")
 	public String joinProcess(HttpServletResponse res, Model model, UsersVO vo){
 		
 		res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
@@ -74,11 +74,11 @@ public class UsersController {
 			if(creatPointResult) {
 				cmd = "move";
 				msg = "회원가입 되었습니다.";
-				url = "login";
+				url = "/users/login";
 			}else {
 				cmd = "move";
 				msg = "포인트 계좌 생성에 실패했습니다. 관리자에게 문의하세요.";
-				url = "main";
+				url = "/users/main";
 			}
 		}else {
 			cmd = "back";
@@ -92,12 +92,12 @@ public class UsersController {
 		return "common/inform";
 	}
 	
-	@GetMapping("/login")
+	@GetMapping("/users/login")
 	public String loginForm() {
 		return "users/login";
 	}
 	
-	@PostMapping("/login")
+	@PostMapping("/users/login")
 	public String login(HttpSession session, Model model, UsersVO vo){
 		
 		//db에 있는 정보
@@ -115,7 +115,7 @@ public class UsersController {
 			if(isValid) {//로그인 성공!
 				session.setAttribute("users_info", login);
 				cmd = "move";
-				url = "main";
+				url = "/";
 			}else {//비밀번호 틀림!
 				msg = "아이디와 비밀번호를 확인해주세요.";
 				cmd = "back";
@@ -123,7 +123,7 @@ public class UsersController {
 		}else if(login.getUsers_status() == 1){//정지된 회원일 때
 			msg = "정지계정입니다. 관리자에게 문의해주세요.";
 			cmd = "move";
-			url = "main";
+			url = "/";
 		}else { // 탈퇴한 회원
 			msg = "아이디와 비밀번호를 확인해주세요.";
 			cmd = "back";
@@ -137,14 +137,14 @@ public class UsersController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/emaildup")
+	@GetMapping("/users/emaildup")
 	public String emailDupCheck(String users_email) {
 		return String.valueOf(service.isEmailDup(users_email));
 	}
 	
 
 	@ResponseBody
-	@PostMapping("/send_authnum")
+	@PostMapping("/users/send_authnum")
 	public String sendAuthNum(HttpSession session, String users_email) {
 		try {
 			String authNum = ms.sendSimpleMessage(users_email);
@@ -157,7 +157,7 @@ public class UsersController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/check_authnum")
+	@PostMapping("/users/check_authnum")
 	public String checkAuthNum(HttpSession session, String validNum){
 		String authNum = (String)session.getAttribute("authNum");
 		session.setAttribute("authNum", ""); //authNum 초기화
@@ -165,18 +165,18 @@ public class UsersController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/nickcheck")
+	@GetMapping("/users/nickcheck")
 	public String nickCheck(String users_nick) {
 		return String.valueOf(service.isNickDup(users_nick));
 	}
 	
 	
-	@GetMapping("find_info")
+	@GetMapping("/users/find_info")
 	public String findInfo() {
 		return "users/findInfo";
 	}
 	
-	@PostMapping("find_id")
+	@PostMapping("/users/find_id")
 	public String findId(Model model, String users_name, String users_phone ) {
 		Map<String, String> user_info = new HashMap<>();
 		user_info.put("users_name", users_name);
@@ -189,7 +189,7 @@ public class UsersController {
 			if(vo.getUsers_status() == 1) {
 				model.addAttribute("msg", "정지 계정입니다.");
 				model.addAttribute("cmd", "move");
-				model.addAttribute("url", "main");
+				model.addAttribute("url", "/");
 				
 				return "common/inform";
 			}else if(vo.getUsers_status() == 2){
@@ -207,7 +207,7 @@ public class UsersController {
 		return "users/findResult";
 	}
 	
-	@PostMapping("find_pwd")
+	@PostMapping("/users/find_pwd")
 	public String findPwd(Model model, String users_name, String users_email, RedirectAttributes rs) {
 		Map<String, String> user_info = new HashMap<>();
 		user_info.put("users_name", users_name);
@@ -221,7 +221,7 @@ public class UsersController {
 			if(vo.getUsers_status() == 1) {
 				model.addAttribute("msg", "정지 계정입니다.");
 				model.addAttribute("cmd", "move");
-				model.addAttribute("url", "main");
+				model.addAttribute("url", "/");
 				
 				return "common/inform";
 			}else if(vo.getUsers_status() == 2){
@@ -234,18 +234,18 @@ public class UsersController {
 		
 	}
 
-	@GetMapping("find_result")
+	@GetMapping("/users/find_result")
 	public String findResult() {
 		return "users/findResult";
 	}
 	
-	@GetMapping("change_pwd")
+	@GetMapping("/users/change_pwd")
 	public String changePwd() {
 		return "users/changePwd";
 	}
 	
 	
-	@PostMapping("change_pwd")
+	@PostMapping("/users/change_pwd")
 	public String changePwdProcess(Model model, String users_pwd, String users_id){
 		String cmd = ""; //move or back
 		String msg = "";
@@ -257,7 +257,7 @@ public class UsersController {
 		if(pwdIsChanged) {
 			cmd = "move";
 			msg = "비밀번호가 변경되었습니다.";
-			url = "login";
+			url = "/users/login";
 		}else {
 			cmd = "back";
 			msg = "비밀변호 변경에 실패했습니다.";
