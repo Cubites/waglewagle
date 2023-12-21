@@ -29,26 +29,27 @@ public class ReportsServiceImpl implements ReportsService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor = Exception.class)
 	public boolean reportUser(ReportsVO report,Integer userId) throws Exception {
 		
-		
-		 
+		System.out.println(report);
+			
+//
 		 Integer reportResult = mapper.insertReport(report);
 		 
 		 Map<String,Object> paramMap = getParamMap(report,userId);
 		//auctions_break 테이블에 넣기 값 넣기
 		 Integer breakResult= auctionsMapper.insertAuctionsBreak(paramMap);
 		 
-//		 //돈 환불해주기 정확하지 않아서 일단 막아둠
-//		Integer breakRefundResult = auctionsMapper.updateBreakRefund(paramMap);
-//		
-//		 //auctions_ing테이블에서 삭제하기 일단 막아둠
-//		 Integer deleteResult = auctionsMapper.deleteAuctionIng((Integer)paramMap.get("goodsId"));
-//		
-//		 	if(reportResult == 0 || breakResult == 0 
-//		 			|| breakRefundResult == 0 || deleteResult == 0) {
-//		 		
-//		 		throw new Exception("과정 중 하나 이상 문제 발생으로 롤백");
-//		 	}
-//		 
+		 //돈 환불해주기 정확하지 않아서 일단 막아둠
+		Integer breakRefundResult = auctionsMapper.updateBreakRefund(paramMap);
+		
+		 //auctions_ing테이블에서 삭제하기 일단 막아둠
+		 Integer deleteResult = auctionsMapper.deleteAuctionIng((Integer)paramMap.get("goodsId"));
+		
+		 	if(reportResult == 0 || breakResult == 0 
+		 			|| breakRefundResult == 0 || deleteResult == 0) {
+		 		
+		 		throw new Exception("과정 중 하나 이상 문제 발생으로 롤백");
+		 	}
+		 
 		 return true;
 	}
 	

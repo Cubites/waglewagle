@@ -44,15 +44,16 @@
 			},2000)
 			
 			//신고 완료 후 다시 돌아가는 페이지 (유저신고인 경우 main으로 일단 보냄)
-			if( isGoodsReport() ){
+			if("${path}" === "" ){
 				
 			setTimeout(() => {
 				location.href="/goods/${goods_id}";				
 			}, 1000);
+			
 			}else{
 			
 			setTimeout(() => {
-				location.href="/main";				
+				location.href="${path}";				
 			}, 1000);
 				
 			}

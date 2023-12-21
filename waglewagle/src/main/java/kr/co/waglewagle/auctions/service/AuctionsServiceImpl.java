@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.waglewagle.auctions.mapper.AuctionsMapper;
 import kr.co.waglewagle.domain.AuctionsIngVO;
@@ -14,12 +17,15 @@ import kr.co.waglewagle.util.hcju.SomeoneAuctionsIngVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsVO;
 import kr.co.waglewagle.util.hcju.SomeoneFavorsVO;
 import kr.co.waglewagle.domain.ReportsVO;
+import kr.co.waglewagle.payment.mapper.PaymentMapper;
 
 @Service
 public class AuctionsServiceImpl implements AuctionsService {
 	
 	@Autowired
 	private AuctionsMapper mapper;
+	@Autowired
+	private PaymentMapper payMapper;
 	
 	@Override
 	public boolean saveReport(ReportsVO vo) {
@@ -103,5 +109,23 @@ public class AuctionsServiceImpl implements AuctionsService {
 	@Override
 	public List<SomeoneFavorsVO> checkFavors(Map<String, Integer> auctionsIngVal) {
 		return mapper.checkFavors(auctionsIngVal);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public boolean auctionEnd(Map<String, Integer> paramMap) throws Exception {
+		
+		//1번 auction_end에 등록 
+		Integer insertAuctionsEndResult = mapper.insertAuctionEnd(paramMap);
+		//2번 auction_buyer에 포인트 auction_seller의 총포인트 + 가용포인트에 올리기 
+		Integer updateAuctionSellerPointResult = payMapper.updateSellerPoint(paramMap);
+		//3번 auction_buyer에 포인트 차감 
+		Integer updateAuctionBuyerPointResult = payMapper.updateBuyerPoint(paramMap);
+		//4번 글 지우기 
+		Integer deleteResult = mapper.deleteAuctionIng(paramMap.get("goods_id"));
+		if(insertAuctionsEndResult == 0 || updateAuctionBuyerPointResult == 0 || updateAuctionBuyerPointResult == 0 || deleteResult == 0) {
+			throw new Exception("경매 완료 과정 중 오류 발생");
+		}
+		return false;
 	}
 }

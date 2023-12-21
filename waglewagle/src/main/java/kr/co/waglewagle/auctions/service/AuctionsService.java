@@ -13,27 +13,36 @@ import kr.co.waglewagle.domain.ReportsVO;
 
 public interface AuctionsService {
 	Map<String, Integer> countAllAuctions(Integer users_id);
-	
+
 	Integer countAuctions(Integer users_id);
+
 	List<SomeoneAuctionsVO> checkAuctions(Map<String, Integer> auctionsVal);
-	
+
 	Integer countAuctionsIng(Integer users_id);
+
 	List<SomeoneAuctionsIngVO> checkAuctionsIng(Map<String, Integer> auctionsIngVal);
 
 	Integer countAuctionsEndSold(Integer users_id);
+
 	List<SomeoneAuctionsEndVO> checkAuctionsEndSold(Map<String, Integer> auctionsIngVal);
 
 	Integer countAuctionsEndBought(Integer users_id);
+
 	List<SomeoneAuctionsEndVO> checkAuctionsEndBought(Map<String, Integer> auctionsIngVal);
 
 	Integer countAuctionsBreak(Integer users_id);
+
 	List<SomeoneAuctionsBreakVO> checkAuctionsBreak(Map<String, Integer> auctionsIngVal);
 
 	Integer countAuctionsFail(Integer users_id);
+
 	List<SomeoneAuctionsBreakVO> checkAuctionsFail(Map<String, Integer> auctionsIngVal);
-	
+
 	Integer countFavors(Integer users_id);
+
 	List<SomeoneFavorsVO> checkFavors(Map<String, Integer> auctionsIngVal);
-  
-  boolean saveReport(ReportsVO vo);
+
+	boolean saveReport(ReportsVO vo);
+
+	boolean auctionEnd(Map<String, Integer> paramMap) throws Exception;
 }

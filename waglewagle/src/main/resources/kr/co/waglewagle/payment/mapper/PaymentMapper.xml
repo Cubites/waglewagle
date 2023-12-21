@@ -16,4 +16,16 @@
 			point_usable = point_usable + #{paylog_cash}
 		WHERE users_id=#{users_id}
 	</update>
+	
+	<update id="updateSellerPoint" parameterType="Map">
+	UPDATE point 
+	SET point_total = point_total+#{auctions_end_price}, point_usable = point_usable+#{auctions_end_price}
+	WHERE users_id = #{auctions_end_seller};
+	</update>
+	
+	<update id="updateBuyerPoint" parameterType="Map">
+	UPDATE point 
+	SET point_total = point_total- #{auctions_end_price} 
+	WHERE users_id = #{auctions_end_buyer};
+	</update>
 </mapper>

@@ -52,4 +52,6 @@ public interface AuctionsMapper {
 	Integer updateBreakRefund(Map<String,Object> paramMap);
 
 	Integer deleteAuctionIng(Integer object);
+
+	Integer insertAuctionEnd(Map<String, Integer> paramMap);
 }

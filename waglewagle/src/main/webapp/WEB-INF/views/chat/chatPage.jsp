@@ -169,7 +169,7 @@
 
 		if (status === true) {
 			//ajax보내는 함수 정의
-			modalAction();
+			auctionEnd();
 		}
 
 		$("#submitModal").fadeOut();
@@ -183,6 +183,38 @@
 		submitForm.submit();
 
 	}
+	
+	function auctionEnd(){
+		
+		$.ajax({
+			
+			url:"/auctions/end/${me.goods_id}",
+			type:"post",
+			data:{"auctions_end_seller":"${me.auctions_ing_seller}",
+				"auctions_end_buyer":"${me.auctions_ing_buyer}",
+				"auctions_end_price":"${me.auctions_ing_price}",
+				"goods_id":"${me.goods_id}"},
+			contentType:"application/x-www-form-urlencoded;charset=utf-8",
+			success:function(data){
+				
+				showModal(data,"result");
+				setTimeout(() => {
+				location.href="/main";
+				}, 2000);
+			},
+			error:function(xhr){
+				
+				showModal(xhr.responseText,"reject");
+	   			setTimeout(() => {
+	   				location.reload(true);
+					}, 2000);
+			}
+			
+			
+		})
+		
+	}
+	
 </script>
 
 

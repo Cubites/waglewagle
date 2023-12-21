@@ -55,22 +55,28 @@ public class ReportsController {
 	@PostMapping("/report/goods")
 	public String report(@ModelAttribute ReportsVO report, RedirectAttributes rs, Model model,
 			@SessionAttribute("users_info") UsersVO loginUser) {
+		
+		
 		String resultMessage = "신고 등록에 성공했습니다.";
 		log.info("report post ReportsVO {}", report);
+		
 		if (report.getReports_type() == 0) {
 
 			try {
 				boolean result = service.reportUser(report, loginUser.getUsers_id());
+				model.addAttribute("path", "/main");
 			} catch (Exception e) {
 				//트랜잭션 과정에서 오류 발생시 나오는 메시지
 				resultMessage = "신고등록에 실패했습니다. 잠시후 다시 시도해주세요";
+				model.addAttribute("path", "/chat/"+report.getGoods_id());
 			}
 
 		} else {
 
 			boolean result = service.reportGoods(report);
+			
 		}
-
+		
 		model.addAttribute("result", resultMessage);
 		model.addAttribute("goods_id", report.getGoods_id());
 		return "/report/reportForm";
