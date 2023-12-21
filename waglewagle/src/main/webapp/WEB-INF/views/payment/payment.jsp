@@ -59,14 +59,13 @@
 				    		url: "/payment",
 				    		dataType: "text",
 				    		data: {
-				    			// 추후에 session에서 user_id 갖고 오는 걸로 수정하기
-				    			user_id: 3,
 				    			paylog_cash: rsp.paid_amount,
 				    			paylog_type: rsp.pay_method
 				    		},
 				    		success: function(data, textStatus) {
 						      	if (data!=="") {
-						      		alert('결제가 완료되었습니다.');
+						      		console.log("결제 완료!")
+						      		alert("결제가 완료되었습니다.");
 							      	location.href = data;
 						      	} else {
 						      	    alert("결제 완료에 실패하였습니다.");
