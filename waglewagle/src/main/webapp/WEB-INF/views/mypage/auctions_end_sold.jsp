@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div id="auctionsContainer">
-		<div id="acTitle">'<span>레오나르도 망곰</span>'님의 판매 완료 목록</div>
+		<div id="acTitle">'<span>${users_info.users_nick}</span>'님의 판매 완료 목록</div>
 		<div id="itemsList">
 			<!-- 반복 -->
 			<c:forEach var="item" items="${ListData}">

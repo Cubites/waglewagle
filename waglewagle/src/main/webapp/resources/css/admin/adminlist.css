@@ -1,8 +1,13 @@
 * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-  }
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+a{
+	color: #000;
+	text-decoration: none;
+	line-style: none;
+}
 
 #header {
     width: 100%;
@@ -73,7 +78,7 @@
     text-align: center;
 	display: flex;
     flex-direction: column;
-    
+    justify-content: start;
 }
 #plus {
     width: 500px;
@@ -179,4 +184,46 @@
     font-stretch: 100;
     align-items: center;
     margin-bottom: 10px;
+}
+
+
+/* paging */
+#pagingBox{
+	width: 100%;
+	height: 10%;
+	margin-top: 20px;
+	align-self: end;
+}
+#pagingBox>ul{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+#pagingBox>ul>li{
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+	overflow: hidden;
+	margin: 0 1%;
+}
+#pagingBox>ul>li:hover>a{
+	background-color: #999;
+	color: #fff;
+}
+#pagingBox>ul>li.nowPage>a{
+	background-color: #999;
+	color: #fff;
+}
+#pagingBox>ul>li>a{
+	width: 100%;
+	height: 100%;
+	font-size: 20px;
+	font-weight: bold;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
