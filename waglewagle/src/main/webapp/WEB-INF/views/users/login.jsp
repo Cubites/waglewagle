@@ -18,7 +18,7 @@
 			<div id="loginFormArea">
 				<div id="formHeader">로그인</div>
 				<div id="formContent">
-					<form id="loginForm" method="post" action="login">
+					<form id="loginForm" method="post" action="/users/login">
 						<!-- input data  -->
 						<div id="inputArea">
 							<div id="emailArea">

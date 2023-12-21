@@ -12,7 +12,7 @@
 	<div id="header">
 		<div id="headerContainer">
 			<div id="headerTop">
-				<a href="/main" id="headerTopLeft">
+				<a href="/" id="headerTopLeft">
 					<img alt="logo" src="/resources/images/logo.png">
 				</a>
 				<div id="headerTopCenter" class="text_center">
@@ -27,7 +27,7 @@
 					</c:if>
 					<c:if test='${empty sessionScope.users_info.users_nick}'>
 						<div class="text_center">
-							<a href="login" class="text_center">로그인</a>
+							<a href="users/login" class="text_center">로그인</a>
 						</div>
 					</c:if>
 					<div class="text_center">

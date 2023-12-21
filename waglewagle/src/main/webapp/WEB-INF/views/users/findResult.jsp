@@ -50,7 +50,7 @@
 						
 						<div id="btnArea">
 							<input type="button" id="toLogin"
-								onclick="location.href='login';" class="btn" value="로그인 페이지">
+								onclick="location.href='/users/login';" class="btn" value="로그인 페이지">
 						</div>
 					</div>
 					
@@ -65,7 +65,7 @@
 						
 						<div id="btnArea">
 							<input type="button" id="toLogin"
-								onclick="location.href='join';" class="btn" value="회원가입 페이지">
+								onclick="location.href='/users/join';" class="btn" value="회원가입 페이지">
 						</div>
 					</div>
 				</div>

@@ -30,9 +30,12 @@
 	color: #635656
 }
 
-#formContent > form{
-	margin: 0 55px 0 55px;
-	height: 85%;
+#joinForm{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
 }
 
 #inputArea{
@@ -189,8 +192,12 @@ select:focus {
 	justify-content: space-between;
 }
 
-#nameArea{
-	margin-right: 20px;
+#genderArea{
+	margin-right: 10px;
+}
+
+#phoneNumber{
+	display: flex;
 }
 
 
@@ -232,6 +239,6 @@ input:focus {
 }
 .formInput::placeholder {
   color: #A6A0A0;
-  font-size:10px;
+  font-size:11px;
 }
 
