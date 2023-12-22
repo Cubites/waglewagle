@@ -23,10 +23,7 @@ public class MypageInterceptor implements HandlerInterceptor {
 	
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
-		HttpSession sess = req.getSession();
 		UsersVO vo = (UsersVO) req.getSession().getAttribute("users_info");
-		
-		System.out.println("vo.getUsers_id(): " + vo.getUsers_id());
 		
 		req.setAttribute("pointInfo", service.checkPoint(vo.getUsers_id()));
 		req.setAttribute("countAuctions", auctionsService.countAllAuctions(vo.getUsers_id()));
