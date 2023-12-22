@@ -9,7 +9,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-
 public class GoodsVO {
 	private Integer goods_id;
 	private String goods_title;
@@ -23,4 +22,17 @@ public class GoodsVO {
 	private Integer goods_access;
 	private String goods_address;
 	private Integer goods_avg_price;
+	
+	//페이징 + 검색 추가
+	private Integer page;
+	private Integer startIdx;
+	private String searchWord;
+	
+	public GoodsVO() {
+		this.page = 1;
+	}
+	public int getStartIdx() {
+		return (page-1) * 10;
+	}
+	
 }

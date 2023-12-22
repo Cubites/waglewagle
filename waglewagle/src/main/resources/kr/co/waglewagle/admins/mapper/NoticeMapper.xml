@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.waglewagle.admins.mapper.NoticeMapper">
-    
-        <select id="noticeList" resultType="kr.co.waglewagle.domain.NoticesVO">
-            SELECT * FROM wagle.notices ORDER BY notices_id DESC
+
+    	<sql id="search">
+	    	<where>
+	    		<if test="searchWord != null and searchWord != ''">
+	    			notices_title LIKE '%${searchWord}%'    		
+	    		</if>
+	    	</where>
+    	</sql>
+    	
+    	<select id="count" parameterType="kr.co.waglewagle.domain.NoticesVO" resultType="int">
+    		SELECT COUNT(*) FROM notices 
+    		<include refid="search"/>
+    	</select>
+    	
+        <select id="noticeList" parameterType="kr.co.waglewagle.domain.NoticesVO" resultType="kr.co.waglewagle.domain.NoticesVO">
+            SELECT * FROM wagle.notices
+            <include refid="search"/>
+            ORDER BY notices_id DESC
+            limit #{startIdx},10
         </select>
         
         

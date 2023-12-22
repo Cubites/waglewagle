@@ -98,7 +98,7 @@
                         
                         <tbody>
                             <tr>
-                                <td class="nonotice" colspan="8">등록된 관리자가 없습니다.</td>
+                                <td colspan="5">등록된 관리자가 없습니다.</td>
                             </tr> 
     
                                     

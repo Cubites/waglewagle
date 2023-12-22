@@ -12,7 +12,6 @@ import kr.co.waglewagle.domain.NoticesVO;
 public class AdminsController {
 //	@Autowired
 //	private NoticeService service;
-	
 	@GetMapping("/admin/adminmanage")
 	public String index(Model model,NoticesVO vo) {
 		//서비스 호출하고 map return 받을거니까...

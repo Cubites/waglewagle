@@ -2,8 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.waglewagle.admins.mapper.GoodsManageMapper">
 
+		<sql id="search">
+	    	<where>
+	    		<if test="searchWord != null and searchWord != ''">
+	    			goods_title LIKE '%${searchWord}%'    		
+	    		</if>
+	    	</where>
+    	</sql>
+    	
+    	<select id="count" parameterType="kr.co.waglewagle.domain.GoodsVO" resultType="int">
+    		SELECT COUNT(*) FROM goods 
+    		<include refid="search"/>
+    	</select>
+    	
 		<select id="goodsList" resultType="kr.co.waglewagle.domain.GoodsVO">
             SELECT * FROM wagle.goods
+            <include refid="search"/>
+            ORDER BY goods_id DESC
         </select>
         
         <update id="goodsAccess" parameterType="java.util.Map">
@@ -21,9 +36,13 @@
 				inner join goods
 				on reports.goods_id=goods.goods_id
 				where reports_type=1
+				<if test="searchWord != null and searchWord != ''">
+	    			AND goods.goods_title LIKE '%${searchWord}%'    		
+	    		</if>
 				group by reports.goods_id) a 
 			on a.goods_id = g.goods_id
-			order by g.goods_id asc;
+			order by g.goods_id desc
+			<!-- limit #{startIdx},10 -->
 		</select>
         
 </mapper>

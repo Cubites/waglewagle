@@ -78,13 +78,17 @@
             <div id="main-box">
             
             	<!-- 회원 검색 -->
-                <div id="plus"> 상품검색 
-                	<input type="text" size="20"> 
-                	<button>조회하기</button>
+                 <div id="plus"> 상품검색 
+                 <form method="get" name="searchForm" id="searchForm" action="/admin/goodsManageList">
+                 <span class="searchWord">
+                	<input type="text" id="sNotice" name="searchWord" value="${goodsVO.searchWord}"  title="검색어입력하세요.">
+                	<input type="submit" id="" value="검색" title="검색">
+                	</span>
+                	</form>
                 </div>
 
-                                  
-                 <!-- 회원 리스트 -->
+
+                <!-- 회원 리스트 -->
                 <div class="noticelist">	
                     <table class="nlist">
 
@@ -116,7 +120,7 @@
                         	</tr>
                         </c:if>
                         
-                        <c:forEach items="${list}" var="item">
+                        <c:forEach items="${list.list}" var="item">
                         	<tr>
                         		<!-- 번호 -->
                         		<td>${item.goods_id}</td>
@@ -128,13 +132,33 @@
                         		<td>${item.goodsReport_cnt}</td>
                         		<!-- 접근여부 -->
 								<td>
-									<button onclick="goods_status(1,${item.goods_id})" id="button0${item.goods_id}" class="${item.goods_access == true ? 'hiddenClass' : '' }">접근해제</button>
+									<button onclick="goods_status(1,${item.goods_id})" id="button0${item.goods_id}" class="${item.goods_access == true ? 'hiddenClass' : '' }">접근가능</button>
 									<button onclick="goods_status(0,${item.goods_id})" id="button1${item.goods_id}" class="${item.goods_access == false ? 'hiddenClass' : '' }">접근금지</button>
 								</td>     		
                         	</tr>
                         </c:forEach>
                         </tbody>
                     </table>
+                      <div>
+                    	<ul class="paging">
+                    	<c:if test="${item.prev}">
+                    		<li><a href="/admin/goodsManageList?page=${item.startPage-1}&searchWord=${GoodsVO.searchWord}">이전</a></li>
+                    	</c:if>
+                    	
+                    	<c:forEach var="p" begin="${item.startPage}" end="${map.endPage}">
+                        	<c:if test="${p == GoodsVO.page}">
+                            <li><a href='#;' class='current'>${p}</a></li>
+                            </c:if>
+                            <c:if test="${p != GoodsVO.page}">
+                            <li><a href="/admin/goodsManageList?page=${p}&searchWord=${GoodsVO.searchWord}">${p}</a></li>
+                            </c:if>
+                        </c:forEach>
+
+						<c:if test="${item.next}">
+                    		<li><a href="/admin/goodsManageList?page=${item.endPage+1}&searchWord=${GoodsVO.searchWord}">이후</a></li>
+                    	</c:if>
+                    </ul>
+                   </div>
             </div>
             </div>
         </div>

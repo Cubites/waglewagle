@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.waglewagle.admins.mapper.UserManageMapper;
 import kr.co.waglewagle.domain.UsersVO;
@@ -30,9 +29,15 @@ public class UserManageServiceImpl implements UserManageService {
 		return mapper.usersAccess(usersInfo);
 	}
 
+
 	@Override
-	public List<Map<String, Object>> usersReport() {
-		return mapper.usersReport();
+	public List<UsersVO> adminUsersList(UsersVO param) {
+		return mapper.adminUsersList(param);
+	}
+
+	@Override
+	public int count(UsersVO param) {
+		return mapper.count(param);
 	}
 
 

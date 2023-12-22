@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.waglewagle.domain.NoticesVO;
 import kr.co.waglewagle.domain.QnasVO;
 
 @Mapper
@@ -20,4 +21,6 @@ public interface QnaMapper {
 	void delReply(int qnas_id);
 	int delReply(QnasVO vo);	
 	int modifyReply(QnasVO vo);
+	int count(QnasVO param);
+	List<NoticesVO> qnaList(QnasVO param);
 }

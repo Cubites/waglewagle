@@ -137,7 +137,7 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(2);
 		registry.addInterceptor(loginInterceptor()).addPathPatterns("/**")
-													.excludePathPatterns("/resources/**", "/upload/**", "/main","/login","/join", "/find_info","/emaildup","/send_authnum","/check_authnum", "/nickcheck", "/find_id", "/find_pwd", "/find_result", "/change_pwd","/board/noticelist/**").order(1);
+													.excludePathPatterns("/resources/**", "/upload/**", "/main","/login","/join", "/find_info","/emaildup","/send_authnum","/check_authnum", "/nickcheck", "/find_id", "/find_pwd", "/find_result", "/change_pwd","/board/noticelist/**","/admin/**").order(1);
 		registry.addInterceptor(logoutInterceptor()).addPathPatterns("/login","/join", "/find_info").order(3);
 	}
 

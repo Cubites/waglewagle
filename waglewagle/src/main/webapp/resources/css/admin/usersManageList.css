@@ -181,3 +181,6 @@
 .hiddenClass{
 	display:none;
 }
+li{
+    display: inline-block;
+} 
