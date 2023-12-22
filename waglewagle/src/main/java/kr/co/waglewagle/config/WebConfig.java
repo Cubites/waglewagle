@@ -32,6 +32,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import kr.co.waglewagle.admins.util.AdminInterceptor;
 import kr.co.waglewagle.auctions.won.AutionGoodsArgumentResolver;
 import kr.co.waglewagle.users.ty.util.LoginInterceptor;
 import kr.co.waglewagle.users.ty.util.LogoutInterceptor;
@@ -72,10 +73,12 @@ public class WebConfig implements WebMvcConfigurer {
 	MypageInterceptor mypageInterceptor; // 마이페이지용 인터셉터
 	
 	@Autowired
+	AdminInterceptor adminInterceptor;
+  @Autowired
 	LoginInterceptor loginInterceptor; // 로그인 인터셉터
-	
 	@Autowired
 	LogoutInterceptor logoutInterceptor; // 비회원 체크 인터셉터
+
 
 	@Autowired
 	RelCaculateInterceptor relCaculateInterceptor;
@@ -149,13 +152,15 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		// [마이페이지용 인터셉터] 마이페이지의 모든 페이지에 필요한 공통 작업 수행
 		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(2);
+
 		// [모든 페이지 인터셉터] 로그인이 필요한 페이지에 비회원 접근 시, 로그인 페이지로 리다이렉트
 		registry.addInterceptor(loginInterceptor).addPathPatterns("/**")
 													.excludePathPatterns(loginIntercepterExclude).order(1);
 		// [비회원 페이지 인터셉터] 이미 로그인이 되어있을 때 접근할 필요가 없는 페이지(로그인, 회원가입, 회원찾기)로 접근 시, 이전 페이지로 되돌아가게 함
 		registry.addInterceptor(logoutInterceptor).addPathPatterns("/users/login","/users/join", "/users/find_info").order(3);
 		registry.addInterceptor(relCaculateInterceptor).addPathPatterns("/auctions/complete", "/auctions/report/complete", "/admin/goodsStatus").excludePathPatterns();
-
+	registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**")
+													.excludePathPatterns("/admin/login","/admin/stop","/admin/check/duplication","/admin/add/admin_account","/admin/usersStatus","/admin/goodsStatus","/admin/delete/admin_account").order(4);
 	}
 
 	// 파일 업로드를 위한 bean

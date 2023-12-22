@@ -12,10 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/resources/css/admin/usersManageList.css"/>
-    <script>
-	    function noticewrite(){
-			 location.href = "/admin/noticewrite";
-		}	    
+    <script> 
 	    function notice(){
 			 location.href = "/admin/noticelist";
 		}
@@ -35,7 +32,7 @@
 			 location.href = "/admin/adminmanage";
 		}
 		function password(){
-			 location.href = "/admin/changepwd";
+			 location.href = "/admin/changePwd";
 		}
 		
 		/* 리스트에서 상품 삭제하기 */
@@ -90,7 +87,7 @@
                 <div id="qna" onclick="qna()">문의</div>
                 <div id="showdata" onclick="stats()">통계</div>
                 <div id="adminuser" onclick="user()">회원관리</div>
-                <div id="admingoods" onclick="goods()">게시글관리</div>
+                <div id="admingoods" onclick="goods()">상품관리</div>
                 <div id="adminmaster" onclick="admin()">관리자 계정</div>
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
@@ -100,7 +97,7 @@
             	<div id="plus"> 회원검색 
                  <form method="get" name="searchForm" id="searchForm" action="/admin/userManageList">
                  <span class="searchWord">
-                	<input type="text" id="sNotice" name="searchWord" value="${UsersVO.searchWord}"  title="검색어입력하세요.">
+                	<input type="text" id="sNotice" name="searchWord" value="${UsersVO.searchWord}"  title="검색어입력하세요." placeholder="회원 이름 검색">
                 	<input type="submit" id="" value="검색" title="검색">
                 	</span>
                 	</form>

@@ -51,7 +51,7 @@
 			 location.href = "/admin/adminmanage";
 		}
 		function password(){
-			 location.href = "/admin/changepwd";
+			 location.href = "/admin/changePwd";
 		}
 	</script>
 </head> 
@@ -70,7 +70,7 @@
                 <div id="qna" onclick="qna()">문의</div>
                 <div id="showdata" onclick="stats()">통계</div>
                 <div id="adminuser" onclick="user()">회원관리</div>
-                <div id="admingoods" onclick="goods()">게시글관리</div>
+                <div id="admingoods" onclick="goods()">상품관리</div>
                 <div id="adminmaster" onclick="admin()">관리자 계정</div>
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
@@ -78,15 +78,7 @@
         
             <div id="main-box">
             	<div class="noticeView">
-<%--             		<!-- 내용들 -->
-            		<p id="notices_id">글번호 : ${a.notices_id }</p>
-            		제목 : <div id="noticetitle" type="text"> ${a.notices_title}</div>         
-            		<div id="noticedate">
-                    	<p id="noticedate" type="text">작성일 : <fmt:formatDate value="${a.notices_date}" pattern="YYYY-MM-dd"/></p>
-                    </div>
-            		<div id="noticecontent" type="text">내용 : ${a.notices_content}</div> --%>
-            		
-            		
+
             	   <div class="rightloc"><p style="font-size:15px" class="noticeinfo" id="notices_id">글번호: ${a.notices_id } &nbsp&nbsp 작성일: ${a.notices_date }</p></div>
             	 
             	   <!-- 제목 -->

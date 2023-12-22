@@ -39,6 +39,7 @@ public class joinController {
 	@ResponseBody
 	@PostMapping("/admin/add/admin_account")
 	public boolean addAdmin(@RequestBody AdminsVO vo) {
+		
 		return service.addAdminAccount(vo) == 1 ? true : false;
 	}
 	

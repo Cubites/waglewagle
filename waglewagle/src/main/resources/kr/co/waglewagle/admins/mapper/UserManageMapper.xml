@@ -38,6 +38,9 @@
 			from reports
 			group by users_id) r
 			on u.users_id = r.users_id
+			<if test="searchWord != null and searchWord != ''">
+    			AND users_name LIKE '%${searchWord}%'    		
+    		</if>
 			order by u.users_id desc
 			limit #{startIdx},10;
         </select>
