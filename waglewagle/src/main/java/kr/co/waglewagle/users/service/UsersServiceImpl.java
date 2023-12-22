@@ -119,4 +119,10 @@ public class UsersServiceImpl implements UsersService {
 		return mapper.changePwd(user_info) > 0 ? true : false;
 	}
 
+	@Override
+	public Integer relCalculate(Integer users_id) { return mapper.relCalculate(users_id); }
+
+	@Override
+	public int relUpdate(Map<String, Integer> dataForRelUpdate) { return mapper.relUpdate(dataForRelUpdate); }
+
 }

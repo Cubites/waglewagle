@@ -25,6 +25,9 @@ public interface UsersMapper {
 	UsersVO findId(Map<String, String> user_info);
 	UsersVO findPwd(Map<String, String> user_info);
 	int changePwd(Map<String, String> user_info);
+	
+	Integer relCalculate(Integer users_id);
+	int relUpdate(Map<String, Integer> dataForRelUpdate);
 
 	PointVO checkPoint(Integer users_id); // 포인트 조회
 	String checkFavorAreas(Integer users_id); // 관심지역 조회
