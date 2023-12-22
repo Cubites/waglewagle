@@ -36,7 +36,7 @@
 						<c:if test='${!empty sessionScope.users_info.users_nick}'>
 							<div id="myMenu">
 								<a href="/mypage/auctions">마이페이지</a>
-								<a href="#" id="logoutButton">로그아웃</a>
+								<a href="javascript:void(0);" id="logoutButton">로그아웃</a>
 							</div>
 						</c:if>
 					</div>

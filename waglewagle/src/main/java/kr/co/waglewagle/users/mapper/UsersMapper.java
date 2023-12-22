@@ -13,9 +13,9 @@ import kr.co.waglewagle.domain.UsersVO;
 @Mapper
 public interface UsersMapper {
 	UsersVO userInfo(Integer users_id);
-
-	List<CategoryVO> allCategory();
+	
 	PointVO selectPointByUsersId(Integer users_id);
+	
 	int join(UsersVO vo);
 	int selectUsersId(String users_email);
 	int createPoint(int users_id);
@@ -25,15 +25,19 @@ public interface UsersMapper {
 	UsersVO findId(Map<String, String> user_info);
 	UsersVO findPwd(Map<String, String> user_info);
 	int changePwd(Map<String, String> user_info);
+	
+	Integer relCalculate(Integer users_id);
+	int relUpdate(Map<String, Integer> dataForRelUpdate);
 
-	PointVO checkPoint(Integer users_id);
-	String checkFavorAreas(Integer users_id);
-	int updateAreas(Map<String, Object> dataForAreaUpdate);
-	String selectPwd(Integer users_id);
-	int pwdChange(Map<String, Object> dataForValidPwd);
-	int countQnas(Integer users_id);
-	List<QnasVO> checkQnas(Map<String, Integer> dataForCheckQnas);
-	int deleteAccount(Integer users_id);
+	PointVO checkPoint(Integer users_id); // 포인트 조회
+	String checkFavorAreas(Integer users_id); // 관심지역 조회
+	int updateAreas(Map<String, Object> dataForAreaUpdate); // 관심지역 수정
+	String selectPwd(Integer users_id); // 비민번호 조회
+	int pwdChange(Map<String, Object> dataForValidPwd); // 비밀번호 변경
+	int countQnas(Integer users_id); // 문의내역 갯수
+	List<QnasVO> checkQnas(Map<String, Integer> dataForCheckQnas); // 문의내역 조회
+	
+	int deleteAccount(Integer users_id); // 회원탈퇴
 
 
 }

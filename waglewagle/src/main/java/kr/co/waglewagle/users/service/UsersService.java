@@ -10,9 +10,7 @@ import kr.co.waglewagle.domain.UsersVO;
 
 public interface UsersService {
 	UsersVO userInfo(Integer users_id);
-	List<CategoryVO> allCategory();
 	PointVO getPoint(Integer users_id);
-
 
 	boolean join(UsersVO vo);
 	int selectUsersId(String users_email);
@@ -23,6 +21,9 @@ public interface UsersService {
 	UsersVO findId(Map<String, String> user_info);
 	UsersVO findPwd(Map<String, String> user_info);
 	boolean changePwd(Map<String, String> user_info);
+	
+	Integer relCalculate(Integer users_id);
+	int relUpdate(Map<String, Integer> dataForRelUpdate);
 
 	PointVO checkPoint(Integer users_id);
 	String checkFavorAreas(Integer users_id);

@@ -36,19 +36,14 @@ import kr.co.waglewagle.admins.util.AdminInterceptor;
 import kr.co.waglewagle.auctions.won.AutionGoodsArgumentResolver;
 import kr.co.waglewagle.users.ty.util.LoginInterceptor;
 import kr.co.waglewagle.users.ty.util.LogoutInterceptor;
-import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @ComponentScan(basePackages = "kr.co.waglewagle")
 @EnableWebMvc
 @MapperScan(basePackages = "kr.co.waglewagle", annotationClass = Mapper.class)
 
-@Slf4j
-
 @EnableTransactionManagement
 public class WebConfig implements WebMvcConfigurer {
-	
-	
 	
 	@Value("${db.driver}")
 	private String driver;
@@ -64,13 +59,29 @@ public class WebConfig implements WebMvcConfigurer {
 	@Value("${os.root}")
 	private String osRoot;
 
+	private String[] loginIntercepterExclude = { 
+		"/",
+		"/resources/**", 
+		"/upload/**", 
+		"/users/**", 
+		"/board/noticelist/**",
+		"/admin/**",
+		"/add/session/*" // [!추후삭제 필요][테스트용] 유저 세션 추가 기능
+	};
 	
 	@Autowired
-	MypageInterceptor mypageInterceptor;
+	MypageInterceptor mypageInterceptor; // 마이페이지용 인터셉터
 	
 	@Autowired
 	AdminInterceptor adminInterceptor;
+  @Autowired
+	LoginInterceptor loginInterceptor; // 로그인 인터셉터
+	@Autowired
+	LogoutInterceptor logoutInterceptor; // 비회원 체크 인터셉터
 
+
+	@Autowired
+	RelCaculateInterceptor relCaculateInterceptor;
 	//argumentResolver등록
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
@@ -85,7 +96,6 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
-		
 		InternalResourceViewResolver rs = new InternalResourceViewResolver();
 		rs.setPrefix("/WEB-INF/views/");
 		rs.setSuffix(".jsp");
@@ -95,7 +105,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-		//외부 파일 읽어오기 위해서 추가  -> 이미지 파일 경로때문에 삭제될 코드!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// [!추후삭제 필요] 외부 파일 읽어오기 위해서 추가  -> 이미지 파일 경로때문에 삭제될 코드!!!!!!!!!!!!!!!!!!!!!!!!!!
 		registry.addResourceHandler("/upload/**").addResourceLocations("file:///"+osRoot+"/");
 	}
 
@@ -137,42 +147,44 @@ public class WebConfig implements WebMvcConfigurer {
 		return pro;
 	}
 
-	// Mypage 공통 작업(유저 정보 조회, 게시글 상태별 수 조회) 인터셉터
+	// 인터셉터 모음
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-
+		// [마이페이지용 인터셉터] 마이페이지의 모든 페이지에 필요한 공통 작업 수행
 		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(2);
-		registry.addInterceptor(loginInterceptor()).addPathPatterns("/**")
-													.excludePathPatterns("/resources/**", "/upload/**", "/", "/users/**", "/board/noticelist/**","/admin/**").order(1);
-		registry.addInterceptor(logoutInterceptor()).addPathPatterns("/users/login","/users/join", "/users/find_info").order(3);
-		registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**")
+
+		// [모든 페이지 인터셉터] 로그인이 필요한 페이지에 비회원 접근 시, 로그인 페이지로 리다이렉트
+		registry.addInterceptor(loginInterceptor).addPathPatterns("/**")
+													.excludePathPatterns(loginIntercepterExclude).order(1);
+		// [비회원 페이지 인터셉터] 이미 로그인이 되어있을 때 접근할 필요가 없는 페이지(로그인, 회원가입, 회원찾기)로 접근 시, 이전 페이지로 되돌아가게 함
+		registry.addInterceptor(logoutInterceptor).addPathPatterns("/users/login","/users/join", "/users/find_info").order(3);
+		registry.addInterceptor(relCaculateInterceptor).addPathPatterns("/auctions/complete", "/auctions/report/complete", "/admin/goodsStatus").excludePathPatterns();
+	registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**")
 													.excludePathPatterns("/admin/login","/admin/stop","/admin/check/duplication","/admin/add/admin_account","/admin/usersStatus","/admin/goodsStatus","/admin/delete/admin_account").order(4);
 	}
 
 	// 파일 업로드를 위한 bean
-		@Bean(name = "multipartResolver")
-		public CommonsMultipartResolver multipartResolver() {
-			CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-			resolver.setMaxUploadSize(2000000);
-			resolver.setDefaultEncoding("UTF-8");
-			return resolver;
-		}
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver multipartResolver() {
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setMaxUploadSize(2000000);
+		resolver.setDefaultEncoding("UTF-8");
+		return resolver;
+	}
 		
 	//messages를 읽기 위한 Bean
-		@Bean 
-		public MessageSource messageSource() {
-			final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-			
-			
-			
-			messageSource.setBasename("/errorMessage/error");
-			
-			messageSource.setDefaultEncoding("utf-8");
-			return messageSource;
-		}
+	@Bean 
+	public MessageSource messageSource() {
+		final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		
-
-
+		
+		
+		messageSource.setBasename("/errorMessage/error");
+		
+		messageSource.setDefaultEncoding("utf-8");
+		return messageSource;
+	}
+		
 	// 트랜잭션 설정
 	@Bean
 	public PlatformTransactionManager transactionManager() {
@@ -181,22 +193,9 @@ public class WebConfig implements WebMvcConfigurer {
 		return dtm;
 	}
 	
-
-	 //ArgumentResolver 등록
-   @Bean
-   public HandlerMethodArgumentResolver auctionArgumentResolver() {
-      return new AutionGoodsArgumentResolver();
-   }
-
-	//login interceptor
+	//ArgumentResolver 등록
 	@Bean
-	public LoginInterceptor loginInterceptor() {
-		return new LoginInterceptor();
-	}
-	//logout interceptor
-	@Bean
-	public LogoutInterceptor logoutInterceptor() {
-		return new LogoutInterceptor();
-
+	public HandlerMethodArgumentResolver auctionArgumentResolver() {
+		return new AutionGoodsArgumentResolver();
 	}
 }
