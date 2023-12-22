@@ -11,13 +11,13 @@ public interface BidsMapper {
 
 	Integer countBidsByGoodsId(int goodsId);
 
-	int checkPoint(BidsFormVO vo);
+	Integer checkPoint(BidsFormVO vo);
 
-	int insertBids(BidsFormVO vo);
+	Integer insertBids(BidsFormVO vo);
 
-	int UpdateUsablePoint(BidsFormVO vo);
+	Integer UpdateUsablePoint(BidsFormVO vo);
 
-	int checkInitial(BidsFormVO vo);
+	Integer checkInitial(BidsFormVO vo);
 
 	Integer selectMaxBidsPriceByUsersId(Map userAndgoods);
 	
