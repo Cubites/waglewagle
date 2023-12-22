@@ -27,8 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Controller
-@Slf4j
-
 public class GoodsController {
 
 	// 생성자주입 - file 저장을 돕는 객체
