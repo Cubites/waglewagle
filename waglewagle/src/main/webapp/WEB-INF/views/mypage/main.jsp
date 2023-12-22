@@ -42,7 +42,7 @@
 								<p class="text_center">총 소지 포인트</p>
 								<div></div>
 							</div>
-							<div id="rechargeButton" class="text_center">
+							<div id="rechargeButton" class="text_center" onClick="goPayment()">
 								<a href="#">충전하기</a>
 							</div>
 						</div>
@@ -249,6 +249,11 @@
 				});
 		    }
 		});
+		
+		// 충전 페이지로 이동
+		function goPayment() {
+			location.href = "/payment";
+		}
 	</script>
 </body>
 </html>

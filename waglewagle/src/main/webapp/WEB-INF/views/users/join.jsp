@@ -18,7 +18,7 @@
 			<div id="joinFormArea">
 				<div id="formHeader">회원가입</div>
 				<div id="formContent">
-					<form id="joinForm" method="post" action="join">
+					<form id="joinForm" method="post" action="/users/join">
 						<!-- input data  -->
 						<div id="inputArea">
 							<div id="emailArea">
@@ -42,11 +42,11 @@
 							<div id="passwordArea">
 								<div id="pwd1">
 									<div class="formText">비밀번호</div>
-									<input type="password" size="35" class="formInput" id="users_pwd" name="users_pwd" placeholder="영문,특수문자,숫자 포함 8자 이상"><br>
+									<input type="password" size="38" class="formInput" id="users_pwd" name="users_pwd" placeholder="영문,특수문자,숫자 중 2가지 이상 포함하여 8~20자로 작성해주세요"><br>
 								</div>
 								<div id="pwd2">
 									<div class="formText">비밀번호 확인</div>
-									<input type="password" size="35" class="formInput" id="users_pwd2">
+									<input type="password" size="38" class="formInput" id="users_pwd2">
 								</div>
 								<div class="flex-end">
 									<div id="pwdCheckTxt">비밀번호가 일치하지 않습니다.</div>
@@ -73,14 +73,14 @@
 								</div>
 							</div>
 							<div id="phoneArea">
-								<div class="formText">전화번호</div>
+								<div class="formText">연락처</div>
 								<div id="phoneNumber">
 									<select name="pn" id="phoneFront">
 										<option value="010">010</option>
 										<option value="011">011</option>
 										<option value="016">016</option>
 									</select>
-									<input type="text" size="30" id="phoneBack" class="formInput" placeholder="전화번호"><br>
+									<input type="text" size="30" id="phoneBack" class="formInput" placeholder="'-'없이 입력해주세요"><br>
 									<input type="hidden" id="phoneResult" name="users_phone" value="">
 								</div>
 							</div>
@@ -100,9 +100,9 @@
 									<div id="interest_dong3">
 										<input type="button" class="addDongBtn" onclick="clickAddDong3()" value="+">
 									</div>
-									<div name="dongResult">
-										<input type="hidden" id="users_addr_list" name="users_addr_list" value="">
-									</div>
+								</div>
+								<div name="dongResult">
+									<input type="hidden" id="users_addr_list" name="users_addr_list" value="">
 								</div>
 							</div>
 						</div>

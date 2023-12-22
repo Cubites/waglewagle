@@ -1,8 +1,8 @@
 * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-  }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 #header {
     width: 100%;
@@ -65,10 +65,88 @@
     margin-top: auto; /* 맨 아래로 이동 */
 }
 
+/* main-box */
 #main-box {
     width: 85%;
     height: 100%;
     font-size: 20px;
     /* border: 1px solid #999; */
-    text-align: center;
+}
+#main-box>#statsTop{
+	width: 90%;
+	height: 10%;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: center;
+	padding-left: 10%;
+	background-color: #ddd;
+}
+#main-box>#statsTop>div{
+	width: 120px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 20px;
+	border-radius: 5px;
+	font-weight: bold;
+	transition: background-color 0.3s ease;
+	cursor: pointer;
+}
+#main-box>#statsTop>div:hover{
+	background-color: #fff;
+}
+
+/* chart-area */
+#main-box>#statsBottom{
+	width: 90%;
+	margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.chartArea{
+    width: 500px;
+    height: 500px;
+    min-height: 300px;
+}
+#main-box>#statsBottom>.chartBox{
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border: 2px solid #333;
+    position: relative;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+#main-box>#statsBottom>.chartBox>.title{
+	width: 120px;
+	height: 40px;
+	background-color: #fff;
+	font-size: 25px;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	left: 20px;
+	top: -20px;
+	z-index: 100;
+}
+#main-box>#statsBottom>.chartBox>.chartArea{
+	width: 500px;
+	height: 500px;
+}
+#main-box>#statsBottom>.chartBox>.chart3,
+#main-box>#statsBottom>.chartBox>.chart5{
+	width: 1000px;
+	height: 1000px;
+}
+#main-box>#statsBottom>.chartBox>.chart5{
+	width: 1000px;
 }

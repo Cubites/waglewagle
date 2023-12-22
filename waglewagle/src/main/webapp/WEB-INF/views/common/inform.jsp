@@ -2,10 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <script>
-console.log("${cmd}");
-console.log("${url}");
-console.log("${msg}");
-
 <c:if test="${cmd == 'move'}">
 	<c:if test="${msg != ''}">
 		alert("${msg}");

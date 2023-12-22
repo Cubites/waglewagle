@@ -43,10 +43,9 @@ public class AutionGoodsArgumentResolver implements HandlerMethodArgumentResolve
          return null;
       }
       
-   
-      
          
       return goods_id;
    }
 
 }
+

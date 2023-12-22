@@ -1,5 +1,6 @@
 package kr.co.waglewagle.auctions.controller;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,11 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -84,4 +89,37 @@ public class AuctionsController {
 	public String goAuctionsReportComplete() {
 		return "auctions/mobileAuctionsReportComplete";
 	}
+	
+	@PostMapping("/auctions/end/{goods_id}")
+	@ResponseBody
+	public ResponseEntity<String> auctionEnd(@RequestParam Map<String,Object> paramMap,@AuctionIng Integer goodsId) {
+		
+		ResponseEntity<String> response=null;
+		HttpHeaders header = new HttpHeaders();
+		header.add("content-type", "text/plain;charset=UTF-8");
+		String msg = "경매 완료에 실패했습니다. 다시 시도해주세요";
+		//경매중인 goods가 아닐 시 실패하도록 함 
+		//근데 어차피 Exception 터지는거 생각하면 굳이 안잡아도 될듯?
+		if(goodsId == null) {
+			return new ResponseEntity<String>(msg,header,HttpStatus.BAD_REQUEST);
+		}
+		
+		
+		try {
+			
+			
+			boolean deleteresult = service.auctionEnd(paramMap);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<String>(msg,header,HttpStatus.BAD_REQUEST);
+		}
+		
+		
+		
+		
+		return new ResponseEntity<String>("경매를 완료했습니다.",header,HttpStatus.ACCEPTED);
+	}
+	
+	//@PostMapping("/auctions/")
+	
 }

@@ -39,6 +39,7 @@ public class BidsServiceImpl implements BidsService {
 		//처음 호가인지 검사
 		int initial = mapper.checkInitial(vo);
 		//이전 호가보다 큰 가격인지, 가용 포인트에서 뺐을 때 0보다 크거나 같은지 검사 
+		//검사 통과하면 1 실패하면 0 ( 첫호가일때는 최대가격이 없어서 0임)
 		check = mapper.checkPoint(vo);
 		
 		
@@ -52,11 +53,12 @@ public class BidsServiceImpl implements BidsService {
 		}
 		
 		
-		
-		if(insert <= 0 || update <= 0 || check <= 0 ) {
+										 //첫호가가 아닌데, 이전 호가보다 작은경우
+		if(insert <= 0 || update <= 0 || (check <=0 && initial > 0)) {
 			result =false;
 			throw new BidsException("호가가 완료되지 않았습니다.");
 		}
+		
 			
 		
 		return result;

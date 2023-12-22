@@ -16,4 +16,38 @@
 			point_usable = point_usable + #{paylog_cash}
 		WHERE users_id=#{users_id}
 	</update>
+	
+	<update id="updateSellerPoint" parameterType="Map">
+	UPDATE point 
+	SET point_total = point_total+#{auctions_end_price}, point_usable = point_usable+#{auctions_end_price}
+	WHERE users_id = #{auctions_end_seller};
+	</update>
+	
+	<update id="updateBuyerPoint" parameterType="Map">
+	UPDATE point 
+	SET point_total = point_total- #{auctions_end_price} 
+	WHERE users_id = #{auctions_end_buyer};
+	</update>
+	
+	<delete id="deleteAuctionIng" parameterType="Integer">
+	DELETE FROM auctions_ing WHERE goods_id = #{goods_id}
+	</delete> 
+	
+	<insert id="insertAuctionEnd" parameterType="map">
+	INSERT INTO auctions_end 
+	(auctions_end_seller,
+	auctions_end_buyer,
+	auctions_end_price,
+	goods_id,
+	auctions_end_date)
+	VALUES(
+	 #{auctions_end_seller},
+	 #{auctions_end_buyer},
+	 #{auctions_end_price},
+	 #{goods_id},
+	 NOW()
+	)
+	</insert>
+	
+	
 </mapper>

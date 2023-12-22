@@ -30,10 +30,10 @@
                 <div id="slideList">
                 
            			<!-- 업로드된 이미지 받아오기 --> 
-               	  <img class="imgs" src="/upload${goods.goods_th_img}"/>
+               	  <img class="imgs" src="/upload/${goods.goods_th_img}"/>
                	  <c:forEach items="${images}" var="img" begin="0">
                	  	<c:if test="${img.images_loc != goods.goods_th_img}">
-               	  	<img class="imgs" src="/upload${img.images_loc}"/>
+               	  	<img class="imgs" src="/upload/${img.images_loc}"/>
                	  	</c:if>
                	  </c:forEach>
                	  	
@@ -68,8 +68,8 @@
             </div>
             <div class="topbox2c" id="seller">
               <div id="sellerBox">
-                <div id="sellerfont">판매자 : <span id="sellerNic">${users_info.users_nick}</span></div>
-                <div id="disBox">와글이와의 거리 "<span id="dis">${users_info.users_rel}</span>"</div>
+                <div id="sellerfont">판매자 : <span id="sellerNic">${seller.users_nick}</span></div>
+                <div id="disBox">와글이와의 거리 "<span id="dis">${seller.users_rel}</span>"</div>
               </div>
               <div id="addrBox">
                 <div id="addrfont">거래장소 : <span id="dong"></span></div>
