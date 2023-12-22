@@ -13,7 +13,7 @@ public class stopController {
 //	@Autowired
 //	private NoticeService service;
 	
-	@GetMapping("/admin/stop.do")
+	@GetMapping("/admin/stop")
 	public String index(Model model,NoticesVO vo) {
 		//서비스 호출하고 map return 받을거니까...
 //		model.addAttribute("map",service.list(vo));

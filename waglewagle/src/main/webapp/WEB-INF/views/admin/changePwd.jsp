@@ -12,9 +12,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/resources/css/admin/changepwd.css"/>
     <script>
-	    function noticewrite(){
-			 location.href = "/admin/noticewrite";
-		}	    
 	    function notice(){
 			 location.href = "/admin/noticelist";
 		}
@@ -34,8 +31,20 @@
 			 location.href = "/admin/adminmanage";
 		}
 		function password(){
-			 location.href = "/admin/changepwd";
+			 location.href = "/admin/changePwd";
 		}
+		
+     	function changePwd() {
+     		if ($("#admin-email").val() == '') {
+     			alert("변경할 비밀번호를 입력해 주세요");
+     			return false;
+     		}
+     		if ($("#admins_pwd").val() == '') {
+     			alert("비밀번호 확인을 입력해주세요");
+     			return false;
+     		}
+     	document.adminpwdchange.submit();
+     	}
     </script>
 </head> 
 <body>
@@ -53,7 +62,7 @@
                 <div id="qna" onclick="qna()">문의</div>
                 <div id="showdata" onclick="stats()">통계</div>
                 <div id="adminuser" onclick="user()">회원관리</div>
-                <div id="admingoods" onclick="goods()">게시글관리</div>
+                <div id="admingoods" onclick="goods()">상품관리</div>
                 <div id="adminmaster" onclick="admin()">관리자 계정</div>
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
@@ -68,20 +77,19 @@
                     </div>
                     
                     <div id="body-plus">
-                        <table>
-   							<tr>
-                              <td>*새로운 비밀번호</td>
-                              <td><input class="onborder" id="admin-pwd" type="password" min="8" placeholder="영문,숫자 합 8자리 이상"/></td>
-                            </tr>
-                      
-                            <tr>
-                              <td>*비밀번호확인</td>
-                              <td><input class="onborder" id="admin-pwd" type="password" min="8" placeholder="동일한 비밀번호를 입력"/> </td>
-                            </tr>
-                            
-                         </table>
-
-                        <button id="changebtn" onclick="changepwd()">비밀번호 변경</button>
+                    	<form method="post" action="/admin/changePwd" onsubmit="return changePwd();" name="adminpwdchange">
+	                        <table>
+	   							<tr>
+	                              <td>*새로운 비밀번호</td>
+	                              <td><input class="onborder" id="ad" name="admins_pwd" type="password" min="8" placeholder="영문,숫자 합 8자리 이상"/></td>
+	                            </tr>
+	                            <tr>
+	                              <td>*비밀번호확인</td>
+	                              <td><input class="onborder" id="admin_pwd" name="admins_pwd" type="password" min="8" placeholder="동일한 비밀번호를 입력"/> </td>
+	                            </tr>
+	                        </table>
+	                        <button type="button" id="changebtn" onclick="changePwd()">비밀번호 변경</button>
+	                  </form>
                     </div>
                 </div>
             </div>

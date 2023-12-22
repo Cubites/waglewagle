@@ -32,6 +32,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import kr.co.waglewagle.admins.util.AdminInterceptor;
 import kr.co.waglewagle.auctions.won.AutionGoodsArgumentResolver;
 import kr.co.waglewagle.users.ty.util.LoginInterceptor;
 import kr.co.waglewagle.users.ty.util.LogoutInterceptor;
@@ -67,6 +68,8 @@ public class WebConfig implements WebMvcConfigurer {
 	@Autowired
 	MypageInterceptor mypageInterceptor;
 	
+	@Autowired
+	AdminInterceptor adminInterceptor;
 
 	//argumentResolver등록
 	@Override
@@ -142,7 +145,8 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addInterceptor(loginInterceptor()).addPathPatterns("/**")
 													.excludePathPatterns("/resources/**", "/upload/**", "/", "/users/**", "/board/noticelist/**","/admin/**").order(1);
 		registry.addInterceptor(logoutInterceptor()).addPathPatterns("/users/login","/users/join", "/users/find_info").order(3);
-
+		registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**")
+													.excludePathPatterns("/admin/login","/admin/stop","/admin/check/duplication","/admin/add/admin_account","/admin/usersStatus","/admin/goodsStatus","/admin/delete/admin_account").order(4);
 	}
 
 	// 파일 업로드를 위한 bean
