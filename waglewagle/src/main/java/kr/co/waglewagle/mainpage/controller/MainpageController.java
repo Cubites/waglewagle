@@ -27,13 +27,17 @@ public class MainpageController {
 		if(session.getAttribute("users_info") != null) {
 			UsersVO login = (UsersVO)session.getAttribute("users_info");
 			List<String> users_addrList = Arrays.asList(login.getUsers_addr_list().split(","));
+			System.out.println(login.getUsers_addr_list().split(",").length);
 			model.addAttribute("near_list", service.nearList(users_addrList));
 			
-			//시구동 -> 동
-			for(int i=0; i<users_addrList.size(); i++) {
-				users_addrList.set(i, users_addrList.get(i).substring(users_addrList.get(i).lastIndexOf(" ")));
+			// 관심 지역이 있다면
+			if(users_addrList.get(0).length()>0) {
+				//시구동 -> 동
+				for(int i=0; i<users_addrList.size(); i++) {
+					users_addrList.set(i, users_addrList.get(i).substring(users_addrList.get(i).lastIndexOf(" ")));
+				}
+				model.addAttribute("dong_list", users_addrList);
 			}
-			model.addAttribute("dong_list", users_addrList);
 		}else {
 			List<String> users_addrList = Arrays.asList("서교동");
 			model.addAttribute("dong_list", users_addrList);
