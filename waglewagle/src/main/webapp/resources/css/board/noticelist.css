@@ -1,125 +1,65 @@
-#main-box {
-    width: 85%;
-    height: 100%;
-    font-size: 20px;
-    /* border: 1px solid #999; */
-    text-align: center;
+.noticelist{
 	display: flex;
     flex-direction: column;
-    
-}
-#plus {
-    width: 500px;
-    height: 50px;
-    background-color: lightgray;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-#plus input {
-    margin: 0 20px; 
-}
-
-.noticelist .nlist{
-    border-collapse:collapse; 
-    border-spacing:0; 
-    box-sizing:border-box;
-    margin: auto;
-}  /* tr에 shadow_down 클래스 사용하는 경우 border-collapse:separate; 으로 변경*/
-.noticelist .nlist thead{
-    border-top:2px solid #221f1f; 
-    border-bottom:1px solid #221f1f;
-}
-.noticelist .nlist thead th{
-    padding:15px 20px; 
-    font-size:13px; 
-    height:20px; 
-    line-height:14px; 
-    color:#333;
-}
-.noticelist .nlist td{
-    text-align:center; 
-    padding:8px 10px; 
-    border-bottom:1px solid #d9d9d9;
-}
-.noticelist .nlist tbody tr:hover{
-    background:#f6f6f6;
-} /*마우스오버 배경칼라지정*/
-.noticelists .nlist .notice{
-    background:#f9f9f9; 
-} /*탑공지  배경칼라지정*/
-.noticelist .nlist .notice_ico{
-    display:none;
-}
-.noticelist .nlist .image img{
-    width:80px; 
-    height:auto;
-}
-.noticelist .nlist .title span{
-    font-size:15px; 
-    font-weight:bold;
-}
-/** tr에 shadow_down 클래스 사용하는 경우 -  테두리 박스에 그림자처리 **/
-.noticelist .nlist tr.shadow_down th{
-    height:35px;  
-    background:#fff; 
-    box-shadow:0 2px 3px rgba(0, 0, 0, 0.08); 
-    -webkit-box-shadow:0 2px 3px rgba(0, 0, 0, 0.08); 
-    -moz-box-shadow:0 2px 3px rgba(0, 0, 0, 0.08); 
-    border-top:1px solid #d4d4d4; 
-    border-bottom:1px solid #d4d4d4; 
-    border-left:none; 
-    border-right:none; 
-    font-size:12px;
-}
-.noticelists .nlist tr.shadow_down th:first-child{
-    border-left:1px solid #d4d4d4; 
-    box-shadow:0;
-}
-.noticelist .nlist tr.shadow_down th:last-child{
-    border-right:1px solid #d4d4d4; 
-    box-shadow:0;
-}
-/** tr에 bgColor 클래스 사용하는 경우 -  배경칼라처리 **/
-.noticelist .nlist thead.bgColor{
-    border-top:none; 
-    border-bottom:none;
-}
-.noticelist .nlist thead.bgColor th{
-    padding:10px 20px; 
-    font-size:13px; 
-    height:20px; 
-    line-height:14px; 
-    color:#fff; 
-    background:#404143;
-}
-.noticelist .nlist td {
-    text-align: center;
-    padding: 8px 10px;
-    font-size: 14px; /* 이 부분을 추가해줍니다. */
-    border-bottom: 1px solid #d9d9d9;
-}
-#writebtn{
-    width: 150px;
-    height: 35px;
-    
-    background: #686868;
-    border-radius: 10px;
-    color: azure;
-    font-size: 14px;
-    font-stretch: 100;
     align-items: center;
-    margin-bottom: 10px;
+    margin-top:50px;
+}
+table.notice {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.notice thead th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: #CF5C5C;
+    margin: 20px 10px;
+}
+table.notice thead th.tSize {
+    width: 500px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: #CF5C5C;
+    margin: 20px 10px;
+}
+table.notice thead th.dSize {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: #CF5C5C;
+    margin: 20px 10px;
+}
+table.notice tbody th {
+    width: 150px;
+    padding: 10px;
+}
+table.notice td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
 }
 
-#line{
-width: 80%px;
-height: 1%;
-left: 339px;
-top: 188px;
-border: 5px solid #ED5565;
-	
+table.notice .even {
+    background: #fdf3f5;
 }
+
+.paging{
+	list-style-type:none; 
+}
+ul{
+	text-align: center;
+}
+li{
+    display: inline-block;
+} 

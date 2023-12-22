@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.waglewagle.admins.mapper.NoticeMapper;
+import kr.co.waglewagle.board.mapper.UsernoticesMapper;
 import kr.co.waglewagle.domain.NoticesVO;
 
 @Service
@@ -19,12 +20,9 @@ public class UsernoticesServiceImpl implements UsernoticesSerivce {
 	@Autowired
 	private NoticeMapper mapper;
 	
-	@Override
-	public List<NoticesVO> noticeList(){
-		return mapper.noticeList();
-	}
+	@Autowired
+	private UsernoticesMapper mapper2;
 	
-
 	@Override
 	public Object list(NoticesVO vo) {
 		return null;
@@ -40,6 +38,10 @@ public class UsernoticesServiceImpl implements UsernoticesSerivce {
 	public Object Noticeview(NoticesVO vo, boolean b) {
 		return null;
 	}
+
+
+
+
 
 
 

@@ -22,6 +22,7 @@ import kr.co.waglewagle.domain.UsersVO;
 
 @Controller
 public class AdminsController {
+
 	@Autowired
 	private AdminsService service;
 	

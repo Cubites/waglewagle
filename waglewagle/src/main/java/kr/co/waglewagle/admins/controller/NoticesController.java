@@ -1,6 +1,9 @@
 package kr.co.waglewagle.admins.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.javassist.runtime.Inner;
@@ -22,14 +25,42 @@ public class NoticesController {
 	@Autowired
 	private NoticeService service;
 
-	//공지 목록 
+	//공지 목록
+//	@GetMapping("/admin/noticelist")
+//	public String noticeList(Model model) {
+//		System.out.println("여기가 공지목록입니다.");
+//		List<NoticesVO> list = service.noticeList();
+//		model.addAttribute("list",list); //jsp로 다시 보내주는거지
+//		return "/admin/noticelist";
+//	}
+	
+	//공지 페이징 + 검색
 	@GetMapping("/admin/noticelist")
-	public String noticeList(Model model) {
-		System.out.println("여기가 공지목록입니다.");
-		List<NoticesVO> list = service.noticeList();
-		model.addAttribute("list",list); //jsp로 다시 보내주는거지
-		return "/admin/noticelist";
+	public String noticeSearch(Model model,NoticesVO vo) {
+		int count = service.count(vo); // 총개수
+        // 총페이지수
+        int totalPage = count / 10;
+        if (count % 10 > 0) totalPage++;
+        
+        List<NoticesVO> list = service.noticeList(vo);
+        
+        // 하단에 페이징처리
+        int endPage = (int)(Math.ceil(vo.getPage()/10.0)*10);
+        int startPage = endPage - 9;
+        if (endPage > totalPage) endPage = totalPage;
+        boolean prev = startPage > 1;
+        boolean next = endPage < totalPage;
+        
+        // model에 담음(페이징 정보)
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("prev", prev);
+        model.addAttribute("next", next);
+		// model에 담음(공지 정보)
+		model.addAttribute("list",list);
+		return "admin/noticelist";
 	}
+
 	
 	//공지 등록 화면 띄우기
 	@GetMapping("/admin/noticewrite")
@@ -53,16 +84,7 @@ public class NoticesController {
 		model.addAttribute("a",a); //jsp로 보내주느거야아아아
 		return "admin/noticeview";
 	}
-	
-	//공지 상세 내용 보기
-//	@GetMapping("/admin/noticeview/{notices_id}")
-//	public String Noticeview(@PathVariable("notices_id") int notices_id,Model model) {
-////		System.out.println("====>"+notices_id);
-//		NoticesVO a = service.Noticeview(notices_id);
-////		System.out.println("내가 가지고 온 공지내용"+a.getNotices_title());
-//		model.addAttribute("a",a); //jsp로 보내주느거야아아아
-//		return "admin/noticeview";
-//	}
+
 	
 	//공지 삭제하기
 	@GetMapping("/admin/noticedelete/{notices_id}")
@@ -89,13 +111,6 @@ public class NoticesController {
 		model.addAttribute(request);
 		return "redirect:/admin/noticelist";
 	}
-	
-//	//공지 수정하기
-//	@PostMapping("/admin/noticemodify")
-//	public String postNoticemodify(NoticesVO vo) throws Exception{
-//		service.Noticemodify(vo);
-//		
-//		return "redirect:/admin/noticeview?notices_id="+vo.getNotices_id();
-//	}
+
 
 }

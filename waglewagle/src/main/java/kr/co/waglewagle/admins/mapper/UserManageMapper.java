@@ -12,6 +12,7 @@ import kr.co.waglewagle.domain.UsersVO;
 public interface UserManageMapper {
 	List<UsersVO> userList();
 	int usersAccess(Map<String,Integer> usersInfo); 
-	List<Map<String, Object>> usersReport();
+	int count(UsersVO param);
+	List<UsersVO> adminUsersList(UsersVO param);
 
 }

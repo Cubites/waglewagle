@@ -4,11 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.waglewagle.admins.mapper.GoodsManageMapper;
 import kr.co.waglewagle.domain.GoodsVO;
@@ -31,15 +28,42 @@ public class GoodsManageServiceImpl implements GoodsManageService {
 
 	@Override
 	public int goodsAccess(Map<String, Integer> goodsInfo) {
-		System.out.println(">>> 게시물 상태 조회 ->>> "+mapper.goodsAccess(goodsInfo));
 		return mapper.goodsAccess(goodsInfo);
 	}
 
 	
-	  @Override 
-	  public List<Map<String, Object>> adminGoodsList() { 
-		  return mapper.adminGoodsList(); 
-		  }
+//	  @Override 
+//	  public List<Map<String, Object>> adminGoodsList() { 
+//		  return mapper.adminGoodsList(); 
+//		  }
+
+	@Override
+	public Map<String, Object> adminGoodsList(GoodsVO param) {
+		int count = mapper.count(param); // 총개수
+        // 총페이지수
+        int totalPage = count / 10;
+        if (count % 10 > 0) totalPage++;
+        
+        List<Map<String, Object>> list = mapper.adminGoodsList(param); // 목록
+        
+        
+        Map<String, Object> map = new HashMap<>();
+        map.put("count", count);
+        map.put("totalPage", totalPage);
+        map.put("list", list);
+        
+        // 하단에 페이징처리
+        int endPage = (int)(Math.ceil(param.getPage()/10.0));
+        int startPage = ((endPage-1)/10)*10+1;
+        if (endPage > totalPage) endPage = totalPage;
+        boolean prev = startPage > 1;
+        boolean next = endPage < totalPage;
+        map.put("endPage", endPage);
+        map.put("startPage", startPage);
+        map.put("prev", prev);
+        map.put("next", next);
+        return map; 
+	}
 	 
 
 

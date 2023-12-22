@@ -174,12 +174,11 @@
     align-items: center;
     margin-bottom: 10px;
 }
-
-#line{
-width: 80%px;
-height: 1%;
-left: 339px;
-top: 188px;
-border: 5px solid #ED5565;
-	
+.paging{
+	list-style-type:none;
+	align-items:center;
 }
+
+li{
+    display: inline-block;
+} 

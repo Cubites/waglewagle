@@ -1,6 +1,5 @@
 package kr.co.waglewagle.admins.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,24 +17,45 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Autowired
 	private NoticeMapper mapper;
-	
-	@Override
-	public List<NoticesVO> noticeList(){
-		return mapper.noticeList();
-	}
-	
-	//공지 글 등록하기
-	@Override
-	public  List<NoticesVO> Noticewrite(NoticesVO vo,HttpServletRequest request) {
-		mapper.Noticewrite(vo);
-		return mapper.noticeList();
-	}
 
-	//공지 수정하기
+	//공지리스트
 //	@Override
-//	public void Noticemodify(NoticesVO vo) {
+//	public List<NoticesVO> noticeList(){
+//		return mapper.noticeList();
 //	}
 	
+
+	//공지리스트
+//	@Override
+//	public Object list(NoticesVO vo) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+//	@Override
+//	public Map<String, Object> noticeList(NoticesVO vo) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
+	// 게시글 수
+	@Override
+	public int count(NoticesVO param) { 
+		return mapper.count(param); 
+	}
+	
+	//검색
+	@Override
+	public List<NoticesVO> noticeList(NoticesVO param) {
+		return mapper.noticeList(param); // 목록;
+	}
+
+	//공지 글 등록하기
+	@Override
+	public void Noticewrite(NoticesVO vo,HttpServletRequest request) {
+		mapper.Noticewrite(vo);
+	}
+		
 	//공지 삭제하기
 	@Override
 	public void Noticedelete(int notices_id) {
@@ -43,10 +63,6 @@ public class NoticeServiceImpl implements NoticeService {
 		mapper.Noticedelete(notices_id);
 	}
 
-	@Override
-	public Object list(NoticesVO vo) {
-		return null;
-	}
 
 	//공지 상세보기
 	@Override
@@ -54,24 +70,23 @@ public class NoticeServiceImpl implements NoticeService {
 		return mapper.detail(notices_id);
 	}
 
+	//공지확인
 	@Override
 	public Object Noticeview(NoticesVO vo, boolean b) {
 		return null;
 	}
-
+	
+	//공지수정
 	@Override
 	public NoticesVO Noticemodify(int notices_id) {
 		return mapper.detail(notices_id);
 	}
 
+	//공지 수정 업로드
 	@Override
 	public int NoticeModifyUpdate(NoticesVO vo, HttpServletRequest request) {
 		int r = mapper.NoticeModifyUpdate(vo);
 		return r;
 	}
 
-
-
-
-	
 }
