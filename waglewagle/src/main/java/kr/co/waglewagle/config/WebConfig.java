@@ -35,7 +35,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import kr.co.waglewagle.auctions.won.AutionGoodsArgumentResolver;
 import kr.co.waglewagle.users.ty.util.LoginInterceptor;
 import kr.co.waglewagle.users.ty.util.LogoutInterceptor;
-import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @ComponentScan(basePackages = "kr.co.waglewagle")
@@ -65,6 +64,7 @@ public class WebConfig implements WebMvcConfigurer {
 		"/upload/**", 
 		"/users/**", 
 		"/board/noticelist/**",
+		"/admin/**",
 		"/add/session/*" // [!추후삭제 필요][테스트용] 유저 세션 추가 기능
 	};
 	
@@ -77,6 +77,8 @@ public class WebConfig implements WebMvcConfigurer {
 	@Autowired
 	LogoutInterceptor logoutInterceptor; // 비회원 체크 인터셉터
 
+	@Autowired
+	RelCaculateInterceptor relCaculateInterceptor;
 	//argumentResolver등록
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
@@ -152,6 +154,7 @@ public class WebConfig implements WebMvcConfigurer {
 													.excludePathPatterns(loginIntercepterExclude).order(1);
 		// [비회원 페이지 인터셉터] 이미 로그인이 되어있을 때 접근할 필요가 없는 페이지(로그인, 회원가입, 회원찾기)로 접근 시, 이전 페이지로 되돌아가게 함
 		registry.addInterceptor(logoutInterceptor).addPathPatterns("/users/login","/users/join", "/users/find_info").order(3);
+		registry.addInterceptor(relCaculateInterceptor).addPathPatterns("/auctions/complete", "/auctions/report/complete", "/admin/goodsStatus").excludePathPatterns();
 
 	}
 

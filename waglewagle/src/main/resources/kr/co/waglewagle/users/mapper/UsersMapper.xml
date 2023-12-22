@@ -135,4 +135,19 @@
 		WHERE users_id=#{users_id}
 	</update>
 
+	<!-- 친밀도 계산 -->
+	<select id="relCalculate" parameterType="Integer" resultType="Integer">
+		SELECT
+			42
+			+ (SELECT COUNT(*) FROM auctions_end WHERE auctions_end_seller = #{users_id} OR auctions_end_buyer = #{users_id})
+			+ (SELECT COUNT(*) FROM goods WHERE goods_access = 1 AND users_id = #{users_id}) * (-2)
+			+ (SELECT COUNT(*) FROM auctions_break WHERE auctions_break_user = #{users_id}) * (-5) AS rel
+	</select>
+	
+	<!-- 친밀도 업로드 -->
+	<select id="relUpdate" parameterType="java.util.Map">
+		UPDATE users
+		SET rel = #{rel}
+		WHERE users_id = #{users_id}
+	</select>
 </mapper>
