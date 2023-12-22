@@ -7,10 +7,10 @@
 		});
 		
 		
-		$(".productExp").each(function(){
-			var fullExp = $(this).text().trim();
+		$(".productExpArea").each(function(){
+			var fullExp = $(this).find(".originExp").text().trim();
 			var result = fullExp.substring(0,11);
-			$(this).text(result);
+			$(this).find(".productExp").text(result);
 		});
 		
 	})
@@ -48,7 +48,10 @@
 	$(function(){
 		$(".swiper-slide").mouseover(function(){
 			let now = new Date();
-			let expDate = new Date($(this).find(".popProduct").find(".avgPrice_expDateArea").find(".avg_expValue").find(".productExp").text());
+			console.log(now);
+			let expDateValue = $(this).find(".popProduct").find(".avgPrice_expDateArea").find(".avg_expValue").find(".productExpArea").find(".originExp").text();
+			let expDate = new Date(Date.parse(expDateValue));
+			console.log(expDate);
 			let leftTime = expDate - now;
 			
 			const days = Math.floor(leftTime/(1000*60*60*24));
