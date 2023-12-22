@@ -10,6 +10,10 @@
 	justify-content: start;
 }
 
+.hide{
+	display: none;
+}
+
 #searchBar {
 	background-color: #CF5C5C;
 	width: 100%;
