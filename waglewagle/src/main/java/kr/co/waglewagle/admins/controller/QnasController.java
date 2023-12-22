@@ -25,11 +25,21 @@ public class QnasController {
 	private QnaService service;
 
 	//문의 목록
+//	@GetMapping("/admin/qnalist")
+//	public String qnaString(Model model) {
+//		//System.out.println("여기는 문의목록입니다..");
+//		List<QnasVO> list = service.QnaList();
+//		model.addAttribute("list",list); 
+//		return "/admin/qnalist";
+//	}
+	
+	//문의 페이징 + 검색
 	@GetMapping("/admin/qnalist")
-	public String qnaString(Model model) {
+	public String qnaString(Model model,QnasVO vo) {
 		//System.out.println("여기는 문의목록입니다..");
-		List<QnasVO> list = service.QnaList();
-		model.addAttribute("list",list); 
+//		List<QnasVO> list = service.QnaList();
+		Map<String, Object> list = service.list(vo);
+		model.addAttribute("map",list); 
 		return "/admin/qnalist";
 	}
 	
@@ -47,21 +57,13 @@ public class QnasController {
 		service.qnaDelete(qnas_id);
 		return "redirect:/admin/qnalist";
 	}
-	
-	//답글 작성하기
-//	@PostMapping("/admin/qnaReply/{qnas_id}")
-//	public String qnaReply(@PathVariable("qnas_id") int qnas_id,Model model,HttpServletRequest request) {
-//		int r = service.qnaReply(vo.request);
-//		return "reditect:/admin/qnalsit/"+vo.getQnas_id();
-//	}
-	
+
 	//답글 삭제하기
 	@GetMapping("/admin/delReply")
 	public String delReply(Model model,QnasVO vo,HttpServletRequest request) {
 		int r = service.delReply(vo,request);
 		return "redirect:/admin/qnalist/"+vo.getQnas_id();
 	}
-	
 	
 	//답글 작성하기 
 	@PostMapping("/admin/writeReply/{qnas_id}")
@@ -71,14 +73,10 @@ public class QnasController {
 		return "redirect:/admin/qnalist/"+qnas_id;
 	}
 	
-	
 	@PostMapping("/admin/modifyReply/{qnas_id}")
 	public String modifyReply(Model model,QnasVO vo, HttpServletRequest request,@PathVariable("qnas_id") int qnas_id) {
 		vo.setAdmins_id(1); //로그인 기능x
 		service.writeReply(vo,request);
 		return "reditect:/admin/qnalist/"+qnas_id;
 	}
-	
-	
-	
 }

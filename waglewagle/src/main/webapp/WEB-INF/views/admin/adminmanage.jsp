@@ -96,12 +96,14 @@
                         </thead>
                         
                         <tbody>
+
                         
                         	<c:if test="${ListData == null }">
 	                            <tr>
 	                                <td class="nonotice" colspan="4">등록된 관리자가 없습니다.</td>
 	                            </tr>
                             </c:if> 
+
                             
     						<c:forEach var="item" items="${ListData}">
 	    						<tr>

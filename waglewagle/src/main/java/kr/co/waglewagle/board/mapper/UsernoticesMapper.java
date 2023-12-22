@@ -8,7 +8,6 @@ import kr.co.waglewagle.domain.NoticesVO;
 
 @Mapper
 public interface UsernoticesMapper {	
-	List<NoticesVO> noticeList();
 	void Noticewrite(NoticesVO vo);
 	Object Noticeview(int notices_id);
 	NoticesVO detail(int notices_id);

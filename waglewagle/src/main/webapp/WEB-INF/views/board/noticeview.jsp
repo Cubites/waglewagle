@@ -7,6 +7,7 @@
 	<title>Sample</title>
 	<link rel="stylesheet" href="/resources/css/common/common.css">
 	<link rel="stylesheet" href="/resources/css/board/noticeview.css">
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	<script>
 	function notice(){
 		 location.href = "/board/noticelist";
@@ -18,22 +19,29 @@
 	<div id="center">
 		<div id="container">
 			
-			<div style="width: 100%;height: 600px;">
+			<div id="viewpage" style="width: 100%;height: 600px;">
 			
 			<!-- 여기부분 작성함 -->
 				<div id="main-box">
             	<div class="noticeView">
-            	   <p style="font-size:15px" class="noticeinfo" id="notices_id">글번호: ${a.notices_id } &nbsp&nbsp 작성일: ${a.notices_date }</p>
+            	   <div class="rightloc"><p style="font-size:15px" class="noticeinfo" id="notices_id">작성일: ${a.notices_date }</p></div>
             	 
             	   <!-- 제목 -->
-                   <div id="noticetitle">
-                       <!-- <p id="titletxt">제목</p> -->
-                       ${a.notices_title}
+            	   <div class="nview">
+	            	   <div class="f">공지 제목</div>
+	                   <div id="noticetitle" class="s">
+	                       <!-- <p id="titletxt">제목</p> -->
+	                       ${a.notices_title}
+	                   </div>
                    </div>
+                   
                    <!-- 내용 -->
-                   <div id="noticecontent">
-                       <!-- <p id="contenttxt">내용</p> -->
-                       ${a.notices_content}
+                   <div class="nview">
+                   		<div class="f">공지 내용</div>
+	                   <div id="noticecontent">
+	                       <!-- <p id="contenttxt">내용</p> -->
+	                       ${a.notices_content}
+	                   </div>
                    </div>
             		<!-- 버튼 -->
             		<div class="writebtn">

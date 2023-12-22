@@ -14,7 +14,7 @@ public interface GoodsManageService {
 	List<GoodsVO> goodsList();
 //	void goodsDelete(int goods_id);
 	int goodsAccess(Map<String, Integer> goodsInfo);
-	List<Map<String, Object>> adminGoodsList();
-
-
+	
+//	public List<Map<String, Object>> adminGoodsList(GoodsVO vo);
+	Map<String, Object> adminGoodsList(GoodsVO param);
 }

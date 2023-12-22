@@ -13,7 +13,6 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/resources/css/admin/noticelist.css"/>
-    
     <script>
 	    function noticewrite(){
 			 location.href = "/admin/noticewrite";
@@ -39,7 +38,6 @@
 		function password(){
 			 location.href = "/admin/changepwd";
 		}
-		
  		/* 리스트에서 공지 삭제하기 */
 		function noticeDelete(notices_id){
 		    if(confirm("선택한 공지를 정말로 삭제 하시겠습니까?")==true)  {
@@ -68,12 +66,15 @@
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
             <div id="main-box">
-            
-            	<!-- 검색 -->
-                <div id="plus"> 검색 
-                	<input type="text" size="20"> 
-                	<button>조회하기</button>
-                </div>
+                    <!-- 검색 -->
+             	<div id="plus"> 검색 
+             	 <form method="get" name="searchForm" id="searchForm" action="/admin/noticelist">
+                    <span class="searchWord">
+                	 <input type="text" id="sNotice" name="searchWord" value="${noticesVO.searchWord}"  title="검색어입력하세요." placeholder="검색할 제목을 입력하세요.">
+                	 <input type="submit" id="" value="검색" title="검색">
+                	</span>
+                 </form>
+               </div>
                 
                 <!-- 공지작성 버튼  -->
 				<div id="notice_button">
@@ -107,7 +108,7 @@
                         
                         <c:if test="${empty list }">
                         	<tr>
-                        		<td>등록된 공지가 없습니다.</td>
+                        		<td colspan="5">등록된 공지가 없습니다.</td>
                         	</tr>
                         </c:if>
                         
@@ -127,6 +128,27 @@
                         </c:forEach>
                         </tbody>
                     </table>
+                    <div>
+                    	<ul class="paging">
+                    	<c:if test="${prev}">
+                    		<li><a href="/admin/noticelist?page=${startPage-1}&searchWord=${noticesVO.searchWord}">이전</a></li>
+                    	</c:if>
+                    	
+                    	
+                    	<c:forEach var="p" begin="${startPage}" end="${endPage}">
+                        	
+                            <c:if test="${p != NoticesVO.page}">
+                            <li><a href="/admin/noticelist?page=${p}&searchWord=${noticesVO.searchWord}">${p}</a></li>
+                            </c:if>
+                            
+                        </c:forEach>
+
+
+						<c:if test="${next}">
+                    		<li><a href="/admin/noticelist?page=${map.endPage+1}&searchWord=${noticesVO.searchWord}">이후</a></li>
+                    	</c:if>
+                    </ul>
+                    </div>
             </div>
             </div>
         </div>

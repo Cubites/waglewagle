@@ -70,16 +70,29 @@
             </div>
             <div id="main-box">
             
-            	<!-- 검색 -->
-                <div id="plus"> 검색 
-                	<input type="text" size="20"> 
-                	<button>조회하기</button>
-                </div>
-                
-                <!-- 공지작성 버튼  -->
-<!-- 				<div id="notice_button">
-					<input type="button" id="writebtn" value="공지작성" onclick="noticewrite()">
-                 </div> -->
+<!-- 	           		<select class="" name="searchType">
+	           			<option value="all">전체</option>
+	           			<option value="title">제목</option>
+	           			<option value="writer">작성자</option>
+	           		</select> -->
+	           		
+<%--                     <div class="plus">
+                        <form method="get" name="searchForm" id="searchForm" action="/admin/qnalist">
+                            <span class="searchWord">
+                                <input type="text" id="sQnas" name="searchWord" value="${qnasVO.searchWord}"  title="검색어입력하세요." placeholder="검색할 제목을 입력하세요.">
+                                <input type="submit" id="" value="검색" title="검색">
+                            </span>
+                        </form>
+                    </div> --%>
+               <div id="plus"> 검색 
+             	 <form method="get" name="searchForm" id="searchForm" action="/admin/qnalist">
+                    <span class="searchWord">
+                	 <input type="text" id="sQnas" name="searchWord" value="${qnasVO.searchWord}"  title="검색어입력하세요." placeholder="검색할 제목을 입력하세요.">
+                	 <input type="submit" id="" value="검색" title="검색">
+                	</span>
+                 </form>
+               </div>
+                 
                  
                  <!-- qna리스트 -->
                 <div class="noticelist">	
@@ -106,13 +119,13 @@
                         <tbody>
                         
                         
-                        <c:if test="${empty list }">
+                        <c:if test="${empty map.list }">
                         	<tr>
-                        		<td>등록된 공지가 없습니다.</td>
+                        		<td colspan="5">등록된 공지가 없습니다.</td>
                         	</tr>
                         </c:if>
                         
-                        <c:forEach items="${list}" var="QnasVO">
+                        <c:forEach items="${map.list}" var="QnasVO">
                         	<tr>
                         		<!-- 번호 -->
                         		<td>${QnasVO.qnas_id }</td>
@@ -135,6 +148,28 @@
                         </c:forEach>
                         </tbody>
                     </table>
+                     <div>
+                    	<ul class="paging">
+                    	<c:if test="${map.prev}">
+                    		<li><a href="/admin/qnalist?page=${map.startPage-1}&searchWord=${QnasVO.searchWord}">이전</a></li>
+                    	</c:if>
+                    	
+                    	
+                    	<c:forEach var="p" begin="${map.startPage}" end="${map.endPage}">
+                        	<c:if test="${p == NoticesVO.page}">
+                            <li><a href='#;' class='current'>${p}</a></li>
+                            </c:if>
+                            <c:if test="${p != QnasVO.page}">
+                            <li><a href="/admin/qnalist?page=${p}&searchWord=${QnasVO.searchWord}">${p}</a></li>
+                            </c:if>
+                        </c:forEach>
+
+
+						<c:if test="${map.next}">
+                    		<li><a href="/admin/qnalist?page=${map.endPage+1}&searchWord=${QnasVO.searchWord}">이후</a></li>
+                    	</c:if>
+                    </ul>
+                   </div>
             </div>
             </div>
         </div>

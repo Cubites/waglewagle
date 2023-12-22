@@ -24,25 +24,23 @@ public class GoodsManageController{
 	@Autowired
 	private GoodsManageService service;
 
+	//상품리스트 출력
+//	@GetMapping("/admin/goodsManageList")
+//	public String adminGoodsList(Model model,GoodsVO vo) {
+//		List<GoodsVO> list = service.goodsList();
+//		List<Map<String, Object>> list = service.adminGoodsList();
+//		model.addAttribute("list",list);
+//		return "/admin/goodsManageList";
+//	}
+
+	//검색 + 페이징
 	@GetMapping("/admin/goodsManageList")
 	public String adminGoodsList(Model model,GoodsVO vo) {
 //		List<GoodsVO> list = service.goodsList();
-		List<Map<String, Object>> list = service.adminGoodsList();
+		Map<String, Object> list = service.adminGoodsList(vo);
 		model.addAttribute("list",list);
 		return "/admin/goodsManageList";
 	}
-	
-	//상품 삭제하기
-//	@GetMapping("/admin/goodsDelete/{goods_id}")
-//	public String goodsDelete(@PathVariable("goods_id") int goods_id, Model model,HttpServletRequest request) {
-//		service.goodsDelete(goods_id);
-//		return "redirect:/admin/goodsManageList";
-//	}
-
-//	@GetMapping("/admin/goodsStatus")
-//	public String goodsStatus(Model model,GoodsVO vo) {
-//		return "/admin/goods";
-//	}
 
 	//ajax이용 상태 변경
 	@ResponseBody

@@ -154,7 +154,9 @@
 						내 주변 상품
 					</div>
 					<div id="location">
-						<div id="locImg"><img src="/resources/images/loc.png"></div>
+						<c:if test="${dong_list != null}">
+							<div id="locImg"><img src="/resources/images/loc.png"></div>
+						</c:if>
 						<div id="locNameArea">
 							<c:forEach var="dong" items="${dong_list }">
 								<div class="locName">

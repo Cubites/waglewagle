@@ -13,10 +13,9 @@ import kr.co.waglewagle.domain.QnasVO;
 public interface QnaService {
 	List<QnasVO> QnaList();
 	QnasVO Qnaview(int qnas_id);
-	Object list(QnasVO vo);
+	Map<String, Object> list(QnasVO param);
 	public Object Qnaview(QnasVO vo, boolean b);
 	void qnaDelete(int qnas_id);
-	
 	
 //	int qnaWrite(QnasVO vo, HttpServletRequest request);
 	QnasVO qnaReply(int qnas_id);
@@ -24,6 +23,4 @@ public interface QnaService {
 	void modifyReply(QnasVO vo, HttpServletRequest request);
 	int delReply(QnasVO vo, HttpServletRequest request);
 	public void writeReply(QnasVO vo, HttpServletRequest request);
-
-
 }
