@@ -439,7 +439,7 @@ public class UsersController {
 		UsersVO vo = (UsersVO) session.getAttribute("users_info");
 		String areasStr = service.checkFavorAreas(vo.getUsers_id());
 		System.out.println("areasStr: " + areasStr);
-		String[] areas = areasStr != null ? areasStr.split(",") : null;
+		String[] areas = areasStr != null ? (areasStr.length() != 0 ? areasStr.split(",") : null) : null;
 		model.addAttribute("favor_areas", areas); 
 		model.addAttribute("favor_areas_count", areas != null ? areas.length : 0);
 		
