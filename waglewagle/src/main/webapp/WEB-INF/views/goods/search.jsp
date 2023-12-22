@@ -276,10 +276,18 @@
 	    
 	    // 남은 시간 뜨고 각 상품 페이지로 이동하기
 	    $(function(){
+			$(".productExpArea").each(function(){
+				var fullExp = $(this).find(".originExp").text().trim();
+				var result = fullExp.substring(0,11);
+				$(this).find(".productExp").text(result);
+			});
     	   $(".item").mouseover(function(){
     	      let now = new Date();
-    	      let expDate = new Date($(this).find(".popProduct").find(".avgPrice_expDateArea").find(".avg_expValue").find(".productExp").text());
-    	      let leftTime = expDate - now;
+    	      console.log(now);
+    	      let expDateValue = $(this).find(".popProduct").find(".avgPrice_expDateArea").find(".avg_expValue").find(".productExpArea").find(".originExp").text();
+  			  let expDate = new Date(Date.parse(expDateValue));
+  			console.log(expDate);
+  			  let leftTime = expDate - now;
     	      
     	      const days = Math.floor(leftTime/(1000*60*60*24));
     	        const hours = ("0"+Math.floor(leftTime %(1000*60*60*24)/(1000*60*60))).slice(-2);
