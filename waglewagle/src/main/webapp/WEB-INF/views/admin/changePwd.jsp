@@ -85,7 +85,7 @@
 	                            </tr>
 	                            <tr>
 	                              <td>*비밀번호확인</td>
-	                              <td><input class="onborder" id="admin_pwd" name="admins_pwd" type="password" min="8" placeholder="동일한 비밀번호를 입력"/> </td>
+	                              <td><input class="onborder" id="admin_pwd" name="pwd_check" type="password" min="8" placeholder="동일한 비밀번호를 입력"/> </td>
 	                            </tr>
 	                        </table>
 	                        <button type="button" id="changebtn" onclick="changePwd()">비밀번호 변경</button>

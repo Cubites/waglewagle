@@ -62,9 +62,9 @@
             <div id="main-box">
             
             	<!-- 회원 검색 -->
-                <div id="plus"> 검색 
-                	<input type="text" size="20" id="findAdminWord"> 
-                	<button id="findAdminButton">조회하기</button>
+                <div id="plus"> 관리자 검색 &nbsp;
+                	<input type="text" size="20" id="findAdminWord" placeholder="관리자 이름 검색">  &nbsp;&nbsp;
+                	<button id="findAdminButton" >검색</button>
                 </div>
                 
                 <!-- 관리자 추가 버튼  -->
@@ -130,11 +130,12 @@
             	</div>
             	 <!-- /회원 리스트 -->
             	 <!-- pagination -->
-				<div id="pagingBox">
+				<div id="pp">
 					<ul>
 						<c:if test="${pageNum10 != 0}">
 							<li><a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${pageNum10}&scroll=0">&#60;</a></li>
 						</c:if>
+						
 						<c:forEach var="num" begin="${pageNum10 + 1}" end="${(pageNumMax - pageNum10) < 10 ? pageNumMax : pageNum10 + 10}" step="1">
 							<c:if test="${pageNum1 == num}">
 								<li class="nowPage">
@@ -147,6 +148,7 @@
 								</li>
 							</c:if>
 						</c:forEach>
+						
 						<c:if test="${(pageNumMax - pageNum10) > 10}">
 							<li><a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${pageNum10 + 11}&scroll=0">&#62;</a></li>
 						</c:if>
