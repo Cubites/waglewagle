@@ -7,8 +7,148 @@
 <title>상품 검색</title>
 <link rel="stylesheet" href="/resources/css/common/common.css">
 <link rel="stylesheet" href="/resources/css/goods/search.css">
-</head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script type="text/javascript">
+
+let page="${page.page}";
+let totalPage = "${page.totalPage}";
+let category_id = "${page.category_id}";
+let searchWord = "${page.searchWord}";
+
+ $(function(){
+	
+	 let scrollPoint;
+	 window.addEventListener("scroll",(event) => {
+		 
+		 	let scroll = $(window).scrollTop();
+		 	let documentHeight = $(document).height();
+		 	let windowHeight = $(window).height();
+			
+			
+		 	let checkNum = scroll-(documentHeight-windowHeight);
+		 	if(checkNum <1 && checkNum > -1 && page < totalPage){
+		 		scrollPoint = documentHeight-windowHeight;
+		 		addPage(scrollPoint);
+		 	}
+		 	
+		 	//로드한다음 위에 스크롤 위치로 보내면 될듯?
+				
+	 });
+ })
+ //장원 스크롤이 끝에 닿으면 다음 데이터 얻어오기
+ function addPage(point){
+	 
+	 let search22 = searchWord2();
+	 searchWord = search22 === null ? searchWord:search22;
+	 
+	 let categorySelected = selectedCategory();
+	 category_id = categorySelected === null ? category_id:categorySelected;
+	
+	 page = Number(page)+1;
+	 
+	 
+	 $.ajax({
+		 
+		 url:"/goods/searchScroll",
+		 type:"post",
+		 dataType:"json",
+		 data:{
+			 "pageNum":page+"", 
+			 "searchWord":searchWord, 
+			 "category_id":category_id},
+		contentType:"application/x-www-form-urlencoded;charset=utf-8;",
+		 success: function(data){
+			 console.log(data);
+			 //데이터 출력 후 
+			 showGoods(data);
+			 //스크롤 위치
+		 },
+		 error:function(xhr){
+			 alert("실패");
+		 }
+		 
+	 });
+	 
+ }
+ // 장원 카테고리 선택 결과 반영
+ function selectedCategory(){
+	 let ca1 = $("#category1 option:selected").val();
+	 let ca2 = $("#category2 option:selected").val();
+	 let resultVal ="";
+	 
+	
+	 if(ca2 === ""){
+		 resultVal = ca1;
+	 }else{
+		 resultVal = ca2;
+	 }
+	 
+	 if(resultVal === null || resultVal === "" || resultVal ==="-"){
+		 return null;
+	 }
+	 
+	 return resultVal;
+ }
+
+ function searchWord2(){
+	 let search2 = $("#searchWordByBar").val();
+	 if(search2 === null || search2 === ""){
+		 return null;
+	 }
+	 return  search2;
+	 
+ } 
+ //장원 동적 list추가
+ function showGoods(data){
+	 
+	 let goodsList = data.goodsList;
+	  let html = ""
+	  let list_div = document.querySelector("#list_div");
+	  goodsList.forEach(element => {
+
+	    html = "<div class='popProduct'>" +
+	      "<div class='productImg'>" +
+	      "<img src='/upload/" + element.goods_th_img + "'>" +
+	      "</div>" +
+	      "<div class='productTitle'>" + element.goods_title + "</div>" +
+	      "<div class='avgPrice_expDateArea'>" +
+	      "<div class='avg_expTitle'>" +
+	      "<div class='avgPriceTitle'>평균 입찰가</div>" +
+	      "<div class='expTitle'>입찰 마감일</div>" +
+	      "</div>" +
+	      "<div class='avg_expValue'>" +
+	      "<div class='productAvgPrice'>" + element.goods_avg_price + "원</div>" +
+	      "<div class='productExp'>" + dateToString(element.goods_exp) + "</div>" +
+	      "</div>" +
+	      "</div>" +
+	      "<div class='leftTime toDetailPage'>" +
+	      "<div class='leftTimeVal'></div>" +
+	      "<input type='hidden' value='" + element.good_id + "' class='goodsIdVal'>" +
+	      "</div>" +
+	      "</div>";
+
+	    	let div = document.createElement("div");
+	   			 div.className = "item";
+	   			 div.innerHTML = html;
+	   			 list_div.append(div);
+	  });
+	 
+	 
+ }
+ 
+ function dateToString(dateTime) {
+	    return dateTime[0] + "-" + dateTime[1] + "-" + dateTime[2];
+	  }
+ 	
+ ///////////////////////
+
+
+
+</script>
+
+</head>
+
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 	<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
@@ -162,6 +302,34 @@
 			
 			<div id="list_div">
 			
+				<!-- 장원 -->
+				<c:forEach var="item" items="${page.goodsList}">
+					<div class="item">
+						<div class="popProduct">
+							<div class="productImg">
+								<img src="/upload/${item.goods_th_img }">
+							</div>
+							<div class="productTitle">${item.goods_title }</div>
+							<div class="avgPrice_expDateArea">
+								<div class="avg_expTitle">
+									<div class="avgPriceTitle">평균 입찰가</div>
+									<div class="expTitle">입찰 마감일</div>
+								</div>
+								<div class="avg_expValue">
+									<div class="productAvgPrice">${item.goods_avg_price }원</div>
+									<div class="productExp">${item.goods_exp }</div>
+								</div>
+							</div>
+							<div class="leftTime toDetailPage">
+								<div class="leftTimeVal"></div>
+								<input type="hidden" value="${item.goods_id }"
+									class="goodsIdVal">
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+
+				<!--  기존 div
 				<c:forEach var="item" items="${goodsList }">
 					<div class="item">
 	                     <div class="popProduct">
@@ -176,9 +344,8 @@
 		                        </div>
 		                        <div class="avg_expValue">
 		                        	<div class="productAvgPrice">${item.goods_avg_price }원</div>
-			                        <div class="productExpArea">
-			                        	<div class="productExp"></div> 
-				                        <div class="originExp hide">${item.goods_exp }</div>
+			                        <div class="productExp">
+			                        	${item.goods_exp }
 			                        </div>
 		                        </div>
 	                        </div>
@@ -188,7 +355,8 @@
 		                   	</div>
 	                     </div>      
 					</div>
-	             </c:forEach>
+					 </c:forEach>
+					 -->
              </div>
 			
 		
@@ -208,7 +376,9 @@
 	         	console.log(searchText);  
 	         	console.log(category1_value);
 	         	console.log(category2_value);
-	        	location.href = "/goods/search?category_id=" + category2_value + "&goods_title=" + searchText;
+	         	//location.href = "/goods/search?category_id=" + category2_value + "&goods_title=" + searchText;
+	        	//장원 search2
+	         	location.href = "/goods/search2?category_id=" + category2_value + "&searchWord=" + searchText;
 	        }
 	    }); 
 		

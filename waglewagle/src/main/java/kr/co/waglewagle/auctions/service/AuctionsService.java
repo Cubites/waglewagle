@@ -54,5 +54,7 @@ public interface AuctionsService {
 	Map<String, String> getAuctionIngGoods(int users_id, int goods_id);
 	void completeAuction(int goods_id);
 	boolean saveReport(ReportsVO vo);
+	
+	boolean updateAuctionIngView(Map<String, Object>me);
 
 }

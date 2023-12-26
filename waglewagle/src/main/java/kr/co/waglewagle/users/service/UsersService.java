@@ -22,7 +22,7 @@ public interface UsersService {
 	UsersVO findPwd(Map<String, String> user_info);
 	boolean changePwd(Map<String, String> user_info);
 	
-	Integer relCalculate(Integer users_id);
+	int relCalculate(Integer users_id);
 	int relUpdate(Map<String, Integer> dataForRelUpdate);
 
 	PointVO checkPoint(Integer users_id);

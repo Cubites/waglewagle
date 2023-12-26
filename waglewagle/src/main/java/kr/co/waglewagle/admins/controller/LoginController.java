@@ -1,71 +1,77 @@
 package kr.co.waglewagle.admins.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import kr.co.waglewagle.admins.service.LoginService;
 import kr.co.waglewagle.domain.AdminsVO;
-//import kr.co.waglewagle.admins.service.ReplyService;
+
 
 @Controller
 public class LoginController {
 	
+	@Autowired
+	private LoginService service;
+	
+	//관리자로그인
+	@GetMapping("/admin/login")
+	public String loginForm() {
+		return "admin/login";
+	}
+	
+	//로그인
+	@PostMapping("/admin/login")
+	public String login(HttpSession session,Model model,String admins_email,String admins_pwd,HttpServletRequest request) {
+		
+		AdminsVO loginAdminsVO = service.adminInfo(admins_email);
+		boolean isValid = false;
+		
+		if(loginAdminsVO != null)  {//회원 정보가 존재하지 않음
+			isValid = BCrypt.checkpw(admins_pwd,loginAdminsVO.getAdmins_pwd());
+			System.out.println(isValid);
+			if(isValid) {//로그인 성공!
+				session.setAttribute("admin_info", loginAdminsVO);
+				AdminsVO vo = (AdminsVO) session.getAttribute("admin_info");
+				System.out.println(vo.getAdmins_email());
+				return "redirect:/admin/noticelist";
+			}
+		}
+		return "/admin/login";
+	}
 
-//	@Autowired
-//	private LoginService service;
-//	
 	
-//	@GetMapping("/admin/join")
-//	public String join() {
-//		return "admin/join";
-//	}
-
 	
-//	@PostMapping("/admin/join")
-//	public String Adminjoin(AdminsVO vo, Model model) {
-//		boolean r = service.Adminjoin(vo); // service -> mapper -> sql
-//		if (r) { // 정상적으로 DB에 insert 
-//			model.addAttribute("cmd", "move");
-//			model.addAttribute("msg", "회원가입되었습니다.");
-//			model.addAttribute("url", "/project/index.do");
-//		} else { // 등록안됨
-//			model.addAttribute("cmd", "back");
-//			model.addAttribute("msg", "회원가입실패");
-//		}
-//		return "admin/alert";
-//	}
-//	
-//	@GetMapping("/admin/login")
-//	public String login() {
-//		return "admin/login";
-//	}
-//	
-//	@PostMapping("/admin/login")
-//	public String loginProcess(AdminsVO vo, HttpSession sess, Model model) {
-//		AdminsVO login = service.login(vo);
-//		if (login == null) { // 로그인실패
-//			model.addAttribute("msg", "아이디 비밀번호가 올바르지 않습니다.");
-//			model.addAttribute("cmd", "back");
-//			return "common/alert";
-//		} else { // 로그인성공
-//			sess.setAttribute("loginInfo", login);
-//			return "redirect:/admin/noticelist";
-//		}
-//	}
-//	
-//	@GetMapping("/admin/logout")
-//	public String logout(Model model, HttpSession sess) {
-////		sess.removeAttribute("loginInfo");
-//		sess.invalidate();
-//		model.addAttribute("msg", "로그아웃되었습니다.");
-//		model.addAttribute("url", "/project/index.do");
-//		model.addAttribute("cmd", "move");
-//		return "admin/alert";
-//	}
+	//관리자 비밀번호 변경
+	@GetMapping("/admin/changePwd")
+	public String changePwd() {
+		return "admin/changePwd";
+	}
 	
+	//비밀번호 변경
+	@PostMapping("/admin/changePwd")
+	public String changePwdProcess(Model model, String admins_pwd, HttpSession session,HttpServletRequest request) {
+		AdminsVO vo = (AdminsVO) session.getAttribute("admin_info");
+		System.out.println(vo.getAdmins_email());
+		Map<String, String> admin = new HashMap<String, String>();
+		admin.put("admins_pwd", admins_pwd);
+		admin.put("admins_id",vo.getAdmins_id().toString());
+		boolean pwdChange = service.changePwd(admin);
+		
+		if(pwdChange) {
+			return "redirect:/admin/login";
+		}
+		return "/admin/changePwd";
+		
+	}
 	
 }

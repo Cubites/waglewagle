@@ -15,6 +15,7 @@ import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.ImagesVO;
 import kr.co.waglewagle.goods.mapper.GoodsMapper;
 import kr.co.waglewagle.goods.won.GoodsFormVO;
+import kr.co.waglewagle.goods.won.GoodsPageVO;
 import kr.co.waglewagle.goods.won.UploadImage;
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,7 +55,6 @@ public class GoodsServiceImpl implements GoodsService {
 		map.put("goods_id", goods_id);
 		map.put("imagesList", list);
 		
-		
 		return mapper.insertImages(map);
 	}
 
@@ -77,8 +77,6 @@ public class GoodsServiceImpl implements GoodsService {
 		Integer favorCnt = mapper.countFavorsByGoodsId(goodsId); 
 		return favorCnt;
 	}
-
-	
 
 	@Override
 	public boolean isFavoritGoods(Integer usersId,Integer goodsId) {
@@ -126,6 +124,12 @@ public class GoodsServiceImpl implements GoodsService {
 		search.put("categoryId", categoryId);
 		search.put("searchWord", searchWord);
 		return mapper.selectGoodsByBoth(search);
+	}
+	
+	@Override
+	public List<Map<String,Object>> searchGoods2(GoodsPageVO page) {
+		
+		return mapper.selectGoodsSearch2(page);
 	}
 	
 	

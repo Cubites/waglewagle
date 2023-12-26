@@ -1,5 +1,6 @@
 package kr.co.waglewagle.users.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
-import kr.co.waglewagle.domain.CategoryVO;
+import kr.co.waglewagle.auctions.mapper.AuctionsMapper;
+import kr.co.waglewagle.domain.AuctionsIngVO;
 import kr.co.waglewagle.domain.PointVO;
 
-import kr.co.waglewagle.domain.PointVO;
 import kr.co.waglewagle.domain.QnasVO;
 
 import kr.co.waglewagle.domain.UsersVO;
@@ -22,6 +22,9 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private UsersMapper mapper;
+	
+	@Autowired
+	private AuctionsMapper auctionsMapper;
 
 	@Override
 	public UsersVO userInfo(Integer users_id) { return mapper.userInfo(users_id); }
@@ -120,7 +123,16 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public Integer relCalculate(Integer users_id) { return mapper.relCalculate(users_id); }
+	public int relCalculate(Integer users_id) {
+		int result = 0;
+		Map<String, Integer> dataForRelUpdate = new HashMap<>();
+		int tempRel = mapper.relCalculate(users_id); 
+		dataForRelUpdate.put("rel", tempRel < 0 ? 0 : (tempRel > 79 ? 79 : tempRel));
+		dataForRelUpdate.put("users_id", users_id);
+		result += mapper.relUpdate(dataForRelUpdate);
+		
+		return result;
+	}
 
 	@Override
 	public int relUpdate(Map<String, Integer> dataForRelUpdate) { return mapper.relUpdate(dataForRelUpdate); }

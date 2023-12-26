@@ -29,7 +29,7 @@ public class AdminsController {
 	@GetMapping("/admin/add/session/{admins_id}")
 	public String addAdminSession(HttpSession sess, @PathVariable("admins_id") Integer admins_id) {
 		sess.setAttribute("admins_info", service.addSessionForTest(admins_id));
-		return "admin/adminmanage";
+		return "redirect:/admin/adminmanage";
 	}
 	
 	@GetMapping("/admin/adminmanage")
@@ -71,7 +71,7 @@ public class AdminsController {
 	@ResponseBody
 	@PostMapping("/admin/delete/admin_account")
 	public boolean deleteAdminAccount(HttpSession sess, @RequestBody Map<String, Integer> dataForDeleteAdmin) {
-		AdminsVO vo = (AdminsVO) sess.getAttribute("admins_info");
+		AdminsVO vo = (AdminsVO) sess.getAttribute("admin_info");
 		if(vo != null && vo.getAdmins_role() == 0 && dataForDeleteAdmin.get("admins_id") != 1) {	
 			return service.deleteAdmin(dataForDeleteAdmin.get("admins_id")) == 1 ? true : false;
 		} else {

@@ -24,7 +24,7 @@
 					</div>
 					<div class="staticValuesBox">
 						<p>시작가 : <fmt:formatNumber value="${item.goods_start_price}" pattern="#,###" />원</p>
-						<p>평균가 : 20,000원</p>
+						<p>평균가 : <fmt:formatNumber value="${item.goods_avg_price}" pattern="#,###" />원</p>
 						<p>마감일 : <fmt:formatDate value="${item.post_date}" pattern="yyyy.MM.dd"/></p>
 					</div>
 				</a>

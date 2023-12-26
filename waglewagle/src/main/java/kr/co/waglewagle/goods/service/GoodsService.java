@@ -1,11 +1,13 @@
 package kr.co.waglewagle.goods.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.waglewagle.domain.CategoryVO;
 import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.ImagesVO;
 import kr.co.waglewagle.goods.won.GoodsFormVO;
+import kr.co.waglewagle.goods.won.GoodsPageVO;
 import kr.co.waglewagle.goods.won.UploadImage;
 
 public interface GoodsService {
@@ -25,4 +27,6 @@ public interface GoodsService {
 	List<GoodsVO> getGoodsByCategory(Integer categoryId);
 	// 둘 다 사용
 	List<GoodsVO> getGoodsByBoth(Integer categoryId, String searchWord);
+	
+	List<Map<String,Object>> searchGoods2(GoodsPageVO page);
 }

@@ -35,7 +35,7 @@
 			 location.href = "/admin/adminmanage";
 		}
 		function password(){
-			 location.href = "/admin/changepwd";
+			 location.href = "/admin/changePwd";
 		}
 		
 		
@@ -89,7 +89,7 @@
                 <div id="qna" onclick="qna()">문의</div>
                 <div id="showdata" onclick="stats()">통계</div>
                 <div id="adminuser" onclick="user()">회원관리</div>
-                <div id="admingoods" onclick="goods()">게시글관리</div>
+                <div id="admingoods" onclick="goods()">상품관리</div>
                 <div id="adminmaster" onclick="admin()">관리자 계정</div>
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>

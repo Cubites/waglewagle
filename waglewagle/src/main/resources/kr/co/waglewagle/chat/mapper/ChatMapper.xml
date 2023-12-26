@@ -6,7 +6,7 @@
 	
 	<select id="selectAuctionIngAndUsers" parameterType="Integer" resultType="java.util.HashMap">
 	    select *
-		FROM (	SELECT auctions_ing_id, auctions_ing_seller, auctions_ing_buyer, auctions_ing_price, auctions_date,
+		FROM (	SELECT auctions_ing_id, auctions_ing_seller, auctions_ing_buyer, auctions_ing_price, auctions_date,auctions_seller_read,auctions_buyer_read,
 				goods.goods_id, goods_title,goods_comment,goods_th_img, goods_address, goods_access,category_id
  				FROM  auctions_ing inner join goods on (auctions_ing.goods_id = goods.goods_id) 
  				WHERE goods.goods_id = #{goodsId}) a, users u

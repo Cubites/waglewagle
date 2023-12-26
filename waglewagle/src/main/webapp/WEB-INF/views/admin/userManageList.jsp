@@ -12,10 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/resources/css/admin/usersManageList.css"/>
-    <script>
-	    function noticewrite(){
-			 location.href = "/admin/noticewrite";
-		}	    
+    <script> 
 	    function notice(){
 			 location.href = "/admin/noticelist";
 		}
@@ -35,15 +32,8 @@
 			 location.href = "/admin/adminmanage";
 		}
 		function password(){
-			 location.href = "/admin/changepwd";
+			 location.href = "/admin/changePwd";
 		}
-		
-		/* 리스트에서 상품 삭제하기 */
-/* 		function userDelete(users_id){
-		    if(confirm("선택한 회원을 정말로 삭제 하시겠습니까?")==true)  {
-		    	location.href="/admin/userDelete/"+users_id;  	
-		    }
-		} */
 		
  		function userStatus(users_status,users_id){ //어떤 상품에 대한 상태 변환할건지...
 			console.log(users_id);
@@ -68,8 +58,6 @@
 					$('#button2'+users_id).addClass('hiddenClass');
 					//3단계 내가 보일 버튼만 toggle
 					$(('#button'+users_status)+users_id).toggleClass('hiddenClass');
-					
-					
 				}
 			})
 		} 
@@ -90,19 +78,17 @@
                 <div id="qna" onclick="qna()">문의</div>
                 <div id="showdata" onclick="stats()">통계</div>
                 <div id="adminuser" onclick="user()">회원관리</div>
-                <div id="admingoods" onclick="goods()">게시글관리</div>
+                <div id="admingoods" onclick="goods()">상품관리</div>
                 <div id="adminmaster" onclick="admin()">관리자 계정</div>
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
             <div id="main-box">
             
             	<!-- 회원 검색 -->
-            	<div id="plus"> 회원검색 
+            	<div id="plus"> 회원검색 &nbsp;
                  <form method="get" name="searchForm" id="searchForm" action="/admin/userManageList">
-                 <span class="searchWord">
-                	<input type="text" id="sNotice" name="searchWord" value="${UsersVO.searchWord}"  title="검색어입력하세요.">
-                	<input type="submit" id="" value="검색" title="검색">
-                	</span>
+                	<input type="text" id="sUsers" name="searchWord" value="${UsersVO.searchWord}" placeholder="회원 이름 검색"> &nbsp;&nbsp;
+                	<input type="submit" id="searchbtn" value="검색" title="검색">
                 	</form>
                 </div>
 
@@ -158,26 +144,27 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                       <div>
+                       <div id="pp">
                     	<ul class="paging">
+                    	<li class="pg">
                     	<c:if test="${prev}">
-                    		<li><a href="/admin/userManageList?page=${startPage-1}&searchWord=${UsersVO.searchWord}">이전</a></li>
-                    	</c:if>
+                    		<a href="/admin/userManageList?page=${startPage-1}&searchWord=${UsersVO.searchWord}">이전</a>
+                    	</c:if></li>
                     	
                     	
                     	<c:forEach var="p" begin="${startPage}" end="${endPage}">
-<%--                         	<c:if test="${p == cnt.page}">
+                        	<c:if test="${p == cnt.page}">
                             <li><a href='#;' class='current'>${p}</a></li>
-                            </c:if> --%>
+                            </c:if>
                             <c:if test="${p != page}">
-                            <li><a href="/admin/userManageList?page=${p}&searchWord=${UsersVO.searchWord}">${p}</a></li>
+                            <li><a href="/admin/userManageList?page=${p}&searchWord=${usersVO.searchWord}">${p}</a></li>
                             </c:if>
                         </c:forEach>
 
-
+						<li class="pg">
 						<c:if test="${next}">
-                    		<li><a href="/admin/userManageList?page=${endPage+1}&searchWord=${UsersVO.searchWord}">다음</a></li>
-                    	</c:if>
+                    		<a href="/admin/userManageList?page=${endPage+1}&searchWord=${UsersVO.searchWord}">다음</a>
+                    	</c:if></li>
                     </ul>
                    </div>
             </div>

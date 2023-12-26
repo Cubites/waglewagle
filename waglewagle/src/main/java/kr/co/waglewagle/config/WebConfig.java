@@ -32,6 +32,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import kr.co.waglewagle.admins.util.AdminInterceptor;
+import kr.co.waglewagle.admins.util.AdminInterceptor2;
 import kr.co.waglewagle.auctions.won.AutionGoodsArgumentResolver;
 import kr.co.waglewagle.users.ty.util.LoginInterceptor;
 import kr.co.waglewagle.users.ty.util.LogoutInterceptor;
@@ -66,20 +68,37 @@ public class WebConfig implements WebMvcConfigurer {
 		"/board/noticelist/**",
 		"/admin/**",
 		"/goods/search/**",
+    "/error/**",
 		"/add/session/*" // [!추후삭제 필요][테스트용] 유저 세션 추가 기능
 	};
 	
-	@Autowired
-	MypageInterceptor mypageInterceptor; // 마이페이지용 인터셉터
+	private String[] adminIntercepterExclude = {
+		"/admin/login",
+		"/admin/stop",
+		"/admin/check/duplication",
+		"/admin/add/admin_account",
+		"/admin/usersStatus",
+		"/admin/goodsStatus",
+		"/admin/delete/admin_account",
+		"/admin/add/session/**", // [!추후삭제 필요][테스트용] 관리자 세션 추가 기능
+	};
 	
+	@Autowired
+	MypageInterceptor mypageInterceptor; // 마이페이지 인터셉터
+	@Autowired
+	AdminInterceptor adminInterceptor; // 관리자 페이지 인터셉터
+  @Autowired
+	AdminInterceptor2 adminInterceptor2; // 관계자 외 관리자 페이지 접근을 막는 인터셉터 
 	@Autowired
 	LoginInterceptor loginInterceptor; // 로그인 인터셉터
-	
 	@Autowired
 	LogoutInterceptor logoutInterceptor; // 비회원 체크 인터셉터
-
 	@Autowired
-	RelCaculateInterceptor relCaculateInterceptor;
+	RelCaculateInterceptor relCaculateInterceptor; // 친밀도 계산 인터셉터
+	@Autowired
+	ReloadSessionInterceptor reloadSessionInterceptor; // 세션 업로드 인터셉터
+
+	
 	//argumentResolver등록
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
@@ -148,15 +167,20 @@ public class WebConfig implements WebMvcConfigurer {
 	// 인터셉터 모음
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		// [마이페이지용 인터셉터] 마이페이지의 모든 페이지에 필요한 공통 작업 수행
-		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(2);
 		// [모든 페이지 인터셉터] 로그인이 필요한 페이지에 비회원 접근 시, 로그인 페이지로 리다이렉트
-		registry.addInterceptor(loginInterceptor).addPathPatterns("/**")
-													.excludePathPatterns(loginIntercepterExclude).order(1);
+		registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns(loginIntercepterExclude).order(1);
 		// [비회원 페이지 인터셉터] 이미 로그인이 되어있을 때 접근할 필요가 없는 페이지(로그인, 회원가입, 회원찾기)로 접근 시, 이전 페이지로 되돌아가게 함
-		registry.addInterceptor(logoutInterceptor).addPathPatterns("/users/login","/users/join", "/users/find_info").order(3);
-		registry.addInterceptor(relCaculateInterceptor).addPathPatterns("/auctions/complete", "/auctions/report/complete", "/admin/goodsStatus").excludePathPatterns();
-
+		registry.addInterceptor(logoutInterceptor).addPathPatterns("/users/login","/users/join", "/users/find_info").order(2);
+		// [친밀도 업데이트 인터셉터] 친밀도가 변동되는 상황(거래 완료, 거래 파기, 거래글 접근금지)에 친밀도 업데이트 
+		registry.addInterceptor(relCaculateInterceptor).addPathPatterns("/auctions/**", "/auctions/report/**", "/auctions/end/**", "/admin/goodsStatus").excludePathPatterns().order(3);
+    // [마이페이지용 인터셉터] 마이페이지의 모든 페이지에 필요한 공통 작업 수행
+		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(4);
+    // [세션 인터셉터] 세션에 있는 유저 정보를 다시 불러옴(마이페이지 접속 시)
+		registry.addInterceptor(reloadSessionInterceptor).addPathPatterns("/mypage/auctions").excludePathPatterns().order(5);
+    // [관리자 페이지 인터셉터] 관계자 외 관리자 페이지 접속 시, 에러 페이지로 이동
+		registry.addInterceptor(adminInterceptor2).addPathPatterns("/admin/**").excludePathPatterns("/admin/login","/admin/add/session/**").order(6);
+    // [관리자 페이지 인터셉터] 관리자 등급별 접근 페이지 제한
+    registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**").excludePathPatterns(adminIntercepterExclude).order(7);
 	}
 
 	// 파일 업로드를 위한 bean
@@ -172,11 +196,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean 
 	public MessageSource messageSource() {
 		final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		
-		
-		
 		messageSource.setBasename("/errorMessage/error");
-		
 		messageSource.setDefaultEncoding("utf-8");
 		return messageSource;
 	}

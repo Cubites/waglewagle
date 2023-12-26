@@ -59,16 +59,12 @@
     font-size: 14px;
     margin-top: auto; /* 맨 아래로 이동 */
 }
-
 #main-box {
     width: 85%;
     height: 100%;
-    font-size: 20px;
-    /* border: 1px solid #999; */
     text-align: center;
 	display: flex;
     flex-direction: column;
-    
 }
 #plus {
     width: 500px;
@@ -80,9 +76,47 @@
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+    border-radius: 10px;
 }
-#plus input {
-    margin: 0 20px; 
+#searchbtn{
+	width: 75px;
+	height: 26.64px;
+	background: #828080;
+	border-radius: 10px;
+	color:#ffffff;
+	border-width:0px;
+}
+#sNotice{
+	width: 200px;
+	height: 19.6px;
+	left: 800px;
+	top: 209px;
+	background: #FFFCFC;
+	border-width:0px;
+}
+#searchForm{
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+}
+#delbtn{
+	top: 100%;
+    background-color: #E6E6E6;
+    border: none;
+    border-radius: 2px;
+}
+#writebtn{
+    width: 100px;
+    height: 35px;
+    background: #686868;
+    border-radius: 10px;
+    color: azure;
+    font-size: 14px;
+    font-stretch: 100;
+    align-items: center;
+    margin-top:10px;
+    border-width:0px;
+    margin-left:463px;
 }
 .noticelist .nlist{
     border-collapse:collapse; 
@@ -143,7 +177,6 @@
     border-right:1px solid #d4d4d4; 
     box-shadow:0;
 }
-
 .noticelist .nlist thead.bgColor{
     border-top:none; 
     border-bottom:none;
@@ -162,23 +195,23 @@
     font-size: 14px; /* 이 부분을 추가했음.. */
     border-bottom: 1px solid #d9d9d9;
 }
-#writebtn{
-    width: 150px;
-    height: 35px;
-    
-    background: #686868;
-    border-radius: 10px;
-    color: azure;
-    font-size: 14px;
-    font-stretch: 100;
-    align-items: center;
-    margin-bottom: 10px;
+.pg{
+	margin:0 10px;
+	width: 100px;
 }
 .paging{
 	list-style-type:none;
 	align-items:center;
 }
-
 li{
     display: inline-block;
 } 
+a{
+	text-decoration:none;
+}
+#pp{
+	margin-top:8px;
+}
+#pp a{
+	font-size:18px;
+}

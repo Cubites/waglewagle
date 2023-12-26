@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.co.waglewagle.auctions.service.AuctionsService;
 import kr.co.waglewagle.auctions.won.AuctionIng;
 import kr.co.waglewagle.chat.service.ChatService;
 import kr.co.waglewagle.chat.won.MemberType;
@@ -36,20 +37,21 @@ public class ChatController {
 	private final ChatService service;
 	private final UsersService userService;
 	private final GoodsService goodsService;
+	private final AuctionsService auctionService;
 	
-	@ExceptionHandler(IndexOutOfBoundsException.class)
+	@ExceptionHandler({IndexOutOfBoundsException.class,IllegalArgumentException.class})
 	public String gohome() {
-		return"redirect:/main";
+		return"redirect:/";
 	}
 	
 	@GetMapping("/s1")
 	public void session1(HttpSession session) {
-		session.setAttribute("users_info", userService.userInfo(111));
+		session.setAttribute("users_info", userService.userInfo(171));
 	}
 
 	@GetMapping("/s2")
 	public void session2(HttpSession session) {
-		session.setAttribute("users_info", userService.userInfo(105));
+		session.setAttribute("users_info", userService.userInfo(170));
 	}
 
 	@GetMapping("/{goodsId}")
@@ -58,7 +60,7 @@ public class ChatController {
 			@SessionAttribute("users_info") UsersVO loginUser) {
 
 		if(goodsId == null) {
-			return "redirect:/main";
+			throw new IllegalArgumentException("auctions_ing아님");
 		}
 
 		// 굿즈 아이디로 옥션 정보 가져오기 맵에는 seller와 buyer id값으로 유저 정보 저장되어 있다.
@@ -68,9 +70,11 @@ public class ChatController {
 		// 특정 굿즈에 옥션 참여 인원이 아니면, 홈으로 돌려보내기 + chatPage에 보내줄 여러 정보 담음
 		if (!assignUser(model,loginUser.getUsers_id(),auction)) {
 			// 옥션에 참여하는 멤바가 아니면 나가야지
-			return "redirect:/main";
+			throw new IllegalArgumentException("auctions_ing 참여 user 아님");
 		}
-
+		System.out.println(model.getAttribute("me"));
+		//경매 완료된거 본지 안본지 체크
+		auctionService.updateAuctionIngView((Map<String,Object>)model.getAttribute("me"));
 		// 모든 챗팅 리스트
 		List<ChatVO> chats = service.getAllChat(loginUser.getUsers_id(), goodsId);
 		model.addAttribute("chats", chats);
@@ -80,9 +84,6 @@ public class ChatController {
 	}
 
 	private boolean assignUser(Model model, Integer users_id, List<Map<String, Object>> auction) {
-		
-		
-
 		boolean result =true;
 		System.out.println(MemberType.Seller.getType());
 		
@@ -91,10 +92,10 @@ public class ChatController {
 		
 		
 		//List에서 seller 와 buyer 구분 
-		if((Integer)auction.get(0).get("auctions_ing_seller") == (Integer) auction.get(0).get("users_id")) {
+		if(((Integer)auction.get(0).get("auctions_ing_seller")).equals((Integer) auction.get(0).get("users_id"))) {
 			sellerMap = auction.get(0);
 			buyerMap = auction.get(1);
-		}else {
+		} else {
 			sellerMap = auction.get(1);
 			buyerMap  = auction.get(0);
 		}
@@ -104,10 +105,10 @@ public class ChatController {
 		buyerMap.put("memberType", "buyer");
 		
 		//내가 셀러인지 바이어인지, 구분 상대방 아이디도 넣기
-		if((Integer)sellerMap.get("users_id") == users_id) {
+		if(users_id.equals((Integer)sellerMap.get("users_id"))) {
 			model.addAttribute("me",sellerMap);
 			model.addAttribute("oppsite", buyerMap);
-		}else if((Integer) buyerMap.get("users_id") == users_id){
+		}else if(users_id.equals((Integer) buyerMap.get("users_id"))){
 			model.addAttribute("me", buyerMap);
 			model.addAttribute("oppsite", sellerMap);
 		}else {
@@ -115,9 +116,7 @@ public class ChatController {
 			return false;
 		}
 		
-
 		return result;
-
 	}
 
 	@PostMapping("/send")
@@ -140,6 +139,5 @@ public class ChatController {
 		
 		return String.valueOf(service.readBid(info) > 0 ? true : false);
 	}
-	
 
 }

@@ -29,23 +29,31 @@
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	<script>
 		$("#qnaSubmitButton").click(function(){
-			$.ajax({
-			    url: "/boards/qnas/write",
-			    type: "post",
-			    contentType: 'application/json',
-			    data: JSON.stringify({
-					title: $("#qnaTitleBox > input").val(),
-					content: $("#qnaContentBox > textarea").val() 
-			    }),
-			    success: function(data) {
-					if(data){
-					    alert("문의가 정상적으로 접수되었습니다.");
-					    location.href="/mypage/qnas";
-					} else {
-					    alert("문의 접수 중 문제가 발생하였습니다. 잠시 후 다시 시도해주세요.");
-					}
-			    }
-			});
+		    if($("#qnaTitleBox > input").val() == "" || $("#qnaTitleBox > input").val() == null){
+				alert("문의 제목을 입력해주세요.");
+				$("#qnaTitleBox > input").focus();
+		    }else if($("#qnaContentBox > textarea").val() == "" || $("#qnaContentBox > textarea").val() == null){ 
+		    	alert("문의 내용을 입력해주세요.");
+		    	$("#qnaContentBox > textarea").focus();
+			}else{
+				$.ajax({
+				    url: "/boards/qnas/write",
+				    type: "post",
+				    contentType: 'application/json',
+				    data: JSON.stringify({
+						title: $("#qnaTitleBox > input").val(),
+						content: $("#qnaContentBox > textarea").val() 
+				    }),
+				    success: function(data) {
+						if(data){
+						    alert("문의가 정상적으로 접수되었습니다.");
+						    location.href="/mypage/qnas";
+						} else {
+						    alert("문의 접수 중 문제가 발생하였습니다. 잠시 후 다시 시도해주세요.");
+						}
+				    }
+				});
+		    }
 		});
 		
 	</script>

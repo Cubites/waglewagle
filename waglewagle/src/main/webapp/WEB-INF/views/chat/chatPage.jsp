@@ -142,7 +142,7 @@
 				"goods_id" : "${me.goods_id}"
 			},
 			success : function(data) {
-				console.log(data);
+				
 			}
 
 		})
@@ -200,7 +200,7 @@
 				
 				showModal(data,"result");
 				setTimeout(() => {
-				location.href="/main";
+				location.href="/mypage/auctions_end_bought";
 				}, 2000);
 			},
 			error:function(xhr){

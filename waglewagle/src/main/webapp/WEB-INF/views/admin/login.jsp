@@ -13,21 +13,20 @@
     
     <link rel="stylesheet" href="/resources/css/admin/login.css"/>
     <script>
-    function loginCheck() {
-    	if ($("#email").val() == '') {
+     function loginCheck() {
+    	if ($("#admin-email").val() == '') {
     		alert("이메일을 입력해 주세요");
-    		$("#email").focus();
+    		$("#admin-email").focus();
     		return false;
     	}
-    	if ($("#pwd").val() == '') {
+    	if ($("#admins_pwd").val() == '') {
     		alert("비밀번호를 입력해 주세요");
-    		$("#pwd").focus();
+    		$("#admins_pwd").focus();
     		return false;
     	}
-    	document.adminlogin.action="/admin/login";
     	document.adminlogin.submit();
     }
-    
+     
     
 
     </script>
@@ -61,15 +60,10 @@
 						<input type="button" id="loginbtn" value="로그인" onclick="loginCheck()">
 	                 </div>
 	                </div>
-	                
-	                <div id="login_btn">
-						<input type="button" id="loginbtn" value="로그인 / 비밀번호 찾기" onclick="">
-	                </div>
 	             </div>
             </form>
             </div>
         </div>
     </div>
-    
 </body> 
 </html>

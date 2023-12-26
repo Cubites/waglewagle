@@ -12,10 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/resources/css/admin/goodsManageList.css"/>
-    <script>
-	    function noticewrite(){
-			 location.href = "/admin/noticewrite";
-		}	    
+    <script>   
 	    function notice(){
 			 location.href = "/admin/noticelist";
 		}
@@ -35,7 +32,7 @@
 			 location.href = "/admin/adminmanage";
 		}
 		function password(){
-			 location.href = "/admin/changepwd";
+			 location.href = "/admin/changePwd";
 		}
 
  		function goods_status(goods_access,goods_id){
@@ -71,22 +68,18 @@
                 <div id="qna" onclick="qna()">문의</div>
                 <div id="showdata" onclick="stats()">통계</div>
                 <div id="adminuser" onclick="user()">회원관리</div>
-                <div id="admingoods" onclick="goods()">게시글관리</div>
+                <div id="admingoods" onclick="goods()">상품관리</div>
                 <div id="adminmaster" onclick="admin()">관리자 계정</div>
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
             <div id="main-box">
-            
-            	<!-- 회원 검색 -->
-                 <div id="plus"> 상품검색 
-                 <form method="get" name="searchForm" id="searchForm" action="/admin/goodsManageList">
-                 <span class="searchWord">
-                	<input type="text" id="sNotice" name="searchWord" value="${goodsVO.searchWord}"  title="검색어입력하세요.">
-                	<input type="submit" id="" value="검색" title="검색">
-                	</span>
-                	</form>
-                </div>
 
+                <div id="plus"> 상품검색 &nbsp;
+                <form method="get" name="searchForm" id="searchForm" action="/admin/goodsManageList">
+                	<input type="text" id="sGoods" name="searchWord" value="${goodsVO.searchWord}" placeholder="상품명 검색"> &nbsp;&nbsp;
+                	<input type="submit" id="searchbtn" value="검색" title="검색">
+                </form>
+                </div>
 
                 <!-- 회원 리스트 -->
                 <div class="noticelist">	
@@ -139,24 +132,28 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                      <div>
+                      <div id="pp">
                     	<ul class="paging">
-                    	<c:if test="${item.prev}">
-                    		<li><a href="/admin/goodsManageList?page=${item.startPage-1}&searchWord=${GoodsVO.searchWord}">이전</a></li>
-                    	</c:if>
-                    	
-                    	<c:forEach var="p" begin="${item.startPage}" end="${map.endPage}">
-                        	<c:if test="${p == GoodsVO.page}">
+                    	<li class="pg">
+                    	<c:if test="${list.prev}">
+                    		<a href="/admin/goodsManageList?page=${list.startPage-1}&searchWord=${list.searchWord}">이전</a>
+                    	</c:if></li>
+<%--                     		<p>${map.endPage }</p> --%>
+                    		
+                    	<c:forEach var="p" begin="${list.startPage}" end="${list.endPage}">
+                    
+<%--                         	<c:if test="${p == list.page}">
                             <li><a href='#;' class='current'>${p}</a></li>
-                            </c:if>
-                            <c:if test="${p != GoodsVO.page}">
-                            <li><a href="/admin/goodsManageList?page=${p}&searchWord=${GoodsVO.searchWord}">${p}</a></li>
+                            </c:if> --%>
+                            <c:if test="${p != list.page}">
+                            <li><a href="/admin/goodsManageList?page=${p}&searchWord=${list.searchWord}">${p}</a></li>
                             </c:if>
                         </c:forEach>
 
-						<c:if test="${item.next}">
-                    		<li><a href="/admin/goodsManageList?page=${item.endPage+1}&searchWord=${GoodsVO.searchWord}">이후</a></li>
-                    	</c:if>
+						<li class="pg">
+						<c:if test="${map.next}">
+                    		<a href="/admin/goodsManageList?page=${list.endPage+1}&searchWord=${list.searchWord}">이후</a>
+                    	</c:if></li>
                     </ul>
                    </div>
             </div>
