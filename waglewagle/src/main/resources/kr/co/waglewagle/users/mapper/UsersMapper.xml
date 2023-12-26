@@ -150,4 +150,16 @@
 		SET rel = #{rel}
 		WHERE users_id = #{users_id}
 	</select>
+	
+	<!-- 문의 읽음으로 업데이트 -->
+	<update id="readQna" parameterType="int">
+		UPDATE 
+			qnas
+    	SET
+    		qnas_read = 1
+    	WHERE 
+    		qnas_id = #{qnas_id}
+    	AND
+    		qnas_reply is not null
+	</update>
 </mapper>

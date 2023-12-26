@@ -13,4 +13,5 @@ public interface ChatService {
 
 	Integer saveChat(ChatVO chat);
 	
+	Integer readBid(Map<String, Integer> info);
 }

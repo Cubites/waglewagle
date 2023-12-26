@@ -11,6 +11,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
+	<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
 	<div id="center">
 		<div id="container">
 			<div id="searchBar">

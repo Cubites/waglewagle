@@ -1,5 +1,6 @@
 package kr.co.waglewagle.chat.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -127,6 +128,18 @@ public class ChatController {
 		return true;
 	}
 
+	
+	@GetMapping("/readBid")
+	@ResponseBody
+	public String updateReadBid(HttpSession session, int auctions_ing_id) {
+		UsersVO vo = (UsersVO)session.getAttribute("users_info");
+		int users_id = vo.getUsers_id();
+		Map<String, Integer> info = new HashMap<>();
+		info.put("auctions_ing_id", auctions_ing_id);
+		info.put("users_id", users_id);
+		
+		return String.valueOf(service.readBid(info) > 0 ? true : false);
+	}
 	
 
 }

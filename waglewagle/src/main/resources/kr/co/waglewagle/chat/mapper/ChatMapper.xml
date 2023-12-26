@@ -32,5 +32,14 @@
 		)
 	</insert>
 	
+	<update id="readBid" parameterType="Map">
+		UPDATE 
+			auctions_ing
+    	SET
+    		auctions_seller_read = CASE WHEN auctions_ing_seller = #{users_id} THEN 1 ELSE auctions_seller_read END,
+    		auctions_buyer_read = CASE WHEN auctions_ing_buyer = #{users_id} THEN 1 ELSE auctions_ing_buyer END
+    	WHERE 
+    		auctions_ing_id = #{auctions_ing_id}
+	</update>
 	
 </mapper>

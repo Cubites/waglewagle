@@ -17,6 +17,7 @@
 <body>
 	<%@ include file="/WEB-INF/views/goods/goodsDetailJs.jsp" %>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
 	<div id="center">
 		<div id="container">
 			 <div id="wrap">

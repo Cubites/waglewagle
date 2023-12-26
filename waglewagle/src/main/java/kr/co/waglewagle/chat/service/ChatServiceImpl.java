@@ -38,5 +38,10 @@ public class ChatServiceImpl implements ChatService {
 		
 		return mapper.insertChat(chat);
 	}
+	
+	@Override
+	public Integer readBid(Map<String, Integer> info) {
+		return mapper.readBid(info);
+	}
 
 }

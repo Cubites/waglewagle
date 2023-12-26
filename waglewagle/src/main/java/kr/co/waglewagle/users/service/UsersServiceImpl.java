@@ -125,4 +125,8 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public int relUpdate(Map<String, Integer> dataForRelUpdate) { return mapper.relUpdate(dataForRelUpdate); }
 
+	@Override
+	public int readQna(Integer qnas_id) {
+		return mapper.readQna(qnas_id);
+	}
 }
