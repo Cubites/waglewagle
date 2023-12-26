@@ -55,7 +55,6 @@ public class GoodsServiceImpl implements GoodsService {
 		map.put("goods_id", goods_id);
 		map.put("imagesList", list);
 		
-		
 		return mapper.insertImages(map);
 	}
 
@@ -78,8 +77,6 @@ public class GoodsServiceImpl implements GoodsService {
 		Integer favorCnt = mapper.countFavorsByGoodsId(goodsId); 
 		return favorCnt;
 	}
-
-	
 
 	@Override
 	public boolean isFavoritGoods(Integer usersId,Integer goodsId) {

@@ -82,9 +82,6 @@ public class ChatController {
 	}
 
 	private boolean assignUser(Model model, Integer users_id, List<Map<String, Object>> auction) {
-		
-		
-
 		boolean result =true;
 		System.out.println(MemberType.Seller.getType());
 		
@@ -93,10 +90,10 @@ public class ChatController {
 		
 		
 		//List에서 seller 와 buyer 구분 
-		if (((Integer)auction.get(0).get("auctions_ing_seller")).equals((Integer)auction.get(0).get("users_id"))) {
+		if(((Integer)auction.get(0).get("auctions_ing_seller")).equals((Integer) auction.get(0).get("users_id"))) {
 			sellerMap = auction.get(0);
 			buyerMap = auction.get(1);
-		}else {
+		} else {
 			sellerMap = auction.get(1);
 			buyerMap  = auction.get(0);
 		}
@@ -104,8 +101,6 @@ public class ChatController {
 		//맵에 상태 저장하기
 		sellerMap.put("memberType", "seller");
 		buyerMap.put("memberType", "buyer");
-		
-		
 		
 		//내가 셀러인지 바이어인지, 구분 상대방 아이디도 넣기
 		if(users_id.equals((Integer)sellerMap.get("users_id"))) {
@@ -119,9 +114,7 @@ public class ChatController {
 			return false;
 		}
 		
-
 		return result;
-
 	}
 
 	@PostMapping("/send")
@@ -131,7 +124,5 @@ public class ChatController {
 		service.saveChat(chat);
 		return true;
 	}
-
-	
 
 }

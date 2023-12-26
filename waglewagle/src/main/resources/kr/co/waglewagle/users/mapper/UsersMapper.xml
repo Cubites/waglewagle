@@ -145,9 +145,9 @@
 	</select>
 	
 	<!-- 친밀도 업로드 -->
-	<select id="relUpdate" parameterType="java.util.Map">
+	<update id="relUpdate" parameterType="java.util.Map">
 		UPDATE users
-		SET rel = #{rel}
+		SET users_rel = #{rel}
 		WHERE users_id = #{users_id}
-	</select>
+	</update>
 </mapper>
