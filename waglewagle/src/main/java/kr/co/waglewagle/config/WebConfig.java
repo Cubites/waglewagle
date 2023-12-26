@@ -78,8 +78,8 @@ public class WebConfig implements WebMvcConfigurer {
 		"/admin/add/admin_account",
 		"/admin/usersStatus",
 		"/admin/goodsStatus",
-		"/admin/delete/admin_account"
-    "/admin/add/session/**", // [!추후삭제 필요][테스트용] 관리자 세션 추가 기능
+		"/admin/delete/admin_account",
+		"/admin/add/session/**", // [!추후삭제 필요][테스트용] 관리자 세션 추가 기능
 	};
 	
 	@Autowired
@@ -171,7 +171,7 @@ public class WebConfig implements WebMvcConfigurer {
 		// [비회원 페이지 인터셉터] 이미 로그인이 되어있을 때 접근할 필요가 없는 페이지(로그인, 회원가입, 회원찾기)로 접근 시, 이전 페이지로 되돌아가게 함
 		registry.addInterceptor(logoutInterceptor).addPathPatterns("/users/login","/users/join", "/users/find_info").order(2);
 		// [친밀도 업데이트 인터셉터] 친밀도가 변동되는 상황(거래 완료, 거래 파기, 거래글 접근금지)에 친밀도 업데이트 
-		registry.addInterceptor(relCaculateInterceptor).addPathPatterns("/auctions/**", "/auctions/report/**", "/auctions/end/**", "/admin/goodsStatus").excludePathPatterns(3);
+		registry.addInterceptor(relCaculateInterceptor).addPathPatterns("/auctions/**", "/auctions/report/**", "/auctions/end/**", "/admin/goodsStatus").excludePathPatterns().order(3);
     // [마이페이지용 인터셉터] 마이페이지의 모든 페이지에 필요한 공통 작업 수행
 		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(4);
     // [세션 인터셉터] 세션에 있는 유저 정보를 다시 불러옴(마이페이지 접속 시)
