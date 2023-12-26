@@ -192,12 +192,14 @@ public class AuctionsServiceImpl implements AuctionsService {
 	@Override
 	public boolean updateAuctionIngView(Map<String,Object> map) {
 		
-		
+		System.out.println(map);
+		System.out.println(map.get("memberType"));
+		System.out.println(map.get("auctions_seller_read") instanceof Boolean);
 		//일단 셀러인지 바이어인지 구분해야함 
 		
-		if(map.get("memberType").equals("seller") && (Integer)map.get("auctions_seller_read")==0) {
+		if(map.get("memberType").equals("seller") && ((boolean)map.get("auctions_seller_read")==false)) {
 			mapper.updateAuctionIngView(map);
-		}else if(map.get("memberType").equals("buyer") && (Integer)map.get("auctions_buyer_read")==0) {
+		}else if(map.get("memberType").equals("buyer") && ((boolean)map.get("auctions_buyer_read"))==false){
 			mapper.updateAuctionIngView(map);
 		}
 		
