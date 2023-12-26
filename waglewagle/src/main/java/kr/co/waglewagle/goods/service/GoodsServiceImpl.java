@@ -105,32 +105,23 @@ public class GoodsServiceImpl implements GoodsService {
 		
 	}
 
-	@Override
-	public List<GoodsVO> getGoodsByWord(String searchWord) {
-		// 검색한 단어로 상품 찾기
-		return mapper.selectGoodsByWord(searchWord);
-	}
-
-	@Override
-	public List<GoodsVO> getGoodsByCategory(Integer categoryId) {
-		// 선택한 카테고리로 상품 찾기
-		return mapper.selectGoodsByCategory(categoryId);
-	}
 	
 	@Override
-	public List<GoodsVO> getGoodsByBoth(Integer categoryId, String searchWord) {
-		// 둘 다 사용해서 상품 찾기
-		Map<String, Object> search = new HashMap<String, Object>();
-		search.put("categoryId", categoryId);
-		search.put("searchWord", searchWord);
-		return mapper.selectGoodsByBoth(search);
+	public List<Map<String,Object>> searchGoods(GoodsPageVO page) {
+		return mapper.selectGoodsSearch(page);
 	}
 	
-	@Override
-	public List<Map<String,Object>> searchGoods2(GoodsPageVO page) {
-		
-		return mapper.selectGoodsSearch2(page);
-	}
-	
-	
+//	@Override
+//	public List<Map<String, Object>> sortingGoods(Integer category_id, String searchWord, String sortingType) {
+//		Map<String, Object> searchMap = new HashMap<>();
+//		searchMap.put("searchWord", searchWord);
+//		searchMap.put("category_id", category_id);
+//		if (sortingType == "recent") {
+//			return mapper.selectRecentGoods(searchMap);			
+//		} else if (sortingType == "lower") {
+//			return mapper.selectLowerGoods(searchMap);
+//		} else {
+//			return mapper.selectHigherGoods(searchMap);
+//		}
+//	}
 }

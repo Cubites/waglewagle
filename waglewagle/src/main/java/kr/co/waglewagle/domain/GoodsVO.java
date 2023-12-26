@@ -28,6 +28,9 @@ public class GoodsVO {
 	private Integer startIdx;
 	private String searchWord;
 	
+	// 정렬 추가
+	private String sortingType;
+	
 	public GoodsVO() {
 		this.page = 1;
 	}
