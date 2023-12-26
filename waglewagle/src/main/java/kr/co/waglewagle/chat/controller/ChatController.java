@@ -90,10 +90,10 @@ public class ChatController {
 		
 		
 		//List에서 seller 와 buyer 구분 
-		if((Integer)auction.get(0).get("auctions_ing_seller") == (Integer) auction.get(0).get("users_id")) {
+		if(((Integer)auction.get(0).get("auctions_ing_seller")).equals((Integer) auction.get(0).get("users_id"))) {
 			sellerMap = auction.get(0);
 			buyerMap = auction.get(1);
-		}else {
+		} else {
 			sellerMap = auction.get(1);
 			buyerMap  = auction.get(0);
 		}
@@ -103,10 +103,10 @@ public class ChatController {
 		buyerMap.put("memberType", "buyer");
 		
 		//내가 셀러인지 바이어인지, 구분 상대방 아이디도 넣기
-		if((Integer)sellerMap.get("users_id") == users_id) {
+		if(users_id.equals((Integer)sellerMap.get("users_id"))) {
 			model.addAttribute("me",sellerMap);
 			model.addAttribute("oppsite", buyerMap);
-		}else if((Integer) buyerMap.get("users_id") == users_id){
+		}else if(users_id.equals((Integer) buyerMap.get("users_id"))){
 			model.addAttribute("me", buyerMap);
 			model.addAttribute("oppsite", sellerMap);
 		}else {

@@ -1,14 +1,13 @@
 package kr.co.waglewagle.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.users.service.UsersService;
@@ -20,18 +19,10 @@ public class RelCaculateInterceptor implements HandlerInterceptor {
 	private UsersService service;
 	
 	@Override
-	public boolean preHandle(HttpServletRequest req, HttpServletResponse res,Object handler) throws Exception {
-		UsersVO vo = (UsersVO) req.getSession().getAttribute("users_info");
-		int rel = service.relCalculate(vo.getUsers_id());
-		if(rel < 0) {
-			rel = 0;
-		} else if(rel > 74) {
-			rel = 74;
+	public void postHandle(HttpServletRequest req, HttpServletResponse res, Object handler, ModelAndView mv) throws Exception {
+		service.relCalculate(Integer.parseInt((String) req.getAttribute("user1")));
+		if(req.getAttribute("user2") != null) {
+			service.relCalculate(Integer.parseInt((String) req.getAttribute("user2")));
 		}
-		Map<String, Integer> dataForRelUpdate = new HashMap<>();
-		dataForRelUpdate.put("users_id", vo.getUsers_id());
-		dataForRelUpdate.put("rel", rel);
-		int result = service.relUpdate(dataForRelUpdate);
-		return true;
 	}
 }

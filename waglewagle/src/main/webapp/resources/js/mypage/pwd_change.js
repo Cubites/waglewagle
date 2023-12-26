@@ -39,20 +39,24 @@ document.getElementById("pwdChangeButton").addEventListener("click", (e) => {
                         document.querySelector("#newPwdConfirm>input").value = null;
                         document.querySelector("#newPwd>input").focus();
                     } else {
-                        $.ajax({
-                            url: "/pwd/change",
-                            type: 'post',
-                            contentType: 'application/json',
-                            data: JSON.stringify({
-                                data: pwdVals[1]
-                            }),
-                            success: function(data) {
-                                if(data){
-                                    alert("비밀번호가 변경되었습니다.");
-                                    location.href = '/mypage/auctions';
-                                }
-                            }
-                        });
+                    	if(pwdVals[0] == pwdVals[1]){
+                    		alert("현재 비밀번호가 새 비밀번호와 일치합니다.");
+                    	} else {
+	                        $.ajax({
+	                            url: "/pwd/change",
+	                            type: 'post',
+	                            contentType: 'application/json',
+	                            data: JSON.stringify({
+	                                data: pwdVals[1]
+	                            }),
+	                            success: function(data) {
+	                                if(data){
+	                                    alert("비밀번호가 변경되었습니다.");
+	                                    location.href = '/mypage/auctions';
+	                                }
+	                            }
+	                        });
+	                    }
                     }
                 } else {
                     alert("새 비밀번호를 사용할 수 없습니다. 영문, 숫자, 특수문자 중 2가지 이상 포함하고 8자이상 20자이하로 입력해주세요.");

@@ -106,9 +106,21 @@
 	    						<tr>
 	                                <td>${item.admins_id }</td>
 	                                <td>${item.admins_name }</td>
-	                                <td id="adminRole">${item.admins_role}</td>
+	                                <td id="adminRole">
+	                                	<c:if test = "${item.admins_role == 0}">
+	                                		최고 관리자
+	                                	</c:if>
+	                                	<c:if test = "${item.admins_role == 1}">
+	                                		부 관리자
+	                                	</c:if>
+	                                	<c:if test = "${item.admins_role == 2}">
+	                                		일반 관리자
+	                                	</c:if>
+                                	</td>
 	                                <td>
-	                                	<button onclick="deleteAdmin(${item.admins_id})">삭제하기</button>
+	                                	<c:if test="${item.admins_id != 1}">
+	                                		<button onclick="deleteAdmin(${item.admins_id})">삭제하기</button>
+	                                	</c:if>
                                 	</td>
 								</tr>
     						</c:forEach>
