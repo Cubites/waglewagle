@@ -9,6 +9,7 @@ import kr.co.waglewagle.domain.CategoryVO;
 import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.ImagesVO;
 import kr.co.waglewagle.goods.won.GoodsFormVO;
+import kr.co.waglewagle.goods.won.GoodsPageVO;
 
 @Mapper
 public interface GoodsMapper {
@@ -27,4 +28,5 @@ public interface GoodsMapper {
 	List<GoodsVO> selectGoodsByWord(String searchWord);
 	List<GoodsVO> selectGoodsByCategory(Integer categoryId);
 	List<GoodsVO> selectGoodsByBoth(Map<String, Object> search);
+	List<Map<String,Object>> selectGoodsSearch2(GoodsPageVO page);
 }
