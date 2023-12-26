@@ -32,6 +32,7 @@ public class AdminsController {
 		return "admin/adminmanage";
 	}
 	
+	// 관리자 계정 목록 조회 및 검색
 	@GetMapping("/admin/adminmanage")
 	public String index(Model model, String searchWord, Integer page, Integer scroll) {
 
@@ -67,7 +68,7 @@ public class AdminsController {
 		return "admin/adminmanage";
 	}
 	
-	
+	// 관리자 계정 삭제
 	@ResponseBody
 	@PostMapping("/admin/delete/admin_account")
 	public boolean deleteAdminAccount(HttpSession sess, @RequestBody Map<String, Integer> dataForDeleteAdmin) {
