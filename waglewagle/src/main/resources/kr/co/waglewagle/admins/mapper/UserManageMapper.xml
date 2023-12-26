@@ -5,7 +5,7 @@
 		<sql id="search">
 	    	<where>
 	    		<if test="searchWord != null and searchWord != ''">
-	    			users_name LIKE '%${searchWord}%'    		
+	    			users_name LIKE '%${searchWord}%'	
 	    		</if>
 	    	</where>
     	</sql>
@@ -17,6 +17,8 @@
     	
 		<select id="userList" resultType="kr.co.waglewagle.domain.UsersVO">
             SELECT * FROM wagle.users
+            <include refid="search"/>
+            ORDER BY users_name DESC
         </select>
         
 		<update id="usersAccess" parameterType="java.util.Map">
@@ -39,12 +41,10 @@
 			group by users_id) r
 			on u.users_id = r.users_id
 			<if test="searchWord != null and searchWord != ''">
-    			AND users_name LIKE '%${searchWord}%'    		
+    			where users_name LIKE '%${searchWord}%'
     		</if>
 			order by u.users_id desc
 			limit #{startIdx},10;
         </select>
-		
-		
 		
 </mapper>

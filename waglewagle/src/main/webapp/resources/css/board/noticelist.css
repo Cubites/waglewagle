@@ -23,7 +23,7 @@ table.notice thead th {
     margin: 20px 10px;
 }
 table.notice thead th.tSize {
-    width: 500px;
+    width: 400px;
     padding: 10px;
     font-weight: bold;
     vertical-align: top;
@@ -32,7 +32,7 @@ table.notice thead th.tSize {
     margin: 20px 10px;
 }
 table.notice thead th.dSize {
-    width: 150px;
+    width: 100px;
     padding: 10px;
     font-weight: bold;
     vertical-align: top;
@@ -41,11 +41,16 @@ table.notice thead th.dSize {
     margin: 20px 10px;
 }
 table.notice tbody th {
-    width: 150px;
+    width: 100px;
     padding: 10px;
 }
-table.notice td {
-    width: 350px;
+table.notice td.tSize{
+    width: 400px;
+    padding: 10px;
+    vertical-align: top;
+}
+table.notice td.dSize{
+    width: 120px;
     padding: 10px;
     vertical-align: top;
 }

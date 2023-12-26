@@ -162,8 +162,16 @@
     color: azure;
     font-size: 14px;
     font-stretch: 100;
+    border-width:0px;
 }
 .rightloc{
 	display:flex;
 	justify-content: flex-end;
+}
+.qview{
+	display:flex;
+}
+.qview2{
+	display:flex;
+	margin-top:10px;
 }

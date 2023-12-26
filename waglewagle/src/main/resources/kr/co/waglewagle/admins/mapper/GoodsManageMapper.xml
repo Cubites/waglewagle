@@ -42,7 +42,7 @@
 				group by reports.goods_id) a 
 			on a.goods_id = g.goods_id
 			order by g.goods_id desc
-			<!-- limit #{startIdx},10 -->
+			limit #{startIdx},10
 		</select>
         
 </mapper>

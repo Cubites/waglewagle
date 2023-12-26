@@ -90,7 +90,6 @@ public class NoticesController {
 		return "admin/noticeview";
 	}
 
-	
 	//공지 삭제하기
 	@GetMapping("/admin/noticedelete/{notices_id}")
 	public String Noticedelete(@PathVariable("notices_id") int notices_id, Model model,HttpServletRequest request) {
