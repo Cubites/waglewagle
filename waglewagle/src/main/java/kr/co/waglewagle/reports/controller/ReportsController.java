@@ -64,7 +64,7 @@ public class ReportsController {
 
 			try {
 				boolean result = service.reportUser(report, loginUser.getUsers_id());
-				model.addAttribute("path", "/main");
+				model.addAttribute("path", "/");
 			} catch (Exception e) {
 				//트랜잭션 과정에서 오류 발생시 나오는 메시지
 				resultMessage = "신고등록에 실패했습니다. 잠시후 다시 시도해주세요";
