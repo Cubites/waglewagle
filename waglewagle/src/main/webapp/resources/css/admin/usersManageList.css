@@ -31,7 +31,11 @@
     min-width: 1280px;
     margin: 0 auto;
 }
-
+#searchForm{
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+}
 #side-box {
 	display: flex;
 	flex-direction: column;
@@ -64,7 +68,6 @@
     font-size: 14px;
     margin-top: auto; /* 맨 아래로 이동 */
 }
-
 #main-box {
     width: 85%;
     height: 100%;
@@ -72,7 +75,6 @@
     text-align: center;
 	display: flex;
     flex-direction: column;
-    
 }
 #plus {
     width: 500px;
@@ -84,9 +86,23 @@
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+    border-radius: 10px;
 }
-#plus input {
-    margin: 0 20px; 
+#searchbtn{
+	width: 75px;
+	height: 26.64px;
+	background: #828080;
+	border-radius: 10px;
+	color:#ffffff;
+	border-width:0px;
+}
+#sUsers{
+	width: 200px;
+	height: 19.6px;
+	left: 800px;
+	top: 209px;
+	background: #FFFCFC;
+	border-width:0px;
 }
 .noticelist .nlist{
     border-collapse:collapse; 
@@ -169,7 +185,6 @@
 #writebtn{
     width: 150px;
     height: 35px;
-    
     background: #686868;
     border-radius: 10px;
     color: azure;
@@ -181,6 +196,23 @@
 .hiddenClass{
 	display:none;
 }
+.paging{
+	list-style-type:none;
+	align-items:center;
+}
 li{
     display: inline-block;
 } 
+a{
+	text-decoration:none;
+}
+#pp{
+	margin-top:8px;
+}
+#pp a{
+	font-size:18px;
+}
+.pg{
+	margin:0 10px;
+	width: 100px;
+}

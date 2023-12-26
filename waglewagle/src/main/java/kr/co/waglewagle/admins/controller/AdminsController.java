@@ -29,7 +29,7 @@ public class AdminsController {
 	@GetMapping("/admin/add/session/{admins_id}")
 	public String addAdminSession(HttpSession sess, @PathVariable("admins_id") Integer admins_id) {
 		sess.setAttribute("admins_info", service.addSessionForTest(admins_id));
-		return "admin/adminmanage";
+		return "redirect:/admin/adminmanage";
 	}
 	
 	// 관리자 계정 목록 조회 및 검색

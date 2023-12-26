@@ -3,13 +3,11 @@
       padding: 0;
       box-sizing: border-box;
   }
-
 #header {
     width: 100%;
     height: 10vh;
     min-height: 100px;
 }
-
 #headerContainer {
     width: 80%;
     height: 100%;
@@ -17,13 +15,11 @@
     min-height: 100px;
     margin: 0 auto;
 }
-
 #center {
     width: 100%;
     height: 80vh;
     min-height: 470px;
 }
-
 #container {
     display: flex;
     width: 80%;
@@ -31,7 +27,6 @@
     min-width: 1280px;
     margin: 0 auto;
 }
-
 #side-box {
 	display: flex;
 	flex-direction: column;
@@ -48,15 +43,12 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 #side-box div.selected {
     background-color: white;
 }
-
 #side-box div:hover {
     background-color: white;
 }
-
 #side-box div:active {
     background-color: lightblue;
 }
@@ -64,16 +56,13 @@
     font-size: 14px;
     margin-top: auto; /* 맨 아래로 이동 */
 }
-
 #main-box {
     width: 85%;
     height: 100%;
-    font-size: 20px;
     /* border: 1px solid #999; */
     text-align: center;
 	display: flex;
     flex-direction: column;
-    
 }
 #plus {
     width: 500px;
@@ -85,9 +74,32 @@
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+    border-radius: 10px;
+    vertical-allign: middle;
 }
-#plus input {
-    margin: 0 20px; 
+#searchForm{
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+}
+#searchbtn{
+	width: 75px;
+	height: 26.64px;
+	background: #828080;
+	border-radius: 10px;
+	color:#ffffff;
+	border-width:0px;
+}
+#sGoods{
+	width: 200px;
+	height: 19.6px;
+	left: 800px;
+	top: 209px;
+	background: #FFFCFC;
+	border-width:0px;
+}
+span.searchWord{
+	
 }
 .noticelist .nlist{
     border-collapse:collapse; 
@@ -185,3 +197,20 @@
 li{
     display: inline-block;
 } 
+a{
+	text-decoration:none;
+}
+#pp{
+	margin-top:8px;
+}
+#pp a{
+	font-size:18px;
+}
+.paging{
+	list-style-type:none;
+	align-items:center;
+}
+.pg{
+	margin:0 10px;
+	width: 100px;
+}

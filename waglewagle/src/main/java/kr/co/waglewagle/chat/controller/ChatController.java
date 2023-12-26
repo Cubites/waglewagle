@@ -71,6 +71,7 @@ public class ChatController {
 			// 옥션에 참여하는 멤바가 아니면 나가야지
 			throw new IllegalArgumentException("auctions_ing 참여 user 아님");
 		}
+		System.out.println(model.getAttribute("me"));
 		//경매 완료된거 본지 안본지 체크
 		auctionService.updateAuctionIngView((Map<String,Object>)model.getAttribute("me"));
 		// 모든 챗팅 리스트

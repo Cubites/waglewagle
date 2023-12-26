@@ -366,11 +366,11 @@
 	<update id="updateAuctionIngView" parameterType="map">
 		UPDATE auctions_ing 
 		SET 
-		<if test="memberType eq seller">
-			auctions_seller_read = 1;
+		<if test="memberType.equals('seller')">
+			auctions_seller_read = 1
 		</if>
-		<if test="memberType eq buyer">
-			auctions_buyer_read = 1;
+		<if test="memberType.equals('buyer')">
+			auctions_buyer_read = 1
 		</if>
 		WHERE goods_id = #{goods_id}
 	</update>

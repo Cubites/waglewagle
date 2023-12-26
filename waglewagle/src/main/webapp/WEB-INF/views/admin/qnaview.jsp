@@ -107,43 +107,44 @@
         
             <div id="main-box">
             	<div class="noticeView">        		
-            	   <p style="font-size:15px" class="noticeinfo" id="qnas_id">글번호: ${a.qnas_id } &nbsp&nbsp 작성일: ${a.qnas_date }</p>
+            	   <div class="rightloc"><p style="font-size:15px" class="noticeinfo" id="qnas_id">글번호: ${a.qnas_id } &nbsp&nbsp 작성일: ${a.qnas_date }</p></div>
             	   <!-- 작성자 -->
-            	   <div>
-            	   <p id="titletxt">작성회원</p>
-                   <div id="noticetitle">
-                       ${a.users_id}
-                   </div>
+            	   <div class="qview">
+	            	   <div class="titletxt">작성 회원</div>&nbsp
+	                   <div id="noticetitle">
+	                       ${a.users_id}
+	                   </div>
                    </div>
             	   <!-- 제목 -->
-            	   <div>
-            	   <p id="titletxt">문의제목</p>
-                   <div id="noticetitle">
-                       ${a.qnas_title}
-                   </div>
-                   </div>
+            	   <div class="qview">
+	            	   <div class="titletxt">문의 제목 </div>&nbsp
+	                   <div id="noticetitle">
+	                       ${a.qnas_title}
+	                   </div>
+                   </div >
                    <!-- 내용 -->
-                   <div>
-                   <p id="titletxt">문의내용</p>
-                   <div id="noticecontent">
-                       <!-- <p id="contenttxt">내용</p> -->
-                       ${a.qnas_content}
-                   </div>
+                   <div class="qview">
+	                   <div class="titletxt">문의 내용 </div>&nbsp
+	                   <div id="noticecontent">
+	                       ${a.qnas_content}
+	                   </div>
                    </div>
 
             		<!-- 버튼들 -->
             		<div class="writebtn">
             			<!-- 공지 상세페이지 버튼들  -->
 						<div id="notice_button">
-				            <!-- <input type="button" id="writebtn" value="답변작성" onclick="qnaReply()"> -->
 							<input type="button" id="writebtn" value="목록" onclick="qna()">
 							<input type="button" id="writebtn" value="문의글 삭제" onclick="qnaDelete(${a.qnas_id})">
 		                 </div>
             		</div>
             		
 						<form method="post" action="/admin/writeReply/${qnas_id}">
-	            			<div id="replyText">
-	            				<textarea id="noticetitle" name="qnas_reply" placeholder="문의답글을 작성하세요">${a.qnas_reply}</textarea>
+							<div class="qview2">
+								<div class="titletxt">문의 답글 </div>&nbsp
+		            			<div id="replyText">
+		            				<textarea id="noticetitle" name="qnas_reply" placeholder="문의답글을 작성하세요">${a.qnas_reply}</textarea>
+		            			</div>
 	            			</div>
 	            			<!-- 답변 유무로 버튼 변경되어서 표시된다. -->
 	            			<c:if test="${empty a.qnas_reply }">
