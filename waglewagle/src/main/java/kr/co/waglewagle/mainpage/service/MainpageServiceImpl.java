@@ -30,4 +30,13 @@ public class MainpageServiceImpl implements MainpageService {
 		return mapper.nearList(users_addrList);
 	}
 
+	@Override
+	public boolean isReadBidNotice(int users_id) {
+		return mapper.countUnread_bid(users_id) > 0 ? false : true;
+	}
+	
+	@Override
+	public boolean isReadQnaNotice(int users_id) {
+		return mapper.countUnread_qna(users_id) > 0 ? false : true;
+	}
 }

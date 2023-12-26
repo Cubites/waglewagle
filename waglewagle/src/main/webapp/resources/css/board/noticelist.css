@@ -13,6 +13,12 @@ table.notice {
     border-bottom: 1px solid #ccc;
     margin: 20px 10px;
 }
+table.notice th{
+	text-align:center;
+}
+table.notice td{
+	text-align:center;
+}
 table.notice thead th {
     width: 150px;
     padding: 10px;
@@ -20,7 +26,7 @@ table.notice thead th {
     vertical-align: top;
     color: #fff;
     background: #CF5C5C;
-    margin: 20px 10px;
+    margin: 20px 10px; 
 }
 table.notice thead th.tSize {
     width: 400px;
@@ -30,9 +36,10 @@ table.notice thead th.tSize {
     color: #fff;
     background: #CF5C5C;
     margin: 20px 10px;
+    text-align:center;
 }
 table.notice thead th.dSize {
-    width: 100px;
+    width: 150px;
     padding: 10px;
     font-weight: bold;
     vertical-align: top;
@@ -58,7 +65,9 @@ table.notice td.dSize{
 table.notice .even {
     background: #fdf3f5;
 }
-
+tbody>tr>td.tSize{
+	text-align:left;
+}
 .paging{
 	list-style-type:none; 
 }

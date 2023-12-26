@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.waglewagle.boards.service.BoardsService;
 import kr.co.waglewagle.domain.QnasVO;
 import kr.co.waglewagle.domain.UsersVO;
+import kr.co.waglewagle.users.service.UsersService;
 
 @Controller
 public class BoardsController {
 
 	@Autowired
 	private BoardsService service;
+	@Autowired
+	private UsersService usersService;
 
 	@GetMapping("/boards/qnas/write")
 	public String wrtieQnas(Model model) {
@@ -45,6 +48,8 @@ public class BoardsController {
 		model.addAttribute("menuTab", 1);
 		model.addAttribute("menuNum", 3);
 		model.addAttribute("qnaDetail", service.showQnaDetail(id));
+		
+		int updateReadcnt = usersService.readQna(id);
 		return "mypage/main";
 	}
 }

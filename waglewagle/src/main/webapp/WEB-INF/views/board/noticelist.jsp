@@ -11,6 +11,7 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
+	<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
 	<div id="center">
 		<div id="container">
 
@@ -18,7 +19,9 @@
 				<!-- 공지 표시 영역 -->
 				<!-- 여기부분 작성함 -->
 				<!-- 공지리스트 -->
+				
 				<div class="noticelist">
+				<h2>공지사항</h2>
 					<table class="notice">
 						<thead>
 							<tr>
