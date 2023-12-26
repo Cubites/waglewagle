@@ -283,10 +283,10 @@
 			});
     	   $(".item").mouseover(function(){
     	      let now = new Date();
-    	      console.log(now);
+    	      //console.log(now);
     	      let expDateValue = $(this).find(".popProduct").find(".avgPrice_expDateArea").find(".avg_expValue").find(".productExpArea").find(".originExp").text();
   			  let expDate = new Date(Date.parse(expDateValue));
-  			console.log(expDate);
+  			  //console.log(expDate);
   			  let leftTime = expDate - now;
     	      
     	      const days = Math.floor(leftTime/(1000*60*60*24));
