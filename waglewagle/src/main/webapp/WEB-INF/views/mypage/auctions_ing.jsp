@@ -14,7 +14,7 @@
 		<div id="itemsList">
 			<!-- 반복 -->
 			<c:forEach var="item" items="${ListData}">
-				<a class="itemBox" href="#">
+				<a class="itemBox" href="/chat/${item.goods_id}">
 					<c:if test="${item.auctions_ing_read == 0}">
 						<div class="newMark">NEW</div>
 					</c:if>

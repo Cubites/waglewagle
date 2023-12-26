@@ -71,7 +71,7 @@ public class AdminsController {
 	@ResponseBody
 	@PostMapping("/admin/delete/admin_account")
 	public boolean deleteAdminAccount(HttpSession sess, @RequestBody Map<String, Integer> dataForDeleteAdmin) {
-		AdminsVO vo = (AdminsVO) sess.getAttribute("admins_info");
+		AdminsVO vo = (AdminsVO) sess.getAttribute("admin_info");
 		if(vo != null && vo.getAdmins_role() == 0 && dataForDeleteAdmin.get("admins_id") != 1) {	
 			return service.deleteAdmin(dataForDeleteAdmin.get("admins_id")) == 1 ? true : false;
 		} else {

@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.waglewagle.auctions.service.AuctionsService;
 import kr.co.waglewagle.auctions.won.AuctionIng;
+import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.ReportsVO;
 import kr.co.waglewagle.domain.UsersVO;
 
@@ -77,6 +79,9 @@ public class AuctionsController {
 		vo.setGoods_id(goods_id);
 		vo.setUsers_id(seller_id);
 		vo.setReports_content(request.getParameter("report_data"));
+		
+		// 친밀도 업데이트를 위한 값(업데이트 대상 유저 id)을 인터셉터에 전달
+		request.setAttribute("user1", Integer.toString(seller_id));
 		// 신고하는 동작 실행
 		if (!service.saveReport(vo)) {
 			return "no";
@@ -92,7 +97,8 @@ public class AuctionsController {
 	
 	@PostMapping("/auctions/end/{goods_id}")
 	@ResponseBody
-	public ResponseEntity<String> auctionEnd(@RequestParam Map<String,Object> paramMap,@AuctionIng Integer goodsId) {
+	public ResponseEntity<String> auctionEnd(@RequestParam Map<String,Object> paramMap,@AuctionIng Integer goodsId, 
+			HttpServletRequest req) {
 		
 		ResponseEntity<String> response=null;
 		HttpHeaders header = new HttpHeaders();
@@ -103,20 +109,15 @@ public class AuctionsController {
 		if(goodsId == null) {
 			return new ResponseEntity<String>(msg,header,HttpStatus.BAD_REQUEST);
 		}
-		
-		
 		try {
-			
-			
-			boolean deleteresult = service.auctionEnd(paramMap);
-			
+			boolean deleteresult = service.auctionEnd(paramMap);	
 		} catch (Exception e) {
 			return new ResponseEntity<String>(msg,header,HttpStatus.BAD_REQUEST);
 		}
-		
-		
-		
-		
+
+		// 친밀도 업데이트를 위한 값(업데이트 대상 유저 id)을 인터셉터에 전달
+		req.setAttribute("user1", paramMap.get("auctions_end_seller"));
+		req.setAttribute("user2", paramMap.get("auctions_end_buyer"));
 		return new ResponseEntity<String>("경매를 완료했습니다.",header,HttpStatus.ACCEPTED);
 	}
 	

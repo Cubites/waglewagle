@@ -36,7 +36,7 @@
 						<c:if test='${!empty sessionScope.users_info.users_nick}'>
 							<div id="myMenu">
 								<a href="/mypage/auctions">마이페이지</a>
-								<a href="#" id="logoutButton">로그아웃</a>
+								<a href="javascript:void(0);" id="logoutButton">로그아웃</a>
 							</div>
 						</c:if>
 					</div>
@@ -124,7 +124,10 @@
             var searchText = event.target.value.toLowerCase();  
             if (event.keyCode === 13) {
              	console.log(searchText);  
-            	location.href = "/goods/search/word?goods_title=" + searchText;
+             	//location.href = "/goods/search/word?goods_title=" + searchText;
+            	//장원
+            	let encode= encodeURI("/goods/search2?searchWord="+searchText);
+             	location.href= encode;
             }
         });  
 		
@@ -132,7 +135,9 @@
 		$(".category").click(function (event) {  
             var searchCategory = event.target.value;  
            	console.log(searchCategory);  
-           	location.href = "/goods/search/category?category_id=" + searchCategory;
+          //location.href = "/goods/search/category?category_id=" + searchCategory;
+           	//장원
+           	location.href= "/goods/search2?category_id="+searchCategory;
 
         }); 
 		

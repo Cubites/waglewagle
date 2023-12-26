@@ -1,8 +1,12 @@
 package kr.co.waglewagle.goods.controller;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,6 +25,7 @@ import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.goods.service.GoodsService;
 import kr.co.waglewagle.goods.won.FileStore;
 import kr.co.waglewagle.goods.won.GoodsFormVO;
+import kr.co.waglewagle.goods.won.GoodsPageVO;
 import kr.co.waglewagle.goods.won.UploadImage;
 import kr.co.waglewagle.users.service.UsersService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +34,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Controller
 @Slf4j
-
 public class GoodsController {
 
 	// 생성자주입 - file 저장을 돕는 객체
@@ -168,27 +173,58 @@ public class GoodsController {
 		return "goods/search";
 	}
 
-	// 나중에 혹시몰라서 만들어 둔 것
-	private GoodsVO convertGoodsFormToGoods(GoodsFormVO vo, UsersVO loginUserId) {
-		GoodsVO goods = new GoodsVO();
-
-		// goodsVO form vo의 값 담을 것
-		// 추후의 로그인 유저 id로 고칠 것
-		if (loginUserId == null) {
-			goods.setUsers_id(1000);
-		} else {
-			goods.setUsers_id(loginUserId.getUsers_id());
-		}
-		goods.setGoods_address(vo.getGoods_addr());
-		goods.setGoods_comment(vo.getGoods_comment());
-		// goods.setGoods_exp(vo.getGoods_exp());
-		goods.setGoods_start_price(vo.getGoods_start_price());
-		goods.setGoods_title(vo.getGoods_title());
-		goods.setGoods_avg_price(vo.getGoods_start_price());
-		goods.setGoods_th_img(vo.getGoods_th_img());
-
-		return null;
-	}
 	
+	
+	///장원 수정
+		@GetMapping("/goods/search2")
+		public String searchGoods(
+				@RequestParam(required = false,defaultValue = "1")Integer pageNum
+				,@RequestParam(required=false,defaultValue = "")String searchWord
+				,@RequestParam(required=false,defaultValue="")Integer category_id
+				,Model model) {
+			
+			log.info("검색어 {}",searchWord);
+			log.info("{} 카테고리 id",category_id);
+			//초기 값 받아서 처리 
+			GoodsPageVO page = new GoodsPageVO(pageNum,category_id,searchWord);
+			List<Map<String,Object>>  list = goodsService.searchGoods2(page);
+			if(list.size() > 0) {
+			page.setTotalrowsCnt((Long)list.get(0).get("totalCnt"));
+			}
+			page.setGoodsList(list);
+			model.addAttribute("page", page);
+			
+			log.info("page {}",page);
+			
+			return  "goods/search";
+		}
+	 
+		
+		
+		
+		@PostMapping(path = "/goods/searchScroll", produces = MediaType.APPLICATION_JSON_VALUE)
+		@ResponseBody
+		public GoodsPageVO searchGoodsAjax(
+				@RequestParam(required = false,defaultValue = "1")Integer pageNum
+				,@RequestParam(required=false,defaultValue = "")String searchWord
+				,@RequestParam(required=false,defaultValue="")Integer category_id) {
+			
+		
+			
+			//값 받아서 처리 
+			GoodsPageVO page = new GoodsPageVO(pageNum,category_id,searchWord);
+			System.out.println("검색 page ="+page);
+			List<Map<String,Object>>  list = goodsService.searchGoods2(page);
+			if(list.size() >0) {
+			page.setTotalrowsCnt((Long)list.get(0).get("totalCnt"));
+			}
+			page.setGoodsList(list);
+			
+			
+			log.info("page {}",page);
+			
+			return  page;
+		}
+		///장원 수정
 
 }

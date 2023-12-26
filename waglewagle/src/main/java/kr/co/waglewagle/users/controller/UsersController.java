@@ -33,20 +33,17 @@ public class UsersController {
 	@Autowired
 	private MailService ms;
 	
-	//MailConfig mailConfig = new MailConfig();
-	//MailService ms = new MailService(mailConfig.javaMailSender());
-	
 	@Autowired
 	private AuctionsService auctionsService;
 	
-	// 테스트용 세션 추가
+	/* [!추후 삭제][테스트] 테스트용 세션 추가 **************************************************************/
 	@GetMapping("/add/session/{users_id}")
 	public String usersInfo(HttpSession sess, @PathVariable("users_id") Integer users_id) {
 		sess.setAttribute("users_info", service.userInfo(users_id));
 		return "home";
 	}
+	/*******************************************************************************************/
 	
-
 	// 회원가입 페이지 이동
 	@GetMapping("/users/join")
 	public String joinForm(HttpServletResponse res) {
@@ -170,7 +167,6 @@ public class UsersController {
 		return String.valueOf(service.isNickDup(users_nick));
 	}
 	
-	
 	@GetMapping("/users/find_info")
 	public String findInfo() {
 		return "users/findInfo";
@@ -270,7 +266,7 @@ public class UsersController {
 		return "common/inform";
 	}
 
-  // 관심지역 수정
+	// 관심지역 수정
 	@ResponseBody
 	@PostMapping("/update/favor_areas")
 	public boolean updateAreas(HttpSession sess, @RequestBody Map<String, Object> areas) {
@@ -295,6 +291,7 @@ public class UsersController {
 		
 		return isValid;
 	}
+	
 	// 비밀번호 변경
 	@ResponseBody
 	@PostMapping("/pwd/change")
@@ -312,7 +309,7 @@ public class UsersController {
 	@GetMapping("/users/logout")
 	public String logout(HttpSession sess) {
 		sess.removeAttribute("users_info");
-		return "redirect:/boards/qnas/write";
+		return "redirect:/";
 	}
 	
 	// 회원탈퇴
@@ -371,8 +368,8 @@ public class UsersController {
 			itemsNumPerPage = 10;
 		}
 		totalAuctionsNum = (int) Math.ceil(((double)totalAuctionsNum) / itemsNumPerPage);
-		int nowPage1 = 0;
-		int nowPage10 = 0;
+		int nowPage1 = 0; // 현재 페이지 (1의 자리)
+		int nowPage10 = 0; // 현재 페이지 (10의 자리)
 		
 		// 거래중 게시글 조회에 필요한 값(유저 id, 페이지 번호) 저장
 		Map<String, Integer> auctionsVal = new HashMap<String, Integer>();
@@ -422,10 +419,10 @@ public class UsersController {
 			model.addAttribute("menuNum", 2);
 		}
 		
-		// 페이지 번호
-		model.addAttribute("pageNum1", nowPage1);
-		model.addAttribute("pageNum10", nowPage10);
-		model.addAttribute("pageNumMax", totalAuctionsNum);
+		// 페이지 번호 전달
+		model.addAttribute("pageNum1", nowPage1); // 현재 페이지(1의 자리)
+		model.addAttribute("pageNum10", nowPage10); // 현재 페이지(10의 자리)
+		model.addAttribute("pageNumMax", totalAuctionsNum); // 전체 페이지 수
 		
 		model.addAttribute("scrollY", scroll);
 		
@@ -438,10 +435,11 @@ public class UsersController {
 		model.addAttribute("menuTab", 1);
 		model.addAttribute("menuNum", 0);
 		
+		// 접속한 유저의 관심지역 조회
 		UsersVO vo = (UsersVO) session.getAttribute("users_info");
 		String areasStr = service.checkFavorAreas(vo.getUsers_id());
 		System.out.println("areasStr: " + areasStr);
-		String[] areas = areasStr != null ? areasStr.split(",") : null;
+		String[] areas = areasStr != null ? (areasStr.length() != 0 ? areasStr.split(",") : null) : null;
 		model.addAttribute("favor_areas", areas); 
 		model.addAttribute("favor_areas_count", areas != null ? areas.length : 0);
 		

@@ -194,7 +194,7 @@
    		url:"/bids/askPrice",
    		type:"post",
    		data: {"users_id":"${goods.users_id}","goods_id":"${goods.goods_id}"
-   			,"bids_price":askPriceNoComma,"point_usable":"${usersPoint.point_usable}"},
+   			,"bids_price":askPriceNoComma,"point_usable":"${usersPoint.point_usable}","goods_start_price":"${goods.goods_start_price}"},
    		contentType:"application/x-www-form-urlencoded;charset=utf-8",
    		success:function(data){
    			

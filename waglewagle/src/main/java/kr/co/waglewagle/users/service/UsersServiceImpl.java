@@ -1,5 +1,6 @@
 package kr.co.waglewagle.users.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
-import kr.co.waglewagle.domain.CategoryVO;
+import kr.co.waglewagle.auctions.mapper.AuctionsMapper;
+import kr.co.waglewagle.domain.AuctionsIngVO;
 import kr.co.waglewagle.domain.PointVO;
 
-import kr.co.waglewagle.domain.PointVO;
 import kr.co.waglewagle.domain.QnasVO;
 
 import kr.co.waglewagle.domain.UsersVO;
@@ -22,6 +22,9 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private UsersMapper mapper;
+	
+	@Autowired
+	private AuctionsMapper auctionsMapper;
 
 	@Override
 	public UsersVO userInfo(Integer users_id) { return mapper.userInfo(users_id); }
@@ -29,16 +32,13 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public PointVO checkPoint(Integer users_id) { return mapper.checkPoint(users_id); }
 
-
 	@Override
 	public String checkFavorAreas(Integer users_id) { return mapper.checkFavorAreas(users_id); }
 	@Override
 	public int updateAreas(Map<String, Object> dataForAreaUpdate) { return mapper.updateAreas(dataForAreaUpdate); }
 
 	@Override
-	public String selectPwd(Integer users_id) { 
-		return mapper.selectPwd(users_id); 
-	}
+	public String selectPwd(Integer users_id) { return mapper.selectPwd(users_id); }
 	
 	@Override
 	public int pwdChange(Map<String, Object> dataForValidPwd) { return mapper.pwdChange(dataForValidPwd); }
@@ -88,15 +88,12 @@ public class UsersServiceImpl implements UsersService {
 		return mapper.isNickDup(users_nick) > 0 ? true : false;
 	}
 
-
 	@Override
 	public PointVO getPoint(Integer users_id) {
 		PointVO userPoint = mapper.selectPointByUsersId(users_id);
 		return userPoint;
 	}
 
-
-	
 	@Override
 	public UsersVO login(UsersVO vo) {
 		return mapper.login(vo);
@@ -126,9 +123,18 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public List<CategoryVO> allCategory() {
-		// TODO Auto-generated method stub
-		return null;
+	public int relCalculate(Integer users_id) {
+		int result = 0;
+		Map<String, Integer> dataForRelUpdate = new HashMap<>();
+		int tempRel = mapper.relCalculate(users_id); 
+		dataForRelUpdate.put("rel", tempRel < 0 ? 0 : (tempRel > 79 ? 79 : tempRel));
+		dataForRelUpdate.put("users_id", users_id);
+		result += mapper.relUpdate(dataForRelUpdate);
+		
+		return result;
 	}
+
+	@Override
+	public int relUpdate(Map<String, Integer> dataForRelUpdate) { return mapper.relUpdate(dataForRelUpdate); }
 
 }

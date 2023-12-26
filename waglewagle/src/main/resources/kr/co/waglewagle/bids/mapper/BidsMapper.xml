@@ -6,14 +6,14 @@
 	</select>
 	
 	<select id="checkPoint" parameterType="kr.co.waglewagle.bids.won.BidsFormVO" resultType="Integer">
-	SELECT  count(*)
+	SELECT  d.bids_max_pre
 	FROM(
 	SELECT point.users_id as users_id, goods_id, MAX(bids_price) as bids_max_pre, point_usable 
 	FROM bids inner join point on(bids.users_id = point.users_id) 
 	where point.users_id =#{users_id} AND goods_id=#{goods_id} 
 	group by point.users_id,goods_id,point_usable) d
 	WHERE
-	<![CDATA[d.bids_max_pre < #{bids_price}]]>
+	<![CDATA[d.bids_max_pre <= #{bids_price}]]>
 	AND 
 	<![CDATA[d.point_usable - #{bids_price} >=0]]>
 	</select>
