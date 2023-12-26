@@ -20,4 +20,6 @@ public interface ChatMapper {
 
 	Integer insertChat(ChatVO chat);
 	
+	Integer readBid(Map<String, Integer> info);
+	
 }

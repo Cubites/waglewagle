@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.UsersVO;
@@ -46,5 +47,18 @@ public class MainpageController {
 		
 		return "mainpage/mainpage";
 	}
+	
+	@ResponseBody
+	@GetMapping("/isCheckNotice_bid")
+	public String bidNotice(String users_id) {
+		return String.valueOf(service.isReadBidNotice(Integer.parseInt(users_id)));
+	}
+	
+	@ResponseBody
+	@GetMapping("/isCheckNotice_qna")
+	public String qnaNotice(String users_id) {
+		return String.valueOf(service.isReadQnaNotice(Integer.parseInt(users_id)));
+	}
+	
 	
 }

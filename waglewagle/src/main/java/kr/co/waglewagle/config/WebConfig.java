@@ -67,6 +67,7 @@ public class WebConfig implements WebMvcConfigurer {
 		"/users/**", 
 		"/board/noticelist/**",
 		"/admin/**",
+		"/goods/search/**",
     "/error/**",
 		"/add/session/*" // [!추후삭제 필요][테스트용] 유저 세션 추가 기능
 	};

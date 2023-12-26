@@ -4,6 +4,7 @@
 <html>
 <head>
 	<link rel="stylesheet" href="/resources/css/mypage/qnas_detail.css">
+	<script src="/resources/js/mypage/qnaRead.js"></script>
 </head>
 <body>
 	<div id="qnaDetailContainer">
