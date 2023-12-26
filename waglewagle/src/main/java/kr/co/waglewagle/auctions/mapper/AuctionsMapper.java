@@ -70,5 +70,7 @@ public interface AuctionsMapper {
 
 	// 거래 파기 테이블에 저장하기
 	int saveAuctionBreak(AuctionsBreakVO vo);
+	
+	Integer updateAuctionIngView(Map<String, Object> map);
 
 }
