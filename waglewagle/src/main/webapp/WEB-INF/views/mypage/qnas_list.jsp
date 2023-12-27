@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,17 +17,22 @@
 				<div>등록일</div>
 			</div>
 			<ul>
-				<!-- 반복 -->
-				<c:forEach var="item" items="${ListData}">
-					<li>
-						<a href="/mypage/qnas/detail?id=${item.qnas_id}">
-							<div>${item.rownum}</div>
-							<div>${item.qnas_title}</div>
-							<div><fmt:formatDate value="${item.qnas_date}" pattern="yyyy.MM.dd"/></div>
-						</a>
-					</li>
-				</c:forEach>
-				<!-- /반복 -->
+				<c:if test="${fn:length(ListData) == 0}">
+					<li id="noItems">문의한 내역이 없습니다.</li>
+				</c:if>
+				<c:if test="${fn:length(ListData) != 0}">
+					<!-- 문의글 반복 -->
+					<c:forEach var="item" items="${ListData}">
+						<li>
+							<a href="/mypage/qnas/detail?id=${item.qnas_id}">
+								<div>${item.rownum}</div>
+								<div>${item.qnas_title}</div>
+								<div><fmt:formatDate value="${item.qnas_date}" pattern="yyyy.MM.dd"/></div>
+							</a>
+						</li>
+					</c:forEach>
+					<!-- /문의글 반복 -->
+				</c:if>
 			</ul>
 		</div>
 		<!-- pagination -->		
@@ -55,6 +61,7 @@
 		<!-- /pagination -->
 	</div> 
 	<script>
+		// 목록 페이지 넘어갈 때 스크롤 높이 고정
 		window.scrollTo({top: "${scrollY}"});
 		window.addEventListener("scroll", () => {
 			let scrollVal = window.scrollY;

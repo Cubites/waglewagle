@@ -38,6 +38,7 @@
 		function password(){
 			 location.href = "/admin/changePwd";
 		}
+		
  		/* 리스트에서 공지 삭제하기 */
 		function noticeDelete(notices_id){
 		    if(confirm("선택한 공지를 정말로 삭제 하시겠습니까?")==true){
@@ -50,7 +51,7 @@
 	<div id="header">
         <div id="headerContainer">
             <br/>
-            <img src="/resources/images/log.jpg" title="와글와글 로고 "/>
+            <img src="/resources/images/log.jpg" title="와글와글 로고 "/ onclick="notice()">
         </div>
     </div>
 
@@ -66,15 +67,15 @@
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
             <div id="main-box">
-                    <!-- 검색 -->
+				<!-- 검색 -->
              	<div id="plus">공지검색 &nbsp;
-             	 <form method="get" name="searchForm" id="searchForm" action="/admin/noticelist">
-                	 <input type="text" id="sNotice" name="searchWord" value="${noticesVO.searchWord}"  title="검색어입력하세요." placeholder="제목을 입력하세요.">&nbsp;&nbsp;
-                	 <input type="submit" id="searchbtn" value="검색" title="검색">
-                 </form>
-               </div>
+					<form method="get" name="searchForm" id="searchForm" action="/admin/noticelist">
+						<input type="text" id="sNotice" name="searchWord" value="${noticesVO.searchWord}"  title="검색어입력하세요." placeholder="제목을 입력하세요.">&nbsp;&nbsp;
+						<input type="submit" id="searchbtn" value="검색" title="검색">
+					</form>
+				</div>
                 
-                 <!-- 공지리스트 -->
+                <!-- 공지리스트 -->
                 <div class="noticelist">	
                     <table class="nlist">
 
@@ -123,33 +124,34 @@
                     </table>
                     
 					<!--공지작성 버튼 -->
-	                 <div>
+					<div>
 						<div id="notice_button">
 							<input type="button" id="writebtn" value="공지작성" onclick="noticewrite()">
-		                 </div>
-	                 </div>
+						</div>
+					</div>
                     
                     <div id="pp">
                     	<ul class="paging">
-                    	<li class="pg">
-                    	<c:if test="${prev}">
-                    		<a href="/admin/noticelist?page=${startPage-1}&searchWord=${noticesVO.searchWord}">이전</a>
-                    	</c:if></li>
-                    	
-                    	<c:forEach var="p" begin="${startPage}" end="${endPage}">
-                            <c:if test="${p != NoticesVO.page}">
-                            <li><a href="/admin/noticelist?page=${p}&searchWord=${noticesVO.searchWord}">${p}</a></li>
-                            </c:if>
-                        </c:forEach>
-
-						<li class="pg">
-						<c:if test="${next}">
-                    		<a href="/admin/noticelist?page=${map.endPage+1}&searchWord=${noticesVO.searchWord}">이후</a>
-                    	</c:if></li>
-                    </ul>
-                    </div>
+	                    	<li class="pg">
+		                    	<c:if test="${prev}">
+	                    		<a href="/admin/noticelist?page=${startPage-1}&searchWord=${noticesVO.searchWord}">이전</a>
+		                    	</c:if>
+	                    	</li>
+	                    	
+	                    	<c:forEach var="p" begin="${startPage}" end="${endPage}">
+	                            <c:if test="${p != NoticesVO.page}">
+	                            <li><a href="/admin/noticelist?page=${p}&searchWord=${noticesVO.searchWord}">${p}</a></li>
+	                            </c:if>
+	                        </c:forEach>
+	
+							<li class="pg">
+							<c:if test="${next}">
+	                    		<a href="/admin/noticelist?page=${map.endPage+1}&searchWord=${noticesVO.searchWord}">이후</a>
+	                    	</c:if></li>
+	                    </ul>
+					</div>
                     
-            </div>
+            	</div>
             </div>
         </div>
     </div>

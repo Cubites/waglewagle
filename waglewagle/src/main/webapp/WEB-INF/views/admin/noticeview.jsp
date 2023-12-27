@@ -59,7 +59,7 @@
 	<div id="header">
         <div id="headerContainer">
             <br/>
-            <img src="/resources/images/log.jpg" title="와글와글 로고"/>
+            <img src="/resources/images/log.jpg" title="와글와글 로고"/ onclick="notice()">
         </div>
     </div>
 
@@ -79,20 +79,22 @@
             <div id="main-box">
             	<div class="noticeView">
 
-            	   <div class="rightloc"><p style="font-size:15px" class="noticeinfo" id="notices_id">글번호: ${a.notices_id } &nbsp&nbsp 작성일: ${a.notices_date }</p></div>
+					<div class="rightloc">
+						<p style="font-size:15px" class="noticeinfo" id="notices_id">글번호: ${a.notices_id } &nbsp&nbsp 작성일: ${a.notices_date }</p>
+					</div>
             	 
-            	   <!-- 제목 -->
-                   <div id="noticetitle">
-                       <!-- <p id="titletxt">제목</p> -->
-                       ${a.notices_title}
-                   </div>
-                   <!-- 내용 -->
-                   <div id="noticecontent">
-                       <!-- <p id="contenttxt">내용</p> -->
-                       ${a.notices_content}
-                   </div>
+					<!-- 제목 -->
+					<div id="noticetitle">
+						<!-- <p id="titletxt">제목</p> -->
+						${a.notices_title}
+					</div>
+					<!-- 내용 -->
+					<div id="noticecontent">
+						<!-- <p id="contenttxt">내용</p> -->
+						${a.notices_content}
+					</div>
             		
-            		<!-- 버튼들 -->
+					<!-- 버튼들 -->
             		<div class="writebtn">
             			<!-- 공지 상세페이지 버튼들  -->
 						<div id="notice_button">

@@ -1,6 +1,3 @@
-// import * as d3 from 'd3';
-// import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-
 // 랜덤 문자열 생성 함수
 const characters = 'abcdefghijklmnopqrstuvwxyz';
 const randomString = (num) => {
