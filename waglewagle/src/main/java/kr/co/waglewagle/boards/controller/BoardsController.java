@@ -22,14 +22,17 @@ public class BoardsController {
 
 	@Autowired
 	private BoardsService service;
+	
 	@Autowired
 	private UsersService usersService;
 
+	// 문의 작성 페이지로 이동
 	@GetMapping("/boards/qnas/write")
 	public String wrtieQnas(Model model) {
 		return "qna/main";
 	}
 	
+	// 문의 작성
 	@ResponseBody
 	@PostMapping("/boards/qnas/write")
 	public boolean addQna(HttpSession sess, @RequestBody Map<String, String> qnaContents) {

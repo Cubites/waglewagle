@@ -118,68 +118,73 @@
 				</div>
 			</div>
 			<div id="mypageBottom">
+				<!-- 마이페이지 메뉴 -->
 				<div id="mypageMenu">
 					<div class="mypageDetailMenu">
 						<div>상품</div>
 						<ul>
-							<li><a href="/mypage/auctions">경매 중</a></li>
-							<li><a href="/mypage/auctions_ing">거래 중</a></li>
-							<li><a href="/mypage/auctions_end_sold">판매 완료</a></li>
-							<li><a href="/mypage/auctions_end_bought">구매 완료</a></li>
-							<li><a href="/mypage/auctions_break">파기 상품</a></li>
-							<li><a href="/mypage/auctions_fail">유찰 상품</a></li>
-							<li><a href="/mypage/favors_list">찜 상품</a></li>
+							<li><a href="/mypage/auctions?scroll=${scrollY == null ? 0 : scrollY}">경매 중</a></li>
+							<li><a href="/mypage/auctions_ing?scroll=${scrollY == null ? 0 : scrollY}">거래 중</a></li>
+							<li><a href="/mypage/auctions_end_sold?scroll=${scrollY == null ? 0 : scrollY}">판매 완료</a></li>
+							<li><a href="/mypage/auctions_end_bought?scroll=${scrollY == null ? 0 : scrollY}">구매 완료</a></li>
+							<li><a href="/mypage/auctions_break?scroll=${scrollY == null ? 0 : scrollY}">파기 상품</a></li>
+							<li><a href="/mypage/auctions_fail?scroll=${scrollY == null ? 0 : scrollY}">유찰 상품</a></li>
+							<li><a href="/mypage/favors_list?scroll=${scrollY == null ? 0 : scrollY}">찜 상품</a></li>
 						</ul>
 					</div>
 					<div class="mypageDetailMenu">
 						<div>내 정보</div>
 						<ul>
-							<li><a href="/mypage/favors_list/fix">관심 지역 수정</a></li>
-							<li><a href="/mypage/pwd/change">비밀번호 수정</a></li>
-							<li><a href="/mypage/qnas">문의 내역</a></li>
+							<li><a href="/mypage/favors_list/fix?scroll=${scrollY == null ? 0 : scrollY}">관심 지역 수정</a></li>
+							<li><a href="/mypage/pwd/change?scroll=${scrollY == null ? 0 : scrollY}">비밀번호 수정</a></li>
+							<li><a href="/mypage/qnas?scroll=${scrollY == null ? 0 : scrollY}">문의 내역</a></li>
 						</ul>
 					</div>
 					<div id="cancelMenu">회원 탈퇴</div>
 				</div>
+				<!-- /마이페이지 메뉴 -->
+				<!-- 마이페이지 페이지 출력 -->
 				<div id="mypageList">
 					<c:if test='${menuTab == 0 && menuNum == 0}'>
-						<%@ include file="/WEB-INF/views/mypage/auctions.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/auctions.jsp" %> <!-- 경매 중 -->
 					</c:if>
 					<c:if test='${menuTab == 0 && menuNum == 1}'>
-						<%@ include file="/WEB-INF/views/mypage/auctions_ing.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/auctions_ing.jsp" %> <!-- 거래 중 -->
 					</c:if>
 					<c:if test='${menuTab == 0 && menuNum == 2}'>
-						<%@ include file="/WEB-INF/views/mypage/auctions_end_sold.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/auctions_end_sold.jsp" %> <!-- 판매 완료 -->
 					</c:if>
 					<c:if test='${menuTab == 0 && menuNum == 3}'>
-						<%@ include file="/WEB-INF/views/mypage/auctions_end_bought.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/auctions_end_bought.jsp" %> <!-- 구매 완료 -->
 					</c:if>
 					<c:if test='${menuTab == 0 && menuNum == 4}'>
-						<%@ include file="/WEB-INF/views/mypage/auctions_break.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/auctions_break.jsp" %> <!-- 파기 상품 -->
 					</c:if>
 					<c:if test='${menuTab == 0 && menuNum == 5}'>
-						<%@ include file="/WEB-INF/views/mypage/auctions_fail.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/auctions_fail.jsp" %> <!-- 유찰 상품 -->
 					</c:if>
 					<c:if test='${menuTab == 0 && menuNum == 6}'>
-						<%@ include file="/WEB-INF/views/mypage/favors_list.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/favors_list.jsp" %> <!-- 찜 상품 -->
 					</c:if>
 					<c:if test='${menuTab == 1 && menuNum == 0}'>
-						<%@ include file="/WEB-INF/views/mypage/favor_area_fix.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/favor_area_fix.jsp" %> <!-- 관심 지역 수정 -->
 					</c:if>
 					<c:if test='${menuTab == 1 && menuNum == 1}'>
-						<%@ include file="/WEB-INF/views/mypage/pwd_change.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/pwd_change.jsp" %> <!-- 비밀번호 수정 -->
 					</c:if>
 					<c:if test='${menuTab == 1 && menuNum == 2}'>
-						<%@ include file="/WEB-INF/views/mypage/qnas_list.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/qnas_list.jsp" %> <!-- 문의 내역 -->
 					</c:if>
 					<c:if test='${menuTab == 1 && menuNum == 3}'>
-						<%@ include file="/WEB-INF/views/mypage/qnas_detail.jsp" %>
+						<%@ include file="/WEB-INF/views/mypage/qnas_detail.jsp" %> <!-- 문의 상세 페이지 -->
 					</c:if>
 				</div>
+				<!-- /마이페이지 페이지 출력 -->
 			</div>
 		</div>
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+	<!-- 회원탈퇴 팝업 창 -->
 	<div id="deleteAccountWindow">
 		<div id="infoInputBox">
 			<div>회원을 탈퇴하시려면 비밀번호를 입력해주세요.</div>
@@ -195,8 +200,9 @@
 			<img id="closeDeleteWindow" src="/resources/images/close_icon.png">
 		</div>
 	</div>
+	<!-- /회원탈퇴 팝업 창 -->
 	<script>
-		// 좌측 메뉴 목록에서 현재 메뉴에 하이라이트
+		// 좌측 메뉴 목록에서 현재 화면에 표시되는 메뉴에 하이라이트
 		const menu = document.getElementsByClassName("mypageDetailMenu");
 		let targetTag = menu[${menuTab}].querySelectorAll("ul>li")[${menuTab == 1 && menuNum == 3 ? 2 : menuNum}]
 		targetTag.querySelector("a").style.color = "#CF5C5C";
@@ -211,20 +217,23 @@
         document.querySelector("#pointBottom>#point").innerHTML = pointVal;
 		document.querySelector("#pointTotalBox>div").innerHTML = totalPointVal;
 
-		// 친밀도 적용
+		// 친밀도 수치 표시
 		let favorVal = ${users_info.users_rel};
 		favorVal = Math.floor(favorVal / 79 * 100);
 		document.getElementById("favorRate").style.width = `${"${favorVal}"}%`;
 		document.getElementById("favorPin").style.left = `calc(${"${favorVal}"}% - 100px)`;
 		
 		// 회원탈퇴
+		// - 회원탈퇴 팝업창 열기
 		$("#cancelMenu").click(function() {
 		    $("#deleteAccountWindow").css("display", "block");
 		    $(window).scrollTop(0);
 		});
+		// - 회원탈퇴 팝업창 닫기
 		$("#closeDeleteWindow").click(function() {
 		    $("#deleteAccountWindow").css("display", "none");
 		});
+		// - 회원탈퇴 기능 수행
 		$("#deleteButton").click(function(){
 		    if(confirm("정말로 회원탈퇴하시겠습니까?")){
 				$.ajax({
@@ -236,14 +245,14 @@
 				    }),
 				    success: function(data){
 						console.log(data);
-						if(data.resultCode == 0){
+						if(data.resultCode == 0){ // 회원탈퇴 성공
 						    alert("회원이 탈퇴되었습니다.");
 						    location.href = "/users/logout";
-						} else if(data.resultCode == 1){
+						} else if(data.resultCode == 1){ // 회원탈퇴 실패 - 비밀번호가 다름
 						    alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
-						} else if(data.resultCode == 2){
+						} else if(data.resultCode == 2){ // 회원탈퇴 실패 - 현재 참여 및 진행 중인 경매가 있음
 						    alert("경매에 참여중이거나, 거래중입니다. 모든 거래가 끝나야 회원탈퇴를 할 수 있습니다.");
-						} else if(data.resultCode == 3){
+						} else if(data.resultCode == 3){ // 회원탈퇴 실패 - 그 외 상황
 						    alert("회원탈퇴에 실패하였습니다. 잠시후에 다시 시도해주세요.");
 						}
 				    }
@@ -255,6 +264,16 @@
 		function goPayment() {
 			location.href = "/payment";
 		}
+		
+		// 목록 페이지 넘어갈 때 스크롤 높이 고정
+		window.scrollTo({top: "${scrollY}"});
+		window.addEventListener("scroll", () => {
+			let scrollVal = window.scrollY;
+			let aTags = document.getElementById("mypageMenu").querySelectorAll("a");
+			for(let aa of aTags){
+			    aa.href = aa.href.substr(0, aa.href.indexOf("scroll=")) + "scroll=" + scrollVal;
+			}
+		});
 	</script>
 </body>
 </html>

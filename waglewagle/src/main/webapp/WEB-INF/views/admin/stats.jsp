@@ -114,7 +114,6 @@
 			"chart21": ${users_gender}
         }
 
-            
 		circleChart("chart1", ChartData.chart1, {
         	Title: "상위 카테고리별 게시글 수"
         });
@@ -143,7 +142,6 @@
 			Title: "성별 가입자 수"
 		});
 		
-		console.log(document.getElementsByClassName("chartMenuButton"));
 		Array.from(document.getElementsByClassName("chartMenuButton")).forEach((item, index) => {
 			item.addEventListener("click", (e) => {
 				Array.from(document.getElementsByClassName("chartMenuButton")).forEach((item, index) => {

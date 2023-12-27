@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/resources/css/admin/qnaview.css"/>
 
 	<script>
-		 //문의글 삭제
+		//문의글 삭제
 		function qnaDelete(qnas_id){
 		    if(confirm("선택한 문의사항을 삭제 하시겠습니까?")==true)  {
 		    	location.href="/admin/qnaDelete/"+qnas_id;  	
@@ -72,7 +72,7 @@
     <div id="center">
         <div id="container">
             <div id="side-box">
-                <div id="notice" onclick="notice()">공지</div>
+				<div id="notice" onclick="notice()">공지</div>
                 <div id="qna" onclick="qna()">문의</div>
                 <div id="showdata" onclick="stats()">통계</div>
                 <div id="adminuser" onclick="user()">회원관리</div>

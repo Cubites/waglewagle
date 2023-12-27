@@ -43,7 +43,7 @@
      			alert("비밀번호 확인을 입력해주세요");
      			return false;
      		}
-     	document.adminpwdchange.submit();
+     		document.adminpwdchange.submit();
      	}
     </script>
 </head> 
@@ -57,6 +57,7 @@
 
     <div id="center">
         <div id="container">
+        
             <div id="side-box">
                 <div id="notice" onclick="notice()">공지</div>
                 <div id="qna" onclick="qna()">문의</div>
@@ -70,6 +71,7 @@
             
             <div id="main-box">
                 <div id="plus">
+                
                     <div id="head-plus">
 	                   	<div>
 	                   		비밀번호 변경
@@ -91,6 +93,7 @@
 	                        <button type="button" id="changebtn" onclick="changePwd()">비밀번호 변경</button>
 	                  </form>
                     </div>
+                    
                 </div>
             </div>
             

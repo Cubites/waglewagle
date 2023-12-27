@@ -70,19 +70,17 @@
                 <!-- 관리자 추가 버튼  -->
 				<div>
 					<input type="button" id="writebtn" value="관리자추가" onclick="adminjoin()">
-                 </div>
+                </div>
                  
                  <!-- 회원 리스트 -->
                 <div class="noticelist">	
                     <table class="nlist">
-
                         <colgroup>
                             <col width="120px" />
                             <col width="120px" />
                             <col width="120px" />
                             <col width="120px" />
                         </colgroup>
-
                         <thead>
                             <tr>
                                 <th>번호</th>
@@ -91,17 +89,13 @@
                                 <th>삭제하기</th>
                             </tr>
                         </thead>
-                        
-                        <tbody>
-
-                        
+                        <tbody>                        
                         	<c:if test="${ListData == null }">
 	                            <tr>
 	                                <td class="nonotice" colspan="4">등록된 관리자가 없습니다.</td>
 	                            </tr>
-                            </c:if> 
-
-                            
+                            </c:if>
+                            <!-- 관리자 계정 목록 반복 -->
     						<c:forEach var="item" items="${ListData}">
 	    						<tr>
 	                                <td>${item.admins_id }</td>
@@ -124,7 +118,7 @@
                                 	</td>
 								</tr>
     						</c:forEach>
-                                    
+                            <!-- /관리자 계정 목록 반복 -->
                         </tbody>
                     </table>
             	</div>
@@ -159,6 +153,7 @@
         </div>
     </div>
     <script>
+    	// 관리자 계정 삭제
     	function deleteAdmin(admins_id){
     	    if(confirm("정말로 해당 관리자 계정을 삭제하시겠습니까?")){
     			$.ajax({
@@ -180,6 +175,7 @@
     	    }
     	}
     	
+    	// 관리자 계정 검색
     	$("#findAdminButton").click(function(){
 			location.href = "/admin/adminmanage?searchWord=" + $("#findAdminWord").val();
     	});

@@ -14,32 +14,31 @@
     <link rel="stylesheet" href="/resources/css/admin/join.css"/>
     <script>
 	    function notice(){
-			   location.href = "/admin/noticelist";
-      }
-      function qna(){
-         location.href = "/admin/qnalist";
-      }
-      function stats(){
-         location.href = "/admin/stats";
-      }
-      function user(){
-         location.href = "/admin/usermanage";
-      }
-      function goods(){
-         location.href = "/admin/goodsmanage";
-      }
-      function admin(){
-         location.href = "/admin/adminmanage";
-      }
-      function password(){
-         location.href = "/admin/changePwd";
-      }
+		   location.href = "/admin/noticelist";
+	    }
+	    function qna(){
+	       location.href = "/admin/qnalist";
+	    }
+	    function stats(){
+	       location.href = "/admin/stats";
+	    }
+	    function user(){
+	       location.href = "/admin/usermanage";
+	    }
+	    function goods(){
+	       location.href = "/admin/goodsmanage";
+	    }
+	    function admin(){
+	       location.href = "/admin/adminmanage";
+	    }
+	    function password(){
+	       location.href = "/admin/changePwd";
+	    }
     </script>
 </head> 
 
 <body>
-
-   <div id="header">
+    <div id="header">
         <div id="headerContainer">
             <br/>
             <img src="/resources/images/log.jpg" title="와글와글 로고"/ onclick="notice()">

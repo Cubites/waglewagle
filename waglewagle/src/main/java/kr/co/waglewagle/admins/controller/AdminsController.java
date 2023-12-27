@@ -9,16 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.waglewagle.admins.service.AdminsService;
 import kr.co.waglewagle.domain.AdminsVO;
-//import kr.co.waglewagle.admins.service.ReplyService;
-import kr.co.waglewagle.domain.NoticesVO;
-import kr.co.waglewagle.domain.UsersVO;
 
 @Controller
 public class AdminsController {
@@ -26,12 +22,7 @@ public class AdminsController {
 	@Autowired
 	private AdminsService service;
 	
-	@GetMapping("/admin/add/session/{admins_id}")
-	public String addAdminSession(HttpSession sess, @PathVariable("admins_id") Integer admins_id) {
-		sess.setAttribute("admins_info", service.addSessionForTest(admins_id));
-		return "redirect:/admin/adminmanage";
-	}
-	
+	// 관리자 계정 목록 페이지 이동(조회 및 검색 포함)
 	@GetMapping("/admin/adminmanage")
 	public String index(Model model, String searchWord, Integer page, Integer scroll) {
 
@@ -67,7 +58,7 @@ public class AdminsController {
 		return "admin/adminmanage";
 	}
 	
-	
+	// 관리자 계정 삭제
 	@ResponseBody
 	@PostMapping("/admin/delete/admin_account")
 	public boolean deleteAdminAccount(HttpSession sess, @RequestBody Map<String, Integer> dataForDeleteAdmin) {
