@@ -28,7 +28,7 @@
 	SET point_total = point_total- #{auctions_end_price} 
 	WHERE users_id = #{auctions_end_buyer};
 	</update>
-	
+	<!--  
 	<delete id="deleteAuctionIng" parameterType="Integer">
 	DELETE FROM auctions_ing WHERE goods_id = #{goods_id}
 	</delete> 
@@ -48,6 +48,6 @@
 	 NOW()
 	)
 	</insert>
-	
+	-->
 	
 </mapper>

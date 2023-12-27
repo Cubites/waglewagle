@@ -74,4 +74,18 @@ public interface AuctionsMapper {
 	
 	Integer updateAuctionIngView(Map<String, Object> map);
 
+	List<GoodsVO> selectBalanceGoods();
+
+	List<Map<String,Object>> selectBalnaceBids(List<GoodsVO> targetGoods);
+
+	List<Map<String,Object>> selectfailGoods(List<GoodsVO> targetGoods);
+
+	Integer insertAuctionIng(List<Map<String,Object>> targetGoods);
+
+	Integer updateSubtractPoint(List<Map<String,Object>> targetGoods);
+
+	Integer insertAuctionsFail(List<Map<String, Object>> failMap);
+
+	List<Map<String,Object>> selectGoodsIngDateExpired();
+
 }

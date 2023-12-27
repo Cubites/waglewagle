@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.waglewagle.goods.mapper.GoodsMapper">
-	<select id="allCategory" resultType="kr.co.waglewagle.domain.CategoryVO">
-		SELECT 
-			category_id, category_upper_id, category_name 
-		FROM category 
+	<select id="allCategory"
+		resultType="kr.co.waglewagle.domain.CategoryVO">
+		SELECT
+		category_id, category_upper_id, category_name
+		FROM category
 		ORDER BY category_id ASC
 	</select>
-	
-	<select id="getLowerCategory" resultType="kr.co.waglewagle.domain.CategoryVO" parameterType="Integer">
-		SELECT * FROM category  WHERE category_upper_id = #{id}
+
+	<select id="getLowerCategory"
+		resultType="kr.co.waglewagle.domain.CategoryVO"
+		parameterType="Integer">
+		SELECT * FROM category WHERE category_upper_id = #{id}
 	</select>
-	
-	<insert id="insertGoods" parameterType="kr.co.waglewagle.goods.won.GoodsFormVO" 
-	 useGeneratedKeys="true" keyProperty="goods_id"> 
+
+	<insert id="insertGoods"
+		parameterType="kr.co.waglewagle.goods.won.GoodsFormVO"
+		useGeneratedKeys="true" keyProperty="goods_id">
 		INSERT INTO goods (
 		goods_title,
 		goods_comment,
@@ -29,54 +33,62 @@
 		,#{goods_comment}
 		,#{goods_start_price}
 		,#{users_id}
-		,#{goods_exp} 
+		,#{goods_exp}
 		,#{goods_th_img}
 		,#{goods_start_price}
 		,#{goods_addr}
 		<choose>
-		<when test="goods_category1 eq 24 or goods_category1 eq 25">
-		   ,#{goods_category1})
-		</when>
-		<otherwise>
-			,#{goods_category2})
-		</otherwise>
+			<when test="goods_category1 eq 24 or goods_category1 eq 25">
+				,#{goods_category1})
+			</when>
+			<otherwise>
+				,#{goods_category2})
+			</otherwise>
 		</choose>
 	</insert>
-	
+
 	<insert id="insertImages" parameterType="map">
-		
-		INSERT INTO 
+
+		INSERT INTO
 		images (
 		goods_id
 		,images_loc)
 		VALUES
 		<foreach collection="imagesList" item="path" separator=",">
-		(
-		#{goods_id}
-		,#{path.fullPath}
-		)
+			(
+			#{goods_id}
+			,#{path.fullPath}
+			)
 		</foreach>
 	</insert>
-	<select id="selectGoodsById" parameterType="Integer" resultType="kr.co.waglewagle.domain.GoodsVO">
+	<select id="selectGoodsById" parameterType="Integer"
+		resultType="kr.co.waglewagle.domain.GoodsVO">
 		SELECT * FROM goods WHERE goods_id = #{goodsId}
 	</select>
-	<select id="selectImagesById" parameterType="Integer" resultType="kr.co.waglewagle.domain.ImagesVO">
+	<select id="selectImagesById" parameterType="Integer"
+		resultType="kr.co.waglewagle.domain.ImagesVO">
 		SELECT * FROM images WHERE goods_id = #{goodsId}
 	</select>
-	<select id="countFavorsByGoodsId" parameterType="Integer" resultType="Integer">
+	<select id="countFavorsByGoodsId" parameterType="Integer"
+		resultType="Integer">
 		SELECT COUNT(*) FROM favors WHERE goods_id = #{goods_id}
 	</select>
-	<select id="countFavorsByUsersId" parameterType="Map" resultType="Integer">
-		SELECT COUNT(*) FROM favors WHERE users_id = #{usersId} AND goods_id = #{goodsId}
+	<select id="countFavorsByUsersId" parameterType="Map"
+		resultType="Integer">
+		SELECT COUNT(*) FROM favors WHERE users_id = #{usersId} AND
+		goods_id = #{goodsId}
 	</select>
-	
-	<insert id="insertFavor" parameterType="Map" >
-		INSERT INTO favors (users_id, goods_id) 
+
+	<insert id="insertFavor" parameterType="Map">
+		INSERT INTO favors
+		(users_id, goods_id)
 		VALUES (#{usersId},#{goodsId})
 	</insert>
 	<delete id="deleteFavor" parameterType="Map">
-		DELETE FROM favors WHERE users_id = #{usersId} AND goods_id = #{goodsId}
+		DELETE FROM favors WHERE
+		users_id = #{usersId} AND goods_id = #{goodsId}
 	</delete>
+
 	
 	<!-- 장원검색 -->
 	<select id="selectGoodsSearch" parameterType="kr.co.waglewagle.goods.won.GoodsPageVO" resultType="map">
@@ -122,5 +134,6 @@
 		LIMIT #{startNum}, #{pageStep}
 	</select>
 	<!-- 장원검색 -->
+
 	
 </mapper>

@@ -57,4 +57,14 @@ public interface AuctionsService {
 	
 	boolean updateAuctionIngView(Map<String, Object>me);
 
+	
+
+	List<GoodsVO> getTargetGoods();
+
+	boolean goodsToAuctionsIng(List<GoodsVO> targetGoods) throws Exception;
+
+	boolean goodsToAuctionsFail(List<GoodsVO> targetGoods);
+
+	List<Map<String, Object>> getGoodsIngDateExpired();
+
 }
