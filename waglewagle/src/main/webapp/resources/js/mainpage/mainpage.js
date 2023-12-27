@@ -19,7 +19,7 @@
     var swiper = new Swiper('.swiper', {
         slidesPerView: 5,
         spaceBetween: 30,
-        loop: true,
+        // loop: false,
         loopAdditionalSlides: 1,
         navigation: {
           nextEl: '.swiper-button-next',
@@ -31,7 +31,7 @@
 	$(function(){
     var swiper = new Swiper('.swiper.banner', {
         slidesPerView: 1,
-        loop: true,
+        // loop: false,
         loopedSlides: 1,
         autoplay:{
         	delay:3000,
