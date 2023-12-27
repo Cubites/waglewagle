@@ -25,11 +25,13 @@
     background: #F1F1F1;
     border: 1px solid #000000;
     border-radius: 10px;
+    border-width:0px;
 }
 #noticetitle{
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
+    border-width:0px;
 }
 #titletxt{
     margin: auto;
@@ -48,22 +50,19 @@
     background: #F1F1F1;
     border: 1px solid #000000;
     border-radius: 20px;
+    border-width:0px;
 }
 #noticecontent{
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
     text-align:left;
+    border-width:0px;
 } 
 .nview{
 	display:flex;
 }
-.f{
-		
-}
-.s{
-	
-}
+
 #contenttxt{
     margin-right: 5px;
 }
@@ -75,6 +74,7 @@
     color: azure;
     font-size: 14px;
     font-stretch: 100;
+    border-width:0px;
 }
 .rightloc{
 	display:flex;

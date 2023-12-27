@@ -38,13 +38,12 @@
 </head> 
 
 <body>
-
-	<div id="header">
-	    <div id="headerContainer">
-	        <br/>
-	        <img src="/resources/images/log.jpg" title="와글와글 로고"/>
-	    </div>
-	</div>
+    <div id="header">
+        <div id="headerContainer">
+            <br/>
+            <img src="/resources/images/log.jpg" title="와글와글 로고"/ onclick="notice()">
+        </div>
+    </div>
 
     <div id="center">
         <div id="container">
@@ -109,7 +108,7 @@
                          	</tr>
                          </table>
 
-                        <button onclick="addAdmin()">추가하기</button>
+                        <button id="joinbtn" onclick="addAdmin()">추가하기</button>
                     </div>
                 </div>
             </div>
