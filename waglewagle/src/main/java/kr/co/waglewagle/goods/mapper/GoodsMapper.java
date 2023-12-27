@@ -25,8 +25,5 @@ public interface GoodsMapper {
 	Integer deleteFavor(Map<String, Integer> favorMap);
 	
 	// 검색
-	List<GoodsVO> selectGoodsByWord(String searchWord);
-	List<GoodsVO> selectGoodsByCategory(Integer categoryId);
-	List<GoodsVO> selectGoodsByBoth(Map<String, Object> search);
-	List<Map<String,Object>> selectGoodsSearch2(GoodsPageVO page);
+	List<Map<String,Object>> selectGoodsSearch(GoodsPageVO page);
 }

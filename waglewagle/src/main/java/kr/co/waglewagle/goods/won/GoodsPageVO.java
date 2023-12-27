@@ -13,7 +13,7 @@ import lombok.ToString;
 public class GoodsPageVO {
 
 	private Integer page;
-	private String searchWord;
+	private String search_word;
 	private Integer category_id;
 	private Integer startNum;
 	private static Integer pageStep = 20;
@@ -21,11 +21,14 @@ public class GoodsPageVO {
 	private Long totalrowsCnt;
 	
 	private List<Map<String,Object>> goodsList;
+	
+	private String sorting_type;
 
-	public GoodsPageVO(Integer page, Integer category, String searchWord) {
+	public GoodsPageVO(Integer page, Integer category, String search_word, String sorting_type) {
 		this.page = page;
-		this.searchWord = searchWord;
+		this.search_word = search_word;
 		this.category_id = category;
+		this.sorting_type = sorting_type;
 
 		setStartNum();
 	}

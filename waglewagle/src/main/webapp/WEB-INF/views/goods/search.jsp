@@ -14,7 +14,7 @@
 let page="${page.page}";
 let totalPage = "${page.totalPage}";
 let category_id = "${page.category_id}";
-let searchWord = "${page.searchWord}";
+let searchWord = "${page.search_word}";
 
  $(function(){
 	
@@ -55,7 +55,7 @@ let searchWord = "${page.searchWord}";
 		 dataType:"json",
 		 data:{
 			 "pageNum":page+"", 
-			 "searchWord":searchWord, 
+			 "search_word":searchWord, 
 			 "category_id":category_id},
 		contentType:"application/x-www-form-urlencoded;charset=utf-8;",
 		 success: function(data){
@@ -155,12 +155,6 @@ let searchWord = "${page.searchWord}";
 	<div id="center">
 		<div id="container">
 			<div id="searchBar">
-					<!-- <img id="check_img" alt="" src="/resources/images/category_check.png">
-					카테고리 1
-					<img id="tri_img" alt="" src="/resources/images/category_tri.png">
-					<img id="check_img" alt="" src="/resources/images/category_check.png">
-					카테고리 2
-					<img id="tri_img" alt="" src="/resources/images/category_tri.png"> -->
 				<!-- 토글 -->
 				<select id="category1">
 					<option value="-">1차 카테고리</option>
@@ -173,45 +167,7 @@ let searchWord = "${page.searchWord}";
 				</select>
 				
 				<select id="category2">
-					<option value="">2차 카테고리</option>
-					
-					
-					
-					<%-- <c:choose>
-						<c:when test="${category1_value == 1 }">
-							<option value="2">여성의류</option>
-							<option value="3">남성의류</option>
-							<option value="4">코트</option>
-							<option value="5">어린이</option>
-							<option value="6">신발</option>
-							<option value="7">가방 / 지갑</option>
-							<option value="8">시계</option>
-							<option value="9">주얼리</option>
-							<option value="10">미용</option>
-						</c:when>
-					</c:choose>
-					
-					<c:choose>
-						<c:when test="${category1_value == 11 }">
-							<option value="12">노트북</option>
-							<option value="13">데스크탑</option>
-							<option value="14">웨어러블</option>
-							<option value="15">휴대폰</option>
-							<option value="16">태블릿</option>
-							<option value="17">컴퓨터 주변기기</option>
-							<option value="18">카메라</option>
-							<option value="19">콘솔 게임기</option>
-						</c:when>
-					</c:choose>
-					
-					<c:choose>
-						<c:when test="${category1_value == 20 }">
-							<option value="21">소모품</option>
-							<option value="22">옷</option>
-							<option value="23">장난감</option>
-						</c:when>
-					</c:choose> --%>
-					
+					<option value="">2차 카테고리</option>				
 				</select>
 				<input type="hidden" id="category1_value" value="${category1_value}" />
 				
@@ -219,77 +175,82 @@ let searchWord = "${page.searchWord}";
 				
 				<div id="searchBox">
 					<img id="searchIcon" alt="search" src="/resources/images/search.png">	
-					<input id="searchWordByBar" type="text" value="${searchWord }" placeholder="상품명 혹은 거래 제목을 입력해주세요.">
+					<input id="searchWordByBar" type="text" value="${search_word }" placeholder="상품명 혹은 거래 제목을 입력해주세요.">
 				</div>
 			</div>
 			
 			<div id="result_div">
-				<c:if test="${not empty searchCategory }">
-					<c:if test="${searchCategory eq 2 }">
+				<c:if test="${not empty page.category_id }">
+					<c:if test="${page.category_id eq 2 }">
 						<div class="result">'여성의류'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 3 }">
+					<c:if test="${page.category_id eq 3 }">
 						<div class="result">'남성의류'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 4 }">
+					<c:if test="${page.category_id eq 4 }">
 						<div class="result">'코트'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 5 }">
+					<c:if test="${page.category_id eq 5 }">
 						<div class="result">'어린이'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 6 }">
+					<c:if test="${page.category_id eq 6 }">
 						<div class="result">'신발'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 7 }">
+					<c:if test="${page.category_id eq 7 }">
 						<div class="result">'가방/지갑'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 8 }">
+					<c:if test="${page.category_id eq 8 }">
 						<div class="result">'시계'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 9 }">
+					<c:if test="${page.category_id eq 9 }">
 						<div class="result">'주얼리'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 10 }">
+					<c:if test="${page.category_id eq 10 }">
 						<div class="result">'미용'</div>					
 					</c:if>
 					
-					<c:if test="${searchCategory eq 12 }">
+					<c:if test="${page.category_id eq 12 }">
 						<div class="result">'노트북'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 13 }">
+					<c:if test="${page.category_id eq 13 }">
 						<div class="result">'데스크탑'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 14 }">
+					<c:if test="${page.category_id eq 14 }">
 						<div class="result">'웨어러블'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 15 }">
+					<c:if test="${page.category_id eq 15 }">
 						<div class="result">'휴대폰'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 16 }">
+					<c:if test="${page.category_id eq 16 }">
 						<div class="result">'태블릿'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 17 }">
+					<c:if test="${page.category_id eq 17 }">
 						<div class="result">'컴퓨터 주변기기'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 18 }">
+					<c:if test="${page.category_id eq 18 }">
 						<div class="result">'카메라'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 19 }">
+					<c:if test="${page.category_id eq 19 }">
 						<div class="result">'콘솔 게임기'</div>					
 					</c:if>
 					
-					<c:if test="${searchCategory eq 21 }">
+					<c:if test="${page.category_id eq 21 }">
 						<div class="result">'소모품'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 22 }">
+					<c:if test="${page.category_id eq 22 }">
 						<div class="result">'옷'</div>					
 					</c:if>
-					<c:if test="${searchCategory eq 23 }">
+					<c:if test="${page.category_id eq 23 }">
 						<div class="result">'장난감'</div>					
 					</c:if>
 				</c:if>
-				<c:if test="${not empty  searchWord}">
-					<div class="result">'${searchWord }'</div>
+				
+				<c:if test="${not empty page.category_id && not empty page.search_word}">
+					<div class="result">>> </div>
+				</c:if>
+				
+				<c:if test="${not empty  page.search_word}">
+					<div class="result">'${page.search_word }'</div>
 				</c:if>
 				<div id="result_comment">에 대한 검색 결과 입니다.</div>
 			</div>
@@ -328,38 +289,7 @@ let searchWord = "${page.searchWord}";
 						</div>
 					</div>
 				</c:forEach>
-
-				<!--  기존 div
-				<c:forEach var="item" items="${goodsList }">
-					<div class="item">
-	                     <div class="popProduct">
-	                        <div class="productImg">
-	                           <img src="/upload/${item.goods_th_img }">
-	                        </div>
-	                        <div class="productTitle">${item.goods_title }</div>
-	                       	<div class="avgPrice_expDateArea">
-	                        	<div class="avg_expTitle">
-	                        		<div class="avgPriceTitle">평균 입찰가</div>
-		                        	<div class="expTitle">입찰 마감일</div>
-		                        </div>
-		                        <div class="avg_expValue">
-		                        	<div class="productAvgPrice">${item.goods_avg_price }원</div>
-			                        <div class="productExp">
-			                        	${item.goods_exp }
-			                        </div>
-		                        </div>
-	                        </div>
-		                    <div class="leftTime toDetailPage">
-	                        	<div class="leftTimeVal"></div>
-	                        	<input type="hidden" value="${item.goods_id }" class="goodsIdVal">
-		                   	</div>
-	                     </div>      
-					</div>
-					 </c:forEach>
-					 -->
              </div>
-			
-		
 		</div>
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
@@ -367,24 +297,38 @@ let searchWord = "${page.searchWord}";
 	
 		// category1_value를 전역 변수로 선언
 	    var category1_value = $("#category1").val();
+	    var searchText = "";
+	    
+	    // 선택한 정렬 기준 색 바꾸기
+    	const urlParams = new URL(location.href).searchParams;
+	    if (urlParams.get('sorting_type') !== null) {
+	    	document.getElementById(urlParams.get('sorting_type')).style.color = 'red';
+	    }
 		
 		// 검색어까지 입력했을 때만 검색되기
-		$("#searchWordByBar").keyup(function (event) {  	        
+		$("#searchWordByBar").keyup(function (event) {  
 	        if (event.keyCode === 13) {
-	        	var searchText = event.target.value.toLowerCase();
-	    	    var category2_value = $("#category2").val();
-	         	console.log(searchText);  
-	         	console.log(category1_value);
-	         	console.log(category2_value);
-	         	//location.href = "/goods/search?category_id=" + category2_value + "&goods_title=" + searchText;
-	        	//장원 search2
-	         	location.href = "/goods/search2?category_id=" + category2_value + "&searchWord=" + searchText;
+	        	searchText = event.target.value.toLowerCase();
+	        	var category2_value = $("#category2").val();
+	    	    console.log(category2_value, searchText);
+	    	    if (searchText === "") {
+	    	    	alert("검색어를 입력해주세요.")
+	    	    } else {
+		         	location.href = "/goods/search?category_id=" + category2_value + "&search_word=" + searchText;	         		
+	         	}
 	        }
 	    }); 
 		
 		// 정렬하기
-		$("#recent").click(function (event) {
-			console.log(event.target.value)
+		$("#sort_div").click(function (event) {
+			//console.log(event.target.id);
+			const urlParams = new URL(location.href).searchParams;
+			//console.log(urlParams.get('category_id'));
+			var sorting_type = event.target.id;
+			console.log(sorting_type);
+			if (sorting_type !== "sort_div") {
+				location.href = "/goods/search?category_id=" + urlParams.get('category_id') + "&search_word=" + searchWord + "&sorting_type=" + sorting_type;				
+			}
 		})
 		
 		// 초기화 시에도 실행되도록 함수 호출
