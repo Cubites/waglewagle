@@ -18,6 +18,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -36,12 +37,14 @@ import kr.co.waglewagle.admins.util.AdminInterceptor;
 import kr.co.waglewagle.auctions.won.AutionGoodsArgumentResolver;
 import kr.co.waglewagle.users.ty.util.LoginInterceptor;
 import kr.co.waglewagle.users.ty.util.LogoutInterceptor;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @ComponentScan(basePackages = "kr.co.waglewagle")
 @EnableWebMvc
 @MapperScan(basePackages = "kr.co.waglewagle", annotationClass = Mapper.class)
-
+//스케쥴링 실행을 위한 어노테이션
+@EnableScheduling
 @EnableTransactionManagement
 public class WebConfig implements WebMvcConfigurer {
 	
@@ -123,7 +126,6 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean(destroyMethod = "close")
 	public HikariDataSource dataSource() {
 		HikariDataSource dataSource = new HikariDataSource();
-
 		dataSource.setDriverClassName(driver);
 		dataSource.setJdbcUrl(url);
 		dataSource.setUsername(username);
