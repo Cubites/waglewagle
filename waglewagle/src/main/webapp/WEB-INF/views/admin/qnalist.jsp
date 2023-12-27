@@ -43,7 +43,7 @@
 	<div id="header">
         <div id="headerContainer">
             <br/>
-            <img src="/resources/images/log.jpg" title="와글와글 로고 "/>
+            <img src="/resources/images/log.jpg" title="와글와글 로고 "/ onclick="notice()">
         </div>
     </div>
 
@@ -126,7 +126,7 @@
                     	<ul class="paging">
                     	<li class="pg">
                     	<c:if test="${map.prev}">
-                    		<a href="/admin/qnalist?page=${map.startPage-1}&searchWord=${QnasVO.searchWord}">이전</a>
+                    		<a href="/admin/qnalist?page=${map.startPage-1}&searchWord=${qnasVO.searchWord}">이전</a>
                     	</c:if></li>
                     	
                     	
@@ -141,7 +141,7 @@
 
 						<li class="pg">
 						<c:if test="${map.next}">
-                    		<a href="/admin/qnalist?page=${map.endPage+1}&searchWord=${QnasVO.searchWord}">다음</a>
+                    		<a href="/admin/qnalist?page=${map.endPage+1}&searchWord=${qnasVO.searchWord}">다음</a>
                     	</c:if></li>
                     </ul>
                    </div>

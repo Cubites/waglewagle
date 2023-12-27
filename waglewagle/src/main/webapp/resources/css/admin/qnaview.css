@@ -68,14 +68,12 @@
 #main-box {
     width: 85%;
     height: 100%;
-    /* border: 1px solid #999; */
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-
 .noticeView{
 	text-align: center;
 }
@@ -87,46 +85,64 @@
     background: #F1F1F1;
     border: 1px solid #000000;
     border-radius: 10px;
+    border-width:0px;
 }
 #noticetitle{
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
+    border-width:0px;
 }
-#titletxt{
-    margin: auto;
-    margin-right: 5px;
-}
-/* #noticedate{
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 20px;
-    width: 500px;
-    height: 50px;
+#qnaReply{
+	width: 500px;
+    height: 100px;
     box-sizing: border-box;
     padding-left: 10px;
     background: #F1F1F1;
     border: 1px solid #000000;
     border-radius: 10px;
-} */
+    border-width:0px;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    border-width:0px;
+}
+#titletxt{
+    margin: auto;
+    margin-right: 5px;
+}
 #datetxt{
     margin: auto;
     margin-right: 5px;
 }
+#ct{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#ct2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 #noticecontent{
     box-sizing: border-box;
     width: 500px;
-    height: 200px;
+    height: 100px;
     padding-left: 10px;
     padding-top: 10px;
     background: #F1F1F1;
     border: 1px solid #000000;
     border-radius: 20px;
+    border-width:0px;
 }
 #noticecontent{
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
+    border-width:0px;
 } 
 #contenttxt{
     margin-right: 5px;
@@ -140,6 +156,7 @@
     background: #F1F1F1;
     border: 1px solid #000000;
     border-radius: 20px;
+    border-width:0px;
 }
 #modifybtn{
     width: 150px;
@@ -171,7 +188,10 @@
 .qview{
 	display:flex;
 }
+.qview3{
+	display:flex;
+	margin-bottom:20px
+}
 .qview2{
 	display:flex;
-	margin-top:10px;
 }
