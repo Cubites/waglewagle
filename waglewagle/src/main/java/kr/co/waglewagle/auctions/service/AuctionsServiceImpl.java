@@ -1,5 +1,6 @@
 package kr.co.waglewagle.auctions.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,14 +37,14 @@ public class AuctionsServiceImpl implements AuctionsService {
 	private PaymentMapper payMapper;
 
 	@Override
-	public Map<String, String> getAuctionIngGoods(int users_id, int goods_id) {
+	public Map<String, String> getAuctionIngGoods(Integer users_id, Integer goods_id) {
 		// 물품 정보 가져오기
 		return mapper.getAuctionIngInfo(goods_id);
 	}
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void completeAuction(int goods_id) {
+	public void completeAuction(Integer goods_id) {
 		// 1. 거래 중 테이블에서 데이터 찾기
 		AuctionsIngVO ingVO = mapper.getAunctionIngData(goods_id);
 		// 2. 거래 완료 테이블에 추가
@@ -60,7 +61,7 @@ public class AuctionsServiceImpl implements AuctionsService {
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public boolean saveReport(ReportsVO vo) {
+	public boolean saveReport(ReportsVO vo, Integer user_id) {
 
 		// 이미 신고된 물품인지 확인하기 -> 신고되지 않은 물품이어야 함.
 		int goods_id = vo.getGoods_id();
@@ -80,14 +81,19 @@ public class AuctionsServiceImpl implements AuctionsService {
 		// 경매 파기 테이블에 데이터 추가
 		AuctionsBreakVO breakVO = new AuctionsBreakVO();
 		breakVO.setAuctions_break_user(ingVO.getAuctions_ing_seller());
-		//vo.getReports_content().split(" - ")[1]
 		breakVO.setAuctions_break_reason(Integer.parseInt(vo.getReports_content().split(" - ")[0]));
 		breakVO.setAuctions_break_detail(vo.getReports_content().split(" - ")[1]);
 		breakVO.setGoods_id(ingVO.getGoods_id());
 		mapper.saveAuctionBreak(breakVO);
 		// 거래 중 테이블에서 데이터 삭제
 		mapper.deleteAuctionIngData(ingVO.getAuctions_ing_id());
-
+		// 신고자에게 낙찰가 돌려주기 (신고자랑 거래 중 낙찰자랑 일치해야 함)
+		if (user_id == ingVO.getAuctions_ing_buyer()) {
+			Map<String, Integer> backToBuyer = new HashMap<>();
+			backToBuyer.put("user_id", user_id);
+			backToBuyer.put("price", ingVO.getAuctions_ing_price());
+			mapper.returnToBuyer(backToBuyer);
+		}
 		return true;
 	}
 
