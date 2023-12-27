@@ -46,7 +46,8 @@
 	align-items: center;
 }
 .productImg > img{
-	width: 60%;
+	 width: 60%; 
+
 }
 .productAddrArea{
 	margin-top:10px;
@@ -206,15 +207,21 @@
 	height: 100%;
 }
 .swiper-slide {
+	width:100%;
 	text-align: center;
 	font-size: 18px;
 	background: #fff;
-	height:98%;
+	height:450px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	border-radius: 25px;
-	width:100vw;
+	/* width:100vw; */
+	overflow: hidden;
+}
+.swiper-slide > img{
+	height:100%;
+	object-fit: cover;
 }
 .relative{
 	position:relative;
