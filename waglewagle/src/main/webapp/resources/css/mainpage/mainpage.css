@@ -235,7 +235,7 @@
 	align-items: center;
 }
 
-<!-- swiper -->
+/* swiper */
 
 .swiper {
 	width: 100%;
@@ -261,14 +261,15 @@
 	width:13%;
 }
 @media (max-width: 760px) {
-.swiper-button-next {
-	right: 20px;
-	transform: rotate(90deg);
+	.swiper-button-next {
+		right: 20px;
+		transform: rotate(90deg);
+	}
+
+	.swiper-button-prev {
+		left: 20px;
+		transform: rotate(90deg);
+	}
 }
 
-.swiper-button-prev {
-	left: 20px;
-	transform: rotate(90deg);
-}
-
-<!-- swiper -->
+/* swiper */
