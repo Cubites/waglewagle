@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,24 +13,29 @@
 	<div id="auctionsContainer">
 		<div id="acTitle">'<span>${users_info.users_nick}</span>'님의 거래 파기 목록</div>
 		<div id="itemsList">
-			<!-- 반복 -->
-			<c:forEach var="item" items="${ListData}">
-				<a class="itemBox" href="#">
-					<img class="wayMark" src='/resources/images/sell_icon.png'>
-					<div 
-						class="thumbnailBox"
-						style="background-image: url('/resources/images/${item.goods_th_img}')"
-					>
-						<img class="stampImg" src="/resources/images/auctions_break_icon.png">
-					</div>
-					<div class="itemTitle">${item.goods_title}</div>
-					<div class="varPriceBox"></div>
-					<div class="staticValuesBox">
-						<p>거래파기일 : <fmt:formatDate value="${item.auctions_break_date}" pattern="yyyy.MM.dd"/></p>
-					</div>
-				</a>
-			</c:forEach>
-			<!-- /반복 -->
+			<c:if test="${fn:length(ListData) == 0}">
+				<div id="noItems">파기된 상품이 없습니다.</div>
+			</c:if>
+			<c:if test="${fn:length(ListData) != 0}">
+				<!-- 파기 상품 반복 -->
+				<c:forEach var="item" items="${ListData}">
+					<a class="itemBox" href="#">
+						<img class="wayMark" src='/resources/images/sell_icon.png'>
+						<div 
+							class="thumbnailBox"
+							style="background-image: url('/resources/images/${item.goods_th_img}')"
+						>
+							<img class="stampImg" src="/resources/images/auctions_break_icon.png">
+						</div>
+						<div class="itemTitle">${item.goods_title}</div>
+						<div class="varPriceBox"></div>
+						<div class="staticValuesBox">
+							<p>거래파기일 : <fmt:formatDate value="${item.auctions_break_date}" pattern="yyyy.MM.dd"/></p>
+						</div>
+					</a>
+				</c:forEach>
+				<!-- /파기 상품 반복 -->
+			</c:if>
 		</div>
 		<!-- pagination -->
 		<div id="pagingBox">
@@ -57,6 +63,7 @@
 		<!-- /pagination -->
 	</div>
 	<script>
+		// 목록 페이지 넘어갈 때 스크롤 높이 고정
 		window.scrollTo({top: "${scrollY}"});
 		window.addEventListener("scroll", () => {
 			let scrollVal = window.scrollY;

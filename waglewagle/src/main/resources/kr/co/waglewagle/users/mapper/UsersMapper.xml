@@ -149,7 +149,7 @@
 		UPDATE users
 		SET users_rel = #{rel}
 		WHERE users_id = #{users_id}
-	</select>
+	</update>
 	
 	<!-- 문의 읽음으로 업데이트 -->
 	<update id="readQna" parameterType="int">

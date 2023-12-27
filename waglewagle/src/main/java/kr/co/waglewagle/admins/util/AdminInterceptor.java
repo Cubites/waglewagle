@@ -62,8 +62,6 @@ public class AdminInterceptor implements HandlerInterceptor {
 			result = false;
 			
 		}else {
-//			System.out.println(admin.getAdmins_role());
-//			System.out.println(adminGrade.get(request.getRequestURI())); 
 			String[] paths = request.getRequestURI().split("/");
 			String path = "";
 			for (int i=1; i<paths.length; i++) {

@@ -105,34 +105,32 @@
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
         
-            <div id="main-box">
-            	<div class="noticeView">        		
-            	   <p style="font-size:15px" class="noticeinfo" id="qnas_id">글번호: ${a.qnas_id } &nbsp&nbsp 작성일: ${a.qnas_date }</p>
-            	   <!-- 작성자 -->
-            	   <div>
-            	   <p id="titletxt">작성회원</p>
-                   <div id="noticetitle">
-                       ${a.users_id}
-                   </div>
-                   </div>
-            	   <!-- 제목 -->
-            	   <div>
-            	   <p id="titletxt">문의제목</p>
-                   <div id="noticetitle">
-                       ${a.qnas_title}
-                   </div>
-                   </div>
-                   <!-- 내용 -->
-                   <div>
-                   <p id="titletxt">문의내용</p>
-                   <div id="noticecontent">
-                       <!-- <p id="contenttxt">내용</p> -->
-                       ${a.qnas_content}
-                   </div>
-                   </div>
+			<div id="main-box">
+				<div class="noticeView">        		
+					<p style="font-size:15px" class="noticeinfo" id="qnas_id">글번호: ${a.qnas_id} &nbsp&nbsp 작성일: ${a.qnas_date}</p>
+					<!-- 작성자 -->
+					<div>
+					<p id="titletxt">작성회원</p>
+						<div id="noticetitle">
+		              		${a.users_id}
+						</div>
+					</div>
+					<!-- 제목 -->
+					<div>
+						<p id="titletxt">문의제목</p>
+						<div id="noticetitle">${a.qnas_title}</div>
+					</div>
+					<!-- 내용 -->
+					<div>
+			            <p id="titletxt">문의내용</p>
+			            <div id="noticecontent">
+			                <!-- <p id="contenttxt">내용</p> -->
+			                ${a.qnas_content}
+			            </div>
+                	</div>
 
             		<!-- 버튼들 -->
-            		<div class="writebtn">
+					<div class="writebtn">
             			<!-- 공지 상세페이지 버튼들  -->
 						<div id="notice_button">
 				            <!-- <input type="button" id="writebtn" value="답변작성" onclick="qnaReply()"> -->
@@ -142,9 +140,9 @@
             		</div>
             		
 
-            		<c:if test="${empty a.qnas_reply }">
+            		<c:if test="${empty a.qnas_reply}">
 	            		<!-- 답변 -->
-	            		<form method="post" action="/admin/writeReply/${qnas_id }">
+	            		<form method="post" action="/admin/writeReply/${qnas_id}">
 	            			<div id="replyText">
 	            				<textarea id="title" name="qnas_reply" placeholder="문의답글을 작성하세요"></textarea>
 	            			</div>
@@ -158,7 +156,7 @@
             	 	
             	 	<c:if test="${!empty a.qnas_reply}">
             	 	
-            	 		<form method="post" action="/admin/writeReply/${qnas_id }">
+            	 		<form method="post" action="/admin/writeReply/${qnas_id}">
 	            			<div id="replyText">
 	            				<textarea id="title" name="qnas_reply" placeholder="문의답글을 작성하세요"></textarea>
 	            			</div>

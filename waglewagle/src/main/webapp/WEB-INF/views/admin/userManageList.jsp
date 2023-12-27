@@ -86,17 +86,16 @@
             
             	<!-- 회원 검색 -->
             	<div id="plus"> 회원검색 &nbsp;
-                 <form method="get" name="searchForm" id="searchForm" action="/admin/userManageList">
-                	<input type="text" id="sUsers" name="searchWord" value="${UsersVO.searchWord}" placeholder="회원 이름 검색"> &nbsp;&nbsp;
-                	<input type="submit" id="searchbtn" value="검색" title="검색">
+                 	<form method="get" name="searchForm" id="searchForm" action="/admin/userManageList">
+                		<input type="text" id="sUsers" name="searchWord" value="${UsersVO.searchWord}" placeholder="회원 이름 검색"> &nbsp;&nbsp;
+                		<input type="submit" id="searchbtn" value="검색" title="검색">
                 	</form>
                 </div>
 
                  
-                 <!-- 회원 리스트 -->
+                <!-- 회원 리스트 -->
                 <div class="noticelist">	
                     <table class="nlist">
-
                         <colgroup>
                             <col width="80px" />
                             <col width="*" />
@@ -104,7 +103,6 @@
                             <col width="100px" />
                             <col width="100px" />
                         </colgroup>
-
                         <thead>
                             <tr>
                                 <th>번호</th>
@@ -114,10 +112,7 @@
                                 <th>정지여부</th>
                             </tr>
                         </thead>
-                        
                         <tbody>
-                        
-                        
                         <c:if test="${empty list }">
                         	<tr>
                         		<td colspan="5">가입한 회원이 없습니다..</td>
@@ -140,34 +135,36 @@
 									<button onclick="userStatus(2,${UsersVO.users_id})" id="button1${UsersVO.users_id}" class="${UsersVO.users_status !=1 ? 'hiddenClass':''}">접근금지</button>
 									<button onclick="userStatus(0,${UsersVO.users_id})" id="button2${UsersVO.users_id}" class="${UsersVO.users_status !=2 ? 'hiddenClass':''}">탈퇴회원</button>
 								</td>
-                  		  </tr>
+							</tr>
                         </c:forEach>
                         </tbody>
                     </table>
-                       <div id="pp">
+					<div id="pp">
                     	<ul class="paging">
-                    	<li class="pg">
-                    	<c:if test="${prev}">
-                    		<a href="/admin/userManageList?page=${startPage-1}&searchWord=${UsersVO.searchWord}">이전</a>
-                    	</c:if></li>
-                    	
-                    	
-                    	<c:forEach var="p" begin="${startPage}" end="${endPage}">
-                        	<c:if test="${p == cnt.page}">
-                            <li><a href='#;' class='current'>${p}</a></li>
-                            </c:if>
-                            <c:if test="${p != page}">
-                            <li><a href="/admin/userManageList?page=${p}&searchWord=${usersVO.searchWord}">${p}</a></li>
-                            </c:if>
-                        </c:forEach>
-
-						<li class="pg">
-						<c:if test="${next}">
-                    		<a href="/admin/userManageList?page=${endPage+1}&searchWord=${UsersVO.searchWord}">다음</a>
-                    	</c:if></li>
-                    </ul>
-                   </div>
-            </div>
+	                    	<li class="pg">
+	                    	<c:if test="${prev}">
+	                    		<a href="/admin/userManageList?page=${startPage-1}&searchWord=${UsersVO.searchWord}">이전</a>
+	                    	</c:if>
+	                    	</li>
+	                    	
+	                    	
+	                    	<c:forEach var="p" begin="${startPage}" end="${endPage}">
+	                        	<c:if test="${p == cnt.page}">
+	                            <li><a href='#;' class='current'>${p}</a></li>
+	                            </c:if>
+	                            <c:if test="${p != page}">
+	                            <li><a href="/admin/userManageList?page=${p}&searchWord=${usersVO.searchWord}">${p}</a></li>
+	                            </c:if>
+	                        </c:forEach>
+	
+							<li class="pg">
+							<c:if test="${next}">
+	                    		<a href="/admin/userManageList?page=${endPage+1}&searchWord=${UsersVO.searchWord}">다음</a>
+	                    	</c:if>
+	                    	</li>
+						</ul>
+					</div>
+				</div>
             </div>
         </div>
     </div>
