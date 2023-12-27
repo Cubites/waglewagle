@@ -20,9 +20,9 @@ public class RelCaculateInterceptor implements HandlerInterceptor {
 	
 	@Override
 	public void postHandle(HttpServletRequest req, HttpServletResponse res, Object handler, ModelAndView mv) throws Exception {
-		service.relCalculate(Integer.parseInt((String) req.getAttribute("user1")));
+		service.relCalculate(Integer.parseInt(req.getAttribute("user1") + ""));
 		if(req.getAttribute("user2") != null) {
-			service.relCalculate(Integer.parseInt((String) req.getAttribute("user2")));
+			service.relCalculate(Integer.parseInt(req.getAttribute("user2") + ""));
 		}
 	}
 }

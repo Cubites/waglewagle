@@ -51,10 +51,20 @@ public interface AuctionsService {
 	
 
   
-	Map<String, String> getAuctionIngGoods(int users_id, int goods_id);
-	void completeAuction(int goods_id);
-	boolean saveReport(ReportsVO vo);
+	Map<String, String> getAuctionIngGoods(Integer users_id, Integer goods_id);
+	void completeAuction(Integer goods_id);
+	boolean saveReport(ReportsVO vo, Integer user_id);
 	
 	boolean updateAuctionIngView(Map<String, Object>me);
+
+	
+
+	List<GoodsVO> getTargetGoods();
+
+	boolean goodsToAuctionsIng(List<GoodsVO> targetGoods) throws Exception;
+
+	boolean goodsToAuctionsFail(List<GoodsVO> targetGoods);
+
+	List<Map<String, Object>> getGoodsIngDateExpired();
 
 }

@@ -3,7 +3,7 @@
 <mapper namespace="kr.co.waglewagle.payment.mapper.PaymentMapper">
 	
 	<insert id="savePayment" parameterType="kr.co.waglewagle.domain.PaylogVO">
-		INSERT INTO wagle.paylog (
+		INSERT INTO paylog (
 			users_id, paylog_cash, paylog_type
 		) VALUES (
 			#{users_id}, #{paylog_cash}, #{paylog_type}
@@ -11,7 +11,7 @@
 	</insert>
 
 	<update id="updateTotalPoint" parameterType="kr.co.waglewagle.domain.PaylogVO">
-		UPDATE wagle.point SET
+		UPDATE point SET
 			point_total = point_total + #{paylog_cash},
 			point_usable = point_usable + #{paylog_cash}
 		WHERE users_id=#{users_id}
@@ -28,7 +28,7 @@
 	SET point_total = point_total- #{auctions_end_price} 
 	WHERE users_id = #{auctions_end_buyer};
 	</update>
-	
+	<!--  
 	<delete id="deleteAuctionIng" parameterType="Integer">
 	DELETE FROM auctions_ing WHERE goods_id = #{goods_id}
 	</delete> 
@@ -48,6 +48,6 @@
 	 NOW()
 	)
 	</insert>
-	
+	-->
 	
 </mapper>

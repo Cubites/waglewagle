@@ -82,6 +82,11 @@
 </style>
 
 <script>
+	// 모바일로 접속했는지, 웹으로 접속했는지 확인하기
+	if (navigator.platform !== "Win32") {
+		location.href = "/auctions/${me.goods_id}"; 
+	}
+
 	//모달창에서 거래확정인지, 거래 파기인지 확인하기 위해
 	let modalAction;
 	$(function() {

@@ -110,18 +110,4 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<Map<String,Object>> searchGoods(GoodsPageVO page) {
 		return mapper.selectGoodsSearch(page);
 	}
-	
-//	@Override
-//	public List<Map<String, Object>> sortingGoods(Integer category_id, String searchWord, String sortingType) {
-//		Map<String, Object> searchMap = new HashMap<>();
-//		searchMap.put("searchWord", searchWord);
-//		searchMap.put("category_id", category_id);
-//		if (sortingType == "recent") {
-//			return mapper.selectRecentGoods(searchMap);			
-//		} else if (sortingType == "lower") {
-//			return mapper.selectLowerGoods(searchMap);
-//		} else {
-//			return mapper.selectHigherGoods(searchMap);
-//		}
-//	}
 }

@@ -1,5 +1,6 @@
 package kr.co.waglewagle.auctions.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,12 +23,14 @@ import kr.co.waglewagle.util.hcju.SomeoneAuctionsEndVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsIngVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsVO;
 import kr.co.waglewagle.util.hcju.SomeoneFavorsVO;
+import lombok.extern.slf4j.Slf4j;
 import kr.co.waglewagle.domain.ReportsVO;
 import kr.co.waglewagle.payment.mapper.PaymentMapper;
 import kr.co.waglewagle.goods.mapper.GoodsMapper;
 
 
 @Service
+@Slf4j
 public class AuctionsServiceImpl implements AuctionsService {
 
 	@Autowired
@@ -36,14 +39,14 @@ public class AuctionsServiceImpl implements AuctionsService {
 	private PaymentMapper payMapper;
 
 	@Override
-	public Map<String, String> getAuctionIngGoods(int users_id, int goods_id) {
+	public Map<String, String> getAuctionIngGoods(Integer users_id, Integer goods_id) {
 		// 물품 정보 가져오기
 		return mapper.getAuctionIngInfo(goods_id);
 	}
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void completeAuction(int goods_id) {
+	public void completeAuction(Integer goods_id) {
 		// 1. 거래 중 테이블에서 데이터 찾기
 		AuctionsIngVO ingVO = mapper.getAunctionIngData(goods_id);
 		// 2. 거래 완료 테이블에 추가
@@ -60,7 +63,7 @@ public class AuctionsServiceImpl implements AuctionsService {
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public boolean saveReport(ReportsVO vo) {
+	public boolean saveReport(ReportsVO vo, Integer user_id) {
 
 		// 이미 신고된 물품인지 확인하기 -> 신고되지 않은 물품이어야 함.
 		int goods_id = vo.getGoods_id();
@@ -80,14 +83,19 @@ public class AuctionsServiceImpl implements AuctionsService {
 		// 경매 파기 테이블에 데이터 추가
 		AuctionsBreakVO breakVO = new AuctionsBreakVO();
 		breakVO.setAuctions_break_user(ingVO.getAuctions_ing_seller());
-		//vo.getReports_content().split(" - ")[1]
 		breakVO.setAuctions_break_reason(Integer.parseInt(vo.getReports_content().split(" - ")[0]));
 		breakVO.setAuctions_break_detail(vo.getReports_content().split(" - ")[1]);
 		breakVO.setGoods_id(ingVO.getGoods_id());
 		mapper.saveAuctionBreak(breakVO);
 		// 거래 중 테이블에서 데이터 삭제
 		mapper.deleteAuctionIngData(ingVO.getAuctions_ing_id());
-
+		// 신고자에게 낙찰가 돌려주기 (신고자랑 거래 중 낙찰자랑 일치해야 함)
+		if (user_id == ingVO.getAuctions_ing_buyer()) {
+			Map<String, Integer> backToBuyer = new HashMap<>();
+			backToBuyer.put("user_id", user_id);
+			backToBuyer.put("price", ingVO.getAuctions_ing_price());
+			mapper.returnToBuyer(backToBuyer);
+		}
 		return true;
 	}
 
@@ -169,11 +177,13 @@ public class AuctionsServiceImpl implements AuctionsService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public boolean auctionEnd(Map<String, Object> paramMap) throws Exception {
-
+		
+		/*auctions*/
+		
 		// 1번 auction_end에 등록
 		Integer insertAuctionsEndResult = mapper.insertAuctionEnd(paramMap);
 
-		// 2번 auction_buyer에 포인트 auction_seller의 총포인트 + 가용포인트에 올리기
+		// 2번 auction_seller의 총포인트 + 가용포인트에 올리기
 		Integer updateAuctionSellerPointResult = payMapper.updateSellerPoint(paramMap);
 		// 3번 auction_buyer 토탈 에 포인트 차감
 		Integer updateAuctionBuyerPointResult = payMapper.updateBuyerPoint(paramMap);
@@ -206,5 +216,59 @@ public class AuctionsServiceImpl implements AuctionsService {
 		return true;
 	}
 
+	
+
+	@Override
+	public List<GoodsVO> getTargetGoods() {
+		
+		//goods중에 auctions들에 포함 x + access가 0인 goods들 가져오는 메서드
+		return mapper.selectBalanceGoods();
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	public boolean goodsToAuctionsIng(List<GoodsVO> targetGoods) throws Exception {
+		Integer AuctionsIngResult=0;
+		Integer updatePointUsableResult =0;
+		System.out.println("시작");
+		/*
+		 * targetGoods 중 bids에 호가 이력이 있는 goods.users_id (seller), bids.users_id(buyer), goods_id, secondPrice(두번째호가), max(최대호가)
+		 * */
+		List<Map<String,Object>> bidsMap = mapper.selectBalnaceBids(targetGoods);
+		log.info("bidsMap = {}",bidsMap);
+		if(bidsMap.size() > 0) {
+		 AuctionsIngResult = mapper.insertAuctionIng(bidsMap);
+		 //여기서 하는게 맞다 돌려줘야겠다. 
+		 updatePointUsableResult = mapper.updateSubtractPoint(bidsMap);
+		}
+		
+		if(AuctionsIngResult == 0 &&  updatePointUsableResult >0) {
+			throw new Exception("AuctionsResult와 updateResult가 맞지 않습니다.");
+		}
+		System.out.println("끝");
+		return true;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	public boolean goodsToAuctionsFail(List<GoodsVO> targetGoods) {
+		/*호가가 없는 goods의  goods_id, users_id,goods_start_price,goods_date,goods_th_img */
+		List<Map<String,Object>> failMap = mapper.selectfailGoods(targetGoods); 
+		log.info("failMap = {}",failMap);
+		System.out.println("시작");
+		if(failMap.size()>0) {
+			Integer insertFailResult = mapper.insertAuctionsFail(failMap);
+		}
+		System.out.println("끝");
+		return true;
+	}
+
+	@Override
+	public List<Map<String, Object>> getGoodsIngDateExpired() {
+			
+		return mapper.selectGoodsIngDateExpired();
+	}
+	
+	
 	
 }

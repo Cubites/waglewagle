@@ -30,7 +30,7 @@
 	$(function(){
 		var swiper = new Swiper('.swiper.banner', {
 			slidesPerView: 1,
-			loop: true,
+			// loop: false,
 			loopAdditionalSlides: 1,
 			autoplay:{
 				delay:3000,

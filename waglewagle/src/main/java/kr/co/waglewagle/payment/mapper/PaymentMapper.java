@@ -15,6 +15,6 @@ public interface PaymentMapper {
 	int updateTotalPoint(PaylogVO vo);
 	Integer updateSellerPoint(Map<String, Object> paramMap);
 	Integer updateBuyerPoint(Map<String, Object> paramMap);
-	Integer deleteAuctionIng(Integer goods_id);
-	Integer insertAuctionEnd(Map<String, Integer> paramMap);
+//	Integer deleteAuctionIng(Integer goods_id);
+//	Integer insertAuctionEnd(Map<String, Integer> paramMap);
 }

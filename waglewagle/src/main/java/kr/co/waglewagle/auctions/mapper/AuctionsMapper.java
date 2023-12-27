@@ -42,20 +42,21 @@ public interface AuctionsMapper {
 	List<SomeoneFavorsVO> checkFavors(Map<String, Integer> auctionsIngVal);
   
 	// 거래 중인 물품인지 확인하기
-	int checkAuctionIng(int goods_id);
+	int checkAuctionIng(Integer goods_id);
 	// 거래 중 정보 가져오기
-	Map<String, String> getAuctionIngInfo(int goods_id);
+	Map<String, String> getAuctionIngInfo(Integer goods_id);
 	// 거래 중 테이블에서 데이터 꺼내기
-	AuctionsIngVO getAunctionIngData(int goods_id);
+	AuctionsIngVO getAunctionIngData(Integer goods_id);
 	// 경매 완료 테이블에 저장하기
 	int saveAuctionEnd(AuctionsEndVO vo);
 	// 거래 중 테이블에서 삭제하기
-	int deleteAuctionIngData(int auctions_ing_id);
+	int deleteAuctionIngData(Integer auctions_ing_id);
 	// 신고된 물품인지 확인하기
-	int checkReport(int goods_id);
+	int checkReport(Integer goods_id);
 	// 신고 접수하기
 	int saveReport(ReportsVO vo);
-
+	// 신고자에게 낙찰가 돌려주기
+	int returnToBuyer(Map<String, Integer> backToBuyer);
 
 	Integer checkgoodsInAuctionIng(Integer goods_id);
 	
@@ -72,5 +73,19 @@ public interface AuctionsMapper {
 	int saveAuctionBreak(AuctionsBreakVO vo);
 	
 	Integer updateAuctionIngView(Map<String, Object> map);
+
+	List<GoodsVO> selectBalanceGoods();
+
+	List<Map<String,Object>> selectBalnaceBids(List<GoodsVO> targetGoods);
+
+	List<Map<String,Object>> selectfailGoods(List<GoodsVO> targetGoods);
+
+	Integer insertAuctionIng(List<Map<String,Object>> targetGoods);
+
+	Integer updateSubtractPoint(List<Map<String,Object>> targetGoods);
+
+	Integer insertAuctionsFail(List<Map<String, Object>> failMap);
+
+	List<Map<String,Object>> selectGoodsIngDateExpired();
 
 }

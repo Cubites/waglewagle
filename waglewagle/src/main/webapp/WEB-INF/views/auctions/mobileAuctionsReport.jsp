@@ -110,7 +110,7 @@
 				$.ajax({
 					type: "post",
 					async: true,
-					url: "/auctions/report/" + goods_id,
+					url: "/auctions/report/comfirm/" + goods_id,
 					dataType: "text",
 					data : {
 						report_data: report_data
