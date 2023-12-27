@@ -38,6 +38,7 @@
 		function password(){
 			 location.href = "/admin/changePwd";
 		}
+		
  		/* 리스트에서 공지 삭제하기 */
 		function noticeDelete(notices_id){
 		    if(confirm("선택한 공지를 정말로 삭제 하시겠습니까?")==true){
@@ -50,7 +51,7 @@
 	<div id="header">
         <div id="headerContainer">
             <br/>
-            <img src="/resources/images/log.jpg" title="와글와글 로고 "/>
+            <img src="/resources/images/log.jpg" title="와글와글 로고 "/ onclick="notice()">
         </div>
     </div>
 
@@ -66,22 +67,15 @@
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
             <div id="main-box">
-                    <!-- 검색 -->
-             	<div id="plus"> 검색 
-             	 <form method="get" name="searchForm" id="searchForm" action="/admin/noticelist">
-                    <span class="searchWord">
-                	 <input type="text" id="sNotice" name="searchWord" value="${noticesVO.searchWord}"  title="검색어입력하세요." placeholder="검색할 제목을 입력하세요.">
-                	 <input type="submit" id="" value="검색" title="검색">
-                	</span>
-                 </form>
-               </div>
+				<!-- 검색 -->
+             	<div id="plus">공지검색 &nbsp;
+					<form method="get" name="searchForm" id="searchForm" action="/admin/noticelist">
+						<input type="text" id="sNotice" name="searchWord" value="${noticesVO.searchWord}"  title="검색어입력하세요." placeholder="제목을 입력하세요.">&nbsp;&nbsp;
+						<input type="submit" id="searchbtn" value="검색" title="검색">
+					</form>
+				</div>
                 
-                <!-- 공지작성 버튼  -->
-				<div id="notice_button">
-					<input type="button" id="writebtn" value="공지작성" onclick="noticewrite()">
-                 </div>
-                 
-                 <!-- 공지리스트 -->
+                <!-- 공지리스트 -->
                 <div class="noticelist">	
                     <table class="nlist">
 
@@ -123,29 +117,41 @@
                         		<!-- 작성자 -->
                         		<td>${NoticesVO.admins_id}</td>
                         		<!-- 삭제버튼 -->
-                        		<td><a href="#;" role="button" onclick="noticeDelete(${NoticesVO.notices_id })">삭제하기</a></td>
+                        		<td><a href="#;" role="button" type="button" id="delbtn" onclick="noticeDelete(${NoticesVO.notices_id })">삭제하기</a></td>
                         	</tr>
                         </c:forEach>
                         </tbody>
                     </table>
-                    <div>
+                    
+					<!--공지작성 버튼 -->
+					<div>
+						<div id="notice_button">
+							<input type="button" id="writebtn" value="공지작성" onclick="noticewrite()">
+						</div>
+					</div>
+                    
+                    <div id="pp">
                     	<ul class="paging">
-                    	<c:if test="${prev}">
-                    		<li><a href="/admin/noticelist?page=${startPage-1}&searchWord=${noticesVO.searchWord}">이전</a></li>
-                    	</c:if>
-                    	
-                    	<c:forEach var="p" begin="${startPage}" end="${endPage}">
-                            <c:if test="${p != NoticesVO.page}">
-                            <li><a href="/admin/noticelist?page=${p}&searchWord=${noticesVO.searchWord}">${p}</a></li>
-                            </c:if>
-                        </c:forEach>
-
-						<c:if test="${next}">
-                    		<li><a href="/admin/noticelist?page=${map.endPage+1}&searchWord=${noticesVO.searchWord}">이후</a></li>
-                    	</c:if>
-                    </ul>
-                    </div>
-            </div>
+	                    	<li class="pg">
+		                    	<c:if test="${prev}">
+	                    		<a href="/admin/noticelist?page=${startPage-1}&searchWord=${noticesVO.searchWord}">이전</a>
+		                    	</c:if>
+	                    	</li>
+	                    	
+	                    	<c:forEach var="p" begin="${startPage}" end="${endPage}">
+	                            <c:if test="${p != NoticesVO.page}">
+	                            <li><a href="/admin/noticelist?page=${p}&searchWord=${noticesVO.searchWord}">${p}</a></li>
+	                            </c:if>
+	                        </c:forEach>
+	
+							<li class="pg">
+							<c:if test="${next}">
+	                    		<a href="/admin/noticelist?page=${map.endPage+1}&searchWord=${noticesVO.searchWord}">이후</a>
+	                    	</c:if></li>
+	                    </ul>
+					</div>
+                    
+            	</div>
             </div>
         </div>
     </div>

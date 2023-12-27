@@ -89,61 +89,49 @@
 		users_id = #{usersId} AND goods_id = #{goodsId}
 	</delete>
 
-	<select id="selectGoodsByWord" parameterType="String"
-		resultType="kr.co.waglewagle.domain.GoodsVO">
-		SELECT * FROM goods WHERE goods_title LIKE CONCAT('%',
-		#{searchWord}, '%') AND goods_exp >= now();
-	</select>
-
-	<select id="selectGoodsByCategory" parameterType="Integer"
-		resultType="kr.co.waglewagle.domain.GoodsVO">
-		SELECT * FROM goods WHERE category_id = #{categoryId} AND
-		goods_exp >= now();
-	</select>
-
-	<select id="selectGoodsByBoth" parameterType="Map"
-		resultType="kr.co.waglewagle.domain.GoodsVO">
-		SELECT * FROM goods
-		WHERE category_id = #{categoryId}
-		AND goods_title LIKE CONCAT('%', #{searchWord}, '%')
-		AND goods_exp >= now();
-	</select>
-
-
+	
 	<!-- 장원검색 -->
-	<select id="selectGoodsSearch2"
-		parameterType="kr.co.waglewagle.goods.won.GoodsPageVO"
-		resultType="map">
-		SELECT
-		goods_id,goods_title,goods_exp,goods_date,goods_th_img,goods_avg_price,
-
+	<select id="selectGoodsSearch" parameterType="kr.co.waglewagle.goods.won.GoodsPageVO" resultType="map">
+		SELECT goods_id,goods_title,goods_exp,goods_date,goods_th_img,goods_avg_price,
+		
 		(
-		SELECT COUNT(*) FROM goods
-		<where>
-			<if test="category_id != null">
-				AND category_id=#{category_id}
-			</if>
-
-			<if test="!searchWord.equals('')">
-				AND goods_title LIKE CONCAT('%', #{searchWord}, '%')
-			</if>
-		</where>
+			SELECT COUNT(*) FROM goods 
+	<where>
+		<if test="category_id != null">
+			AND category_id=#{category_id}
+		</if>
+		
+		<if test="!search_word.equals('')">
+			AND goods_title LIKE CONCAT('%', #{search_word}, '%') 
+		</if>
+	</where>
 		) as totalCnt
-
-		FROM goods
-
-		<where>
-			<if test="category_id != null">
-				AND category_id=#{category_id}
-			</if>
-
-			<if test="!searchWord.equals('')">
-				AND goods_title LIKE CONCAT('%', #{searchWord}, '%')
-			</if>
-		</where>
-
-		ORDER BY goods_id
-		LIMIT #{startNum}, #{pageStep};
+		
+		FROM goods 
+	
+	<where>
+		<if test="category_id != null">
+			AND category_id=#{category_id}
+		</if>
+		
+		<if test="!search_word.equals('')">
+			AND goods_title LIKE CONCAT('%', #{search_word}, '%') 
+		</if>
+		AND goods_exp >= now()
+	</where>
+	<choose>
+		<when test="sorting_type == null or sorting_type == ''">
+			ORDER BY goods_id
+		</when>
+		<otherwise >
+			ORDER BY 
+			<if test="sorting_type.equals('recent')">goods_date</if>
+			<if test="sorting_type.equals('lower')">goods_avg_price</if>
+			<if test="sorting_type.equals('higher')">goods_avg_price DESC</if>
+			
+		</otherwise>
+	</choose>
+		LIMIT #{startNum}, #{pageStep}
 	</select>
 	<!-- 장원검색 -->
 

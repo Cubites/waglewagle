@@ -122,11 +122,8 @@
 		// 검색어 입력하고 엔터키 눌렀을 때
         $("#searchWord").keyup(function (event) {  
             var searchText = event.target.value.toLowerCase();  
-            if (event.keyCode === 13) {
-             	console.log(searchText);  
-             	//location.href = "/goods/search/word?goods_title=" + searchText;
-            	//장원
-            	let encode= encodeURI("/goods/search2?searchWord="+searchText);
+            if (event.keyCode === 13) {  
+            	let encode= encodeURI("/goods/search?searchWord="+searchText);
              	location.href= encode;
             }
         });  
@@ -134,10 +131,7 @@
 		// 카테고리 눌렀을 때
 		$(".category").click(function (event) {  
             var searchCategory = event.target.value;  
-           	console.log(searchCategory);  
-          //location.href = "/goods/search/category?category_id=" + searchCategory;
-           	//장원
-           	location.href= "/goods/search2?category_id="+searchCategory;
+           	location.href= "/goods/search?category_id="+searchCategory;
 
         }); 
 		

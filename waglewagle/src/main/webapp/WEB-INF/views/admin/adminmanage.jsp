@@ -62,27 +62,25 @@
             <div id="main-box">
             
             	<!-- 회원 검색 -->
-                <div id="plus"> 검색 
-                	<input type="text" size="20" id="findAdminWord"> 
-                	<button id="findAdminButton">조회하기</button>
+                <div id="plus"> 관리자 검색 &nbsp;
+                	<input type="text" size="20" id="findAdminWord" placeholder="관리자 이름 검색">  &nbsp;&nbsp;
+                	<button id="findAdminButton" >검색</button>
                 </div>
                 
                 <!-- 관리자 추가 버튼  -->
 				<div>
 					<input type="button" id="writebtn" value="관리자추가" onclick="adminjoin()">
-                 </div>
+                </div>
                  
                  <!-- 회원 리스트 -->
                 <div class="noticelist">	
                     <table class="nlist">
-
                         <colgroup>
                             <col width="120px" />
                             <col width="120px" />
                             <col width="120px" />
                             <col width="120px" />
                         </colgroup>
-
                         <thead>
                             <tr>
                                 <th>번호</th>
@@ -91,17 +89,13 @@
                                 <th>삭제하기</th>
                             </tr>
                         </thead>
-                        
-                        <tbody>
-
-                        
+                        <tbody>                        
                         	<c:if test="${ListData == null }">
 	                            <tr>
 	                                <td class="nonotice" colspan="4">등록된 관리자가 없습니다.</td>
 	                            </tr>
-                            </c:if> 
-
-                            
+                            </c:if>
+                            <!-- 관리자 계정 목록 반복 -->
     						<c:forEach var="item" items="${ListData}">
 	    						<tr>
 	                                <td>${item.admins_id }</td>
@@ -124,17 +118,18 @@
                                 	</td>
 								</tr>
     						</c:forEach>
-                                    
+                            <!-- /관리자 계정 목록 반복 -->
                         </tbody>
                     </table>
             	</div>
             	 <!-- /회원 리스트 -->
             	 <!-- pagination -->
-				<div id="pagingBox">
+				<div id="pp">
 					<ul>
 						<c:if test="${pageNum10 != 0}">
 							<li><a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${pageNum10}&scroll=0">&#60;</a></li>
 						</c:if>
+						
 						<c:forEach var="num" begin="${pageNum10 + 1}" end="${(pageNumMax - pageNum10) < 10 ? pageNumMax : pageNum10 + 10}" step="1">
 							<c:if test="${pageNum1 == num}">
 								<li class="nowPage">
@@ -147,6 +142,7 @@
 								</li>
 							</c:if>
 						</c:forEach>
+						
 						<c:if test="${(pageNumMax - pageNum10) > 10}">
 							<li><a href="/admin/adminmanage?searchWord=${searchWord != null ? searchWord : ''}&page=${pageNum10 + 11}&scroll=0">&#62;</a></li>
 						</c:if>
@@ -157,6 +153,7 @@
         </div>
     </div>
     <script>
+    	// 관리자 계정 삭제
     	function deleteAdmin(admins_id){
     	    if(confirm("정말로 해당 관리자 계정을 삭제하시겠습니까?")){
     			$.ajax({
@@ -178,6 +175,7 @@
     	    }
     	}
     	
+    	// 관리자 계정 검색
     	$("#findAdminButton").click(function(){
 			location.href = "/admin/adminmanage?searchWord=" + $("#findAdminWord").val();
     	});

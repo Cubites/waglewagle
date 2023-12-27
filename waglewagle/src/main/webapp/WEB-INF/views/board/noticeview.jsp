@@ -16,6 +16,7 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
 	<div id="center">
 		<div id="container">
 			
@@ -28,7 +29,7 @@
             	 
             	   <!-- 제목 -->
             	   <div class="nview">
-	            	   <div class="f">공지 제목</div>
+	            	   <div class="f">공지 제목</div>&nbsp
 	                   <div id="noticetitle" class="s">
 	                       <!-- <p id="titletxt">제목</p> -->
 	                       ${a.notices_title}
@@ -37,18 +38,22 @@
                    
                    <!-- 내용 -->
                    <div class="nview">
-                   		<div class="f">공지 내용</div>
-	                   <div id="noticecontent">
-	                       <!-- <p id="contenttxt">내용</p> -->
-	                       ${a.notices_content}
-	                   </div>
-                   </div>
-            		<!-- 버튼 -->
+                   		<div class="f">공지 내용</div>&nbsp
+                   		<div>
+		                   <div id="noticecontent">
+		                       <!-- <p id="contenttxt">내용</p> -->
+		                       ${a.notices_content}
+		                   </div>
+		                               		<!-- 버튼 -->
             		<div class="writebtn">
 						<div id="notice_button">
 							<input type="button" id="writebtn" value="목록" onclick="notice()">
 		                 </div>
             		</div>
+		                   
+	                   </div>
+                   </div>
+
             	</div>
             </div>
 			</div>

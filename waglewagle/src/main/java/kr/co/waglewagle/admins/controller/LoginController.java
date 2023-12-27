@@ -68,9 +68,9 @@ public class LoginController {
 		boolean pwdChange = service.changePwd(admin);
 		
 		if(pwdChange) {
-			return "/admin/noticelist";
+			return "redirect:/admin/login";
 		}
-		return "redirect:admin/changePwd";
+		return "/admin/changePwd";
 		
 	}
 	

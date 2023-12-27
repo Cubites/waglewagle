@@ -34,6 +34,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import com.zaxxer.hikari.HikariDataSource;
 
 import kr.co.waglewagle.admins.util.AdminInterceptor;
+import kr.co.waglewagle.admins.util.AdminInterceptor2;
 import kr.co.waglewagle.auctions.won.AutionGoodsArgumentResolver;
 import kr.co.waglewagle.users.ty.util.LoginInterceptor;
 import kr.co.waglewagle.users.ty.util.LogoutInterceptor;
@@ -62,6 +63,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Value("${os.root}")
 	private String osRoot;
 
+	// 로그인 페이지로 이동하는 인터셉터의 예외 경로
 	private String[] loginIntercepterExclude = { 
 		"/",
 		"/resources/**", 
@@ -69,9 +71,11 @@ public class WebConfig implements WebMvcConfigurer {
 		"/users/**", 
 		"/board/noticelist/**",
 		"/admin/**",
-		"/add/session/*" // [!추후삭제 필요][테스트용] 유저 세션 추가 기능
+		"/goods/search/**",
+		"/error/**"
 	};
-	
+
+	// 관리 페이지 권한별 접근 가능 여부 판별 인터셉터의 예외 경로
 	private String[] adminIntercepterExclude = {
 		"/admin/login",
 		"/admin/stop",
@@ -87,26 +91,26 @@ public class WebConfig implements WebMvcConfigurer {
 	@Autowired
 	AdminInterceptor adminInterceptor; // 관리자 페이지 인터셉터
 	@Autowired
+	AdminInterceptor2 adminInterceptor2; // 관계자 외 관리자 페이지 접근을 막는 인터셉터 
+	@Autowired
 	LoginInterceptor loginInterceptor; // 로그인 인터셉터
 	@Autowired
 	LogoutInterceptor logoutInterceptor; // 비회원 체크 인터셉터
 	@Autowired
-	RelCaculateInterceptor relCaculateInterceptor;
+	RelCaculateInterceptor relCaculateInterceptor; // 친밀도 계산 인터셉터
 	@Autowired
-	ReloadSessionInterceptor reloadSessionInterceptor;
-	
+	ReloadSessionInterceptor reloadSessionInterceptor; // 세션 업로드 인터셉터
+
 	//argumentResolver등록
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(auctionArgumentResolver());
 	}
 
-
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
 	
-
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		InternalResourceViewResolver rs = new InternalResourceViewResolver();
@@ -115,11 +119,11 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.viewResolver(rs);
 	}
 
+	// 이미지 경로 지정
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-		// [!추후삭제 필요] 외부 파일 읽어오기 위해서 추가  -> 이미지 파일 경로때문에 삭제될 코드!!!!!!!!!!!!!!!!!!!!!!!!!!
-		registry.addResourceHandler("/upload/**").addResourceLocations("file:///"+osRoot+"/");
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/"); // 화면 디자인 이미지
+		registry.addResourceHandler("/upload/**").addResourceLocations("file:///"+osRoot+"/"); // 상품 및 유저 이미지
 	}
 
 	// db관련 bean등록
@@ -136,7 +140,6 @@ public class WebConfig implements WebMvcConfigurer {
 	// mybatis
 	@Bean
 	public SqlSessionFactory sqlSessionFactory() throws Exception {
-
 		SqlSessionFactoryBean ssf = new SqlSessionFactoryBean();
 		ssf.setDataSource(dataSource());
 		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
@@ -164,17 +167,18 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		// [모든 페이지 인터셉터] 로그인이 필요한 페이지에 비회원 접근 시, 로그인 페이지로 리다이렉트
 		registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns(loginIntercepterExclude).order(1);
-		// [마이페이지용 인터셉터] 마이페이지의 모든 페이지에 필요한 공통 작업 수행
-		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(2);
 		// [비회원 페이지 인터셉터] 이미 로그인이 되어있을 때 접근할 필요가 없는 페이지(로그인, 회원가입, 회원찾기)로 접근 시, 이전 페이지로 되돌아가게 함
-		registry.addInterceptor(logoutInterceptor).addPathPatterns("/users/login","/users/join", "/users/find_info").order(3);
+		registry.addInterceptor(logoutInterceptor).addPathPatterns("/users/login","/users/join", "/users/find_info").order(2);
 		// [친밀도 업데이트 인터셉터] 친밀도가 변동되는 상황(거래 완료, 거래 파기, 거래글 접근금지)에 친밀도 업데이트 
-		registry.addInterceptor(relCaculateInterceptor).addPathPatterns("/auctions/**", "/auctions/report/**", "/auctions/end/**", "/admin/goodsStatus").excludePathPatterns();
+		registry.addInterceptor(relCaculateInterceptor).addPathPatterns("/auctions/comfirm/**", "/auctions/report/comfirm/**", "/auctions/end/**", "/admin/goodsStatus").excludePathPatterns().order(3);
+    // [마이페이지용 인터셉터] 마이페이지의 모든 페이지에 필요한 공통 작업 수행
+		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(4);
 		// [세션 인터셉터] 세션에 있는 유저 정보를 다시 불러옴(마이페이지 접속 시)
-		registry.addInterceptor(reloadSessionInterceptor).addPathPatterns("/mypage/auctions").excludePathPatterns().order(4);
-		// admin에서 수정시 post 메시지로 오는데 request body는 한번밖에 못읽어서 다른 방법을 찾아야 함(방법이 있긴한데 비효율적임) 
-//		registry.addInterceptor(relCaculateInterceptor).addPathPatterns("/admin/goodsStatus").excludePathPatterns();
-		registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**").excludePathPatterns(adminIntercepterExclude).order(5);
+		registry.addInterceptor(reloadSessionInterceptor).addPathPatterns("/mypage/auctions").excludePathPatterns().order(5);
+		// [관리자 페이지 인터셉터] 관계자 외 관리자 페이지 접속 시, 에러 페이지로 이동
+		registry.addInterceptor(adminInterceptor2).addPathPatterns("/admin/**").excludePathPatterns("/admin/login").order(6);
+	    // [관리자 페이지 인터셉터] 관리자 등급별 접근 페이지 제한
+	    registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**").excludePathPatterns(adminIntercepterExclude).order(7);
 	}
 
 	// 파일 업로드를 위한 bean
@@ -186,7 +190,7 @@ public class WebConfig implements WebMvcConfigurer {
 		return resolver;
 	}
 		
-	//messages를 읽기 위한 Bean
+	// messages를 읽기 위한 Bean
 	@Bean 
 	public MessageSource messageSource() {
 		final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -203,7 +207,7 @@ public class WebConfig implements WebMvcConfigurer {
 		return dtm;
 	}
 	
-	//ArgumentResolver 등록
+	// ArgumentResolver 등록
 	@Bean
 	public HandlerMethodArgumentResolver auctionArgumentResolver() {
 		return new AutionGoodsArgumentResolver();

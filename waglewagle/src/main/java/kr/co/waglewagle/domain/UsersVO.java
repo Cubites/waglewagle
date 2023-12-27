@@ -22,6 +22,7 @@ public class UsersVO {
 	private String users_addr_list;
 	
 	private Integer cnt;
+	
 	//페이징 + 검색 추가
 	private Integer page;
 	private Integer startIdx;

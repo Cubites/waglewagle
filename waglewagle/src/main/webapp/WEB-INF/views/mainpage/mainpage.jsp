@@ -18,6 +18,7 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
 	<div id="center">
 		<div id="container">
 			<!-- 배너 -->
@@ -27,24 +28,20 @@
 				<div class="swiper banner mySwiper">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
-							<img src="/resources/images/bannertest.png" >
+							<img src="/resources/images/banner_01.png" >
 						</div>
 						<div class="swiper-slide">
-							<img src="/resources/images/bannertest.png" >
+							<img src="/resources/images/banner_02.png" >
 						</div>
 						<div class="swiper-slide">
-							<img src="/resources/images/bannertest.png" >
+							<img src="/resources/images/banner_03.png" >
 						</div>
 						<div class="swiper-slide">
-							<img src="/resources/images/bannertest.png" >
+							<img src="/resources/images/banner_04.png" >
 						</div>
 						<div class="swiper-slide">
-							<img src="/resources/images/bannertest.png" >
-						</div>
-						<div class="swiper-slide">
-							<img src="/resources/images/bannertest.png" >
-						</div>
-					</div>
+							<img src="/resources/images/banner_05.png" >
+						</div>					</div>
 					<div class="swiper-button-next"></div>
 					<div class="swiper-button-prev"></div>
 				</div>

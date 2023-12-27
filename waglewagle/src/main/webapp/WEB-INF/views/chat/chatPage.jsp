@@ -9,6 +9,7 @@
 <title>Sample</title>
 <link rel="stylesheet" href="/resources/css/common/common.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/resources/js/goods/goodsRead.js"></script>
 <link rel="stylesheet" href="/resources/css/chat/chat.css">
 
 <style>
@@ -81,6 +82,11 @@
 </style>
 
 <script>
+	// 모바일로 접속했는지, 웹으로 접속했는지 확인하기
+	if (navigator.platform !== "Win32") {
+		location.href = "/auctions/${me.goods_id}"; 
+	}
+
 	//모달창에서 거래확정인지, 거래 파기인지 확인하기 위해
 	let modalAction;
 	$(function() {
@@ -221,6 +227,7 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
+	<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
 	<div id="center">
 		<div id="container">
 

@@ -8,4 +8,6 @@ public interface MainpageService {
 	List<GoodsVO> popularList();
 	List<GoodsVO> newRegList();
 	List<GoodsVO> nearList(List<String> users_addrList);
+	boolean isReadBidNotice(int users_id);
+	boolean isReadQnaNotice(int users_id);
 }

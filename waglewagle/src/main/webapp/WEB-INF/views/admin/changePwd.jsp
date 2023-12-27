@@ -43,7 +43,7 @@
      			alert("비밀번호 확인을 입력해주세요");
      			return false;
      		}
-     	document.adminpwdchange.submit();
+     		document.adminpwdchange.submit();
      	}
     </script>
 </head> 
@@ -57,6 +57,7 @@
 
     <div id="center">
         <div id="container">
+        
             <div id="side-box">
                 <div id="notice" onclick="notice()">공지</div>
                 <div id="qna" onclick="qna()">문의</div>
@@ -70,6 +71,7 @@
             
             <div id="main-box">
                 <div id="plus">
+                
                     <div id="head-plus">
 	                   	<div>
 	                   		비밀번호 변경
@@ -85,12 +87,13 @@
 	                            </tr>
 	                            <tr>
 	                              <td>*비밀번호확인</td>
-	                              <td><input class="onborder" id="admin_pwd" name="admins_pwd" type="password" min="8" placeholder="동일한 비밀번호를 입력"/> </td>
+	                              <td><input class="onborder" id="admin_pwd" name="pwd_check" type="password" min="8" placeholder="동일한 비밀번호를 입력"/> </td>
 	                            </tr>
 	                        </table>
 	                        <button type="button" id="changebtn" onclick="changePwd()">비밀번호 변경</button>
 	                  </form>
                     </div>
+                    
                 </div>
             </div>
             

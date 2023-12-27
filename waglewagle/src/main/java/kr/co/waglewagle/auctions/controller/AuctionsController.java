@@ -50,13 +50,13 @@ public class AuctionsController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/auctions/{goods_id}")
-	public String completeAuction(@PathVariable("goods_id") int goods_id) {
+	@PostMapping("/auctions/comfirm/{goods_id}")
+	public String completeAuction(@PathVariable("goods_id") Integer goods_id, @SessionAttribute("users_info") UsersVO loginUser,
+			@SessionAttribute("auctions_ing_seller") Integer seller_id, HttpServletRequest req) {
 		// 거래 완료 처리하기
 		service.completeAuction(goods_id);
-		System.out.println();
-		System.out.println("여기 안옴?????");
-		System.out.println();
+		req.setAttribute("user1", loginUser.getUsers_id());
+		req.setAttribute("user2", seller_id);
 		return "";
 	}
 	
@@ -66,24 +66,25 @@ public class AuctionsController {
 	}
 	
 	@GetMapping("/auctions/report/{goods_id}")
-	public String goAuctionsReport(@SessionAttribute("users_info") UsersVO loginUser, @SessionAttribute("auctions_ing_seller") int seller_id,
-			@PathVariable("goods_id") int goods_id, Model model) {
+	public String goAuctionsReport(@SessionAttribute("users_info") UsersVO loginUser, @SessionAttribute("auctions_ing_seller") Integer seller_id,
+			@PathVariable("goods_id") Integer goods_id, Model model) {
 		return "auctions/mobileAuctionsReport";
 	}
 	
 	@ResponseBody
-	@PostMapping("/auctions/report/{goods_id}")
-	public String saveAuctionsReport(@SessionAttribute("users_info") UsersVO loginUser, @SessionAttribute("auctions_ing_seller") int seller_id,
-			@PathVariable("goods_id") int goods_id, HttpServletRequest request) {
+	@PostMapping("/auctions/report/comfirm/{goods_id}")
+	public String saveAuctionsReport(@SessionAttribute("users_info") UsersVO loginUser, @SessionAttribute("auctions_ing_seller") Integer seller_id,
+			@PathVariable("goods_id") Integer goods_id, HttpServletRequest request) {
 		ReportsVO vo = new ReportsVO();
 		vo.setGoods_id(goods_id);
 		vo.setUsers_id(seller_id);
 		vo.setReports_content(request.getParameter("report_data"));
 		
 		// 친밀도 업데이트를 위한 값(업데이트 대상 유저 id)을 인터셉터에 전달
-		request.setAttribute("user1", Integer.toString(seller_id));
+		request.setAttribute("user1", seller_id);
+		request.setAttribute("user2", loginUser.getUsers_id());
 		// 신고하는 동작 실행
-		if (!service.saveReport(vo)) {
+		if (!service.saveReport(vo, loginUser.getUsers_id())) {
 			return "no";
 		} else {
 			return "ok";			

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,11 @@
 	<div id="auctionsContainer">
 		<div id="acTitle">'<span>${users_info.users_nick}</span>'님의 경매중인 목록</div>
 		<div id="itemsList">
-			<!-- 반복 -->
+			<c:if test="${fn:length(ListData) == 0}">
+				<div id="noItems">거래 중인 상품이 없습니다.</div>
+			</c:if>
+			<c:if test="${fn:length(ListData) != 0}">
+			<!-- 경매 중인 상품 반복 -->
 			<c:forEach var="item" items="${ListData}">
 				<a class="itemBox" href="/goods/${item.goods_id}">
 					<img class="wayMark" src='/resources/images/${item.bids_price != null ? "buy_icon.png" : "sell_icon.png"}'>
@@ -29,7 +34,8 @@
 					</div>
 				</a>
 			</c:forEach>
-			<!-- /반복 -->
+			<!-- /경매 중인 상품 반복 -->
+			</c:if>
 		</div>
 		<!-- pagination -->
 		<div id="pagingBox">
@@ -57,6 +63,7 @@
 		<!-- /pagination -->
 	</div>
 	<script>
+		// 목록 페이지 넘어갈 때 스크롤 높이 고정
 		window.scrollTo({top: "${scrollY}"});
 		window.addEventListener("scroll", () => {
 			let scrollVal = window.scrollY;

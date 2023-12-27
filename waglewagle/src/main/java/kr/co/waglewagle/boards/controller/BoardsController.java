@@ -15,18 +15,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.waglewagle.boards.service.BoardsService;
 import kr.co.waglewagle.domain.QnasVO;
 import kr.co.waglewagle.domain.UsersVO;
+import kr.co.waglewagle.users.service.UsersService;
 
 @Controller
 public class BoardsController {
 
 	@Autowired
 	private BoardsService service;
+	
+	@Autowired
+	private UsersService usersService;
 
+	// 문의 작성 페이지로 이동
 	@GetMapping("/boards/qnas/write")
 	public String wrtieQnas(Model model) {
 		return "qna/main";
 	}
 	
+	// 문의 작성
 	@ResponseBody
 	@PostMapping("/boards/qnas/write")
 	public boolean addQna(HttpSession sess, @RequestBody Map<String, String> qnaContents) {
@@ -45,6 +51,8 @@ public class BoardsController {
 		model.addAttribute("menuTab", 1);
 		model.addAttribute("menuNum", 3);
 		model.addAttribute("qnaDetail", service.showQnaDetail(id));
+		
+		int updateReadcnt = usersService.readQna(id);
 		return "mypage/main";
 	}
 }

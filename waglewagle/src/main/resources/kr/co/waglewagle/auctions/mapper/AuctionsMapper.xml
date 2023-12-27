@@ -53,76 +53,65 @@
 		) cn;
 	</select>
 
-	<select id="checkAuctionIng" parameterType="int"
-		resultType="int">
-		SELECT count(*) FROM wagle.auctions_ing WHERE goods_id =
-		#{goods_id};
+	
+	<select id="checkAuctionIng" parameterType="int" resultType="int">
+		SELECT count(*) FROM auctions_ing WHERE goods_id = #{goods_id};
 	</select>
-
-	<select id="getAuctionIngInfo" parameterType="int"
-		resultType="java.util.Map">
-		SELECT
-		a.auctions_ing_price, a.goods_id,
-		a.auctions_ing_seller, b.goods_title, b.goods_th_img
-		FROM
-		wagle.auctions_ing a
-		JOIN wagle.goods b ON a.goods_id = b.goods_id
-		WHERE a.goods_id =
-		#{goods_id};
+	
+	<select id="getAuctionIngInfo" parameterType="int" resultType="java.util.Map">
+		SELECT 
+			a.auctions_ing_price, a.goods_id, a.auctions_ing_seller, b.goods_title, b.goods_th_img
+		FROM auctions_ing a 
+		JOIN goods b ON a.goods_id = b.goods_id
+		WHERE a.goods_id = #{goods_id};
 	</select>
-
-	<select id="getAunctionIngData" parameterType="int"
-		resultType="kr.co.waglewagle.domain.AuctionsIngVO">
-		SELECT * FROM wagle.auctions_ing WHERE goods_id =
-		#{goods_id};
+	
+	<select id="getAunctionIngData" parameterType="int" resultType="kr.co.waglewagle.domain.AuctionsIngVO">
+		SELECT * FROM auctions_ing WHERE goods_id = #{goods_id};
 	</select>
-
-	<insert id="saveAuctionEnd"
-		parameterType="kr.co.waglewagle.domain.AuctionsEndVO">
-		INSERT INTO wagle.auctions_end (
-		auctions_end_seller,
-		auctions_end_buyer, auctions_end_price, auctions_end_date, goods_id
-		)
-		VALUES (
-		#{auctions_end_seller}, #{auctions_end_buyer},
-		#{auctions_end_price}, #{auctions_end_date},
-		#{goods_id}
+	
+	<insert id="saveAuctionEnd" parameterType="kr.co.waglewagle.domain.AuctionsEndVO">
+		INSERT INTO auctions_end (
+			auctions_end_seller, auctions_end_buyer, auctions_end_price, auctions_end_date, goods_id
+		) VALUES (
+			#{auctions_end_seller}, #{auctions_end_buyer}, #{auctions_end_price}, #{auctions_end_date}, #{goods_id}
 		);
 	</insert>
 
 	<delete id="deleteAuctionIngData" parameterType="int">
-		DELETE FROM
-		wagle.auctions_ing WHERE auctions_ing_id = #{auctions_ing_id};
+		DELETE FROM auctions_ing WHERE auctions_ing_id = #{auctions_ing_id};
 	</delete>
 
 	<select id="checkReport" parameterType="int" resultType="int">
-		SELECT
-		count(*) FROM wagle.reports WHERE goods_id = #{goods_id};
+		SELECT count(*) FROM reports WHERE goods_id = #{goods_id};
 	</select>
 
-	<insert id="saveReport"
-		parameterType="kr.co.waglewagle.domain.ReportsVO">
-		INSERT INTO wagle.reports (
-		reports_type, users_id,
-		goods_id, reports_content
+	<insert id="saveReport" parameterType="kr.co.waglewagle.domain.ReportsVO">
+		INSERT INTO reports (
+			reports_type, users_id, goods_id, reports_content
 		) VALUES (
 		0, #{users_id}, #{goods_id},
 		#{reports_content}
 		)
 	</insert>
 
-	<insert id="saveAuctionBreak"
-		parameterType="kr.co.waglewagle.domain.AuctionsBreakVO">
-		INSERT INTO wagle.auctions_break (
-		auctions_break_user,
-		auctions_break_reason, auctions_break_detail, auctions_break_date,
-		goods_id
+	
+	<insert id="saveAuctionBreak" parameterType="kr.co.waglewagle.domain.AuctionsBreakVO">
+		INSERT INTO auctions_break (
+			auctions_break_user, auctions_break_reason, auctions_break_detail, auctions_break_date, goods_id
 		) VALUES (
 		#{auctions_break_user}, #{auctions_break_reason},
 		#{auctions_break_detail}, now(),
 		#{goods_id}
 		);
 	</insert>
+	
+	<update id="returnToBuyer" parameterType="Map">
+		UPDATE point SET
+			point_total = point_total + #{price},
+			point_usable = point_usable + #{price}
+		WHERE users_id = #{user_id}
+	</update>
 
 	<select id="countAuctions" resultType="Integer"
 		parameterType="Integer">

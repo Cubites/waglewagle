@@ -20,6 +20,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+
 		//false -> 되돌아 가게 함 , true -> 가던길 가게 함
 		HttpSession sess = request.getSession();
 		AdminsVO admin = (AdminsVO)sess.getAttribute("admin_info");
@@ -61,8 +62,6 @@ public class AdminInterceptor implements HandlerInterceptor {
 			result = false;
 			
 		}else {
-//			System.out.println(admin.getAdmins_role());
-//			System.out.println(adminGrade.get(request.getRequestURI())); 
 			String[] paths = request.getRequestURI().split("/");
 			String path = "";
 			for (int i=1; i<paths.length; i++) {

@@ -36,14 +36,6 @@ public class UsersController {
 	@Autowired
 	private AuctionsService auctionsService;
 	
-	/* [!추후 삭제][테스트] 테스트용 세션 추가 **************************************************************/
-	@GetMapping("/add/session/{users_id}")
-	public String usersInfo(HttpSession sess, @PathVariable("users_id") Integer users_id) {
-		sess.setAttribute("users_info", service.userInfo(users_id));
-		return "home";
-	}
-	/*******************************************************************************************/
-	
 	// 회원가입 페이지 이동
 	@GetMapping("/users/join")
 	public String joinForm(HttpServletResponse res) {
@@ -53,7 +45,7 @@ public class UsersController {
 		return "users/join";
 	}
 	
-	// 회원가입 정보 제출 후 login page 이동
+	// 회원가입
 	@PostMapping("/users/join")
 	public String joinProcess(HttpServletResponse res, Model model, UsersVO vo){
 		
@@ -68,16 +60,16 @@ public class UsersController {
 		if(joinResult) {
 			int users_id = service.selectUsersId(vo.getUsers_email());
 			boolean creatPointResult = service.createPoint(users_id);
-			if(creatPointResult) {
+			if(creatPointResult) { // 회원가입 성공
 				cmd = "move";
 				msg = "회원가입 되었습니다.";
 				url = "/users/login";
-			}else {
+			} else { // 회원가입 실패 - 포인트 계좌 생성 실패
 				cmd = "move";
 				msg = "포인트 계좌 생성에 실패했습니다. 관리자에게 문의하세요.";
 				url = "/users/main";
 			}
-		}else {
+		} else { // 회원가입 실패
 			cmd = "back";
 			msg = "회원가입에 실패했습니다.";
 		}
@@ -89,39 +81,41 @@ public class UsersController {
 		return "common/inform";
 	}
 	
+	// 로그인 페이지로 이동
 	@GetMapping("/users/login")
 	public String loginForm() {
 		return "users/login";
 	}
 	
+	// 로그인
 	@PostMapping("/users/login")
 	public String login(HttpSession session, Model model, UsersVO vo){
 		
-		//db에 있는 정보
+		// db에 있는 정보
 		UsersVO login = service.login(vo);
 		boolean isValid = false;
 		String cmd = ""; //move or back
 		String msg = "";
 		String url = "";
 		
-		if(login == null) { //회원 정보가 존재하지 않음
+		if(login == null) { // 로그인 실패 - 회원 정보가 존재하지 않음
 			msg = "아이디와 비밀번호를 확인해주세요.";
 			cmd = "back";
-		}else if(login.getUsers_status() == 0) {//정상 회원일 때 -> 로그인
+		}else if(login.getUsers_status() == 0) { // 정상 회원일 때 -> 로그인
 			isValid = BCrypt.checkpw(vo.getUsers_pwd(), login.getUsers_pwd()); 
-			if(isValid) {//로그인 성공!
+			if(isValid) { // 로그인 성공!
 				session.setAttribute("users_info", login);
 				cmd = "move";
 				url = "/";
-			}else {//비밀번호 틀림!
+			} else { // 로그인 실패 - 비밀번호 틀림!
 				msg = "아이디와 비밀번호를 확인해주세요.";
 				cmd = "back";
 			}
-		}else if(login.getUsers_status() == 1){//정지된 회원일 때
+		} else if (login.getUsers_status() == 1){ // 로그인 실패 - 정지된 회원
 			msg = "정지계정입니다. 관리자에게 문의해주세요.";
 			cmd = "move";
 			url = "/";
-		}else { // 탈퇴한 회원
+		} else { // 로그인 실패 - 탈퇴한 회원
 			msg = "아이디와 비밀번호를 확인해주세요.";
 			cmd = "back";
 		}
@@ -132,14 +126,15 @@ public class UsersController {
 		
 		return "common/inform";
 	}
-	
+
+	// 이메일 중복 체크
 	@ResponseBody
 	@GetMapping("/users/emaildup")
 	public String emailDupCheck(String users_email) {
 		return String.valueOf(service.isEmailDup(users_email));
 	}
 	
-
+	// 이메일 인증 번호 발송
 	@ResponseBody
 	@PostMapping("/users/send_authnum")
 	public String sendAuthNum(HttpSession session, String users_email) {
@@ -153,6 +148,7 @@ public class UsersController {
 		}
 	}
 	
+	// 이메일 인증 번호 검증
 	@ResponseBody
 	@PostMapping("/users/check_authnum")
 	public String checkAuthNum(HttpSession session, String validNum){
@@ -161,17 +157,20 @@ public class UsersController {
 		return validNum.equals(authNum) ? "true" : "false";
 	}
 	
+	// 닉네임 중복 체크
 	@ResponseBody
 	@GetMapping("/users/nickcheck")
 	public String nickCheck(String users_nick) {
 		return String.valueOf(service.isNickDup(users_nick));
 	}
 	
+	// 아이디/비밀번호 찾기 페이지로 이동
 	@GetMapping("/users/find_info")
 	public String findInfo() {
 		return "users/findInfo";
 	}
 	
+	// 아이디 찾기
 	@PostMapping("/users/find_id")
 	public String findId(Model model, String users_name, String users_phone ) {
 		Map<String, String> user_info = new HashMap<>();
@@ -179,22 +178,21 @@ public class UsersController {
 		user_info.put("users_phone", users_phone);
 		
 		UsersVO vo = service.findId(user_info);
-		if(vo == null) {
+		if(vo == null) { // 아이디 찾기 실패 - 존재하지 않는 이메일
 			model.addAttribute("users_email", "NOT_EXIST");
 		}else {
-			if(vo.getUsers_status() == 1) {
+			if(vo.getUsers_status() == 1) { // 아이디 찾기 실패 - 정지 계정
 				model.addAttribute("msg", "정지 계정입니다.");
 				model.addAttribute("cmd", "move");
 				model.addAttribute("url", "/");
 				
 				return "common/inform";
-			}else if(vo.getUsers_status() == 2){
+			} else if(vo.getUsers_status() == 2) { // 아이디 찾기 실패 - 탈퇴 회원
 				model.addAttribute("users_email", "NOT_EXIST");
-			}else {
+			} else { // 아이디 찾기 성공
 				String users_email = vo.getUsers_email();
 				int atIdx = users_email.indexOf("@");
-				String maskedEmail = users_email.substring(0,3) + "*****" + users_email.substring(atIdx); 
-				System.out.println(maskedEmail);
+				String maskedEmail = users_email.substring(0,3) + "*****" + users_email.substring(atIdx);
 				model.addAttribute("users_email", maskedEmail);
 			}
 		}
@@ -203,6 +201,7 @@ public class UsersController {
 		return "users/findResult";
 	}
 	
+	// 비밀번호 찾기
 	@PostMapping("/users/find_pwd")
 	public String findPwd(Model model, String users_name, String users_email, RedirectAttributes rs) {
 		Map<String, String> user_info = new HashMap<>();
@@ -210,51 +209,52 @@ public class UsersController {
 		user_info.put("users_email", users_email);
 		
 		UsersVO vo = service.findPwd(user_info);
-		if(vo == null) {
+		if(vo == null) { // 비밀번호 찾기 실패 - 존재하지 않는 유저
 			model.addAttribute("result_type", "find_pwd");
 			return "users/findResult";
 		}else {
-			if(vo.getUsers_status() == 1) {
+			if(vo.getUsers_status() == 1) { // 비밀번호 찾기 실패 - 정지 계정
 				model.addAttribute("msg", "정지 계정입니다.");
 				model.addAttribute("cmd", "move");
 				model.addAttribute("url", "/");
 				
 				return "common/inform";
-			}else if(vo.getUsers_status() == 2){
+			} else if(vo.getUsers_status() == 2) { // 비밀번호 찾기 실패 - 탈퇴 회원
 				model.addAttribute("result_type", "find_pwd");
 				return "users/findResult";
 			}
 			rs.addFlashAttribute("vo", vo);
 			return "redirect:change_pwd";
 		}
-		
 	}
 
+	// 아이디/비밀번호 찾기 결과 페이지로 이동
 	@GetMapping("/users/find_result")
 	public String findResult() {
 		return "users/findResult";
 	}
 	
+	// 비밀번호 변경 페이지로 이동
 	@GetMapping("/users/change_pwd")
 	public String changePwd() {
 		return "users/changePwd";
 	}
 	
-	
+	// 비밀번호 변경
 	@PostMapping("/users/change_pwd")
 	public String changePwdProcess(Model model, String users_pwd, String users_id){
-		String cmd = ""; //move or back
+		String cmd = ""; // move or back
 		String msg = "";
 		String url = "";
 		Map<String, String> user_info = new HashMap<>();
 		user_info.put("users_pwd", users_pwd);
 		user_info.put("users_id", users_id);
 		boolean pwdIsChanged = service.changePwd(user_info);
-		if(pwdIsChanged) {
+		if(pwdIsChanged) { // 비밀번호 변경 성공
 			cmd = "move";
 			msg = "비밀번호가 변경되었습니다.";
 			url = "/users/login";
-		}else {
+		}else { // 비밀번호 변경 실패
 			cmd = "back";
 			msg = "비밀변호 변경에 실패했습니다.";
 		}
@@ -280,7 +280,7 @@ public class UsersController {
 		return result == 1 ? true : false;
 	}
 	
-	// 비밀번호 변경 시, 비밀번호가 맞는지 여부 확인
+	// [마이페이지] 비밀번호 변경 시, 비밀번호가 맞는지 여부 확인
 	@ResponseBody
 	@PostMapping("/pwd/check")
 	public boolean pwdCheck(HttpSession sess, @RequestBody Map<String, Object> pwd) {
@@ -292,7 +292,7 @@ public class UsersController {
 		return isValid;
 	}
 	
-	// 비밀번호 변경
+	// [마이페이지] 비밀번호 변경
 	@ResponseBody
 	@PostMapping("/pwd/change")
 	public boolean pwdChange(HttpSession sess, @RequestBody Map<String, Object> pwd) {
@@ -323,20 +323,20 @@ public class UsersController {
 		boolean isValid = BCrypt.checkpw((String)pwd.get("data"), encryptPwd);
 
 		Map<String, Integer> result = new HashMap<>();
-		if(isValid) {
+		if(isValid) { // 비밀번호 일치
 			int auctionsCount = 0;
 			auctionsCount += auctionsService.countAuctions(vo.getUsers_id());
 			auctionsCount += auctionsService.countAuctionsIng(vo.getUsers_id());
-			if(auctionsCount == 0) {
-				if(service.deleteAccount(vo.getUsers_id()) == 1) {
+			if(auctionsCount == 0) { // 진행 중인 경매가 없는 경우
+				if(service.deleteAccount(vo.getUsers_id()) == 1) { // 회원탈퇴 성공
 					result.put("resultCode", 0);
-				} else {
+				} else { // 회원탈퇴 실패
 					result.put("resultCode", 3);
 				}
-			} else {
+			} else { // 회원탈퇴 실패 - 진행 중인 경매가 있음
 				result.put("resultCode", 2);
 			}
-		} else {
+		} else { // 회원탈퇴 실패 - 비밀번호 불일치
 			result.put("resultCode", 1);
 		}
 		return result;
@@ -429,9 +429,9 @@ public class UsersController {
 		return "mypage/main";
 	}
 	
-	// 마이페이지 - 관심지역 수정으로 이동
+	// 마이페이지 - 관심지역 수정 페이지로 이동
 	@GetMapping("/mypage/favors_list/fix")
-	public String mypageFavorsListFix(Model model, HttpSession session) {
+	public String mypageFavorsListFix(Model model, HttpSession session, Integer scroll) {
 		model.addAttribute("menuTab", 1);
 		model.addAttribute("menuNum", 0);
 		
@@ -442,15 +442,20 @@ public class UsersController {
 		String[] areas = areasStr != null ? (areasStr.length() != 0 ? areasStr.split(",") : null) : null;
 		model.addAttribute("favor_areas", areas); 
 		model.addAttribute("favor_areas_count", areas != null ? areas.length : 0);
+
+		model.addAttribute("scrollY", scroll);
 		
 		return "mypage/main";
 	}
 	
-	// 마이페이지 - 비밀번호 수정으로 이동
+	// 마이페이지 - 비밀번호 수정 페이지로 이동
 	@GetMapping("/mypage/pwd/change")
-	public String mypagePwdChange(Model model, HttpSession session) {
+	public String mypagePwdChange(Model model, HttpSession session, Integer scroll) {
 		model.addAttribute("menuTab", 1);
 		model.addAttribute("menuNum", 1);
+
+		model.addAttribute("scrollY", scroll);
+		
 		return "mypage/main";
 	}
 
