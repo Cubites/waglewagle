@@ -152,7 +152,7 @@
 
 						<li class="pg">
 						<c:if test="${map.next}">
-                    		<a href="/admin/goodsManageList?page=${list.endPage+1}&searchWord=${list.searchWord}">이후</a>
+                    		<a href="/admin/goodsManageList?page=${list.endPage+1}&searchWord=${list.searchWord}">다음</a>
                     	</c:if></li>
                     </ul>
                    </div>

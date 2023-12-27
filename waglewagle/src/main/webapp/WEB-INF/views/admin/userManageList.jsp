@@ -148,7 +148,7 @@
                     	<ul class="paging">
                     	<li class="pg">
                     	<c:if test="${prev}">
-                    		<a href="/admin/userManageList?page=${startPage-1}&searchWord=${UsersVO.searchWord}">이전</a>
+                    		<a href="/admin/userManageList?page=${startPage-1}&searchWord=${usersVO.searchWord}">이전</a>
                     	</c:if></li>
                     	
                     	
@@ -163,7 +163,7 @@
 
 						<li class="pg">
 						<c:if test="${next}">
-                    		<a href="/admin/userManageList?page=${endPage+1}&searchWord=${UsersVO.searchWord}">다음</a>
+                    		<a href="/admin/userManageList?page=${endPage+1}&searchWord=${usersVO.searchWord}">다음</a>
                     	</c:if></li>
                     </ul>
                    </div>

@@ -38,6 +38,7 @@
 		function password(){
 			 location.href = "/admin/changePwd";
 		}
+		
  		/* 리스트에서 공지 삭제하기 */
 		function noticeDelete(notices_id){
 		    if(confirm("선택한 공지를 정말로 삭제 하시겠습니까?")==true){
@@ -50,7 +51,7 @@
 	<div id="header">
         <div id="headerContainer">
             <br/>
-            <img src="/resources/images/log.jpg" title="와글와글 로고 "/>
+            <img src="/resources/images/log.jpg" title="와글와글 로고 "/ onclick="notice()">
         </div>
     </div>
 
