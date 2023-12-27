@@ -56,7 +56,7 @@
     			$.ajax({
     				type: "post",
     				async: true,
-    				url: "/auctions/" + goods_id,
+    				url: "/auctions/comfirm/" + goods_id,
     				success: function(data, textStatus) {
     					location.href = "/auctions/complete";
     				},
@@ -70,6 +70,7 @@
     	function goReport(goods_id) {
     		location.href = "/auctions/report/" + goods_id;
     	}
+    	
     </script>
 </body>
 </html>

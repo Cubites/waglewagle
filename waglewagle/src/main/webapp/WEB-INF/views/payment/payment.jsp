@@ -66,7 +66,7 @@
 						      	if (data!=="") {
 						      		console.log("결제 완료!")
 						      		alert("결제가 완료되었습니다.");
-							      	location.href = data;
+							      	location.href = "/mypage/auctions";
 						      	} else {
 						      	    alert("결제 완료에 실패하였습니다.");
 						      	}
