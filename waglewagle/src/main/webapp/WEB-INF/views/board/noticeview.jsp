@@ -20,7 +20,7 @@
 	<div id="center">
 		<div id="container">
 			
-			<div id="viewpage" style="width: 100%;height: 600px;">
+			<div id="viewpage" >
 			
 			<!-- 여기부분 작성함 -->
 				<div id="main-box">
