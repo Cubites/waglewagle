@@ -39,6 +39,9 @@ public class UsersController {
 	@Autowired
 	private AuctionsService auctionsService;
 	
+	@Autowired
+	private FileStore fs;
+	
 	// 회원가입 페이지 이동
 	@GetMapping("/users/join")
 	public String joinForm(HttpServletResponse res) {
@@ -436,7 +439,6 @@ public class UsersController {
 	@PostMapping("/mypage/profile/change")
 	public String mypageProfileChange(MultipartFile profileImg, HttpSession sess, RedirectAttributes ra) {
 		UsersVO vo = (UsersVO) sess.getAttribute("users_info");
-		FileStore fs = new FileStore();
 		UploadImage ui = fs.storeProfileFile(profileImg, vo.getUsers_id());
 		
 		Map<String, Object> dataForUpdateProfile = new HashMap<>();
