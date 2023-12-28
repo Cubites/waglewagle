@@ -216,8 +216,6 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border-radius: 25px;
-	/* width:100vw; */
 	overflow: hidden;
 }
 .swiper-slide > img{
