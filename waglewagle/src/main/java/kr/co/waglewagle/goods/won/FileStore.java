@@ -20,7 +20,7 @@ public class FileStore {
 	@Value("${file.dir}")
 	public String fileDir;
 	
-	
+	// 상품 등록 시, 상품 이미지 저장
 	public List<UploadImage> storeFiles(List<MultipartFile> images) {
 		
 		//UploadImage객체는 파일 오리지널 이름, 서버에 저장되는 파일명, 파일 풀 경로 
@@ -35,6 +35,7 @@ public class FileStore {
 		return list;
 	}
 	
+	// 프로필 사진 저장
 	public UploadImage storeProfileFile(MultipartFile image, Integer users_id) {
 		
 		if(image.isEmpty()) {
@@ -47,7 +48,7 @@ public class FileStore {
 		//저장 경로 
 		
 		String fullPath = getFullPath(storeFileName);
-	
+
 		try {
 			//MultipartFile 아주 간단하게 저장 가능..
 			image.transferTo(new File(fullPath));
@@ -59,8 +60,8 @@ public class FileStore {
 		return new UploadImage(originFileName,storeFileName,fullPath);
 	}
 	
-	
-	public UploadImage storeFile(MultipartFile image) {
+	// 상품 이미지 저장 기능
+	private UploadImage storeFile(MultipartFile image) {
 		
 		if(image.isEmpty()) {
 			return null;
@@ -89,13 +90,10 @@ public class FileStore {
 		return th != null ? th.getFullPath():"";
 	}
 
-
 	private String getFullPath(String storeFileName) {
-		
 		//파일 실제 저장 경로
 		return fileDir+File.separator+storeFileName;
 	}
-
 
 	private String createStoreFileName(String originFileName) {
 		String ext = originFileName.substring(originFileName.lastIndexOf(".")+1);
