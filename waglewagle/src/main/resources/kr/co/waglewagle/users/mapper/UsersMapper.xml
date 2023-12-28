@@ -83,9 +83,9 @@
 	<!-- 회원 가입 -->	
 	<insert id="join" parameterType="kr.co.waglewagle.domain.UsersVO">
 		INSERT INTO users(
-			users_nick, users_pwd, users_name, users_gender, users_phone, users_email, users_join, users_rel, users_status, users_addr_list
+			users_nick, users_pwd, users_name, users_gender, users_phone, users_email, users_join, users_rel, users_status, users_addr_list, users_image
 		) VALUES(
-			#{users_nick}, #{users_pwd}, #{users_name}, #{users_gender}, #{users_phone}, #{users_email}, NOW(), 42, 0, #{users_addr_list}
+			#{users_nick}, #{users_pwd}, #{users_name}, #{users_gender}, #{users_phone}, #{users_email}, NOW(), 42, 0, #{users_addr_list}, #{users_image}
 		)
 	</insert>
 	
