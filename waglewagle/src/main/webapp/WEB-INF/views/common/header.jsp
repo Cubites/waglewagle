@@ -123,7 +123,7 @@
         $("#searchWord").keyup(function (event) {  
             var searchText = event.target.value.toLowerCase();  
             if (event.keyCode === 13) {  
-            	let encode= encodeURI("/goods/search?searchWord="+searchText);
+            	let encode= encodeURI("/goods/search?search_word="+searchText);
              	location.href= encode;
             }
         });  
