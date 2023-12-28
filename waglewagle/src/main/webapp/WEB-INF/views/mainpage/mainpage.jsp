@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="/resources/css/mainpage/mainpage.css">
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="/resources/js/mainpage/mainpage.js"></script>
+	
 	<!-- Swiper JS -->
   	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
