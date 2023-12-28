@@ -37,11 +37,12 @@ public class BidsController {
 		boolean result;
 		
 		BidsMsg msgs = BidsMsg.MSG1;
-		System.out.println(vo);
+		
 		//------------오류 검사 코드 
 		
+		
 		//자신의 글에 호가 
-		if(vo.getUsers_id() == loginuser.getUsers_id()) {
+		if(vo.getUsers_id().equals(loginuser.getUsers_id())) {
 			
 			rs.rejectValue("users_id", null,null,"자신이 올린 글에는 호가 불가함");
 			msgs = BidsMsg.gethighPriorityMsg(msgs, BidsMsg.MSG2);
