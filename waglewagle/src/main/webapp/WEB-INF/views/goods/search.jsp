@@ -59,7 +59,7 @@ let searchWord = "${page.search_word}";
 			 "category_id":category_id},
 		contentType:"application/x-www-form-urlencoded;charset=utf-8;",
 		 success: function(data){
-			 console.log(data);
+			 
 			 //데이터 출력 후 
 			 showGoods(data);
 			 //스크롤 위치
@@ -117,10 +117,13 @@ let searchWord = "${page.search_word}";
 	      "<div class='avgPriceTitle'>평균 입찰가</div>" +
 	      "<div class='expTitle'>입찰 마감일</div>" +
 	      "</div>" +
-	      "<div class='avg_expValue'>" +
-	      "<div class='productAvgPrice'>" + element.goods_avg_price + "원</div>" +
-	      "<div class='productExp'>" + dateToString(element.goods_exp) + "</div>" +
-	      "</div>" +
+	      "<div class='avg_expValue'>"+
+	      "<div class='productAvgPrice'>"+element.goods_avg_price+"원</div>"+
+	      "<div class='productExpArea'>"+
+	      "<div class='productExp'></div>"+
+	      "<div class='originExp hide'>"+dateToString(element.goods_exp)+"</div>"+
+	      "</div>"+
+	      "</div>"+
 	      "</div>" +
 	      "<div class='leftTime toDetailPage'>" +
 	      "<div class='leftTimeVal'></div>" +
@@ -133,7 +136,36 @@ let searchWord = "${page.search_word}";
 	   			 div.innerHTML = html;
 	   			 list_div.append(div);
 	  });
+	 	//마우스 올리면 경매 남은 시간 나오는 이벤트 다시 걸기
+	    addMouseEvent();
 	 
+ }
+ 
+ function addMouseEvent(){
+	 //이벤트 중복 방지를 위해 기존 이벤트 삭제
+	 $(".item").off("mouseover");
+	 $(".item").off("mouseout");
+	 
+	 //마우스 올리면 시간 나오는 이벤트 다시 걸기
+	 $(".item").mouseover(function(){
+         let now = new Date();
+         //console.log(now);
+         let expDateValue = $(this).find(".popProduct").find(".avgPrice_expDateArea").find(".avg_expValue").find(".productExpArea").find(".originExp").text();
+         let expDate = new Date(Date.parse(expDateValue));
+         //console.log(expDate);
+         let leftTime = expDate - now;
+         
+         const days = Math.floor(leftTime/(1000*60*60*24));
+           const hours = ("0"+Math.floor(leftTime %(1000*60*60*24)/(1000*60*60))).slice(-2);
+
+         
+         $(".leftTimeVal").text(days+"일 "+hours+"시간");
+         $(this).find('.popProduct').find(".leftTime").css("display", "flex");
+         
+      })
+      $(".item").mouseout(function(){
+         $(this).find('.popProduct').find(".leftTime").css("display", "none");
+      })
 	 
  }
  
@@ -151,7 +183,7 @@ let searchWord = "${page.search_word}";
 
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
-	<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
+	<%@ include file="/WEB-INF/views/common/quickmenu.jsp"%>
 	<div id="center">
 		<div id="container">
 			<div id="searchBar">
@@ -164,105 +196,108 @@ let searchWord = "${page.search_word}";
 					<option value="26">생활 / 가전</option>
 					<option value="24">도서 / 음악</option>
 					<option value="25">기타</option>
-				</select>
-				
-				<select id="category2">
-					<option value="">2차 카테고리</option>				
-				</select>
-				<input type="hidden" id="category1_value" value="${category1_value}" />
-				
+				</select> <select id="category2">
+					<option value="">2차 카테고리</option>
+				</select> <input type="hidden" id="category1_value"
+					value="${category1_value}" />
+
 				<!--  -->
-				
+
 				<div id="searchBox">
-					<img id="searchIcon" alt="search" src="/resources/images/search.png">	
-					<input id="searchWordByBar" type="text" value="${search_word }" placeholder="상품명 혹은 거래 제목을 입력해주세요.">
+					<img id="searchIcon" alt="search"
+						src="/resources/images/search.png"> <input
+						id="searchWordByBar" type="text" value="${search_word }"
+						placeholder="상품명 혹은 거래 제목을 입력해주세요.">
 				</div>
 			</div>
-			
+
 			<div id="result_div">
 				<c:if test="${not empty page.category_id }">
 					<c:if test="${page.category_id eq 2 }">
-						<div class="result">'여성의류'</div>					
+						<div class="result">'여성의류'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 3 }">
-						<div class="result">'남성의류'</div>					
+						<div class="result">'남성의류'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 4 }">
-						<div class="result">'코트'</div>					
+						<div class="result">'코트'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 5 }">
-						<div class="result">'어린이'</div>					
+						<div class="result">'어린이'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 6 }">
-						<div class="result">'신발'</div>					
+						<div class="result">'신발'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 7 }">
-						<div class="result">'가방/지갑'</div>					
+						<div class="result">'가방/지갑'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 8 }">
-						<div class="result">'시계'</div>					
+						<div class="result">'시계'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 9 }">
-						<div class="result">'주얼리'</div>					
+						<div class="result">'주얼리'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 10 }">
-						<div class="result">'미용'</div>					
+						<div class="result">'미용'</div>
 					</c:if>
-					
+
 					<c:if test="${page.category_id eq 12 }">
-						<div class="result">'노트북'</div>					
+						<div class="result">'노트북'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 13 }">
-						<div class="result">'데스크탑'</div>					
+						<div class="result">'데스크탑'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 14 }">
-						<div class="result">'웨어러블'</div>					
+						<div class="result">'웨어러블'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 15 }">
-						<div class="result">'휴대폰'</div>					
+						<div class="result">'휴대폰'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 16 }">
-						<div class="result">'태블릿'</div>					
+						<div class="result">'태블릿'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 17 }">
-						<div class="result">'컴퓨터 주변기기'</div>					
+						<div class="result">'컴퓨터 주변기기'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 18 }">
-						<div class="result">'카메라'</div>					
+						<div class="result">'카메라'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 19 }">
-						<div class="result">'콘솔 게임기'</div>					
+						<div class="result">'콘솔 게임기'</div>
 					</c:if>
-					
+
 					<c:if test="${page.category_id eq 21 }">
-						<div class="result">'소모품'</div>					
+						<div class="result">'소모품'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 22 }">
-						<div class="result">'옷'</div>					
+						<div class="result">'옷'</div>
 					</c:if>
 					<c:if test="${page.category_id eq 23 }">
-						<div class="result">'장난감'</div>					
+						<div class="result">'장난감'</div>
 					</c:if>
 				</c:if>
-				
-				<c:if test="${not empty page.category_id && not empty page.search_word}">
-					<div class="result">>> </div>
+
+				<c:if
+					test="${not empty page.category_id && not empty page.search_word}">
+					<div class="result">>></div>
 				</c:if>
-				
+
 				<c:if test="${not empty  page.search_word}">
 					<div class="result">'${page.search_word }'</div>
 				</c:if>
 				<div id="result_comment">에 대한 검색 결과 입니다.</div>
 			</div>
-			
+
 			<div id="sort_div">
-				<div id="recent">최신등록순</div>|
-				<div id="lower">낮은가격순</div>|
+				<div id="recent">최신등록순</div>
+				|
+				<div id="lower">낮은가격순</div>
+				|
 				<div id="higher">높은가격순</div>
 			</div>
-			
+
 			<div id="list_div">
-			
+
 				<!-- 장원 -->
 				<c:forEach var="item" items="${page.goodsList}">
 					<div class="item">
@@ -292,7 +327,7 @@ let searchWord = "${page.search_word}";
 						</div>
 					</div>
 				</c:forEach>
-             </div>
+			</div>
 		</div>
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
@@ -324,13 +359,16 @@ let searchWord = "${page.search_word}";
 		
 		// 정렬하기
 		$("#sort_div").click(function (event) {
-			//console.log(event.target.id);
+			
 			const urlParams = new URL(location.href).searchParams;
-			//console.log(urlParams.get('category_id'));
 			var sorting_type = event.target.id;
-			console.log(sorting_type);
+			let ca = urlParams.get('category_id');
 			if (sorting_type !== "sort_div") {
-				location.href = "/goods/search?category_id=" + urlParams.get('category_id') + "&search_word=" + searchWord + "&sorting_type=" + sorting_type;				
+				if (ca === null) {
+					location.href = "/goods/search?search_word=" + searchWord + "&sorting_type=" + sorting_type;	
+				} else {
+					location.href = "/goods/search?category_id=" + urlParams.get('category_id') + "&search_word=" + searchWord + "&sorting_type=" + sorting_type;				
+				}
 			}
 		})
 		
