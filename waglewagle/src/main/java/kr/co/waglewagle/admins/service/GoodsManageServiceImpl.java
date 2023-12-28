@@ -46,8 +46,6 @@ public class GoodsManageServiceImpl implements GoodsManageService {
         // 하단에 페이징처리
         int endPage = (int)(Math.ceil(vo.getPage()/10.0));
         int startPage = ((endPage-1)/10)*10+1;
-//        int endPage = (int)(Math.ceil(vo.getPage()/10.0)*10);
-//        int startPage = endPage - 9;
         if (endPage > totalPage) endPage = totalPage;
         boolean prev = startPage > 1;
         boolean next = endPage < totalPage;

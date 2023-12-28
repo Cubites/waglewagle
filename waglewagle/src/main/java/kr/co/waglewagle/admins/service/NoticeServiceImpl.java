@@ -18,25 +18,6 @@ public class NoticeServiceImpl implements NoticeService {
 	@Autowired
 	private NoticeMapper mapper;
 
-	//공지리스트
-//	@Override
-//	public List<NoticesVO> noticeList(){
-//		return mapper.noticeList();
-//	}
-	
-
-	//공지리스트
-//	@Override
-//	public Object list(NoticesVO vo) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
-//	@Override
-//	public Map<String, Object> noticeList(NoticesVO vo) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 	
 	// 게시글 수
 	@Override

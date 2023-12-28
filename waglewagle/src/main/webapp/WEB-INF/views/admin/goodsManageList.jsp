@@ -138,13 +138,8 @@
                     	<c:if test="${list.prev}">
                     		<a href="/admin/goodsManageList?page=${list.startPage-1}&searchWord=${list.searchWord}">이전</a>
                     	</c:if></li>
-<%--                     		<p>${map.endPage }</p> --%>
                     		
                     	<c:forEach var="p" begin="${list.startPage}" end="${list.endPage}">
-                    
-<%--                         	<c:if test="${p == list.page}">
-                            <li><a href='#;' class='current'>${p}</a></li>
-                            </c:if> --%>
                             <c:if test="${p != list.page}">
                             <li><a href="/admin/goodsManageList?page=${p}&searchWord=${list.searchWord}">${p}</a></li>
                             </c:if>

@@ -27,15 +27,6 @@ import kr.co.waglewagle.domain.NoticesVO;
 public class NoticesController {
 	@Autowired
 	private NoticeService service;
-
-	//공지 목록
-//	@GetMapping("/admin/noticelist")
-//	public String noticeList(Model model) {
-//		System.out.println("여기가 공지목록입니다.");
-//		List<NoticesVO> list = service.noticeList();
-//		model.addAttribute("list",list); //jsp로 다시 보내주는거지
-//		return "/admin/noticelist";
-//	}
 	
 	//공지 페이징 + 검색
 	@GetMapping("/admin/noticelist")
@@ -75,7 +66,6 @@ public class NoticesController {
 		
 		AdminsVO sess = (AdminsVO) session.getAttribute("admin_info");
 		vo.setAdmins_id(sess.getAdmins_id());
-//		vo.setAdmins_id(1); //아직 로그인 기능 미완성이라서 admins_id 고정해둔것이고
 		service.Noticewrite(vo,request);
 		return "redirect:/admin/noticelist";
 	}
@@ -83,17 +73,14 @@ public class NoticesController {
 	//공지 상세 내용 보기 ( 주소창 수정 버전 )
 	@GetMapping("/admin/noticelist/{notices_id}")
 	public String noticeListDetail(Model model, @PathVariable("notices_id") int notices_id) {
-//		System.out.println("====>"+notices_id);
 		NoticesVO a = service.Noticeview(notices_id);
-//		System.out.println("내가 가지고 온 공지내용"+a.getNotices_title());
-		model.addAttribute("a",a); //jsp로 보내주느거야아아아
+		model.addAttribute("a",a);
 		return "admin/noticeview";
 	}
 
 	//공지 삭제하기
 	@GetMapping("/admin/noticedelete/{notices_id}")
 	public String Noticedelete(@PathVariable("notices_id") int notices_id, Model model,HttpServletRequest request) {
-		System.out.println("======>"+notices_id);
 		service.Noticedelete(notices_id);
 		return "redirect:/admin/noticelist";
 	}
@@ -103,14 +90,14 @@ public class NoticesController {
 	public String Noticemodify(NoticesVO vo,Model model,@PathVariable("notices_id") int notices_id) {
 		NoticesVO a = service.Noticemodify(notices_id);
 		model.addAttribute("a",a);
-//		model.addAttribute("vo",service.Noticeview(vo,false));
-//		System.out.println("===>"+notices_id);
 		return "admin/noticemodify";
 	}
 	
+	//공지 수정
 	@PostMapping("/admin/noticeModify")
-	public String NoticeModifyUpdate(Model model, NoticesVO vo, HttpServletRequest request) {
-		vo.setAdmins_id(1);
+	public String NoticeModifyUpdate(Model model, NoticesVO vo, HttpServletRequest request,HttpSession session) {
+		AdminsVO sess = (AdminsVO) session.getAttribute("admin_info");
+		vo.setAdmins_id(sess.getAdmins_id());
 		int r = service.NoticeModifyUpdate(vo,request);
 		model.addAttribute(request);
 		return "redirect:/admin/noticelist";

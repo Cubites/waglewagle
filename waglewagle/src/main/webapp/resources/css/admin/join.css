@@ -1,7 +1,7 @@
 * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
   }
 #header {
     width: 100%;
@@ -34,7 +34,7 @@
 	width: 15%;
 	height: 100%;
 	text-align: center;
-	justify-content: space-between; /* 수직 간격을 동일하게 분배 */
+	justify-content: space-between;
 }
 #side-box div {
     height: 40px;
@@ -54,13 +54,12 @@
 }
 #side-box div:last-child {
     font-size: 14px;
-    margin-top: auto; /* 맨 아래로 이동 */
+    margin-top: auto;
 }
 #main-box {
     width: 85%;
     height: 100%;
     font-size: 20px;
-    /* border: 1px solid #999; */
     text-align: center;
 }
 #plus {
@@ -93,7 +92,7 @@
 	border-radius: 5px 5px 5px 5px;
 }
 #plus table td:first-child {
-    font-size: 14px; /* 첫 번째 td의 글자 크기 조절 */
+    font-size: 14px;
 }
 #body-plus button {
     width: 50%;

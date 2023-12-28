@@ -21,21 +21,10 @@ public class QnasController {
 	
 	@Autowired
 	private QnaService service;
-
-	//문의 목록
-//	@GetMapping("/admin/qnalist")
-//	public String qnaString(Model model) {
-//		//System.out.println("여기는 문의목록입니다..");
-//		List<QnasVO> list = service.QnaList();
-//		model.addAttribute("list",list); 
-//		return "/admin/qnalist";
-//	}
 	
 	//문의 페이징 + 검색
 	@GetMapping("/admin/qnalist")
 	public String qnaString(Model model,QnasVO vo) {
-		//System.out.println("여기는 문의목록입니다..");
-//		List<QnasVO> list = service.QnaList();
 		Map<String, Object> list = service.list(vo);
 		model.addAttribute("map",list); 
 		return "/admin/qnalist";
@@ -45,7 +34,7 @@ public class QnasController {
 	@GetMapping("/admin/qnalist/{qnas_id}")
 	public String qnaListDetail(Model model, @PathVariable("qnas_id") int qnas_id) {
 		QnasVO a = service.Qnaview(qnas_id);
-		model.addAttribute("a",a); //jsp로
+		model.addAttribute("a",a);
 		return "admin/qnaview";
 	}
 	
@@ -68,7 +57,6 @@ public class QnasController {
 	public String writeReply(Model model,QnasVO vo, HttpServletRequest request,@PathVariable("qnas_id") int qnas_id,HttpSession session) {
 		AdminsVO sess = (AdminsVO) session.getAttribute("admin_info");
 		vo.setAdmins_id(sess.getAdmins_id());
-//		vo.setAdmins_id(1); //로그인x
 		service.writeReply(vo,request);
 		return "redirect:/admin/qnalist/"+qnas_id;
 	}
@@ -77,8 +65,6 @@ public class QnasController {
 	public String modifyReply(Model model,QnasVO vo, HttpServletRequest request,@PathVariable("qnas_id") int qnas_id,HttpSession session) {
 		AdminsVO sess = (AdminsVO) session.getAttribute("admin_info");
 		vo.setAdmins_id(sess.getAdmins_id());
-//		vo.getAdmins_id(session);
-//		vo.setAdmins_id(1); //로그인x 고정
 		service.writeReply(vo,request);
 		return "reditect:/admin/qnalist/"+qnas_id;
 	}

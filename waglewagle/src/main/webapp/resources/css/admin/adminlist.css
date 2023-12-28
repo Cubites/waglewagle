@@ -51,11 +51,9 @@ a{
 #side-box div.selected {
     background-color: white;
 }
-
 #side-box div:hover {
     background-color: white;
 }
-
 #side-box div:active {
     background-color: lightblue;
 }
@@ -63,7 +61,6 @@ a{
     font-size: 14px;
     margin-top: auto; /* 맨 아래로 이동 */
 }
-
 #main-box {
     width: 85%;
     height: 100%;
@@ -105,7 +102,7 @@ a{
     border-spacing:0; 
     box-sizing:border-box;
     margin: auto;
-}  /* tr에 shadow_down 클래스 사용하는 경우 border-collapse:separate; 으로 변경*/
+}
 .noticelist .nlist thead{
     border-top:2px solid #221f1f; 
     border-bottom:1px solid #221f1f;
@@ -124,10 +121,10 @@ a{
 }
 .noticelist .nlist tbody tr:hover{
     background:#f6f6f6;
-} /*마우스오버 배경칼라지정*/
+}
 .noticelists .nlist .notice{
     background:#f9f9f9; 
-} /*탑공지  배경칼라지정*/
+}
 .noticelist .nlist .notice_ico{
     display:none;
 }
@@ -139,7 +136,6 @@ a{
     font-size:15px; 
     font-weight:bold;
 }
-/** tr에 shadow_down 클래스 사용하는 경우 -  테두리 박스에 그림자처리 **/
 .noticelist .nlist tr.shadow_down th{
     height:35px;  
     background:#fff; 
@@ -200,43 +196,3 @@ li{
 #pp a{
 	font-size:18px;
 }
-/* paging */
-/* #pagingBox{
-	width: 100%;
-	height: 10%;
-	margin-top: 20px;
-	align-self: end;
-}
-#pagingBox>ul{
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-}
-#pagingBox>ul>li{
-	width: 40px;
-	height: 40px;
-	border-radius: 20px;
-	overflow: hidden;
-	margin: 0 1%;
-}
-#pagingBox>ul>li:hover>a{
-	background-color: #999;
-	color: #fff;
-}
-#pagingBox>ul>li.nowPage>a{
-	background-color: #999;
-	color: #fff;
-}
-#pagingBox>ul>li>a{
-	width: 100%;
-	height: 100%;
-	font-size: 20px;
-	font-weight: bold;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-} */

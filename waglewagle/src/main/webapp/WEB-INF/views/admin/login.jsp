@@ -52,7 +52,6 @@
 		                    비밀번호 <input type="password" id="admin-pwd" name="admins_pwd" placeholder="비밀번호를 입력하세요"/>
 		                </div>
 		                <div>
-		                    <!-- <input type="button" id="loginbtn" value="로그인"> -->
 		                <div id="login_btn">
 							<input type="button" id="loginbtn" value="로그인" onclick="loginCheck()">
 		                </div>

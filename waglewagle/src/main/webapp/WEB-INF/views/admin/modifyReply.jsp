@@ -44,23 +44,7 @@
 			const qnas_id = document.getElementById("qnas_id").innerText;
 			location.href="/admin/modifyReply/${qnas_id}";
 		}  
-		
-		//답글 수정 (ajax)
-		/*function modifyReply(qnas_id){
-				$.ajax({
-					url:"/admin/modifyReply",
-					type:"post",
-					contnetType:"application/json",
-					data:JSON.stringify({
-						data:qnas_id
-					}),
-					success:function(data){
-					}
-				}) 
-			} */
-		
-		
-		 
+
 		//사이드바 선택에 맞는 함수들..
 	    function notice(){
 			 location.href = "/admin/noticelist";
@@ -124,7 +108,6 @@
 					<div>
 			            <p id="titletxt">문의내용</p>
 			            <div id="noticecontent">
-			                <!-- <p id="contenttxt">내용</p> -->
 			                ${a.qnas_content}
 			            </div>
                 	</div>
@@ -133,7 +116,6 @@
 					<div class="writebtn">
             			<!-- 공지 상세페이지 버튼들  -->
 						<div id="notice_button">
-				            <!-- <input type="button" id="writebtn" value="답변작성" onclick="qnaReply()"> -->
 							<input type="button" id="writebtn" value="목록" onclick="qna()">
 							<input type="button" id="writebtn" value="문의글 삭제" onclick="qnaDelete(${a.qnas_id})">
 		                 </div>
@@ -148,10 +130,6 @@
 	            			</div>
 	            			<input type="submit" value="답글작성" id="writebtn">
 	            		</form>
-	            		
-	            		<%-- <div id="replybtn">
-            				<input type="button" id="writebtn" value="답글작성" onclick="writeReply(${a.qnas_id})">
-            			</div> --%>
             	 	</c:if>
             	 	
             	 	<c:if test="${!empty a.qnas_reply}">

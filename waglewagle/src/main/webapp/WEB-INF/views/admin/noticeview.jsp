@@ -18,7 +18,7 @@
 	
 		//게시물 삭제
 		function noticeDelete(){
-			console.log(document.getElementById("notices_id").innerText); //notices_id값 가지고 오고 아래 넣어주기!! (ex.나는 2가 notices_id인줄 알고있지만 모르니까..)
+			console.log(document.getElementById("notices_id").innerText);
 		    if(confirm("선택한 공지를 정말로 삭제 하시겠습니까?")==true)  {
 		    	const notices_id = document.getElementById("notices_id").innerText;
 		    	location.href="/admin/noticedelete/${notices_id}";  	
@@ -77,20 +77,20 @@
 
         
             <div id="main-box">
+            <h1>[ 공지사항 ]</h1><br/><br/>
             	<div class="noticeView">
-
 					<div class="rightloc">
 						<p style="font-size:15px" class="noticeinfo" id="notices_id">글번호: ${a.notices_id } &nbsp&nbsp 작성일: ${a.notices_date }</p>
 					</div>
             	 
 					<!-- 제목 -->
+					<div class="leftloc"><p id="titletxt">제목</p></div>
 					<div id="noticetitle">
-						<!-- <p id="titletxt">제목</p> -->
 						${a.notices_title}
 					</div>
 					<!-- 내용 -->
+					<div class="leftloc"><p id="contenttxt">내용</p></div>
 					<div id="noticecontent">
-						<!-- <p id="contenttxt">내용</p> -->
 						${a.notices_content}
 					</div>
             		

@@ -64,18 +64,12 @@ public class QnaServiceImpl implements QnaService {
 		return null;
 	}
 	
-	
 	//문의 삭제하기
 	@Override
 	public void qnaDelete(int qnas_id) {
 		mapper.qnaDelete(qnas_id);
 	}
-	
-//	@Override
-//	public void delReply(int qnas_id) {
-//		mapper.delReply(qnas_id);
-//	}
-	
+
 	@Override
 	public int delReply(QnasVO vo, HttpServletRequest request) {
 		int r = mapper.delReply(vo);

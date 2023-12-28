@@ -43,7 +43,7 @@ public class LoginController {
 				session.setAttribute("admin_info", loginAdminsVO);
 				AdminsVO vo = (AdminsVO) session.getAttribute("admin_info");
 				System.out.println(vo.getAdmins_email());
-				return "redirect:/admin/noticelist";
+				return "redirect:/admin/stats";
 			}
 		}
 		return "/admin/login";

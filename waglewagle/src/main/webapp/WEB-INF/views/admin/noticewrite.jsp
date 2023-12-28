@@ -82,16 +82,17 @@
             
             
             <div id="main-box">
-          		  <form name="WriteForm"  method="post"> <!-- 여기서 왜 method=post를 넣으면 내가 db에서 직접 넣은 데이터가 출력이 안된다...??  -->
+            <h1>[ 공지사항 ]</h1><br/>
+          		  <form name="WriteForm"  method="post">
                     <!-- 제목 -->
-                    <p id="titletxt" style="font-size:15px;">제목</p>
+                    <div class="leftloc"><p id="titletxt">제목</p></div>
                     <div id="noticetitle">
                         <input id="title" name="notices_title" placeholder="공지 제목을 작성하세요.">
                     </div>
                     <!-- 내용 --> 
-                    <p id="contenttxt" style="font-size:15px;">내용</p>
+                   <div class="leftloc"><p id="contenttxt">내용</p></div>
                     <div id="noticecontent">
-                        <textarea id="content" name="notices_content" placeholder="공지내용 작성 규칙에 맞춰 작성할것"></textarea>
+                        <textarea id="content" name="notices_content" placeholder="공지내용 작성 규칙에 맞춰 작성할 것"></textarea>
                     </div>
                     <!-- 공지업로드 버튼 -->
                     <div id="noticebutton">
