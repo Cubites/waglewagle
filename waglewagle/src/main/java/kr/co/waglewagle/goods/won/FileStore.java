@@ -9,13 +9,16 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
 //저장 경로 properties에 저장하고 @Value로 읽기 위해
 @PropertySource("classpath:file.properties")
+@Slf4j
 public class FileStore {
 	
 	@Value("${file.dir}")
-	private String fileDir;
+	public String fileDir;
 	
 	// 상품 등록 시, 상품 이미지 저장
 	public List<UploadImage> storeFiles(List<MultipartFile> images) {
@@ -43,7 +46,9 @@ public class FileStore {
 		//실제 저장될 때 이름 
 		String storeFileName = users_id + "_profile." + originFileName.split("[.]")[1];
 		//저장 경로 
+		
 		String fullPath = getFullPath(storeFileName);
+
 		try {
 			//MultipartFile 아주 간단하게 저장 가능..
 			image.transferTo(new File(fullPath));

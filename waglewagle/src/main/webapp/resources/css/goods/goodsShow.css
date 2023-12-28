@@ -6,8 +6,8 @@
 
   flex-direction: column;
   justify-content: space-evenly;
-  padding-left:8%;
-  padding-right:8%;
+  padding-left: 8%;
+  padding-right: 8%;
 }
 
 #top {
@@ -51,7 +51,7 @@
 }
 
 .imgs {
-	/*
+  /*
   width: 420px;
   height: 350px;
   */
@@ -91,9 +91,6 @@
 
 .topbox2c {
   height: 25%;
- 
-  
-
 }
 
 #title {
@@ -138,7 +135,6 @@
 }
 
 #sellerBox {
- 
   height: 50%;
   display: flex;
   flex-direction: row;
@@ -190,7 +186,7 @@
 #addrBox > span {
   font-size: 10px;
   line-height: 30px;
-  margin-left:2px
+  margin-left: 2px;
   color: #838383;
 }
 
@@ -257,7 +253,7 @@
 
 #topbox2footer {
   height: auto;
-  margin-top:3%;
+  margin-top: 3%;
   font-size: 12px;
   font-weight: bold;
   display: flex;
@@ -310,36 +306,33 @@
 }
 
 /* 슬라이드*/
- #imagewrap {
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-    }
+#imagewrap {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
 
-    #slideList {
-      position: absolute;
-      left: 0;
-      top: 0;
+#slideList {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
 
-    }
+#slideList > .imgs {
+  float: left;
+}
 
-    #slideList>.imgs {
+#slideList.active {
+  transition: 0.3s ease-out;
+}
 
-      float: left;
+.direc {
+  position: absolute;
+  z-index: 1;
+}
 
-    }
-
-    #slideList.active {
-      transition: 0.3s ease-out;
-    }
-
-    .direc {
-      position: absolute;
-      z-index: 1;
-    }
-    
-    /*mid 추가!*/
-    #mid {
+/*mid 추가!*/
+#mid {
   border-radius: 5px;
   border: 2px solid #ffd36e;
 }
@@ -357,94 +350,8 @@
   font-size: 10px;
   color: #adadad;
 }
-/* #myPoints {
-  width: 40%;
-  display: flex;
-  flex-direction: row;
- 
-}
-#myPointBox {
-  width: 100%;
-  display: flex;
-  
 
-}
-#coinImg {
-  width: 60px;
-  height: 60px;
-}
-#myPoint {
-  width:100%
-  padding-top: 1%;
-  text-align: center;
-  line-height: 50px;
-  font-weight: bolder;
-
-  font-size: 30px;
- 
-}
-.myPointBoxChild {
-  width:50%;
-  margin-top: 1%;
-  padding-top: 0.5%;
-}
-#fillText {
-  margin-top: 2.5%;
-  line-height: 40px;
-  width: 120px;
-  height: 40px;
-  border: 1px solid #db0000;
-  display: flex;
-  justify-content: center;
-  border-radius: 5px;
-  background-color: #ffd36e;
-  border-style: none;
-  
-}
-#fillText > span {
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-}
-#imgWrap {
-  margin-left: 4%;
-  margin-bottom: 10px;
-}
-
-#submitPoint {
-  width: 300px;
-  height: 50px;
-  border: 1px solid black;
-  margin-right: 4%;
-  margin-top: 2%;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-}
-#submitPoint > input {
-  padding-top: 0.8%;
-  border: none;
-  font-size: 18px;
-  height: 100%;
-  padding-bottom: 1.5%;
-  margin-left: 5%;
-  font-weight: bold;
-}
-#submitButton {
-  line-height: 30px;
-  margin-right: 5%;
-  height: 30px;
-  width: 90px;
-  margin-top: 1%;
-  text-align: center;
-  border-radius: 10px;
-  background-color: #ff4356;
-  color: #fffefe;
-  font-weight: normal;
-  font-size: 14px;
-} */
-    
-    /*12.15추가*/
+/*12.15추가*/
 #bottom {
   border-radius: 5px;
   border: 2px solid #ffd36e;
@@ -469,16 +376,17 @@
   font-size: 30px;
   font-weight: bolder;
 }
-input:focus {outline:none;}
-
+input:focus {
+  outline: none;
+}
 
 /* 12- 15  오후 추가 모달 관련 css*/
 .modal {
   position: absolute;
   width: 100%;
   height: 100%;
-  min-height:720px;
-  
+  min-height: 720px;
+
   left: 0;
   top: 0;
   display: none;
@@ -545,84 +453,82 @@ input:focus {outline:none;}
 
 /*css 수정*/
 
-#midPointWrap{
-	display: flex;
-	flex-direction: row;
-	margin-top:1.5%;
-	margin-left: 1.5%;
-	margit-right:1.5%;
-	
+#midPointWrap {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1.5%;
+  margin-left: 1.5%;
+  margin-right: 1.5%;
 }
-#myPoints{
-	width:55%;
-	height:100%;
-	margin-top:1.5%;
-	
-	margin-right:10px;
-	display: flex;
-	flex-direction: row;
-	
+#myPoints {
+  width: 55%;
+  height: 100%;
+  margin-top: 1.5%;
+
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
 }
 
-#coin{
-	width:50px;
-	height:50px;
-	margin-left:10px;
-	margin-right:10px;
+#coin {
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
-#myPoint{
-	width: 70%;
-	text-align: center;
-	font-size: 30px;
-	font-weight: bold;
-	line-height:45px;
-}
-
-#fillText{
-	width:15%;
-	padding-top: 10px
-	
-	
-}
-#fillText > div{
-	text-align: center;
-	color:white;
-	font-size: 12px;
-	font-weight: bold;
-	line-height:25px;
-	height:70%;
-	border-radius:5px;
-	background: #FFD36E
+#myPoint {
+  width: 70%;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 45px;
 }
 
+#fillText {
+  width: 15%;
+  padding-top: 10px;
+}
+#fillText > div {
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 25px;
+  height: 70%;
+  border-radius: 5px;
+  background: #ffd36e;
+}
 
-#submitPoint{
-	width:40%;
-	height:100%;
-	
-	border:1px solid black;
-	border-radius:10px;
-	margin-top:1.5%;
-    display: flex;
-    flex-direction: row;
+#submitPoint {
+  width: 40%;
+  height: 100%;
+
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-top: 1.5%;
+  display: flex;
+  flex-direction: row;
 }
-#submitPoint > input{
-	display:block;
-	width: 75%;
-	border-radius:10px;
-	min-height: 45px;
-	border: none;
-	padding-left: 2px;
+#submitPoint > input {
+  display: block;
+  width: 75%;
+  border-radius: 10px;
+  min-height: 45px;
+  border: none;
+  padding-left: 2px;
 }
-#submitButton{
-	width:23%;
-	text-align: center;
-	line-height: 30px;
-	color:white;
-	border-radius: 10px;
-	background-color: #FF4356;
-	font-size: 12px;
-	font-weight: bold;
-	height: 30px;
-	margin-top:2%;
+#submitButton {
+  width: 23%;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+  border-radius: 10px;
+  background-color: #ff4356;
+  font-size: 12px;
+  font-weight: bold;
+  height: 30px;
+  margin-top: 2%;
+}
+#goPayment{
+	cursor: pointer;
 }
