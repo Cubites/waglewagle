@@ -40,5 +40,6 @@ public interface UsersMapper {
 	int deleteAccount(Integer users_id); // 회원탈퇴
 
 	int readQna(Integer qnas_id);
-
+	
+	int updateProfile(Map<String, Object> dataForUpdateProfile);
 }

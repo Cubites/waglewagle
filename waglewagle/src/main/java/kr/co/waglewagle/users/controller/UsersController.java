@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.waglewagle.auctions.service.AuctionsService;
 import kr.co.waglewagle.domain.UsersVO;
+import kr.co.waglewagle.goods.won.FileStore;
+import kr.co.waglewagle.goods.won.UploadImage;
 import kr.co.waglewagle.users.service.UsersService;
 import kr.co.waglewagle.users.ty.mailauth.MailService;
 
@@ -427,6 +430,23 @@ public class UsersController {
 		model.addAttribute("scrollY", scroll);
 		
 		return "mypage/main";
+	}
+	
+	// 마이페이지 - 프로필 수정
+	@PostMapping("/mypage/profile/change")
+	public String mypageProfileChange(MultipartFile profileImg, HttpSession sess, RedirectAttributes ra) {
+		UsersVO vo = (UsersVO) sess.getAttribute("users_info");
+		FileStore fs = new FileStore();
+		UploadImage ui = fs.storeProfileFile(profileImg, vo.getUsers_id());
+		
+		Map<String, Object> dataForUpdateProfile = new HashMap<>();
+		dataForUpdateProfile.put("users_id", vo.getUsers_id());
+		dataForUpdateProfile.put("img", ui.getFullPath());
+		
+		int result = service.updateProfile(dataForUpdateProfile);
+		ra.addFlashAttribute("updateResult", result == 1 ? true : false);
+		
+		return "redirect:/mypage/auctions";
 	}
 	
 	// 마이페이지 - 관심지역 수정 페이지로 이동

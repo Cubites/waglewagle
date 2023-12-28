@@ -161,6 +161,12 @@
     		qnas_id = #{qnas_id}
     	AND
     		qnas_reply is not null
-
+	</update>
+	
+	<!-- 프로필 이미지 수정 -->
+	<update id="updateProfile" parameterType="java.util.Map">
+		UPDATE users
+		SET users_image = #{img}
+		WHERE users_id = #{users_id}
 	</update>
 </mapper>
