@@ -41,7 +41,7 @@ public class BidsServiceImpl implements BidsService {
 		vo.setBids_price(vo.getBids_price() - preMaxBids);
 		// 업데이트 쿼리
 		UserPointupdate = mapper.updateUsablePoint(vo);
-
+		
 		// 평균가 계산 쿼리
 		avgPriceUpdate = mapper.updateAvgPrice(vo.getGoods_id());
 

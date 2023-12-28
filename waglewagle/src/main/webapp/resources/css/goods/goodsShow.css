@@ -532,3 +532,12 @@ input:focus {
 #goPayment{
 	cursor: pointer;
 }
+.direc{
+	cursor: pointer;
+}
+#submitButton{
+	cursor: pointer;
+}
+#likebox{
+	cursor: pointer;
+}
