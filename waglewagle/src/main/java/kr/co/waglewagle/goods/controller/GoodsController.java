@@ -51,7 +51,8 @@ public class GoodsController {
 	@PostMapping("/goods/regist")
 	public String regist(@Validated GoodsFormVO vo, BindingResult br, Model model,
 			@SessionAttribute(name = "users_info", required = false) UsersVO LoginUserId, RedirectAttributes rs) {
-
+		
+		
 		// Spring: 태그를 이용해서 출력할 수도 있지만..그냥 br담아서 출력하는 것도 나쁘지않은 선택!
 		// 글로벌 오류 출력하기 위해 담음
 		model.addAttribute("error", br);
