@@ -64,6 +64,8 @@
 			, qnas_id 
 			, qnas_title 
 			, qnas_date
+			, qnas_read
+			, qnas_reply
 		FROM qnas
 		WHERE users_id = #{users_id}
 		ORDER BY qnas_date DESC
