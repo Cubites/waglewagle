@@ -41,8 +41,7 @@
                    		<div class="f">공지 내용</div>&nbsp
                    		<div>
 		                   <div id="noticecontent">
-		                       <!-- <p id="contenttxt">내용</p> -->
-		                       ${a.notices_content}
+		                   <textarea style="resize: none;" id="noticecontent" name="notices_content">${a.notices_content}</textarea>
 		                   </div>
 		                               		<!-- 버튼 -->
             		<div class="writebtn">
