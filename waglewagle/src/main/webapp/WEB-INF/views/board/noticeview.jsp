@@ -31,8 +31,7 @@
             	   <div class="nview">
 	            	   <div class="f">공지 제목</div>&nbsp
 	                   <div id="noticetitle" class="s">
-	                       <!-- <p id="titletxt">제목</p> -->
-	                       ${a.notices_title}
+	                       <input id="title" name="notices_title" value="${a.notices_title}">
 	                   </div>
                    </div>
                    

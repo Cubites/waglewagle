@@ -17,6 +17,32 @@
 .noticeView{
 	text-align: center;
 }
+#title{
+    width: 500px;
+    height: 50px;
+    box-sizing: border-box;
+    padding-left: 10px;
+    background: #F1F1F1;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    border-width:0px;
+}
+#noticetitle{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    border-width:0px;
+}
+#title{
+    width: 500px;
+    height: 50px;
+    box-sizing: border-box;
+    padding-left: 10px;
+    background: #F1F1F1;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    border-width:0px;
+}
 #noticetitle{
     width: 500px;
     height: 50px;
