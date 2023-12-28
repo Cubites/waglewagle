@@ -86,12 +86,13 @@
 					<!-- 제목 -->
 					<div class="leftloc"><p id="titletxt">제목</p></div>
 					<div id="noticetitle">
-						${a.notices_title}
+						<input id="title" name="notices_title" value="${a.notices_title}">
 					</div>
 					<!-- 내용 -->
 					<div class="leftloc"><p id="contenttxt">내용</p></div>
 					<div id="noticecontent">
-						${a.notices_content}
+					<%-- <textarea><c:out value="${a.notices_content}" /></textarea> --%>
+						<textarea style="resize: none;" id="noticecontent" name="notices_content">${a.notices_content}</textarea>
 					</div>
             		
 					<!-- 버튼들 -->

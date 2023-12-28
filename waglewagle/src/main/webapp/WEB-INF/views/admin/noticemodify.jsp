@@ -90,7 +90,7 @@
                     	<p id="contenttxt">내용</p>
                     </div>
                     <div id="noticecontent">
-                        <textarea id="content" name="notices_content">${a.notices_content}</textarea>
+                        <textarea style="resize: none;" id="content" name="notices_content">${a.notices_content}</textarea>
                     </div>
 
 
