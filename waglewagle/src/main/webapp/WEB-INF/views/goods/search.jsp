@@ -277,9 +277,12 @@ let searchWord = "${page.search_word}";
 									<div class="expTitle">입찰 마감일</div>
 								</div>
 								<div class="avg_expValue">
-									<div class="productAvgPrice">${item.goods_avg_price }원</div>
-									<div class="productExp">${item.goods_exp }</div>
-								</div>
+		                            <div class="productAvgPrice">${item.goods_avg_price }원</div>
+		                            <div class="productExpArea">
+		                              <div class="productExp"></div> 
+		                              <div class="originExp hide">${item.goods_exp }</div>
+		                            </div>
+		                          </div>
 							</div>
 							<div class="leftTime toDetailPage">
 								<div class="leftTimeVal"></div>

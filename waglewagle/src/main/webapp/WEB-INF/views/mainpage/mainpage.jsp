@@ -55,14 +55,14 @@
 				</div>
 				<!-- swiper -->
 				<div class="swiper mySwiper notBanner">
-					<div class="swiper-wrapper hoverEl relative">
+					<div class="swiper-wrapper hoverEl relative popular">
 						<c:if test="${empty popular_list }">
 							<div class="noItems">
 								<div class="noItemValue">조건에 맞는 상품이 없습니다.</div>
 							</div>
 						</c:if>
 						<c:forEach var="item" items="${popular_list }">
-							  <div class="swiper-slide">
+							  <div class="swiper-slide popSlideEl">
                     <div class="popProduct">
                         <div class="productImg">
                           <img src="/upload/${item.goods_th_img }">
@@ -150,20 +150,21 @@
 			<div id="nearProductsArea">
 				<div id="nearProdHeader">
 					<div id="nearProductsTitle">
-						내 주변 상품
+						관심 지역 상품
 					</div>
 					<div id="location">
 						<c:if test="${dong_list != null}">
-							<div id="locImg"><img src="/resources/images/loc.png"></div>
+							
+							<div id="locNameArea">
+								<c:forEach var="dong" items="${dong_list }">
+									<div id="locImg"><img src="/resources/images/loc.png"></div>
+									<div class="locName">
+										${dong }
+										 
+									</div>
+								</c:forEach>	
+							</div>
 						</c:if>
-						<div id="locNameArea">
-							<c:forEach var="dong" items="${dong_list }">
-								<div class="locName">
-									${dong }
-									 
-								</div>
-							</c:forEach>	
-						</div>
 					</div>
 				</div>
 				<!-- swiper -->
@@ -175,7 +176,7 @@
 							</div>
 						</c:if>
 						<c:forEach var="item" items="${near_list }">
-							<div class="swiper-slide">
+							<div class="swiper-slide dongSlideEl">
 	                     		<div class="popProduct">
                         			<div class="productImg">
 			                           <img src="/upload/${item.goods_th_img }">
