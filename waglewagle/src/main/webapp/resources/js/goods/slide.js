@@ -9,9 +9,12 @@ let imagewrap = document.querySelector('#imagewrap');
 //초기 사이즈 조절
 setImgSize();
 //이미지가 1개면 움직일 필요 없으니, slide 사이드나 clone객체 생성로직 제외
-if (imgLength > 1) {
-  init();
-}
+
+// if (imgLength > 1) {
+//   init();
+// }
+
+init();
 function init() {
   addImages();
   addClickEvent();
@@ -43,7 +46,7 @@ function updateSlideWidth() {
 //초기 위치 지정
 function setInitPos() {
   let initpos = -(imgLength * imgWidth);
- 
+
   slidList.style.transform = 'translateX(' + initpos + 'px)';
   setTimeout(() => {
     slidList.classList.add('active');
@@ -54,7 +57,7 @@ function moveSlide(num) {
   let left = -(num * imgWidth);
   slidList.style.left = left + 'px';
   currImg = num;
- 
+
   if (currImg == imgLength || -currImg == imgLength) {
     setTimeout(() => {
       slidList.classList.remove('active');
@@ -78,7 +81,7 @@ function setImgSize() {
     img.width = width;
     img.height = height;
   }
-  
+
   return width;
 }
 
