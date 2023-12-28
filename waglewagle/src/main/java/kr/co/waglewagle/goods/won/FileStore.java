@@ -1,7 +1,6 @@
 package kr.co.waglewagle.goods.won;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +9,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Component
 //저장 경로 properties에 저장하고 @Value로 읽기 위해
 @PropertySource("classpath:file.properties")
-@Slf4j
 public class FileStore {
 	
 	@Value("${file.dir}")
@@ -34,6 +30,31 @@ public class FileStore {
 		}
 		
 		return list;
+	}
+	
+	public UploadImage storeProfileFile(MultipartFile image, Integer users_id) {
+		
+		if(image.isEmpty()) {
+			return null;
+		}
+		//오리지널 이름 알아내기 
+		String originFileName = image.getOriginalFilename();
+		//실제 저장될 때 이름 
+		String storeFileName = users_id + "_profile." + originFileName.split("[.]")[1];
+		//저장 경로 
+		String fullPath = getFullPath(storeFileName);
+		System.out.println("****************************");
+		System.out.println(fullPath);
+		System.out.println("****************************");
+		try {
+			//MultipartFile 아주 간단하게 저장 가능..
+			image.transferTo(new File(fullPath));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//실제 파일을 저장 후 필요한 정보(파일이름,경로 등)만 담은 객체 리턴
+		return new UploadImage(originFileName,storeFileName,fullPath);
 	}
 	
 	
@@ -68,6 +89,9 @@ public class FileStore {
 
 
 	private String getFullPath(String storeFileName) {
+		System.out.println("****************************");
+		System.out.println(fileDir+File.separator+storeFileName);
+		System.out.println("****************************");
 		//파일 실제 저장 경로
 		return fileDir+File.separator+storeFileName;
 	}

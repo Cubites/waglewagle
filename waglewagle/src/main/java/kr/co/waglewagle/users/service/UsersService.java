@@ -36,4 +36,6 @@ public interface UsersService {
 	int deleteAccount(Integer users_id);
 
 	int readQna(Integer qnas_id);
+	
+	int updateProfile(Map<String, Object> dataForUpdateProfile);
 }

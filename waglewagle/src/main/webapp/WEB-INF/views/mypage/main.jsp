@@ -20,7 +20,13 @@
 						<div id="userBox">
 							<div id="user_name" class="text_center">${users_info.users_nick}</div>
 							<div id="profile">
-								<img src="/resources/images/default_profile.png">
+								<img src="${users_info.users_image}">
+								<div>
+									<form id="profileSubmit" method="post" action="/mypage/profile/change" enctype="multipart/form-data">
+										<input id="inputFile" type="file" accept="image/*" name="profileImg">
+										<img id="imgInputButton" src="/resources/images/edit_icon.png">
+									</form>
+								</div>
 							</div>
 							<div id="pointBox" class="text-center">
 								<div id="pointTop">
@@ -273,6 +279,17 @@
 			for(let aa of aTags){
 			    aa.href = aa.href.substr(0, aa.href.indexOf("scroll=")) + "scroll=" + scrollVal;
 			}
+		});
+		
+		$("#imgInputButton").click(function() {
+		    $("#inputFile").click();
+		})
+		
+		if("${updateResult}" == "false"){
+		    alert("프로필 수정에 실패했습니다. 잠시후에 다시 시도해주세요.");
+		}
+		$("#inputFile").change(function(){
+		   	 $("#profileSubmit").submit();
 		});
 	</script>
 </body>

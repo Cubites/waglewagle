@@ -141,4 +141,9 @@ public class UsersServiceImpl implements UsersService {
 	public int readQna(Integer qnas_id) {
 		return mapper.readQna(qnas_id);
 	}
+
+	@Override
+	public int updateProfile(Map<String, Object> dataForUpdateProfile) {
+		return mapper.updateProfile(dataForUpdateProfile);
+	}
 }
