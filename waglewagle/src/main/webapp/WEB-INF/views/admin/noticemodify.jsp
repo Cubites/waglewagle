@@ -37,41 +37,14 @@
 		function password(){
 			 location.href = "/admin/changePwd";
 		}
-		
-		
-/* 		document.noticemodify.action="/admin/noticeModify/{notices_id}";
-		document.noticemodify.submit(); */
+
 		
   		function noticeModify(){
 			console.log(document.getElementById("notices_id").innerText); //찍히나??
 			if(confirm("수정완료?")) {
 				$("#noticemodify").submit();
 			}
-		}
- 	
-/* 	 	$.ajax({
-	 		type : 'post',
-	 		url : '/admin/noticemodify/${notices_id}',           
-	 		async : true,            
-	 		headers : {              
-	 			"Content-Type" : "application/json",      
-	 			"X-HTTP-Method-Override" : "POST"    
-	 		},    
-	 		dataType : 'text',       
-	 		data : JSON.stringify({  
-	 			"notices_title":notices_title,
-	 			"notices_content" : notices_content,
-	 			"notices_date":notices_date
-	 		}),    
-	 		success : function(result) { // 결과 성공 콜백함수        
-	 			console.log(result);    
-	 		},    
-	 		error : function(request, status, error) { // 결과 에러 콜백함수        
-	 			console.log(error)    
-	 			}
-	 		}) */
-	 		
-	 		
+		}		
  </script>
 </head> 
 <body>
@@ -97,20 +70,26 @@
             
             
             <div id="main-box">  
-            	<!-- 내가 선택한 글번호에 맞는 내용이 출력되는 페이지가 있고 그 안에 수정을 하고, 수정완료 버튼 누르고 method=post 다시 저장되는 과정 반복 -->
-            	
-            	<div class="rightloc"><p style="font-size:15px" class="noticeinfo" id="notices_id">글번호: ${a.notices_id } &nbsp&nbsp 작성일: ${a.notices_date }</p></div>
-            	<%-- <form name="noticemodify" method="post" action="<c:url value='/admin/noticemodify/${notices_id}'>"> --%>
+            	<h1>[ 공지수정 ]</h1><br/><br/>
+            	<div class="rightloc">
+            		<p style="font-size:15px" class="noticeinfo" id="notices_id">글번호: ${a.notices_id } &nbsp&nbsp 작성일: ${a.notices_date }</p>
+            	</div>
             	<form id="noticemodify" method="post" action="/admin/noticeModify">
-            	<input type="hidden" name="notices_id" value="${notices_id}"/> <!-- form 태그로 데이터를 보낼때는 input태그로 데이터 모두 가지고 있어야함..!! -->
+            	<input type="hidden" name="notices_id" value="${notices_id}"/>
+            	
                     <!-- 제목 -->
+               		<div class="leftloc">
+               			<p id="titletxt">제목</p>
+               		</div>
                     <div id="noticetitle">
-                        <p id="titletxt">제목</p>
                         <input id="title" name="notices_title" value="${a.notices_title}">
                     </div>
+                    
                     <!-- 내용 -->
+                    <div class="leftloc">
+                    	<p id="contenttxt">내용</p>
+                    </div>
                     <div id="noticecontent">
-                        <p id="contenttxt">내용</p>
                         <textarea id="content" name="notices_content">${a.notices_content}</textarea>
                     </div>
 

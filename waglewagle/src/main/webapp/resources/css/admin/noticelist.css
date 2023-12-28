@@ -34,7 +34,7 @@
 	width: 15%;
 	height: 100%;
 	text-align: center;
-	justify-content: space-between; /* 수직 간격을 동일하게 분배 */
+	justify-content: space-between; 
 }
 #side-box div {
     height: 40px;
@@ -43,21 +43,18 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 #side-box div.selected {
     background-color: white;
 }
-
 #side-box div:hover {
     background-color: white;
 }
-
 #side-box div:active {
     background-color: lightblue;
 }
 #side-box div:last-child {
     font-size: 14px;
-    margin-top: auto; /* 맨 아래로 이동 */
+    margin-top: auto;
 }
 #main-box {
     width: 85%;
@@ -123,7 +120,7 @@
     border-spacing:0; 
     box-sizing:border-box;
     margin: auto;
-}  /* tr에 shadow_down 클래스 사용하는 경우 border-collapse:separate; 으로 변경*/
+}
 .noticelist .nlist thead{
     border-top:2px solid #221f1f; 
     border-bottom:1px solid #221f1f;
@@ -192,7 +189,7 @@
 .noticelist .nlist td {
     text-align: center;
     padding: 8px 10px;
-    font-size: 14px; /* 이 부분을 추가했음.. */
+    font-size: 14px;
     border-bottom: 1px solid #d9d9d9;
 }
 .pg{

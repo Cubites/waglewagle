@@ -26,9 +26,6 @@ public class LoginServiceImpl implements LoginService {
 	public boolean changePwd(Map<String, String> admin) {
 		
 		String pwd = admin.get("admins_pwd");
-		System.out.println("*********************************************************");
-		System.out.println(pwd);
-		System.out.println("*********************************************************");
 		//암호화 비밀번호 변경
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String encodePwd = encoder.encode(pwd);

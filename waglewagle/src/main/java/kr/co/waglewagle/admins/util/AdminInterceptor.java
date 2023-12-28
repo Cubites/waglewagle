@@ -45,9 +45,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 		adminGrade.put("/admin/changePwd", 2);
 		
 		adminGrade.put("/admin/goodsManageList", 1);
-//		adminGrade.put("/admin/goodsStatus", 1);
 		adminGrade.put("/admin/userManageList", 1);
-//		adminGrade.put("/admin/usersStatus", 1);
 		adminGrade.put("/admin/adminmanage", 0);
 		adminGrade.put("/admin/join", 0);
 		adminGrade.put("/admin/delete/admin_account",0);

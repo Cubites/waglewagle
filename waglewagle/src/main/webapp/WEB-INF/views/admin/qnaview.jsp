@@ -81,6 +81,7 @@
                 <div id="chagepwd" onclick="password()">비밀번호 변경</div>
             </div>
             <div id="main-box">
+            <h1>[ 문의사항 ]</h1><br/><br/>
             	<div class="noticeView">        		
             	   <div class="rightloc"><p style="font-size:15px" class="noticeinfo" id="qnas_id">글번호: ${a.qnas_id } &nbsp&nbsp 작성일: ${a.qnas_date }</p></div>
             	   <!-- 작성자 -->
@@ -132,7 +133,6 @@
 					            	 	<c:if test="${!empty a.qnas_reply}">
 					            	 		<div id="replybtn">
 					            	 			<input type="submit" value="답글수정" id="writebtn">
-					            				<%-- <input type="button" id="writebtn" value="답글수정" onclick="writeReply(${a.qnas_id})"> --%>
 					            				<input type="button" id="writebtn" value="답글삭제" onclick="delReply(${a.qnas_id})">
 					            			</div>
 					            	 	</c:if>

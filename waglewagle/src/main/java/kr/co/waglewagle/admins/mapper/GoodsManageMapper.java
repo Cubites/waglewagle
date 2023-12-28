@@ -14,9 +14,6 @@ public interface GoodsManageMapper {
 	List<GoodsVO> goodsList();
 	void goodsDelete(int goods_id);
 	int goodsAccess(Map<String, Integer> goodsInfo);
-	
-//	List<Map<String, Object>> adminGoodsList(GoodsVO param);
-	
 	int count(GoodsVO param);
 	List<Map<String, Object>> adminGoodsList(GoodsVO param);
 }

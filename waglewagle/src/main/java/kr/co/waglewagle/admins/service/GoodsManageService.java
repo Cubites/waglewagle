@@ -10,11 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.waglewagle.domain.GoodsVO;
 
 public interface GoodsManageService {
-
 	List<GoodsVO> goodsList();
-//	void goodsDelete(int goods_id);
 	int goodsAccess(Map<String, Integer> goodsInfo);
-	
-//	public List<Map<String, Object>> adminGoodsList(GoodsVO vo);
 	Map<String, Object> adminGoodsList(GoodsVO param);
 }

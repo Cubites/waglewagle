@@ -153,6 +153,7 @@
         </div>
     </div>
     <script>
+    
     	// 관리자 계정 삭제
     	function deleteAdmin(admins_id){
     	    if(confirm("정말로 해당 관리자 계정을 삭제하시겠습니까?")){

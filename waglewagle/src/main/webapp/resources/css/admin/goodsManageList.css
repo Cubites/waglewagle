@@ -34,7 +34,7 @@
 	width: 15%;
 	height: 100%;
 	text-align: center;
-	justify-content: space-between; /* 수직 간격을 동일하게 분배 */
+	justify-content: space-between;
 }
 #side-box div {
     height: 40px;
@@ -54,12 +54,11 @@
 }
 #side-box div:last-child {
     font-size: 14px;
-    margin-top: auto; /* 맨 아래로 이동 */
+    margin-top: auto;
 }
 #main-box {
     width: 85%;
     height: 100%;
-    /* border: 1px solid #999; */
     text-align: center;
 	display: flex;
     flex-direction: column;
@@ -98,15 +97,12 @@
 	background: #FFFCFC;
 	border-width:0px;
 }
-span.searchWord{
-	
-}
 .noticelist .nlist{
     border-collapse:collapse; 
     border-spacing:0; 
     box-sizing:border-box;
     margin: auto;
-}  /* tr에 shadow_down 클래스 사용하는 경우 border-collapse:separate; 으로 변경*/
+}
 .noticelist .nlist thead{
     border-top:2px solid #221f1f; 
     border-bottom:1px solid #221f1f;
@@ -125,10 +121,10 @@ span.searchWord{
 }
 .noticelist .nlist tbody tr:hover{
     background:#f6f6f6;
-} /*마우스오버 배경칼라지정*/
+} 
 .noticelists .nlist .notice{
     background:#f9f9f9; 
-} /*탑공지  배경칼라지정*/
+}
 .noticelist .nlist .notice_ico{
     display:none;
 }
