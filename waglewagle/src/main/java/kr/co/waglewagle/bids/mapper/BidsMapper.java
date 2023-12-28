@@ -15,10 +15,12 @@ public interface BidsMapper {
 
 	Integer insertBids(BidsFormVO vo);
 
-	Integer UpdateUsablePoint(BidsFormVO vo);
+	Integer updateUsablePoint(BidsFormVO vo);
 
 	Integer checkInitial(BidsFormVO vo);
 
 	Integer selectMaxBidsPriceByUsersId(Map userAndgoods);
+	
+	Integer updateAvgPrice(Integer goods_id);
 	
 }

@@ -1,26 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="forms" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="Spring" uri="http://www.springframework.org/tags" %>
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="forms" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="Spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script src="/resources/js/goods/regist.js"></script>
-  <script src="/resources/js/goods/registSubmit.js"></script>
- <link rel="stylesheet" href="/resources/css/common/common.css">
-<link rel="stylesheet" href="/resources/css/goods/regist.css"/>
-  <title>Document</title>
- 
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/resources/js/goods/regist.js"></script>
+<script src="/resources/js/goods/registSubmit.js"></script>
+<link rel="stylesheet" href="/resources/css/common/common.css">
+<link rel="stylesheet" href="/resources/css/goods/regist.css" />
+<title>Document</title>
+
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
-	<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
 	<div id="center">
 		<div id="container">
 
@@ -57,13 +57,7 @@
 					<div class="inputBox">
 						<span class="inputlabel"><span class="pointer">*</span>설명</span>
 						<textarea name="goods_comment" id="textBox"
-							placeholder="   
-      
-      -상품명 ( 브랜드 )
-      -구매시기
-      -사용기간
-      -물건 상태
-      *실제 촬용한 사진과 함께 상세 정보를 입력해주세요"></textarea>
+							placeholder="&#13;&#10; -상품명 ( 브랜드 )&#13;&#10; -구매시기&#13;&#10; -사용기간&#13;&#10; -물건 상태&#13;&#10; *실제 촬용한 사진과 함께 상세 정보를 입력해주세요"></textarea>
 					</div>
 					<div class="inputBox">
 						<span class="inputlabel"><span class="pointer">*</span>카테고리</span>
@@ -75,12 +69,11 @@
 								<forms:option value="11">전자기기</forms:option>
 								<forms:option value="20">반려동물</forms:option>
 								<forms:option value="24">도서/음악</forms:option>
+								<forms:option value="26">생활가전</forms:option>
 								<forms:option value="25">기타</forms:option>
 							</forms:select>
 							<forms:select path="goods_category2" id="goodsCategory2">
 								<forms:option value="">2차 카테고리</forms:option>
-								<!-- 24,25번 카테고리 선택시 넣을 값임 -->
-								<!--<forms:option value="-1" cssStyle="display:none;">hidden</forms:option>-->
 								<div id="category2Ajax"></div>
 							</forms:select>
 
@@ -116,8 +109,9 @@
 
 					<div class="inputBox">
 						<span class="inputlabel"><span class="pointer">*</span>거래마감일</span>
-						<input id="goodsDate" type="date" name="goods_exp" class="goodsInput"> 
-							<input type="hidden" name="goods_exp" id="goods_exph">
+						<input id="goodsDate" type="date" name="goods_exp"
+							class="goodsInput"> <input type="hidden" name="goods_exp"
+							id="goods_exph">
 						<forms:errors path="goods_exp" cssClass="errorMessage" />
 					</div>
 

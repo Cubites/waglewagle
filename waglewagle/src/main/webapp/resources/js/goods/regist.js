@@ -4,11 +4,17 @@ var filesArr = new Array();
 var maxFileCnt = 5;
 var curImgCnt = 0;
 $(function () {
-	
-	$('#registForm').submit(function (event) {
+  //숫자만 입력가능 및 콤마로 자동 변환 이벤트
+  let inputDom = document.querySelector('#price');
+  inputDom.addEventListener('input', function (e) {
+    let val = e.target.value.replace(/[^0-9]/g, '');
+    e.target.value = val.replace(/\d(?=(?:\d{3})+$)/g, '$&,');
+  });
+  ////////////////////////////////////////
+
+  $('#registForm').submit(function (event) {
     validationFormData(event);
   });
-	
 
   (function () {
     setDate();
@@ -17,20 +23,21 @@ $(function () {
   //rejectValue 출력용
   (function () {
     var p = $('#price').val();
-  
-     if (p !== '' && p !== null && p !== undefined) {
+
+    if (p !== '' && p !== null && p !== undefined) {
       changePrice();
     }
   })();
-  
+
+  $('#price').change(function () {
+    appendPrefix();
+  });
   $('#price').change(function () {
     changePrice();
   });
-  
-  
 
   //이미지 등록 사진 누르면, input type file 클릭되도록 함
-  //var inputFile = $('input[type=file]'); 
+  //var inputFile = $('input[type=file]');
   //전체 input[type=file]의미
   var inputFile = $('#inputFile');
   inputFile.hide();
@@ -56,63 +63,63 @@ $(function () {
 //onload 외 function 모음
 
 //form데이터 검증로직
-function validationFormData(event){
-  	var files = $('#himage').val();
-    var goods_title = $('#goods_title').val();
-    var goods_category1 = $('#goodsCategory1').val();
-    var goods_category2 = $('#goodsCategory2').val();
-    var price = $('#price').val();
-    var fulljibun = $('#fullJibun').val();
-    var goods_date = $('goodsDate').val();
+function validationFormData(event) {
+  var files = $('#himage').val();
+  var goods_title = $('#goods_title').val();
+  var goods_category1 = $('#goodsCategory1').val();
+  var goods_category2 = $('#goodsCategory2').val();
+  var price = $('#price').val();
+  var fulljibun = $('#fullJibun').val();
+  var goods_date = $('goodsDate').val();
 
-    if (files === '') {
-      alert('상품 이미지는 최소 1개이상 등록해주세요');
-      event.preventDefault();
-      return;
-    }
+  if (files === '') {
+    alert('상품 이미지는 최소 1개이상 등록해주세요');
+    event.preventDefault();
+    return;
+  }
 
-    if (goods_title === '') {
-      alert('제목은 반드시 입력하셔야하는 값 입니다.');
-      event.preventDefault();
-      return;
-    }
+  if (goods_title === '') {
+    alert('제목은 반드시 입력하셔야하는 값 입니다.');
+    event.preventDefault();
+    return;
+  }
 
-    if (goods_category1 === '' || goods_category2 === '') {
-      alert('카테고리를 지정해주세요.');
-      event.preventDefault();
-      return;
-    }
+  if (goods_category1 === '' || goods_category2 === '') {
+    alert('카테고리를 지정해주세요.');
+    event.preventDefault();
+    return;
+  }
 
-   if (price === '') {
-      alert('가격을 정확하게 입력해주세요.');
-      event.preventDefault();
-      return;
-    }
+  if (price === '') {
+    alert('가격을 정확하게 입력해주세요.');
+    event.preventDefault();
+    return;
+  }
 
-    if(price < 0 ){
-      alert('가격은 음수일 수 없습니다.');
-      event.preventDefault();
-      return;
-    }
-    
-	//소수점 검사를 위해 출력
-    if(!Number.isInteger(Number(price))){
-      alert('가격은 소수점을 포함할 수 없습니다.');
-      event.preventDefault();
-      return;
-    }
+  if (price < 0) {
+    alert('가격은 음수일 수 없습니다.');
+    event.preventDefault();
+    return;
+  }
 
-    if (fulljibun === '') {
-      alert('주소를 정확하게 기입해주세요.');
-      event.preventDefault();
-      return;
-    }
+  //소수점 검사를 위해 출력
+  if (!Number.isInteger(Number(price))) {
+    alert('가격은 소수점을 포함할 수 없습니다.');
+    event.preventDefault();
+    return;
+  }
 
-    if (goods_date === '') {
-      alert('경매일자를 정확하게 기입해주세요.');
-      event.preventDefault();
-      return;
-    }
+  if (fulljibun === '') {
+    alert('주소를 정확하게 기입해주세요.');
+    event.preventDefault();
+    return;
+  }
+
+  if (goods_date === '') {
+    alert('경매일자를 정확하게 기입해주세요.');
+    event.preventDefault();
+    return;
+  }
 }
 
 function validationImageLength(curFileCnt, remainFileCnt) {
@@ -156,7 +163,7 @@ function makeTage(e) {
     "' class='selectedImageBox'/>";
   html += '<span></span>';
   html +=
-    "<img class='xbutton' src='/resources/image/goods/xbutton.PNG' onclick='deleteImage(" +
+    "<img class='xbutton' src='/resources/images/goods/xbutton.PNG' onclick='deleteImage(" +
     window.fileNo +
     ");'/><div>";
   $('#imageBox').append(html);
@@ -193,8 +200,6 @@ function thImgSelect() {
   }
 }
 
-
-
 function numberValidation(val) {
   return !isNaN(val);
 }
@@ -206,16 +211,20 @@ function setDate() {
   $('#goodsDate').attr('min', mindate);
   $('#goodsDate').val(mindate);
 }
-
-//함수화 세자리 마다 콤마 
+function appendPrefix() {
+  var priceTag = $('#price');
+  var priceVal = priceTag.val();
+  console.log(priceVal);
+}
+//함수화 세자리 마다 콤마
 function changePrice() {
   var priceTag = $('#price');
   var priceVal = priceTag.val();
-  
+
   var priceNoComma = priceVal.replace(/,/g, '').replace(/￦/, '').trim();
   if (numberValidation(priceNoComma)) {
     var priceNum = Number(priceNoComma);
-    var priceComma = priceNum.toLocaleString('ko-KR',4);
+    var priceComma = priceNum.toLocaleString('ko-KR', 4);
     priceTag.val('￦ ' + priceComma);
   } else {
     alert('숫자만 입력해 주세요');
@@ -228,23 +237,18 @@ $(function () {
 function searchAddr() {
   new daum.Postcode({
     oncomplete: function (data) {
-      
-   	  var guso =data.sido+" "+data.sigungu+" ";
-      
-      if(data.bname1 == ""){
-      	guso +=data.bname;
-      }else{
-      	guso +=data.bname1;
+      var guso = data.sido + ' ' + data.sigungu + ' ';
+
+      if (data.bname1 == '') {
+        guso += data.bname;
+      } else {
+        guso += data.bname1;
       }
-      
-      
-      dong = guso.substring(guso.lastIndexOf(" "));
-     
-			
+
+      dong = guso.substring(guso.lastIndexOf(' '));
+
       $('#fullJibun').val(guso);
       $('#addrDong').val(dong);
     },
   }).open();
-  
-  
 }
