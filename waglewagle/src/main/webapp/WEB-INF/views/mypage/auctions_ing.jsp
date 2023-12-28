@@ -23,7 +23,7 @@
 						<c:if test="${item.auctions_ing_read == 0}">
 							<div class="newMark">NEW</div>
 						</c:if>
-						<img class="wayMark" src='${item.buyer_id == users_info.users_id ? "buy_icon.png" : "sell_icon.png"}'>
+						<img class="wayMark" src='/upload/${item.buyer_id == users_info.users_id ? "buy_icon.png" : "sell_icon.png"}'>
 						<img class="goodsThumb" src="${item.goods_th_img}">
 						<div class="itemTitle">${item.goods_title}</div>
 						<div class="varPriceBox">

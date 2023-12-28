@@ -20,7 +20,7 @@
 			<c:forEach var="item" items="${ListData}">
 				<a class="itemBox" href="/goods/${item.goods_id}">
 					<img class="wayMark" src='/resources/images/${item.bids_price != null ? "buy_icon.png" : "sell_icon.png"}'>
-					<img class="goodsThumb" src="${item.goods_th_img}">
+					<img class="goodsThumb" src="/upload/${item.goods_th_img}">
 					<div class="itemTitle">${item.goods_title}</div>
 					<div class="varPriceBox">
 						<c:if test="${item.bids_price != null}">

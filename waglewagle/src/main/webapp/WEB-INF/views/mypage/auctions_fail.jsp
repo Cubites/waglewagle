@@ -23,7 +23,7 @@
 						<img class="wayMark" src='/resources/images/sell_icon.png'>
 						<div 
 							class="thumbnailBox"
-							style="background-image: url('${item.goods_th_img}')"
+							style="background-image: url('/upload/${item.goods_th_img}')"
 						>
 							<img class="stampImg" src="/resources/images/auctions_fail_icon.png">
 						</div>
