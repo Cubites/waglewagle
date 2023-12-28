@@ -35,5 +35,8 @@
 		SELECT MAX(bids.bids_price) FROM bids where goods_id = #{goods_id} AND users_id =#{users_id};
 
 	</select>
+		<update id="updateAvgPrice" parameterType="Integer">
+		 UPDATE goods SET goods_avg_price = (SELECT ROUND(AVG(bids_price)) FROM bids WHERE goods_id = #{goods_id}) WHERE goods_id = #{goods_id}
+	</update>
 	
 </mapper>
