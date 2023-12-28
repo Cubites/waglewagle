@@ -27,7 +27,7 @@
 		VALUES(#{users_id},#{goods_id},#{bids_price})
 	</insert>
 	
-	<update id="UpdateUsablePoint" parameterType="kr.co.waglewagle.bids.won.BidsFormVO">
+	<update id="updateUsablePoint" parameterType="kr.co.waglewagle.bids.won.BidsFormVO">
 		UPDATE point set point_usable=point_usable-#{bids_price} WHERE users_id = #{users_id}
 	</update>
 	

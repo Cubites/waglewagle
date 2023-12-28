@@ -345,3 +345,16 @@ input:focus {
 .hide {
   display: none;
 }
+#inputbutton{
+	cursor: pointer;
+}
+#imgleft > img {
+	cursor: pointer;
+}
+#imgRight > img{
+	cursor: pointer;
+}
+
+.leftbutton{
+	cursor: pointer;
+}
