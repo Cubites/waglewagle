@@ -19,7 +19,7 @@
 				<!-- 찜 상품 반복 -->
 				<c:forEach var="item" items="${ListData}">
 					<a class="itemBox" href="/goods/${item.goods_id}">
-						<img class="wayMark" src='/resources/images/buy_icon.png'>
+						<img class="wayMark" src='/resources/images/${item.users_id == users_info.users_id ? "sell_icon.png" : "buy_icon.png"}'>
 						<img class="goodsThumb" src="/resources/images/${item.goods_th_img}">
 						<div class="itemTitle">${item.goods_title}</div>
 						<div class="varPriceBox"></div>

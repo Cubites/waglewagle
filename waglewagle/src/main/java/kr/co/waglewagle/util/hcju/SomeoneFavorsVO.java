@@ -14,4 +14,5 @@ public class SomeoneFavorsVO {
 	private Integer goods_avg_price;
 	private Date goods_exp;
 	private String goods_th_img;
+	private Integer users_id;
 }

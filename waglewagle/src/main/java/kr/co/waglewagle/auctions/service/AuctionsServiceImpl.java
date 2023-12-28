@@ -9,13 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
-
 import kr.co.waglewagle.auctions.mapper.AuctionsMapper;
 import kr.co.waglewagle.domain.AuctionsBreakVO;
 import kr.co.waglewagle.domain.AuctionsEndVO;
-import kr.co.waglewagle.domain.AuctionsFailVO;
 import kr.co.waglewagle.domain.AuctionsIngVO;
 import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsBreakVO;
@@ -26,7 +22,6 @@ import kr.co.waglewagle.util.hcju.SomeoneFavorsVO;
 import lombok.extern.slf4j.Slf4j;
 import kr.co.waglewagle.domain.ReportsVO;
 import kr.co.waglewagle.payment.mapper.PaymentMapper;
-import kr.co.waglewagle.goods.mapper.GoodsMapper;
 
 
 @Service

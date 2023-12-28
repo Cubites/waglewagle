@@ -24,7 +24,7 @@
 					<!-- 문의글 반복 -->
 					<c:forEach var="item" items="${ListData}">
 						<li>
-							<a href="/mypage/qnas/detail?id=${item.qnas_id}">
+							<a href="/mypage/qnas/detail?id=${item.qnas_id}" style="${item.qnas_reply == null ? '' : (item.qnas_read == 0 ? 'background-color: #FBE3E3' : '')}">
 								<div>${item.rownum}</div>
 								<div>${item.qnas_title}</div>
 								<div><fmt:formatDate value="${item.qnas_date}" pattern="yyyy.MM.dd"/></div>
