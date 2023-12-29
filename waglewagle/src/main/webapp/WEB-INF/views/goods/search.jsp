@@ -9,179 +9,7 @@
 <link rel="stylesheet" href="/resources/css/goods/search.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-<script type="text/javascript">
 
-let page="${page.page}";
-let totalPage = "${page.totalPage}";
-let category_id = "${page.category_id}";
-let searchWord = "${page.search_word}";
-
- $(function(){
-	
-	 let scrollPoint;
-	 window.addEventListener("scroll",(event) => {
-		 
-		 	let scroll = $(window).scrollTop();
-		 	let documentHeight = $(document).height();
-		 	let windowHeight = $(window).height();
-			
-			
-		 	let checkNum = scroll-(documentHeight-windowHeight);
-		 	if(checkNum <1 && checkNum > -1 && page < totalPage){
-		 		scrollPoint = documentHeight-windowHeight;
-		 		addPage(scrollPoint);
-		 	}
-		 	
-		 	//로드한다음 위에 스크롤 위치로 보내면 될듯?
-				
-	 });
- })
- //장원 스크롤이 끝에 닿으면 다음 데이터 얻어오기
- function addPage(point){
-	 
-	 let search22 = searchWord2();
-	 searchWord = search22 === null ? searchWord:search22;
-	 
-	 let categorySelected = selectedCategory();
-	 category_id = categorySelected === null ? category_id:categorySelected;
-	
-	 page = Number(page)+1;
-	 
-	 const urlParams = new URL(location.href).searchParams;
-	 let ca = urlParams.get('sorting_type');
-	
-	 
-	 $.ajax({
-		 
-		 url:"/goods/searchScroll",
-		 type:"post",
-		 dataType:"json",
-		 data:{
-			 "pageNum":page+"", 
-			 "search_word":searchWord, 
-			 "category_id":category_id,
-			 "sorting_type":ca},
-		contentType:"application/x-www-form-urlencoded;charset=utf-8;",
-		 success: function(data){
-			 
-			 //데이터 출력 후 
-			 showGoods(data);
-			 //스크롤 위치
-		 },
-		 error:function(xhr){
-			 console.log(xhr);
-		 }
-		 
-	 });
-	 
- }
- // 장원 카테고리 선택 결과 반영
- function selectedCategory(){
-	 let ca1 = $("#category1 option:selected").val();
-	 let ca2 = $("#category2 option:selected").val();
-	 let resultVal ="";
-	 
-	
-	 if(ca2 === ""){
-		 resultVal = ca1;
-	 }else{
-		 resultVal = ca2;
-	 }
-	 
-	 if(resultVal === null || resultVal === "" || resultVal ==="-"){
-		 return null;
-	 }
-	 
-	 return resultVal;
- }
-
- function searchWord2(){
-	 let search2 = $("#searchWordByBar").val();
-	 if(search2 === null || search2 === ""){
-		 return null;
-	 }
-	 return  search2;
-	 
- } 
- //장원 동적 list추가
- function showGoods(data){
-	 
-	 let goodsList = data.goodsList;
-	  let html = ""
-	  let list_div = document.querySelector("#list_div");
-	  goodsList.forEach(element => {
-
-	    html = "<div class='popProduct'>" +
-	      "<div class='productImg'>" +
-	      "<img src='/upload/" + element.goods_th_img + "'>" +
-	      "</div>" +
-	      "<div class='productTitle'>" + element.goods_title + "</div>" +
-	      "<div class='avgPrice_expDateArea'>" +
-	      "<div class='avg_expTitle'>" +
-	      "<div class='avgPriceTitle'>평균 입찰가</div>" +
-	      "<div class='expTitle'>입찰 마감일</div>" +
-	      "</div>" +
-	      "<div class='avg_expValue'>"+
-	      "<div class='productAvgPrice'>"+element.goods_avg_price+"원</div>"+
-	      "<div class='productExpArea'>"+
-	      "<div class='productExp'></div>"+
-	      "<div class='originExp hide'>"+dateToString(element.goods_exp)+"</div>"+
-	      "</div>"+
-	      "</div>"+
-	      "</div>" +
-	      "<div class='leftTime toDetailPage'>" +
-	      "<div class='leftTimeVal'></div>" +
-	      "<input type='hidden' value='" + element.good_id + "' class='goodsIdVal'>" +
-	      "</div>" +
-	      "</div>";
-
-	    	let div = document.createElement("div");
-	   			 div.className = "item";
-	   			 div.innerHTML = html;
-	   			 list_div.append(div);
-	  });
-	 	//마우스 올리면 경매 남은 시간 나오는 이벤트 다시 걸기
-	    addMouseEvent();
-	 
- }
- 
- function addMouseEvent(){
-	 //이벤트 중복 방지를 위해 기존 이벤트 삭제
-	 $(".item").off("mouseover");
-	 $(".item").off("mouseout");
-	 
-	 //마우스 올리면 시간 나오는 이벤트 다시 걸기
-	 $(".item").mouseover(function(){
-         let now = new Date();
-         //console.log(now);
-         let expDateValue = $(this).find(".popProduct").find(".avgPrice_expDateArea").find(".avg_expValue").find(".productExpArea").find(".originExp").text();
-         let expDate = new Date(Date.parse(expDateValue));
-         //console.log(expDate);
-         let leftTime = expDate - now;
-         
-         const days = Math.floor(leftTime/(1000*60*60*24));
-           const hours = ("0"+Math.floor(leftTime %(1000*60*60*24)/(1000*60*60))).slice(-2);
-
-         
-         $(".leftTimeVal").text(days+"일 "+hours+"시간");
-         $(this).find('.popProduct').find(".leftTime").css("display", "flex");
-         
-      })
-      $(".item").mouseout(function(){
-         $(this).find('.popProduct').find(".leftTime").css("display", "none");
-      })
-	 
- }
- 
- function dateToString(dateTime) {
-	    return dateTime[0] + "-" + dateTime[1] + "-" + dateTime[2];
-	  }
- 	
- ///////////////////////
-
-
-
-</script>
 
 </head>
 
@@ -479,5 +307,193 @@ let searchWord = "${page.search_word}";
     	})
 	
 	</script>
+	<script type="text/javascript">
+
+		let page="${page.page}";
+		let totalPage = "${page.totalPage}";
+		let category_id = "${page.category_id}";
+		let searchWord = "${page.search_word}";
+
+		 $(function(){
+			
+			 $(".productExpArea").each(function(){
+				
+		         var fullExp = $(this).find(".originExp").text().trim();
+		         //var result = fullExp.substring(0,5);
+		         var result = fullExp.split("T");
+		         
+		         $(this).find(".productExp").text(result[0]);
+		   
+		      });
+	 
+	 let scrollPoint;
+	 window.addEventListener("scroll",(event) => {
+		 
+		 	let scroll = $(window).scrollTop();
+		 	let documentHeight = $(document).height();
+		 	let windowHeight = $(window).height();
+			
+			
+		 	let checkNum = scroll-(documentHeight-windowHeight);
+		 	if(checkNum <1 && checkNum > -1 && page < totalPage){
+		 		scrollPoint = documentHeight-windowHeight;
+		 		addPage(scrollPoint);
+		 	}
+		 	
+		 	//로드한다음 위에 스크롤 위치로 보내면 될듯?
+				
+	 });
+ })
+ //장원 스크롤이 끝에 닿으면 다음 데이터 얻어오기
+ function addPage(point){
+	 
+	 let search22 = searchWord2();
+	 searchWord = search22 === null ? searchWord:search22;
+	 
+	 let categorySelected = selectedCategory();
+	 category_id = categorySelected === null ? category_id:categorySelected;
+	
+	 page = Number(page)+1;
+	 
+	 const urlParams = new URL(location.href).searchParams;
+	 let ca = urlParams.get('sorting_type');
+	
+	 
+	 $.ajax({
+		 
+		 url:"/goods/searchScroll",
+		 type:"post",
+		 dataType:"json",
+		 data:{
+			 "pageNum":page+"", 
+			 "search_word":searchWord, 
+			 "category_id":category_id,
+			 "sorting_type":ca},
+		contentType:"application/x-www-form-urlencoded;charset=utf-8;",
+		 success: function(data){
+			 
+			 //데이터 출력 후 
+			 showGoods(data);
+			 //스크롤 위치
+		 },
+		 error:function(xhr){
+			 console.log(xhr);
+		 }
+		 
+	 });
+	 
+ }
+ // 장원 카테고리 선택 결과 반영
+ function selectedCategory(){
+	 let ca1 = $("#category1 option:selected").val();
+	 let ca2 = $("#category2 option:selected").val();
+	 let resultVal ="";
+	 
+	
+	 if(ca2 === ""){
+		 resultVal = ca1;
+	 }else{
+		 resultVal = ca2;
+	 }
+	 
+	 if(resultVal === null || resultVal === "" || resultVal ==="-"){
+		 return null;
+	 }
+	 
+	 return resultVal;
+ }
+
+ function searchWord2(){
+	 let search2 = $("#searchWordByBar").val();
+	 if(search2 === null || search2 === ""){
+		 return null;
+	 }
+	 return  search2;
+	 
+ } 
+ //장원 동적 list추가
+ function showGoods(data){
+	 
+	 let goodsList = data.goodsList;
+	  let html = ""
+	  let list_div = document.querySelector("#list_div");
+	  goodsList.forEach(element => {
+
+	    html = "<div class='popProduct'>" +
+	      "<div class='productImg'>" +
+	      "<img src='/upload/" + element.goods_th_img + "'>" +
+	      "</div>" +
+	      "<div class='productTitle'>" + element.goods_title + "</div>" +
+	      "<div class='avgPrice_expDateArea'>" +
+	      "<div class='avg_expTitle'>" +
+	      "<div class='avgPriceTitle'>평균 입찰가</div>" +
+	      "<div class='expTitle'>입찰 마감일</div>" +
+	      "</div>" +
+	      "<div class='avg_expValue'>"+
+	      "<div class='productAvgPrice'>"+element.goods_avg_price+"원</div>"+
+	      "<div class='productExpArea'>"+
+	      "<div class='productExp'>"+dateToString(element.goods_exp)+"</div>"+
+	      "<div class='originExp hide'>"+dateToString(element.goods_exp)+"</div>"+
+	      "</div>"+
+	      "</div>"+
+	      "</div>" +
+	      "<div class='leftTime toDetailPage'>" +
+	      "<div class='leftTimeVal'></div>" +
+	      "<input type='hidden' value='" + element.good_id + "' class='goodsIdVal'>" +
+	      "</div>" +
+	      "</div>";
+
+	    	let div = document.createElement("div");
+	   			 div.className = "item";
+	   			 div.innerHTML = html;
+	   			 list_div.append(div);
+	  });
+	 	//마우스 올리면 경매 남은 시간 나오는 이벤트 다시 걸기
+	    addMouseEvent();
+	   
+	 
+ }
+ 
+ function addMouseEvent(){
+	 //이벤트 중복 방지를 위해 기존 이벤트 삭제
+	 $(".item").off("mouseover");
+	 $(".item").off("mouseout");
+	 
+	 //마우스 올리면 시간 나오는 이벤트 다시 걸기
+	 $(".item").mouseover(function(){
+         let now = new Date();
+         //console.log(now);
+         let expDateValue = $(this).find(".popProduct").find(".avgPrice_expDateArea").find(".avg_expValue").find(".productExpArea").find(".originExp").text();
+         let expDate = new Date(Date.parse(expDateValue));
+         //console.log(expDate);
+         let leftTime = expDate - now;
+         
+         const days = Math.floor(leftTime/(1000*60*60*24));
+           const hours = ("0"+Math.floor(leftTime %(1000*60*60*24)/(1000*60*60))).slice(-2);
+
+         
+         $(".leftTimeVal").text(days+"일 "+hours+"시간");
+         $(this).find('.popProduct').find(".leftTime").css("display", "flex");
+         
+      })
+      $(".item").mouseout(function(){
+         $(this).find('.popProduct').find(".leftTime").css("display", "none");
+      })
+	 
+ }
+ 
+ function dateToString(dateTime) {
+	 	
+	 
+	  //return text;
+	   // return dateTime[0] + "-" + dateTime[1] > 10 ?  dateTime[1]: "0" +dateTime[1] + "-" + dateTime[2];
+	   return dateTime[0] +"-"+dateTime[1]+"-"+dateTime[2];
+	  }
+ 	
+ 
+
+
+
+</script>
 </body>
 </html>

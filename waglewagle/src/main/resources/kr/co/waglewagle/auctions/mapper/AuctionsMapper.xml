@@ -569,5 +569,37 @@
 			goods_id from auctions_ing
 		where DATE_FORMAT(DATE_ADD(auctions_date,interval 7 DAY),"%Y-%m-%d") =curdate();
 	</select>
+	
+	
+	<select id="selectGoodsBidsMax" parameterType="java.util.List" resultType="java.util.List">
+	
+	select goods_id,users_id, MAX(bids_price) as maxBids from bids  
+	
+	where goods_id IN 
+	
+	<foreach collection="list" item="map" open="(" close=")"
+			separator=",">
+			#{map.goods_id}
+	</foreach>
+	AND users_id NOT IN 
+	
+	<foreach collection="list" item="map" open="(" close=")"
+			separator=",">
+			#{map.buyer}
+	</foreach>
+	
+	group by users_id,goods_id;
+	
+	</select>
+	
+	<update id="updateAllUsablePoint" parameterType="java.util.List">
+		
+		<foreach collection="list" item="item" open="" close=""
+			separator=";">
+			
+			UPDATE point SET point_usable = point_usable + #{item.maxBids} WHERE users_id = #{item.users_id}
+			
+		</foreach>
+	</update>
 
 </mapper>

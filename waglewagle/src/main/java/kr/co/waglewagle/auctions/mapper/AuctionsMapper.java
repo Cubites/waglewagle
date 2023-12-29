@@ -92,4 +92,8 @@ public interface AuctionsMapper {
 
 	List<Map<String,Object>> selectGoodsIngDateExpired();
 
+	List<Map<String, Object>> selectGoodsBidsMax(List<GoodsVO> targetGoods);
+
+	Integer updateAllUsablePoint(List<Map<String, Object>> bisMax);
+
 }

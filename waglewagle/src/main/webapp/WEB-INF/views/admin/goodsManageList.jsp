@@ -51,6 +51,8 @@
 				}
 			})
 		} 
+ 		
+ 		console.log("${list.totalPage}","${list.endPage}","${list.startPage}");
     </script>
 </head> 
 <body>
@@ -146,7 +148,7 @@
                         </c:forEach>
 
 						<li class="pg">
-						<c:if test="${map.next}">
+						<c:if test="${list.next}">
                     		<a href="/admin/goodsManageList?page=${list.endPage+1}&searchWord=${list.searchWord}">다음</a>
                     	</c:if></li>
                     </ul>

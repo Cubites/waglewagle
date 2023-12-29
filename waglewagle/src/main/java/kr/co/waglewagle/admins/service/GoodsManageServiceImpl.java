@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import kr.co.waglewagle.admins.mapper.GoodsManageMapper;
 import kr.co.waglewagle.domain.GoodsVO;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class GoodsManageServiceImpl implements GoodsManageService {
 
 	@Autowired
@@ -31,12 +33,14 @@ public class GoodsManageServiceImpl implements GoodsManageService {
 	@Override
 	public Map<String, Object> adminGoodsList(GoodsVO vo) {
 		int count = mapper.count(vo); // 총개수
+		
         // 총페이지수
         int totalPage = count / 10;
         if (count % 10 > 0) totalPage++;
         
         List<Map<String, Object>> list = mapper.adminGoodsList(vo); // 목록
         
+        log.info("list {}",list);
         
         Map<String, Object> map = new HashMap<>();
         map.put("count", count);
@@ -44,7 +48,7 @@ public class GoodsManageServiceImpl implements GoodsManageService {
         map.put("list", list);
         
         // 하단에 페이징처리
-        int endPage = (int)(Math.ceil(vo.getPage()/10.0));
+        int endPage = (int)(Math.ceil(vo.getPage()/10.0))*10;
         int startPage = ((endPage-1)/10)*10+1;
         if (endPage > totalPage) endPage = totalPage;
         boolean prev = startPage > 1;
