@@ -91,7 +91,7 @@
 						<!-- /친밀도 -->
 						<!-- 거래수 -->
 						<div id="logBox">
-							<div>'<span>레오나르도 망곰</span>'님의 거래 현황</div>
+							<div>'<span>${users_info.users_nick}</span>'님의 거래 현황</div>
 							<div id="logArea">
 								<div id="logAreaLeft" class="countSet">
 									<div class="countTitle text-center">전체 거래수</div>

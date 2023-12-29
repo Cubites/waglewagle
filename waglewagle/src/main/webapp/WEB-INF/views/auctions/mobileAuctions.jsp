@@ -14,7 +14,7 @@
         <div id="logo">
         </div>
         <div id="content">
-            <img id="auction_img" src="/resources/images/${auction_ing_info.goods_th_img }">
+            <img id="auction_img" src="/upload/${auction_ing_info.goods_th_img }">
 				
             <div id="auction_goods">
                 <div id="auction_title">
