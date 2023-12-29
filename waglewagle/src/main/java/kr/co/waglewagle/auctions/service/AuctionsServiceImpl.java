@@ -54,6 +54,10 @@ public class AuctionsServiceImpl implements AuctionsService {
 		mapper.saveAuctionEnd(endVO);
 		// 3. 거래 중 테이블에서 해당 데이터 삭제
 		mapper.deleteAuctionIngData(ingVO.getAuctions_ing_id());
+		// 4. 판매자에게 돈 넣어주기
+		mapper.updateSellerPoint(endVO);
+		// 5. 구매자 총 포인트 빼기
+		mapper.updateBuyerPoint(endVO);
 	}
 	
 	@Override
