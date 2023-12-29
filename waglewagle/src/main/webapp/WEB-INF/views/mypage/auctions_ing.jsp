@@ -23,8 +23,8 @@
 						<c:if test="${item.auctions_ing_read == 0}">
 							<div class="newMark">NEW</div>
 						</c:if>
-						<img class="wayMark" src='/upload/${item.buyer_id == users_info.users_id ? "buy_icon.png" : "sell_icon.png"}'>
-						<img class="goodsThumb" src="${item.goods_th_img}">
+						<img class="wayMark" src='/resources/images/${item.buyer_id == users_info.users_id ? "buy_icon.png" : "sell_icon.png"}'>
+						<img class="goodsThumb" src="/upload/${item.goods_th_img}">
 						<div class="itemTitle">${item.goods_title}</div>
 						<div class="varPriceBox">
 							낙찰가 : <fmt:formatNumber value="${item.purchase_price}" pattern="#,###" />원
