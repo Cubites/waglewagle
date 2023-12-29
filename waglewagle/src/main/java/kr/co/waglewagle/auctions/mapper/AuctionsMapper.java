@@ -51,6 +51,10 @@ public interface AuctionsMapper {
 	int saveAuctionEnd(AuctionsEndVO vo);
 	// 거래 중 테이블에서 삭제하기
 	int deleteAuctionIngData(Integer auctions_ing_id);
+	// 판매자에게 돈 넣어주기
+	int updateSellerPoint(AuctionsEndVO vo);
+	// 구매자 총 포인트 빼기
+	int updateBuyerPoint(AuctionsEndVO vo);
 	// 신고된 물품인지 확인하기
 	int checkReport(Integer goods_id);
 	// 신고 접수하기

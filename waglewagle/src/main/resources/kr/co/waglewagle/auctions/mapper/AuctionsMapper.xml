@@ -81,6 +81,19 @@
 	<delete id="deleteAuctionIngData" parameterType="int">
 		DELETE FROM auctions_ing WHERE auctions_ing_id = #{auctions_ing_id};
 	</delete>
+	
+	<update id="updateSellerPoint" parameterType="kr.co.waglewagle.domain.AuctionsEndVO">
+		UPDATE point 
+			SET point_total = point_total + #{auctions_end_price}, 
+			point_usable = point_usable + #{auctions_end_price} 
+		WHERE users_id = #{auctions_end_seller}
+	</update>
+	
+	<update id="updateBuyerPoint" parameterType="kr.co.waglewagle.domain.AuctionsEndVO">
+		UPDATE point 
+			SET point_total = point_total - #{auctions_end_price} 
+		WHERE users_id = #{auctions_end_buyer}
+	</update>
 
 	<select id="checkReport" parameterType="int" resultType="int">
 		SELECT count(*) FROM reports WHERE goods_id = #{goods_id};
