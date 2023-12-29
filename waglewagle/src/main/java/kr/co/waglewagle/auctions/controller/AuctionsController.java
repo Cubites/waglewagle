@@ -122,6 +122,4 @@ public class AuctionsController {
 		return new ResponseEntity<String>("경매를 완료했습니다.",header,HttpStatus.ACCEPTED);
 	}
 	
-	//@PostMapping("/auctions/")
-	
 }

@@ -18,16 +18,22 @@
 			<c:if test="${fn:length(ListData) != 0}">
 				<!-- 찜 상품 반복 -->
 				<c:forEach var="item" items="${ListData}">
-					<a class="itemBox" href="/goods/${item.goods_id}">
+					<a class="itemBox auctionsItem" href="/goods/${item.goods_id}">
 						<img class="wayMark" src='/resources/images/${item.users_id == users_info.users_id ? "sell_icon.png" : "buy_icon.png"}'>
-						<img class="goodsThumb" src="/resources/images/${item.goods_th_img}">
+						<img class="goodsThumb" src="/upload/${item.goods_th_img}">
 						<div class="itemTitle">${item.goods_title}</div>
 						<div class="varPriceBox"></div>
 						<div class="staticValuesBox">
 							<p>시작가 : <fmt:formatNumber value="${item.goods_start_price}" pattern="#,###" />원</p>
-							<p>평균가: <fmt:formatNumber value="${item.goods_avg_price}" pattern="#,###" />원</p>
+							<p>평균가 : <fmt:formatNumber value="${item.goods_avg_price}" pattern="#,###" />원</p>
 							<p>마감일 : <fmt:formatDate value="${item.goods_exp}" pattern="yyyy.MM.dd"/></p>
 						</div>
+						<c:if test="${item.goods_access == 1}">
+							<div class="blockBoxForAccess">
+								<p>접근 금지된 상품입니다.</p>
+								<p>(누르면 메인 페이지로 넘어갑니다)</p>
+							</div>
+						</c:if>
 					</a>
 				</c:forEach>
 				<!-- /찜 상품 반복 -->
@@ -68,6 +74,9 @@
 			    aa.href = aa.href.substr(0, aa.href.indexOf("&scroll=")) + "&scroll=" + scrollVal;
 			}
 		});
+		<c:forEach var="item" items="${ListData}">
+			console.log("${item.users_id}", "${users_info.users_id}");
+		</c:forEach>
 	</script>
 </body>
 </html>

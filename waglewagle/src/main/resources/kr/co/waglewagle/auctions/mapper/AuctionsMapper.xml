@@ -5,51 +5,58 @@
 	<select id="countAllAuctions" resultType="java.util.Map"
 		parameterType="Integer">
 		SELECT
-		auctions_count
-		, auctions_ing_count
-		,
-		auctions_end_count
-		, auctions_break_count
-		, auctions_fail_count
-		,
-		auctions_count + auctions_ing_count + auctions_end_count +
-		auctions_break_count + auctions_fail_count AS auctions_total_count
+			auctions_count
+			, auctions_ing_count
+			, auctions_end_count
+			, auctions_break_count
+			, auctions_fail_count
+			, auctions_count + auctions_ing_count + auctions_end_count + auctions_break_count + auctions_fail_count AS auctions_total_count
 		FROM (
-		SELECT
-		(SELECT COUNT(*) FROM goods WHERE goods_exp > NOW() AND
-		users_id =
-		#{users_id}) + (
-		SELECT
-		COUNT(*)
-		FROM goods gs2
-		JOIN (
-		SELECT
-		goods_id
-		FROM bids
-		WHERE users_id = #{users_id}
-		GROUP BY goods_id
-		) bs ON
-		bs.goods_id = gs2.goods_id
-		WHERE gs2.goods_exp > NOW()
-		) AS
-		auctions_count
-		, (SELECT COUNT(*) FROM auctions_ing WHERE
-		auctions_ing_seller =
-		#{users_id} OR auctions_ing_buyer = #{users_id})
-		AS auctions_ing_count
-		, (SELECT COUNT(*) FROM auctions_end WHERE
-		auctions_end_seller =
-		#{users_id} OR auctions_end_buyer = #{users_id})
-		AS auctions_end_count
-		, (SELECT COUNT(*) FROM auctions_break WHERE
-		auctions_break_user =
-		#{users_id}) AS auctions_break_count
-		, (SELECT
-		COUNT(*) FROM auctions_fail WHERE auctions_fail_seller =
-		#{users_id})
-		AS auctions_fail_count
-		FROM users
-		WHERE users_id = #{users_id}
+			SELECT
+			(
+				SELECT 
+					COUNT(*) 
+				FROM goods 
+				WHERE goods_exp > NOW() AND users_id = #{users_id}
+			) + (
+				SELECT
+					COUNT(*)
+				FROM goods gs2
+				JOIN (
+					SELECT
+						goods_id
+					FROM bids
+					WHERE users_id = #{users_id}
+					GROUP BY goods_id
+				) bs ON bs.goods_id = gs2.goods_id
+				WHERE gs2.goods_exp > NOW()
+			) AS auctions_count
+			, (
+				SELECT 
+					COUNT(*) 
+				FROM auctions_ing 
+				WHERE auctions_ing_seller = #{users_id} OR auctions_ing_buyer = #{users_id}
+			) AS auctions_ing_count
+			, (
+				SELECT 
+					COUNT(*) 
+				FROM auctions_end 
+				WHERE auctions_end_seller = #{users_id} OR auctions_end_buyer = #{users_id}
+			) AS auctions_end_count
+			, (
+				SELECT 
+					COUNT(*) 
+				FROM auctions_break 
+				WHERE auctions_break_user = #{users_id}
+			) AS auctions_break_count
+			, (
+				SELECT 
+					COUNT(*) 
+				FROM auctions_fail 
+				WHERE auctions_fail_seller = #{users_id}
+			) AS auctions_fail_count
+			FROM users
+			WHERE users_id = #{users_id}
 		) cn;
 	</select>
 
@@ -97,13 +104,10 @@
 
 	
 	<insert id="saveAuctionBreak" parameterType="kr.co.waglewagle.domain.AuctionsBreakVO">
-		INSERT INTO auctions_break (
-			auctions_break_user, auctions_break_reason, auctions_break_detail, auctions_break_date, goods_id
-		) VALUES (
-		#{auctions_break_user}, #{auctions_break_reason},
-		#{auctions_break_detail}, now(),
-		#{goods_id}
-		);
+		INSERT INTO auctions_break 
+			(auctions_break_user, auctions_break_reason, auctions_break_detail, auctions_break_date, goods_id) 
+		VALUES 
+			(#{auctions_break_user}, #{auctions_break_reason}, #{auctions_break_detail}, now(), #{goods_id} );
 	</insert>
 	
 	<update id="returnToBuyer" parameterType="Map">
@@ -117,33 +121,29 @@
 		parameterType="Integer">
 		SELECT
 		(
-		SELECT
-		COUNT(*)
-		FROM goods gs
-		WHERE gs.goods_exp >
-		NOW() AND users_id = #{users_id}
+			SELECT
+				COUNT(*)
+			FROM goods gs
+			WHERE gs.goods_exp > NOW() AND users_id = #{users_id} 
 		) + (
-		SELECT
-		COUNT(*)
-		FROM goods gs2
-		JOIN
-		(
-		SELECT
-		goods_id
-		FROM bids
-		WHERE users_id = #{users_id}
-		GROUP BY goods_id
-		) bs ON bs.goods_id = gs2.goods_id
-		WHERE gs2.goods_exp > NOW()
-		)
-		auctionsTotalNum;
+			SELECT
+				COUNT(*)
+			FROM goods gs2
+			JOIN
+			(
+				SELECT
+					goods_id
+				FROM bids
+				WHERE users_id = #{users_id}
+				GROUP BY goods_id
+			) bs ON bs.goods_id = gs2.goods_id
+			WHERE gs2.goods_exp > NOW()
+		) auctionsTotalNum;
 	</select>
 
-	<select id="checkAuctions"
-		resultType="kr.co.waglewagle.util.hcju.SomeoneAuctionsVO"
-		parameterType="java.util.Map">
+	<select id="checkAuctions" resultType="kr.co.waglewagle.util.hcju.SomeoneAuctionsVO" parameterType="java.util.Map">
 		SELECT
-		goods_id
+			goods_id
 			, goods_title
 			, goods_start_price
 			, goods_avg_price
@@ -151,6 +151,7 @@
 			, goods_exp
 			, post_date
 			, goods_th_img
+			, goods_access
 			, bids_price
 		FROM (
 			SELECT
@@ -162,12 +163,13 @@
 				, goods_exp
 				, goods_date AS post_date
 				, goods_th_img
+				, gs.goods_access
 				, null AS bids_price
 			FROM goods gs
 			WHERE gs.goods_exp > NOW() AND users_id = #{users_id}
 			UNION
 			SELECT
-			gs2.goods_id
+				gs2.goods_id
 				, gs2.goods_title
 				, gs2.goods_start_price
 				, gs2.goods_avg_price
@@ -175,6 +177,7 @@
 				, gs2.goods_exp
 				, bs.bids_date AS post_date
 				, gs2.goods_th_img
+				, gs2.goods_access
 				, bs.bids_price
 			FROM goods gs2
 			JOIN (
@@ -195,7 +198,7 @@
 				) mbd ON bd.users_id = mbd.users_id AND bd.goods_id = mbd.goods_id AND bd.bids_price = mbd.bids_price
 			) bs ON bs.goods_id = gs2.goods_id
 			WHERE gs2.goods_exp > NOW()
-			ORDER BY post_date desc 
+			ORDER BY post_date DESC
 		) al
 		LIMIT #{start_page}, 5
 	</select>
@@ -363,7 +366,8 @@
 			, g.goods_start_price
 			, g.goods_avg_price
 			, g.goods_exp
-			, f.users_id
+			, g.goods_access
+			, g.users_id
 		FROM goods g
 		JOIN favors f ON f.goods_id = g.goods_id
 		WHERE f.users_id = #{users_id} AND g.goods_exp > NOW()
@@ -545,10 +549,11 @@
 	</insert>
 
 	<select id="selectGoodsIngDateExpired" resultType="map">
-		select auctions_ing_seller as auctions_end_seller,
-		auctions_ing_buyer as auctions_end_buyer,
-		auctions_ing_price as auctions_end_price,
-		goods_id from auctions_ing
+		select 
+			auctions_ing_seller as auctions_end_seller,
+			auctions_ing_buyer as auctions_end_buyer,
+			auctions_ing_price as auctions_end_price,
+			goods_id from auctions_ing
 		where DATE_FORMAT(DATE_ADD(auctions_date,interval 7 DAY),"%Y-%m-%d") =curdate();
 	</select>
 

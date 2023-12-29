@@ -16,5 +16,6 @@ public class SomeoneAuctionsVO {
 	private Date goods_exp;
 	private Date post_date;
 	private String goods_th_img;
+	private Integer goods_access;
 	private Integer bids_price;
 }
