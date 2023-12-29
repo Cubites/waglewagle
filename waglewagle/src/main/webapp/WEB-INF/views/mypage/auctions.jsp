@@ -18,7 +18,7 @@
 			<c:if test="${fn:length(ListData) != 0}">
 			<!-- 경매 중인 상품 반복 -->
 			<c:forEach var="item" items="${ListData}">
-				<a class="itemBox" href="/goods/${item.goods_id}">
+				<a class="itemBox auctionsItem" href="/goods/${item.goods_id}">
 					<img class="wayMark" src='/resources/images/${item.bids_price != null ? "buy_icon.png" : "sell_icon.png"}'>
 					<img class="goodsThumb" src="/upload/${item.goods_th_img}">
 					<div class="itemTitle">${item.goods_title}</div>
@@ -32,6 +32,12 @@
 						<p>평균가 : <fmt:formatNumber value="${item.goods_avg_price}" pattern="#,###" />원</p>
 						<p>마감일 : <fmt:formatDate value="${item.post_date}" pattern="yyyy.MM.dd"/></p>
 					</div>
+					<c:if test="${item.goods_access == 1}">
+						<div class="blockBoxForAccess">
+							<p>접근 금지된 상품입니다.</p>
+							<p>(누르면 메인 페이지로 넘어갑니다)</p>
+						</div>
+					</c:if>
 				</a>
 			</c:forEach>
 			<!-- /경매 중인 상품 반복 -->
@@ -72,6 +78,24 @@
 			    aa.href = aa.href.substr(0, aa.href.indexOf("&scroll=")) + "&scroll=" + scrollVal;
 			}
 		});
+		
+		function goToGoods(goods_id){
+		    $.ajax({
+		        url: "/update/favor_areas",
+		        type: 'post',
+				contentType: 'application/json',
+		        data: JSON.stringify({
+					addr: areasStr
+				}),
+		        success: function(data) {
+					if(data){
+						alert("괌시지역이 저장되었습니다.");
+					} else {
+						alert("관심지역 저장이 되지 않았습니다. 잠시 후에 다시 시도해주세요.");
+					}
+				}
+			});
+		}
 	</script>
 </body>
 </html>

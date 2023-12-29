@@ -31,6 +31,11 @@ public class MainpageController {
 			System.out.println(login.getUsers_addr_list().split(",").length);
 			model.addAttribute("near_list", service.nearList(users_addrList));
 			
+			System.out.println("************************************************");
+			System.out.println(users_addrList);
+			System.out.println(model.getAttribute("near_list").toString());
+			System.out.println("************************************************");
+			
 			// 관심 지역이 있다면
 			if(users_addrList.get(0).length()>0) {
 				//시구동 -> 동
@@ -39,7 +44,7 @@ public class MainpageController {
 				}
 				model.addAttribute("dong_list", users_addrList);
 			}
-		}else {
+		} else {
 			List<String> users_addrList = Arrays.asList("서교동");
 			model.addAttribute("dong_list", users_addrList);
 			model.addAttribute("near_list", service.nearList(null));

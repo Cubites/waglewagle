@@ -60,7 +60,6 @@ public class UsersController {
 		res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate"); // HTTP 1.1.
 		
 		UsersVO usersVO = vo;
-		usersVO.setUsers_image("/resources/images/default_profile.png");
 		
 		String cmd = ""; //move or back
 		String msg = "";

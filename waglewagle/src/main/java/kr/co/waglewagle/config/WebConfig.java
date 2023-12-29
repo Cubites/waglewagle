@@ -174,7 +174,7 @@ public class WebConfig implements WebMvcConfigurer {
     // [마이페이지용 인터셉터] 마이페이지의 모든 페이지에 필요한 공통 작업 수행
 		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(4);
 		// [세션 인터셉터] 세션에 있는 유저 정보를 다시 불러옴(마이페이지 접속 시)
-		registry.addInterceptor(reloadSessionInterceptor).addPathPatterns("/mypage/auctions").excludePathPatterns().order(5);
+		registry.addInterceptor(reloadSessionInterceptor).addPathPatterns("/", "/mypage/auctions").excludePathPatterns().order(5);
 		// [관리자 페이지 인터셉터] 관계자 외 관리자 페이지 접속 시, 에러 페이지로 이동
 		registry.addInterceptor(adminInterceptor2).addPathPatterns("/admin/**").excludePathPatterns("/admin/login").order(6);
 	    // [관리자 페이지 인터셉터] 관리자 등급별 접근 페이지 제한

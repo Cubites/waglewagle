@@ -19,7 +19,9 @@ public class ReloadSessionInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
 		UsersVO vo = (UsersVO) req.getSession().getAttribute("users_info");
-		req.getSession().setAttribute("users_info", service.userInfo(vo.getUsers_id()));
+		if(vo != null) {
+			req.getSession().setAttribute("users_info", service.userInfo(vo.getUsers_id()));
+		}
 		return true;
 	}
 

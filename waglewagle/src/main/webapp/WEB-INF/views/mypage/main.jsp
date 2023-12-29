@@ -20,7 +20,7 @@
 						<div id="userBox">
 							<div id="user_name" class="text_center">${users_info.users_nick}</div>
 							<div id="profile">
-								<img src="/upload/${users_info.users_image}">
+								<img src="${users_info.users_image == null ? '/resources/images/default_profile.png' : '/upload/' += users_info.users_image}">
 								<div>
 									<form id="profileSubmit" method="post" action="/mypage/profile/change" enctype="multipart/form-data">
 										<input id="inputFile" type="file" accept="image/*" name="profileImg">
