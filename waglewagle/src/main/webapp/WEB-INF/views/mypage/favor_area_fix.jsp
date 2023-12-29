@@ -86,7 +86,7 @@
 				}),
 		        success: function(data) {
 					if(data){
-						alert("괌시지역이 저장되었습니다.");
+						alert("관심지역이 저장되었습니다.");
 					} else {
 						alert("관심지역 저장이 되지 않았습니다. 잠시 후에 다시 시도해주세요.");
 					}
