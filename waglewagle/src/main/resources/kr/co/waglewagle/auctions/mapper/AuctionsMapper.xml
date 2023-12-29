@@ -393,7 +393,7 @@
 			FROM auctions_ing 
 			WHERE goods_id =#{goods_id}
 		)
-		WHERE users_id = #{userId}
+		WHERE users_id = #{refoundUserId}
 	</update>
 
 	<delete id="deleteAuctionIng" parameterType="map">

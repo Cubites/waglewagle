@@ -72,6 +72,7 @@ public class WebConfig implements WebMvcConfigurer {
 		"/board/noticelist/**",
 		"/admin/**",
 		"/goods/search/**",
+		"/goods/searchScroll",
 		"/error/**"
 	};
 

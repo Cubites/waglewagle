@@ -221,6 +221,9 @@
 		
 	}
 	
+	
+	
+	
 </script>
 
 
@@ -232,11 +235,17 @@
 		<div id="container">
 
 			<div id="wrap">
-				<form id="reportForm" action="/report/user" method="post"
+				<!--  
+				<form id="reportForm" action="/report/user" method="get"
 					style="display: none;" enctype="application/x-www-form-urlencoded">
 					<input type="hidden" name="users_id" value="${oppsite.users_id}">
 					<input type="hidden" name="goods_id" value="${oppsite.goods_id}">
 					<input type="hidden" name="reports_type" value=0>
+				</form>
+				 -->
+				<form id="reportForm" action="/report/user/${oppsite.users_id}/${me.users_id}/0/${oppsite.goods_id}" method="get"
+					style="display: none;">
+					
 				</form>
 				<div id="chatBoxes">
 

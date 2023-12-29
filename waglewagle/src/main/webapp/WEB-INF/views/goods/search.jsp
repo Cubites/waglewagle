@@ -47,6 +47,9 @@ let searchWord = "${page.search_word}";
 	
 	 page = Number(page)+1;
 	 
+	 const urlParams = new URL(location.href).searchParams;
+	 let ca = urlParams.get('sorting_type');
+	
 	 
 	 $.ajax({
 		 
@@ -56,7 +59,8 @@ let searchWord = "${page.search_word}";
 		 data:{
 			 "pageNum":page+"", 
 			 "search_word":searchWord, 
-			 "category_id":category_id},
+			 "category_id":category_id,
+			 "sorting_type":ca},
 		contentType:"application/x-www-form-urlencoded;charset=utf-8;",
 		 success: function(data){
 			 
@@ -65,7 +69,7 @@ let searchWord = "${page.search_word}";
 			 //스크롤 위치
 		 },
 		 error:function(xhr){
-			 alert("실패");
+			 console.log(xhr);
 		 }
 		 
 	 });
@@ -285,7 +289,11 @@ let searchWord = "${page.search_word}";
 				<c:if test="${not empty  page.search_word}">
 					<div class="result">'${page.search_word }'</div>
 				</c:if>
-				<div id="result_comment">에 대한 검색 결과 입니다.</div>
+				
+				<c:if test="${not empty  page.search_word || not empty page.category_id}">
+					<div id="result_comment">에 대한 검색 결과 입니다.</div>
+				</c:if>
+		
 			</div>
 
 			<div id="sort_div">
@@ -299,6 +307,9 @@ let searchWord = "${page.search_word}";
 			<div id="list_div">
 
 				<!-- 장원 -->
+				<c:if test="${empty page.goodsList}">
+					<h2>검색 결과가 없습니다.</h2>
+				</c:if>
 				<c:forEach var="item" items="${page.goodsList}">
 					<div class="item">
 						<div class="popProduct">
