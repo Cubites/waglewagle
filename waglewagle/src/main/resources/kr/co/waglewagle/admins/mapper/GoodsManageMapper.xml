@@ -24,7 +24,8 @@
         <update id="goodsAccess" parameterType="java.util.Map">
         	update goods set goods_access=#{goods_access} where goods_id=#{goods_id};
         </update>
-
+		
+		<!--  
         <select id="adminGoodsList" parameterType="kr.co.waglewagle.domain.GoodsVO" resultType="Map">
 			select * 
 			from goods g
@@ -44,5 +45,25 @@
 			order by g.goods_id desc
 			limit #{startIdx},10
 		</select>
+		-->
+		
+		<select id="adminGoodsList" parameterType="kr.co.waglewagle.domain.GoodsVO" resultType="Map">
+			
+			select goods.* ,ifnull(cnt,0) as goodsReport_cnt 
+			from goods left join 
+		     (select reports.goods_id, count(*) as cnt from goods inner join reports on (goods.goods_id = reports.goods_id)  
+		      where reports_type = 1 
+		     <if test="searchWord != null and searchWord != ''">
+	    	  AND goods.goods_title LIKE '%${searchWord}%'    		
+	          </if>
+		      group by reports.goods_id) d
+              on (goods.goods_id = d.goods_id)
+			  order by goods.goods_id desc
+			  limit #{startIdx},10
+			
+			
+		</select>
+		
+		
         
 </mapper>

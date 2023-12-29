@@ -230,7 +230,13 @@ public class AuctionsServiceImpl implements AuctionsService {
 		 * targetGoods 중 bids에 호가 이력이 있는 goods.users_id (seller), bids.users_id(buyer), goods_id, secondPrice(두번째호가), max(최대호가)
 		 * */
 		List<Map<String,Object>> bidsMap = mapper.selectBalnaceBids(targetGoods);
-		log.info("bidsMap = {}",bidsMap);
+		
+		// 당첨된사람 제외하고 본인의 최대호가 
+		List<Map<String,Object>> bisMax = mapper.selectGoodsBidsMax(targetGoods);
+		
+		// 최대호가만큼 포인트 돌려주기
+		Integer refoundUsablePointForAll = mapper.updateAllUsablePoint(bisMax);
+		
 		if(bidsMap.size() > 0) {
 		 AuctionsIngResult = mapper.insertAuctionIng(bidsMap);
 		 //여기서 하는게 맞다 돌려줘야겠다. 
