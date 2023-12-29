@@ -98,6 +98,12 @@ public class GoodsController {
 		// 같이 가지고 올 수 있는게 없네
 
 		GoodsVO goods = goodsService.getGoods(goodsId);
+		
+		//접근금지면 상세페이지 이동 불가
+		if(goods.getGoods_access().equals(1)) {
+			return "redirect:/";
+		}
+		
 		UsersVO seller = usersService.userInfo(goods.getUsers_id());
 
 		model.addAttribute("seller", seller);
@@ -148,7 +154,7 @@ public class GoodsController {
 			@RequestParam(required = false, defaultValue = "") String search_word,
 			@RequestParam(required = false, defaultValue = "") Integer category_id,
 			@RequestParam(required = false, defaultValue = "") String sorting_type) {
-
+		
 		// 값 받아서 처리
 		GoodsPageVO page = new GoodsPageVO(pageNum, category_id, search_word, sorting_type);
 		

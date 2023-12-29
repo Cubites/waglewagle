@@ -96,15 +96,16 @@
 		
 		(
 			SELECT COUNT(*) FROM goods 
-	<where>
-		<if test="category_id != null">
-			AND category_id=#{category_id}
-		</if>
+			<where>
+				<if test="category_id != null">
+				AND category_id=#{category_id}
+				</if>
 		
-		<if test="!search_word.equals('')">
-			AND goods_title LIKE CONCAT('%', #{search_word}, '%') 
-		</if>
-	</where>
+				<if test="!search_word.equals('')">
+				AND goods_title LIKE CONCAT('%', #{search_word}, '%') 
+				</if>
+			
+			</where>
 		) as totalCnt
 		
 		FROM goods 
@@ -118,6 +119,7 @@
 			AND goods_title LIKE CONCAT('%', #{search_word}, '%') 
 		</if>
 		AND goods_exp >= now()
+		AND goods_access = 0
 	</where>
 	<choose>
 		<when test="sorting_type == null or sorting_type == ''">

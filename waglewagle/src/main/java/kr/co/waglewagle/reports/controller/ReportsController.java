@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.co.waglewagle.auctions.won.AuctionIng;
 import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.ReportsVO;
 import kr.co.waglewagle.domain.UsersVO;
@@ -42,18 +44,15 @@ public class ReportsController {
 		}
 
 		// redirect하면서 goods정보 가지고감
-		rs.addFlashAttribute("goods", goodsService.getGoods(goods_id));
-
-		return "redirect:/report/reportForm";
-	}
-
-	@GetMapping("/report/reportForm")
-	public String reportForm() {
+		model.addAttribute("goods",  goodsService.getGoods(goods_id));
+	
 		return "/report/reportForm";
 	}
 
+
+
 	@PostMapping("/report/goods")
-	public String report(@ModelAttribute ReportsVO report, RedirectAttributes rs, Model model,
+	public String report(@ModelAttribute ReportsVO report, Model model,
 			@SessionAttribute("users_info") UsersVO loginUser) {
 		
 		
@@ -82,13 +81,33 @@ public class ReportsController {
 		return "/report/reportForm";
 	}
 
-	@PostMapping("/report/user")
-	public String reportUser(@ModelAttribute ReportsVO report, RedirectAttributes rs) {
+	
 
-		rs.addFlashAttribute("report", report);
-
-		return "redirect:/report/reportForm";
-
-	}
-
+	
+		@GetMapping("/report/user/{users_id}/{myid}/{reports_type}/{goods_id}")
+		public String reportUser(@PathVariable Integer users_id
+				,@AuctionIng Integer goods_id
+				,@PathVariable Integer reports_type
+				,@PathVariable Integer myid
+				,@SessionAttribute(name = "users_info") UsersVO loginUser
+				,Model model) {
+			
+			
+			//auctions_ing에 없는 goods면 신고 못함 
+			if(goods_id == null) {
+				return "redirect:/";
+			}
+			//상대방이 신고하러오거나, 거래자가 아닌 사람이 신고하러 오는 것 막기
+			if(loginUser.getUsers_id().equals(users_id) || !loginUser.getUsers_id().equals(myid)) {
+				return "redirect:/";
+			}
+			
+			ReportsVO report = new ReportsVO();
+			report.setGoods_id(goods_id);
+			report.setUsers_id(users_id);
+			report.setReports_type(reports_type);	
+			model.addAttribute("report", report);
+		
+			return "/report/reportForm";
+		}
 }
