@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.waglewagle.admins.service.UserManageService;
-import kr.co.waglewagle.domain.NoticesVO;
 import kr.co.waglewagle.domain.UsersVO;
 
 @Controller
 public class UsersManageController {
+	
 	@Autowired
 	private UserManageService service;
-
 	
 	@GetMapping("/admin/userManageList")
 	public String userList(Model model,UsersVO vo) {

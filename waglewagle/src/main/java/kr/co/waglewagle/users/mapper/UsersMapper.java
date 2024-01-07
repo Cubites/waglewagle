@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import kr.co.waglewagle.domain.CategoryVO;
 import kr.co.waglewagle.domain.PointVO;
 import kr.co.waglewagle.domain.QnasVO;
 import kr.co.waglewagle.domain.UsersVO;

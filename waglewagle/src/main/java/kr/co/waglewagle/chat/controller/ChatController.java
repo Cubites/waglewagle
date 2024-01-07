@@ -6,12 +6,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,10 +24,8 @@ import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.goods.service.GoodsService;
 import kr.co.waglewagle.users.service.UsersService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@Slf4j
 @RequestMapping("/chat")
 @RequiredArgsConstructor
 public class ChatController {
@@ -90,7 +86,6 @@ public class ChatController {
 		Map<String, Object> sellerMap;
 		Map<String,Object> buyerMap;
 		
-		
 		//List에서 seller 와 buyer 구분 
 		if(((Integer)auction.get(0).get("auctions_ing_seller")).equals((Integer) auction.get(0).get("users_id"))) {
 			sellerMap = auction.get(0);
@@ -127,7 +122,6 @@ public class ChatController {
 		return true;
 	}
 
-	
 	@GetMapping("/readBid")
 	@ResponseBody
 	public String updateReadBid(HttpSession session, int auctions_ing_id) {

@@ -3,7 +3,6 @@ package kr.co.waglewagle.users.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.co.waglewagle.domain.CategoryVO;
 import kr.co.waglewagle.domain.PointVO;
 import kr.co.waglewagle.domain.QnasVO;
 import kr.co.waglewagle.domain.UsersVO;

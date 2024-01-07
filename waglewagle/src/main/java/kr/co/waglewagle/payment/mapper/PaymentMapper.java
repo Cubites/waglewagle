@@ -5,7 +5,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.waglewagle.domain.PaylogVO;
-import kr.co.waglewagle.domain.PointVO;
 
 @Mapper
 public interface PaymentMapper {

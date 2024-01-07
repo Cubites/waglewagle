@@ -1,7 +1,5 @@
 package kr.co.waglewagle.board.mapper;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.waglewagle.domain.NoticesVO;

@@ -1,11 +1,9 @@
 package kr.co.waglewagle.domain;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter

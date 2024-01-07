@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +25,6 @@ import kr.co.waglewagle.goods.won.FileStore;
 import kr.co.waglewagle.goods.won.UploadImage;
 import kr.co.waglewagle.users.service.UsersService;
 import kr.co.waglewagle.users.ty.mailauth.MailService;
-
 
 @Controller
 public class UsersController {
@@ -462,7 +460,6 @@ public class UsersController {
 		// 접속한 유저의 관심지역 조회
 		UsersVO vo = (UsersVO) session.getAttribute("users_info");
 		String areasStr = service.checkFavorAreas(vo.getUsers_id());
-		System.out.println("areasStr: " + areasStr);
 		String[] areas = areasStr != null ? (areasStr.length() != 0 ? areasStr.split(",") : null) : null;
 		model.addAttribute("favor_areas", areas); 
 		model.addAttribute("favor_areas_count", areas != null ? areas.length : 0);

@@ -1,26 +1,19 @@
 package kr.co.waglewagle.admins.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.javassist.runtime.Inner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.MergedAnnotation.Adapt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.waglewagle.admins.service.NoticeService;
 import kr.co.waglewagle.domain.AdminsVO;
-//import kr.co.waglewagle.admins.service.ReplyService;
 import kr.co.waglewagle.domain.NoticesVO;
 
 @Controller
@@ -54,7 +47,6 @@ public class NoticesController {
 		model.addAttribute("list",list);
 		return "admin/noticelist";
 	}
-
 	
 	//공지 등록 화면 띄우기
 	@GetMapping("/admin/noticewrite")
@@ -102,6 +94,5 @@ public class NoticesController {
 		model.addAttribute(request);
 		return "redirect:/admin/noticelist";
 	}
-
 
 }

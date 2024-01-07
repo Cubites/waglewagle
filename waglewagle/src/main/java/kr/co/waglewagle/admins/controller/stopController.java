@@ -14,6 +14,4 @@ public class stopController {
 		return "/admin/stop";
 	}
 	
-	
-	
 }

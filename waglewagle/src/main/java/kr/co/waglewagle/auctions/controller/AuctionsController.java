@@ -1,7 +1,6 @@
 package kr.co.waglewagle.auctions.controller;
 
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.waglewagle.auctions.service.AuctionsService;
 import kr.co.waglewagle.auctions.won.AuctionIng;
-import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.ReportsVO;
 import kr.co.waglewagle.domain.UsersVO;
 

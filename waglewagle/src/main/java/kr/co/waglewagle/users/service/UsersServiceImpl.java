@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import kr.co.waglewagle.auctions.mapper.AuctionsMapper;
-import kr.co.waglewagle.domain.AuctionsIngVO;
 import kr.co.waglewagle.domain.PointVO;
 
 import kr.co.waglewagle.domain.QnasVO;
@@ -22,9 +20,6 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private UsersMapper mapper;
-	
-	@Autowired
-	private AuctionsMapper auctionsMapper;
 
 	@Override
 	public UsersVO userInfo(Integer users_id) { return mapper.userInfo(users_id); }
