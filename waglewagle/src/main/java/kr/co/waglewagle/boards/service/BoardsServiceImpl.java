@@ -11,7 +11,7 @@ public class BoardsServiceImpl implements BoardsService {
 	
 	@Autowired
 	private BoardsMapper mapper;
-
+	
 	@Override
 	public int addQna(QnasVO vo) { return mapper.addQna(vo); }
 

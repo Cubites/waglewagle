@@ -5,9 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import kr.co.waglewagle.domain.NoticesVO;
 import kr.co.waglewagle.domain.QnasVO;
 
 public interface QnaService {

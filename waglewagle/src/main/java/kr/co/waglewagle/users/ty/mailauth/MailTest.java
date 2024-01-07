@@ -1,7 +1,5 @@
 package kr.co.waglewagle.users.ty.mailauth;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class MailTest {
 
 	public static void main(String[] args) {

@@ -3,7 +3,6 @@ package kr.co.waglewagle.auctions.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.co.waglewagle.domain.AuctionsIngVO;
 import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsBreakVO;
 import kr.co.waglewagle.util.hcju.SomeoneAuctionsEndVO;

@@ -14,7 +14,6 @@ import kr.co.waglewagle.auctions.mapper.AuctionsMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
-
 @Slf4j
 public class AutionGoodsArgumentResolver implements HandlerMethodArgumentResolver{
    

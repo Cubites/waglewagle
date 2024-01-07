@@ -1,4 +1,4 @@
-package kr.co.waglewagle;
+package kr.co.waglewagle.example;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -48,8 +48,6 @@ public class LoginController {
 		}
 		return "/admin/login";
 	}
-
-	
 	
 	//관리자 비밀번호 변경
 	@GetMapping("/admin/changePwd")
@@ -71,7 +69,6 @@ public class LoginController {
 			return "redirect:/admin/login";
 		}
 		return "/admin/changePwd";
-		
 	}
 	
 }

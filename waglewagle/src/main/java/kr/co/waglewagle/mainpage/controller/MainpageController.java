@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.waglewagle.domain.GoodsVO;
 import kr.co.waglewagle.domain.UsersVO;
 import kr.co.waglewagle.mainpage.service.MainpageService;
 

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -17,10 +16,8 @@ import kr.co.waglewagle.bids.won.BidsException;
 import kr.co.waglewagle.bids.won.BidsFormVO;
 import kr.co.waglewagle.bids.won.BidsMsg;
 import kr.co.waglewagle.domain.UsersVO;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@Slf4j
 public class BidsController {
 
 	@Autowired
@@ -81,10 +78,7 @@ public class BidsController {
 		// ------------여기까지 
 		
 		//오류 검사 후 정상 로직 
-
-		
 		try {
-			
 			result = service.askPrice(vo,bidsCheck);
 		} catch (BidsException e) {
 			msgs = BidsMsg.gethighPriorityMsg(msgs, BidsMsg.MSG6);
@@ -93,8 +87,6 @@ public class BidsController {
 		}
 
 		response = new ResponseEntity<String>("호가 등록에 성공했습니다.",headers,HttpStatus.ACCEPTED);
-		
-		
 		
 		return response;
 	}

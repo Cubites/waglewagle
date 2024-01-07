@@ -38,7 +38,6 @@ import kr.co.waglewagle.admins.util.AdminInterceptor2;
 import kr.co.waglewagle.auctions.won.AutionGoodsArgumentResolver;
 import kr.co.waglewagle.users.ty.util.LoginInterceptor;
 import kr.co.waglewagle.users.ty.util.LogoutInterceptor;
-import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @ComponentScan(basePackages = "kr.co.waglewagle")
@@ -172,7 +171,7 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addInterceptor(logoutInterceptor).addPathPatterns("/users/login","/users/join", "/users/find_info").order(2);
 		// [친밀도 업데이트 인터셉터] 친밀도가 변동되는 상황(거래 완료, 거래 파기, 거래글 접근금지)에 친밀도 업데이트 
 		registry.addInterceptor(relCaculateInterceptor).addPathPatterns("/auctions/comfirm/**", "/auctions/report/comfirm/**", "/auctions/end/**", "/admin/goodsStatus").excludePathPatterns().order(3);
-    // [마이페이지용 인터셉터] 마이페이지의 모든 페이지에 필요한 공통 작업 수행
+		// [마이페이지용 인터셉터] 마이페이지의 모든 페이지에 필요한 공통 작업 수행
 		registry.addInterceptor(mypageInterceptor).addPathPatterns("/mypage/**").excludePathPatterns().order(4);
 		// [세션 인터셉터] 세션에 있는 유저 정보를 다시 불러옴(마이페이지 접속 시)
 		registry.addInterceptor(reloadSessionInterceptor).addPathPatterns("/", "/mypage/auctions").excludePathPatterns().order(5);

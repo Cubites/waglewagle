@@ -6,8 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.waglewagle.domain.GoodsVO;
-import kr.co.waglewagle.domain.NoticesVO;
-import kr.co.waglewagle.domain.QnasVO;
 
 @Mapper
 public interface GoodsManageMapper {

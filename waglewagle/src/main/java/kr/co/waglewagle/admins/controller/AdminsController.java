@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.waglewagle.admins.service.AdminsService;
 import kr.co.waglewagle.domain.AdminsVO;
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor // 테스트를 위한 다른 Autowired 방법 1 - lombok 이용
 public class AdminsController {
 
-	@Autowired
+//	@Autowired
 	private AdminsService service;
 	
 	// 관리자 계정 목록 페이지 이동(조회 및 검색 포함)
@@ -33,7 +35,7 @@ public class AdminsController {
 		int nowPage1 = 0;
 		int nowPage10 = 0;
 		
-		// 거래중 게시글 조회에 필요한 값(유저 id, 페이지 번호) 저장
+		// 관리자 계정 조회에 필요한 값(유저 id, 페이지 번호) 저장
 		Map<String, Object> dataForSearch = new HashMap<>();
 		if(page == null || page > totalAuctionsNum) {
 			dataForSearch.put("start_page", 0);
