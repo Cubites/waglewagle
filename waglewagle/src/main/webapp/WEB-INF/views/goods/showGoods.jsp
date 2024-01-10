@@ -17,6 +17,14 @@
 
 </head>
 <body>
+<<<<<<<< HEAD:waglewagle/src/main/webapp/WEB-INF/views/goods/showGoods.jsp
 여기는 중간필터
+========
+	<div id="footer">
+		<div id="footerContainer">
+		
+		</div>
+	</div>
+>>>>>>>> main:waglewagle/src/main/webapp/WEB-INF/views/test/testfooter.jsp
 </body>
 </html>
